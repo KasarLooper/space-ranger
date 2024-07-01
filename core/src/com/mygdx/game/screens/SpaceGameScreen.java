@@ -27,16 +27,17 @@ public class SpaceGameScreen extends GameScreen {
     }
     @Override
     public void render(float delta) {
-        draw();
+        super.render(delta);
     }
 
-    public void draw() {
-        myGdxGame.camera.update();
-        myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
-        ScreenUtils.clear(Color.CLEAR);
-
-        myGdxGame.batch.begin();
+    @Override
+    protected void draw() {
+        super.draw();
         shipObject.draw(myGdxGame.batch);
-        myGdxGame.batch.end();
+    }
+
+    @Override
+    protected void handleInput() {
+        super.handleInput();
     }
 }

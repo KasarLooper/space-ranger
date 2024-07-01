@@ -2,49 +2,60 @@ package com.mygdx.game.components;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.GameResources;
 
 public class JoystickView extends View {
     private Texture circle;
     private Texture zone;
-    private int centreX, centreY;
-    private int circleX, circleY;
-    private int radius;
+    private float centreX, centreY;
+    private float circleX, circleY;
+    private float radius;
 
-    public JoystickView(int x, int y) {
+    public JoystickView(float x, float y) {
         super(x, y);
-        circle = new Texture("joystick-circle.png");
-        zone = new Texture("joystick-zone.png");
-        centreX = x + zone.getWidth() / 2;
-        centreY = y + zone.getHeight() / 2;
-        circleX = x + centreX;
-        circleY = y + centreY;
-        radius = Math.max(zone.getWidth(), zone.getHeight()) / 2;
+        circle = new Texture(GameResources.JOYSTICK_CIRCLE_IMG_PATH);
+        zone = new Texture(GameResources.JOYSTICK_BACK_IMG_PATH);
+
+        centreX = x + zone.getWidth() / 2f;
+        centreY = y + zone.getHeight() / 2f;
+        circleX = centreX;
+        circleY = centreY;
+        radius = Math.max(zone.getWidth(), zone.getHeight()) / 2f;
     }
 
     public void onTouch(int touchX, int touchY) {
         if (getDistanceFromCenter(touchX, touchY) <= radius) {
-            circleX = touchX - circle.getWidth() / 2;
-            circleY = touchY - circle.getHeight() / 2;
+            circleX = touchX;
+            circleY = touchY;
         } else {
-            float ratio = (float) touchX / (float) touchY;
-            int newX = (int) Math.round((double) radius / Math.sqrt(ratio * ratio + 1));
-            int newY = Math.round((float) newX / ratio);
-            if (touchX <= centreX) newX = -newX;
-            if (touchY <= centreY) newY = -newY;
-            circleX = newX - circle.getWidth() / 2;
-            circleY = newY - circle.getHeight() / 2;
+            float ratio = (float) Math.sqrt(((touchX - centreX) * (touchX - centreX) + (touchY - centreY) * (touchY - centreY)));
+            circleX = centreX + radius * (touchX - centreX) / ratio;
+            circleY = centreY + radius * (touchY - centreY) / ratio;
         }
     }
 
-    private int getDistanceFromCenter(int x, int y) {
-        int dx = Math.abs(x - centreX);
-        int dy = Math.abs(y - centreY);
+    public void toDefault() {
+        circleX = centreX;
+        circleY = centreY;
+    }
+
+    private float getDistanceFromCenter(int x, int y) {
+        float dx = Math.abs(x - centreX);
+        float dy = Math.abs(y - centreY);
         return (int) Math.round(Math.sqrt(dx * dx + dy * dy));
+    }
+
+    public float getX() {
+        return (circleX - centreX) / radius;
+    }
+
+    public float getY() {
+        return (circleY - centreY) / radius;
     }
 
     @Override
     public void draw(SpriteBatch batch) {
-        batch.draw(circle, circleX, circleY);
+        batch.draw(circle, circleX - (float) circle.getWidth() / 2f, circleY - (float) circle.getHeight() / 2f);
         batch.draw(zone, x, y);
     }
 

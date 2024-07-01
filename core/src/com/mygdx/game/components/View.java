@@ -3,10 +3,10 @@ package com.mygdx.game.components;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class View implements Disposable {
-    protected int x;
-    protected int y;
+    protected float x;
+    protected float y;
 
-    public View(int x, int y) {
+    public View(float x, float y) {
         this.x = x;
         this.y = y;
     }
