@@ -6,6 +6,8 @@ import com.mygdx.game.MyGdxGame;
 public abstract class GameScreen extends ScreenAdapter {
     MyGdxGame game;
 
+
+
     public GameScreen(MyGdxGame game) {
         this.game = game;
     }
