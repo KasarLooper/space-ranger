@@ -14,14 +14,15 @@ import com.mygdx.game.Type;
 
 
 public class GameObject {
-    public int wight;
+    public int width;
     public int height;
 
     public Body body;
+    public short cBits;
     Texture texture;
 
     GameObject(String texturePath, int x, int y, int wight, int height, World world) {
-        this.wight = wight;
+        this.width = wight;
         this.height = height;
 
         texture = new Texture(texturePath);
@@ -30,16 +31,11 @@ public class GameObject {
 
     public void draw(SpriteBatch batch) {
         batch.draw(texture,
-                getX() - (wight / 2f),
+                getX() - (width / 2f),
                 getY() - (height / 2f),
-                wight,
+                width,
                 height);
     }
-
-    public int width, height;
-    public short cBits;
-    public Body body;
-    Texture texture;
 
     GameObject(String TexturePath, int x, int y, int width, int height, short cBits, World world) {
         this.width = width;
@@ -49,11 +45,11 @@ public class GameObject {
         body = createBody(x, y, world);
     }
 
-    public void draw(SpriteBatch batch) {
-        batch.draw(texture, getX() - (width / 2f), getY() - (height / 2f), width, height);
+    public Type type() {
+        return  null;
     }
 
-    public void hit() {
+    public void hit(Type type) {
         // вся физика ударов и т.п.
     }
 
