@@ -6,36 +6,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.mygdx.game.Type;
+import com.badlogic.gdx.physics.box2d.World;
 
 
 public class GameObject {
-    public int wight;
-    public int height;
-
-    public Body body;
-    Texture texture;
-
-    GameObject(String texturePath, int x, int y, int wight, int height, World world) {
-        this.wight = wight;
-        this.height = height;
-
-        texture = new Texture(texturePath);
-        body = createBody(x, y, world);
-    }
-
-    public void draw(SpriteBatch batch) {
-        batch.draw(texture,
-                getX() - (wight / 2f),
-                getY() - (height / 2f),
-                wight,
-                height);
-    }
-
     public int width, height;
     public short cBits;
     public Body body;
@@ -76,7 +55,6 @@ public class GameObject {
     public void setY(int y) {
         body.setTransform(body.getPosition().x, y * SCALE, 0);
     }
-
 
     private Body createBody(float x, float y, World world) {
         BodyDef def = new BodyDef();
