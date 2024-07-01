@@ -6,6 +6,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.mygdx.game.Type;
 
 
@@ -21,7 +25,7 @@ public class GameObject {
         this.height = height;
 
         texture = new Texture(texturePath);
-        //body = createBody(x, y, world);
+        body = createBody(x, y, world);
     }
 
     public void draw(SpriteBatch batch) {
@@ -31,12 +35,30 @@ public class GameObject {
                 wight,
                 height);
     }
-    public void hit(Type type) {
-        //
+
+    public int width, height;
+    public short cBits;
+    public Body body;
+    Texture texture;
+
+    GameObject(String TexturePath, int x, int y, int width, int height, short cBits, World world) {
+        this.width = width;
+        this.height = height;
+        this.cBits = cBits;
+        texture = new Texture(TexturePath);
+        body = createBody(x, y, world);
     }
 
-    public Type type() {
-        return  null;
+    public void draw(SpriteBatch batch) {
+        batch.draw(texture, getX() - (width / 2f), getY() - (height / 2f), width, height);
+    }
+
+    public void hit() {
+        // вся физика ударов и т.п.
+    }
+
+    public void dispose() {
+        texture.dispose();
     }
 
     public int getX() {
@@ -56,5 +78,28 @@ public class GameObject {
     }
 
 
+    private Body createBody(float x, float y, World world) {
+        BodyDef def = new BodyDef();
 
+        def.type = BodyDef.BodyType.DynamicBody;
+        def.fixedRotation = true; // запрет на вращение
+        Body body = world.createBody(def);
+
+        CircleShape circleShape = new CircleShape();
+        circleShape.setRadius(Math.max(width, height) * SCALE / 2f);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.filter.categoryBits = cBits; // биты
+
+        fixtureDef.shape = circleShape;
+        fixtureDef.density = 0.1f;
+        fixtureDef.friction = 1f;
+
+        Fixture fixture = body.createFixture(fixtureDef);
+        fixture.setUserData(this);
+        circleShape.dispose();
+
+        body.setTransform(x * SCALE, y * SCALE, 0);
+        return body;
+    }
 }
