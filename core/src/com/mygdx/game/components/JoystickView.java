@@ -53,6 +53,13 @@ public class JoystickView extends View {
         return (circleY - centreY) / radius;
     }
 
+    public float getDegrees() {
+        double radians = Math.atan2(getY(), getX());
+        double degrees = Math.toDegrees(radians);
+        if (degrees < 0) degrees += 360;
+        return (float) degrees;
+    }
+
     @Override
     public void draw(SpriteBatch batch) {
         batch.draw(circle, circleX - (float) circle.getWidth() / 2f, circleY - (float) circle.getHeight() / 2f);
