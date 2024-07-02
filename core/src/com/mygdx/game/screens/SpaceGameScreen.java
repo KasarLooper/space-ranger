@@ -57,7 +57,6 @@ public class SpaceGameScreen extends GameScreen {
         }
         myGdxGame.stepWorld();
         updateBullets();
-        backgroundView.move();
     }
 
     @Override
@@ -75,6 +74,7 @@ public class SpaceGameScreen extends GameScreen {
     protected void moveCamera(Vector2 move) {
         super.moveCamera(move);
         joystick.onCameraUpdate(move.x, move.y);
+        backgroundView.move(move.x, move.y);
     }
 
     @Override
