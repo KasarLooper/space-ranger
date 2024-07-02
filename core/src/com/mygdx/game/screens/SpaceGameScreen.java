@@ -8,6 +8,8 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.manager.ContactManager;
 import com.mygdx.game.objects.ShipObject;
 
+import java.util.Random;
+
 public class SpaceGameScreen extends GameScreen {
     MyGdxGame myGdxGame;
     public ShipObject shipObject;
@@ -40,8 +42,9 @@ public class SpaceGameScreen extends GameScreen {
     protected void handleInput() {
         super.handleInput();
         if (Gdx.input.isTouched()) {
-            Vector3 touch = myGdxGame.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+            //myGdxGame.touch = myGdxGame.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
             shipObject.setRotation(joystick.getDegrees());
+            shipObject.move();
         }
     }
 }

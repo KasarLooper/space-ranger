@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.screens.SpaceGameScreen;
@@ -20,6 +21,8 @@ public class MyGdxGame extends Game {
 	public SpriteBatch batch;
 	public OrthographicCamera camera;
 	public SpaceGameScreen spaceScreen;
+
+	public Vector3 touch;
 
 	@Override
 	public void create () {

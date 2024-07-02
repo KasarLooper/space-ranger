@@ -14,4 +14,6 @@ public class GameSettings {
     //Size settings
     public static final int SHIP_WIDTH = 150;
     public static final int SHIP_HEIGHT = 150;
+
+    public static final int SPEED_SHIP = 7;
 }
