@@ -71,4 +71,13 @@ public class JoystickView extends View {
         circle.dispose();
         zone.dispose();
     }
+
+    @Override
+    public void onCameraUpdate(float dx, float dy) {
+        super.onCameraUpdate(dx, dy);
+        centreX += dx;
+        circleX += dx;
+        centreY += dy;
+        circleY += dy;
+    }
 }
