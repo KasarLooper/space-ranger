@@ -42,13 +42,15 @@ public class BulletObject extends GameObject{
         sprite.setRotation(degrees);
     }
 
-
     @Override
     public void hit(Type type) {
         wasHit = true;
     }
 
-    public boolean Destroy() {
-        return wasHit || !((getX() - width / 2 > 0 && getX() - width / 2 < SCREEN_WIDTH) && (getY() - height / 2 > 0 && getY() - height / 2 < SCREEN_HEIGHT));
+    public boolean destroy(int centreX, int centreY) {
+        return wasHit || !(getX() > centreX - (width + SCREEN_WIDTH) / 2 &&
+                getX() < centreX + (width + SCREEN_WIDTH) / 2 &&
+                getY() > centreY - (height + SCREEN_HEIGHT) / 2 &&
+                getY() < centreY + (height + SCREEN_HEIGHT) / 2);
     }
 }

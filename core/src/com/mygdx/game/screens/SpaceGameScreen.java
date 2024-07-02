@@ -6,18 +6,16 @@ import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.GameResources;
 import com.mygdx.game.GameSettings;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.components.JoystickView;
 import com.mygdx.game.components.MovingBackgroundView;
 import com.mygdx.game.manager.ContactManager;
 import com.mygdx.game.objects.BulletObject;
 import com.mygdx.game.objects.ShipObject;
 
-import java.util.Random;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -59,18 +57,24 @@ public class SpaceGameScreen extends GameScreen {
         }
         myGdxGame.stepWorld();
         updateBullets();
-//      backgroundView.move();
+        backgroundView.move();
     }
 
     @Override
     protected void draw() {
-        super.draw();
         backgroundView.draw(myGdxGame.batch);
+        super.draw();
         shipObject.draw(myGdxGame.batch);
         for (BulletObject bullet : bulletArray) {
             //bullet.setRotation(shipObject.getRotation());
             bullet.draw(myGdxGame.batch);
         }
+    }
+
+    @Override
+    protected void moveCamera(Vector2 move) {
+        super.moveCamera(move);
+        joystick.onCameraUpdate(move.x, move.y);
     }
 
     @Override
@@ -80,7 +84,8 @@ public class SpaceGameScreen extends GameScreen {
         if (Gdx.input.isTouched()) {
             //myGdxGame.touch = myGdxGame.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
             shipObject.setRotation(joystick.getDegrees());
-            shipObject.move();
+            Vector2 difference = shipObject.move();
+            moveCamera(difference);
         }
     }
 
@@ -89,7 +94,7 @@ public class SpaceGameScreen extends GameScreen {
         Iterator<BulletObject> iterator = bulletArray.iterator();
         while(iterator.hasNext()) {
             BulletObject bulletObject_now = iterator.next();
-            if (bulletObject_now.Destroy()) {
+            if (bulletObject_now.destroy(shipObject.getX(), shipObject.getY())) {
                 myGdxGame.world.destroyBody(bulletObject_now.body);
                 iterator.remove();
             }

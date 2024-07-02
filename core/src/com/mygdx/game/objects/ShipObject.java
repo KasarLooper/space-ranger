@@ -36,9 +36,12 @@ public class ShipObject extends GameObject{
         shot_cool_down = GameSettings.SHOOTING_COOL_DOWN;
     }
 
-    public void move() {
-        setX(getX() + (int) (cos(toRadians(degrees + 90)) * SPEED_SHIP));
-        setY(getY() + (int) (sin(toRadians(degrees + 90)) * SPEED_SHIP));
+    public Vector2 move() {
+        int dx = (int) (cos(toRadians(degrees + 90)) * SPEED_SHIP);
+        int dy = (int) (sin(toRadians(degrees + 90)) * SPEED_SHIP);
+        setX(getX() + dx);
+        setY(getY() + dy);
+        return new Vector2(dx, dy);
 
         /*
         if (22.5 > getRotation() % 360 || getRotation() % 360 > 337.5) {

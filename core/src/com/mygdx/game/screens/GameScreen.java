@@ -3,6 +3,7 @@ package com.mygdx.game.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -39,6 +40,11 @@ public abstract class GameScreen extends ScreenAdapter {
 
     protected void draw() {
         joystick.draw(myGdxGame.batch);
+    }
+
+    protected void moveCamera(Vector2 move) {
+        myGdxGame.camera.position.x += move.x;
+        myGdxGame.camera.position.y += move.y;
     }
 
     protected void handleInput() {
