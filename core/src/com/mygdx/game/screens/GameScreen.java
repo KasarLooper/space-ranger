@@ -5,12 +5,14 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.JoystickView;
 
 public abstract class GameScreen extends ScreenAdapter {
     MyGdxGame myGdxGame;
     JoystickView joystick;
+    long showTime;
 
     public GameScreen(MyGdxGame game) {
         this.myGdxGame = game;
@@ -19,6 +21,7 @@ public abstract class GameScreen extends ScreenAdapter {
     @Override
     public void show() {
         joystick = new JoystickView(100, 100);
+        showTime = TimeUtils.millis();
     }
 
     @Override
@@ -39,6 +42,7 @@ public abstract class GameScreen extends ScreenAdapter {
     }
 
     protected void handleInput() {
+        if (TimeUtils.millis() - showTime < 100) return;
         if (Gdx.input.isTouched()) {
             Vector3 touch = myGdxGame.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
             joystick.onTouch((int) touch.x, (int) touch.y);

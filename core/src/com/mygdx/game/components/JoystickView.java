@@ -56,7 +56,7 @@ public class JoystickView extends View {
         return (circleY - centreY) / radius;
     }
 
-    public static float getDegrees() {
+    public float getDegrees() {
         double radians = Math.atan2(getY(), getX());
         double degrees = Math.toDegrees(radians);
         if (degrees < 0) degrees += 360;

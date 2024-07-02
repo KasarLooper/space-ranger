@@ -3,9 +3,11 @@ package com.mygdx.game.screens;
 import static com.mygdx.game.GameSettings.BULLET_HEIGHT;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
+import static java.lang.Math.toRadians;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.GameResources;
 import com.mygdx.game.GameSettings;
 import com.mygdx.game.MyGdxGame;
@@ -27,9 +29,6 @@ public class SpaceGameScreen extends GameScreen {
     ContactManager contactManager;
     MovingBackgroundView backgroundView;
 
-
-
-
     public SpaceGameScreen(MyGdxGame myGdxGame) {
         super(myGdxGame);
         this.myGdxGame = myGdxGame;
@@ -46,13 +45,14 @@ public class SpaceGameScreen extends GameScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
+        final int padding = 50;
         if (shipObject.needToShoot()) {
             BulletObject Bullet = new BulletObject(
-                    (int) (shipObject.getX() + cos(ShipObject.getRotation()) * (shipObject.getRadius() / 2 + BULLET_HEIGHT)),
-                    (int) (shipObject.getY() + sin(ShipObject.getRotation()) * (shipObject.getRadius() / 2 + BULLET_HEIGHT)),
+                    (int) (shipObject.getX() + cos(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
+                    (int) (shipObject.getY() + sin(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
                     GameSettings.BULLET_WIDTH, BULLET_HEIGHT,
                     GameResources.BULLET_IMG_PATH,
-                    myGdxGame.world
+                    myGdxGame.world, shipObject.getRotation()
             );
             bulletArray.add(Bullet);
         }
@@ -67,7 +67,7 @@ public class SpaceGameScreen extends GameScreen {
         backgroundView.draw(myGdxGame.batch);
         shipObject.draw(myGdxGame.batch);
         for (BulletObject bullet : bulletArray) {
-            bullet.setRotation(ShipObject.getRotation());
+            //bullet.setRotation(shipObject.getRotation());
             bullet.draw(myGdxGame.batch);
         }
     }
@@ -75,6 +75,7 @@ public class SpaceGameScreen extends GameScreen {
     @Override
     protected void handleInput() {
         super.handleInput();
+        if (TimeUtils.millis() - showTime < 100) return;
         if (Gdx.input.isTouched()) {
             Vector3 touch = myGdxGame.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
             shipObject.setRotation(joystick.getDegrees());

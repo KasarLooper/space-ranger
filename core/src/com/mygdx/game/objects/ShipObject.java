@@ -9,7 +9,7 @@ import com.mygdx.game.Type;
 
 public class ShipObject extends GameObject{
     int livesLeft;
-    static Sprite sprite;
+    Sprite sprite;
 
     public long lastShotTime;
 
@@ -19,6 +19,7 @@ public class ShipObject extends GameObject{
         super(texturePath, x, y, wight, height, world);
         livesLeft = 3;
         sprite = new Sprite(texture);
+        sprite.setOrigin(wight / 2f, height / 2f);
         shot_cool_down = GameSettings.SHOOTING_COOL_DOWN;
     }
 
@@ -43,8 +44,8 @@ public class ShipObject extends GameObject{
         }
     }
 
-    public static float getRotation() {
-        return sprite.getRotation();
+    public float getRotation() {
+        return sprite.getRotation() + 90;
     }
 
     public void setRotation(float degrees) {
