@@ -3,6 +3,7 @@ package com.mygdx.game.objects;
 import static com.mygdx.game.GameSettings.SCALE;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
@@ -13,13 +14,14 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.mygdx.game.Type;
 
 
-public class GameObject {
+public abstract class GameObject {
     public int width;
     public int height;
 
     public Body body;
     public short cBits;
     Texture texture;
+
 
     GameObject(String texturePath, int x, int y, int wight, int height, World world) {
         this.width = wight;
@@ -37,17 +39,19 @@ public class GameObject {
                 height);
     }
 
-    GameObject(String TexturePath, int x, int y, int width, int height, short cBits, World world) {
+    /*GameObject(String TexturePath, int x, int y, int width, int height, short cBits, World world) {
         this.width = width;
         this.height = height;
         this.cBits = cBits;
         texture = new Texture(TexturePath);
         body = createBody(x, y, world);
-    }
+    }*/
 
     public Type type() {
         return  null;
     }
+
+    public abstract void draw();
 
     public void hit(Type type) {
         // вся физика ударов и т.п.
@@ -73,6 +77,10 @@ public class GameObject {
         body.setTransform(body.getPosition().x, y * SCALE, 0);
     }
 
+    public float getRadius() {
+        return Math.max(width, height) * SCALE / 2f;
+    }
+
 
     private Body createBody(float x, float y, World world) {
         BodyDef def = new BodyDef();
@@ -82,7 +90,7 @@ public class GameObject {
         Body body = world.createBody(def);
 
         CircleShape circleShape = new CircleShape();
-        circleShape.setRadius(Math.max(width, height) * SCALE / 2f);
+        circleShape.setRadius(getRadius());
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.filter.categoryBits = cBits; // биты

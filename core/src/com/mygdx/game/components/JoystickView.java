@@ -7,9 +7,11 @@ import com.mygdx.game.GameResources;
 public class JoystickView extends View {
     private Texture circle;
     private Texture zone;
-    private float centreX, centreY;
-    private float circleX, circleY;
-    private float radius;
+    private static float centreX;
+    private static float centreY;
+    private static float circleX;
+    private static float circleY;
+    private static float radius;
 
     public JoystickView(float x, float y) {
         super(x, y);
@@ -45,15 +47,15 @@ public class JoystickView extends View {
         return (int) Math.round(Math.sqrt(dx * dx + dy * dy));
     }
 
-    public float getX() {
+    public static float getX() {
         return (circleX - centreX) / radius;
     }
 
-    public float getY() {
+    public static float getY() {
         return (circleY - centreY) / radius;
     }
 
-    public float getDegrees() {
+    public static float getDegrees() {
         double radians = Math.atan2(getY(), getX());
         double degrees = Math.toDegrees(radians);
         if (degrees < 0) degrees += 360;
