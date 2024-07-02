@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.GameSettings;
 import com.mygdx.game.Type;
 
@@ -15,11 +16,17 @@ public class ShipObject extends GameObject{
     Sprite sprite;
     Random random = new Random();
 
+    public long lastShotTime;
+
+    public float shot_cool_down;
+
     public ShipObject(int x, int y, int wight, int height, String texturePath, World world) {
         super(texturePath, x, y, wight, height, world);
         livesLeft = 3;
         body.setLinearDamping(10);
         sprite = new Sprite(texture);
+        sprite.setOrigin(wight / 2f, height / 2f);
+        shot_cool_down = GameSettings.SHOOTING_COOL_DOWN;
     }
 
     public void move() {
@@ -56,6 +63,14 @@ public class ShipObject extends GameObject{
         sprite.draw(batch);
     }
 
+    public boolean needToShoot() {
+        if (TimeUtils.millis() - lastShotTime >= shot_cool_down) {
+            lastShotTime = TimeUtils.millis();
+            return true;
+        }
+        return false;
+    }
+
     @Override
     public void hit(Type type) {
         if (type == Type.Enemy) {
@@ -64,7 +79,7 @@ public class ShipObject extends GameObject{
     }
 
     public float getRotation() {
-        return sprite.getRotation();
+        return sprite.getRotation() + 90;
     }
 
     public void setRotation(float degrees) {
@@ -73,6 +88,11 @@ public class ShipObject extends GameObject{
 
     public Type type() {
         return  Type.Ship;
+    }
+
+    @Override
+    public void draw() {
+
     }
 
     public boolean isAlive() {

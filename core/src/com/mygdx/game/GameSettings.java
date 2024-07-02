@@ -11,9 +11,16 @@ public class GameSettings {
     public static final int POSITION_ITERATIONS = 6;
     public static final float SCALE = 0.05f;
 
-    //Size settings
+    // Object Setting
+  
+    // Ship Setting
+    public static final int SHOOTING_COOL_DOWN = 100; // in ms
     public static final int SHIP_WIDTH = 150;
     public static final int SHIP_HEIGHT = 150;
-
     public static final int SPEED_SHIP = 7;
+
+    // Bullet Setting
+    public static final int BULLET_WIDTH = 15;
+    public static final int BULLET_HEIGHT = 50;
+    public static final int Bullet_Speed = 20; // in ms
 }
