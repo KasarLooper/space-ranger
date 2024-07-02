@@ -17,7 +17,7 @@ public class GameSettings {
     public static final int SHOOTING_COOL_DOWN = 100; // in ms
     public static final int SHIP_WIDTH = 150;
     public static final int SHIP_HEIGHT = 150;
-    public static final int SPEED_SHIP = 7;
+    public static final int SPEED_SHIP = 4;
 
     // Bullet Setting
     public static final int BULLET_WIDTH = 15;

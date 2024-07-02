@@ -1,5 +1,11 @@
 package com.mygdx.game.objects;
 
+import static com.mygdx.game.GameSettings.SCALE;
+import static com.mygdx.game.GameSettings.SPEED_SHIP;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+import static java.lang.Math.toRadians;
+
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -19,6 +25,7 @@ public class ShipObject extends GameObject{
     public long lastShotTime;
 
     public float shot_cool_down;
+    private float degrees;
 
     public ShipObject(int x, int y, int wight, int height, String texturePath, World world) {
         super(texturePath, x, y, wight, height, world);
@@ -30,6 +37,10 @@ public class ShipObject extends GameObject{
     }
 
     public void move() {
+        setX(getX() + (int) (cos(toRadians(degrees + 90)) * SPEED_SHIP));
+        setY(getY() + (int) (sin(toRadians(degrees + 90)) * SPEED_SHIP));
+
+        /*
         if (22.5 > getRotation() % 360 || getRotation() % 360 > 337.5) {
             setY(getY() + GameSettings.SPEED_SHIP);
         } else if (337.5 > getRotation() % 360 && getRotation() % 360 > 292.5) {
@@ -51,10 +62,8 @@ public class ShipObject extends GameObject{
             setY(getY() + GameSettings.SPEED_SHIP);
             setX(getX() - GameSettings.SPEED_SHIP);
         }
-
-       System.out.println(getRotation() % 360);
-
-
+        System.out.println(getRotation() % 360);
+         */
     }
 
     @Override
@@ -83,6 +92,7 @@ public class ShipObject extends GameObject{
     }
 
     public void setRotation(float degrees) {
+        this.degrees = degrees;
         sprite.setRotation(degrees);
     }
 
