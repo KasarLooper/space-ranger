@@ -17,6 +17,7 @@ import com.mygdx.game.manager.ContactManager;
 import com.mygdx.game.objects.BulletObject;
 import com.mygdx.game.objects.ShipObject;
 
+import java.util.Random;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -77,8 +78,9 @@ public class SpaceGameScreen extends GameScreen {
         super.handleInput();
         if (TimeUtils.millis() - showTime < 100) return;
         if (Gdx.input.isTouched()) {
-            Vector3 touch = myGdxGame.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+            //myGdxGame.touch = myGdxGame.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
             shipObject.setRotation(joystick.getDegrees());
+            shipObject.move();
         }
     }
 

@@ -29,6 +29,8 @@ public class MyGdxGame extends Game {
 	public MenuScreen menuScreen;
 	public BitmapFont commonWhiteFont;
 
+	public Vector3 touch;
+
 	@Override
 	public void create () {
 		Box2D.init();
