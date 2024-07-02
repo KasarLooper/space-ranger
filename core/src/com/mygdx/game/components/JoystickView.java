@@ -11,6 +11,7 @@ public class JoystickView extends View {
     private float circleX, circleY;
     private float radius;
 
+
     public JoystickView(float x, float y) {
         super(x, y);
         circle = new Texture(GameResources.JOYSTICK_CIRCLE_IMG_PATH);
