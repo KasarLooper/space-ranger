@@ -28,6 +28,10 @@ public class ShipObject extends GameObject{
         }
     }
 
+    public float getRotation() {
+        return sprite.getRotation();
+    }
+
     public void setRotation(float degrees) {
         sprite.setRotation(degrees);
     }
