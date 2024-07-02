@@ -41,7 +41,7 @@ public class SpaceGameScreen extends GameScreen {
         super.handleInput();
         if (Gdx.input.isTouched()) {
             Vector3 touch = myGdxGame.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-            shipObject.setRotation(joystick.getDegrees() + 270f);
+            shipObject.setRotation(joystick.getDegrees());
         }
     }
 }
