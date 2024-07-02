@@ -8,4 +8,5 @@ public class GameResources {
     public static final String BACKGROUND_IMG_PATH = "background.png";
     public static final String FONT_PATH = "fonts/ofont.ru_Montserrat.ttf";
     public static final String BUTTON_IMG_PATH = "button_bg.png";
+    public static final String CORE_IMG_PATH = "core.png";
 }
