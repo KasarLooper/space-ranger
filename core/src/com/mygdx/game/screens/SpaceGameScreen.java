@@ -32,11 +32,9 @@ public class SpaceGameScreen extends GameScreen {
     ArrayList<BulletObject> bulletArray;
     ContactManager contactManager;
     MovingBackgroundView backgroundView;
-    ButtonView pauseButton;
     ButtonView fireButton;
     ImageView backgroundFireButton;
     TextView purpose;
-    State state;
     LiveView live;
 
     public SpaceGameScreen(MyGdxGame myGdxGame) {
@@ -51,7 +49,6 @@ public class SpaceGameScreen extends GameScreen {
                 myGdxGame.world
         );
         fireButton = new ButtonView(1050, 150, 100, 100, GameResources.FIRE_BUTTON_IMG_PATH); // "Remove-bg.ai_1720009081104.png"
-        pauseButton =new ButtonView(1200, 650, 50, 50, GameResources.PAUSE_ICON_IMG_PATH); // "pause_icon.png"
         backgroundFireButton = new ImageView(1000, 100, GameResources.JOYSTICK_BACK_IMG_PATH);
         bulletArray = new ArrayList<>();
         purpose = new TextView(myGdxGame.averageWhiteFont, 500, 675, "Purpose: energy: .../3");
@@ -84,7 +81,6 @@ public class SpaceGameScreen extends GameScreen {
             //bullet.setRotation(shipObject.getRotation());
             bullet.draw(myGdxGame.batch);
         }
-        pauseButton.draw(myGdxGame.batch);
         backgroundFireButton.draw(myGdxGame.batch);
         fireButton.draw(myGdxGame.batch);
         purpose.draw(myGdxGame.batch);
