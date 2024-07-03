@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.components.ButtonView;
 import com.mygdx.game.components.JoystickView;
 
 public abstract class GameScreen extends ScreenAdapter {
@@ -56,4 +57,9 @@ public abstract class GameScreen extends ScreenAdapter {
             joystick.toDefault();
         }
     }
+}
+
+enum State {
+    play,
+    pause
 }

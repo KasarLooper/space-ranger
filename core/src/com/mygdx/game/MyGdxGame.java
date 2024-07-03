@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.World;
+import com.mygdx.game.manager.AudioManager;
 import com.mygdx.game.screens.MenuScreen;
 import com.mygdx.game.screens.SpaceGameScreen;
 
@@ -28,12 +29,16 @@ public class MyGdxGame extends Game {
 	public SpaceGameScreen spaceScreen;
 	public MenuScreen menuScreen;
 	public BitmapFont commonWhiteFont;
+	public BitmapFont averageWhiteFont;
+
+	public AudioManager audioManager;
 	@Override
 	public void create () {
 		Box2D.init();
 		world = new World(new Vector2(0, 0), true);
 
 		commonWhiteFont = FontBuilder.generate(50, Color.WHITE, GameResources.FONT_PATH);
+		averageWhiteFont = FontBuilder.generate(25, Color.WHITE, GameResources.FONT_PATH);
 
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
@@ -41,6 +46,7 @@ public class MyGdxGame extends Game {
 
 		spaceScreen = new SpaceGameScreen(this);
 		menuScreen = new MenuScreen(this);
+		audioManager = new AudioManager();
 
 		setScreen(menuScreen);
 	}
