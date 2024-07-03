@@ -44,7 +44,7 @@ public class SpaceGameScreen extends GameScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        final int padding = 50;
+        final int padding = 10;
         if (shipObject.needToShoot()) {
             BulletObject Bullet = new BulletObject(
                     (int) (shipObject.getX() + cos(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
