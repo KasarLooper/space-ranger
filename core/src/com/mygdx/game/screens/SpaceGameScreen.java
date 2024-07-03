@@ -50,8 +50,8 @@ public class SpaceGameScreen extends GameScreen {
                 GameResources.SHIP_IMG_PATH,
                 myGdxGame.world
         );
-        fireButton = new ButtonView(1050, 150, 100, 100, "Remove-bg.ai_1720009081104.png");
-        pauseButton =new ButtonView(1200, 650, 50, 50, "pause_icon.png");
+        fireButton = new ButtonView(1050, 150, 100, 100, GameResources.FIRE_BUTTON_IMG_PATH); // "Remove-bg.ai_1720009081104.png"
+        pauseButton =new ButtonView(1200, 650, 50, 50, GameResources.PAUSE_ICON_IMG_PATH); // "pause_icon.png"
         backgroundFireButton = new ImageView(1000, 100, GameResources.JOYSTICK_BACK_IMG_PATH);
         bulletArray = new ArrayList<>();
         purpose = new TextView(myGdxGame.averageWhiteFont, 500, 675, "Purpose: energy: .../3");
