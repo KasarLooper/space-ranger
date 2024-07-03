@@ -84,3 +84,4 @@ public class MovingBackgroundView extends View{
         texture.dispose();
     }
 }
+
