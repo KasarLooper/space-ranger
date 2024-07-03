@@ -20,7 +20,11 @@ import com.mygdx.game.GameSession;
 import com.mygdx.game.GameSettings;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.JoystickView;
+import com.mygdx.game.components.ButtonView;
+import com.mygdx.game.components.ImageView;
+import com.mygdx.game.components.LiveView;
 import com.mygdx.game.components.MovingBackgroundView;
+import com.mygdx.game.components.TextView;
 import com.mygdx.game.manager.ContactManager;
 import com.mygdx.game.objects.BulletObject;
 import com.mygdx.game.objects.CoreObject;
@@ -30,6 +34,7 @@ import com.mygdx.game.objects.ShipObject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+
 
 public class SpaceGameScreen extends GameScreen {
 
@@ -47,6 +52,10 @@ public class SpaceGameScreen extends GameScreen {
     ArrayList<EnemyObject> enemyArray;
     ContactManager contactManager;
     MovingBackgroundView backgroundView;
+    ButtonView fireButton;
+    ImageView backgroundFireButton;
+    TextView purpose;
+    LiveView live;
 
     public SpaceGameScreen(MyGdxGame myGdxGame) {
         super(myGdxGame);
@@ -59,11 +68,15 @@ public class SpaceGameScreen extends GameScreen {
                 GameResources.SHIP_IMG_PATH,
                 myGdxGame.world
         );
+        fireButton = new ButtonView(1050, 150, 100, 100, GameResources.FIRE_BUTTON_IMG_PATH); // "Remove-bg.ai_1720009081104.png"
+        backgroundFireButton = new ImageView(1000, 100, GameResources.JOYSTICK_BACK_IMG_PATH);
         bulletArray = new ArrayList<>();
         coreArray = new ArrayList<>();
         enemyArray = new ArrayList<>();
         random = new Random();
         gameSession = new GameSession();
+        purpose = new TextView(myGdxGame.averageWhiteFont, 500, 675, "Purpose: energy: .../3");
+        live = new LiveView(0, 675);
     }
 
     @Override
@@ -80,7 +93,7 @@ public class SpaceGameScreen extends GameScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        final int padding = 50;
+        final int padding = 10;
         if (shipObject.needToShoot()) {
             BulletObject Bullet = new BulletObject(
                     (int) (shipObject.getX() + cos(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
@@ -92,6 +105,7 @@ public class SpaceGameScreen extends GameScreen {
             bulletArray.add(Bullet);
         }
         for (EnemyObject enemy: enemyArray) enemy.move();
+        live.setLeftLives(shipObject.getLivesLeft());
         myGdxGame.stepWorld();
         updateBullets();
         updateCore();
@@ -103,11 +117,15 @@ public class SpaceGameScreen extends GameScreen {
     @Override
     protected void draw() {
         backgroundView.draw(myGdxGame.batch);
-        super.draw();
         shipObject.draw(myGdxGame.batch);
         for (BulletObject bullet : bulletArray) bullet.draw(myGdxGame.batch);
         for (CoreObject core: coreArray) core.draw(myGdxGame.batch);
         for (EnemyObject enemy: enemyArray) enemy.draw(myGdxGame.batch);
+        backgroundFireButton.draw(myGdxGame.batch);
+        fireButton.draw(myGdxGame.batch);
+        purpose.draw(myGdxGame.batch);
+        live.draw(myGdxGame.batch);
+        super.draw();
     }
 
     @Override

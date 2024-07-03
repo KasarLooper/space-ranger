@@ -7,13 +7,17 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.mygdx.game.GameResources;
 import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.components.ButtonView;
 import com.mygdx.game.components.JoystickView;
 
 public abstract class GameScreen extends ScreenAdapter {
     MyGdxGame myGdxGame;
     JoystickView joystick;
     long showTime;
+    State state;
+    ButtonView pauseButton;
 
     public GameScreen(MyGdxGame game) {
         this.myGdxGame = game;
@@ -22,6 +26,7 @@ public abstract class GameScreen extends ScreenAdapter {
     @Override
     public void show() {
         joystick = new JoystickView(100, 100);
+        pauseButton =new ButtonView(1200, 650, 50, 50, GameResources.PAUSE_ICON_IMG_PATH); // "pause_icon.png"
         showTime = TimeUtils.millis();
     }
 
@@ -40,6 +45,7 @@ public abstract class GameScreen extends ScreenAdapter {
 
     protected void draw() {
         joystick.draw(myGdxGame.batch);
+        pauseButton.draw(myGdxGame.batch);
     }
 
     protected void moveCamera(Vector2 move) {
@@ -55,5 +61,17 @@ public abstract class GameScreen extends ScreenAdapter {
         } else {
             joystick.toDefault();
         }
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        joystick.dispose();
+        pauseButton.dispose();
+    }
+
+    enum State {
+        play,
+        pause
     }
 }
