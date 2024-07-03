@@ -23,7 +23,7 @@ public class BulletObject extends GameObject{
         body.setLinearVelocity(new Vector2((float) (cos(toRadians(degrees)) * Bullet_Speed), (float) (sin(toRadians(degrees)) * Bullet_Speed)));
         body.setBullet(true);
         sprite = new Sprite(texture);
-        sprite.setRotation(degrees + 90);
+        sprite.setRotation(degrees + 270);
         wasHit = false;
     }
 
@@ -38,9 +38,6 @@ public class BulletObject extends GameObject{
 
     }
 
-    public void setRotation(float degrees) {
-        sprite.setRotation(degrees);
-    }
 
     @Override
     public void hit(Type type) {
