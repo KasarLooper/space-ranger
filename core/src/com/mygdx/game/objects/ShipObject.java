@@ -100,12 +100,7 @@ public class ShipObject extends GameObject{
     }
 
     public Type type() {
-        return  Type.Ship;
-    }
-
-    @Override
-    public void draw() {
-
+        return Type.Ship;
     }
 
     public boolean isAlive() {

@@ -39,19 +39,9 @@ public abstract class GameObject {
                 height);
     }
 
-    /*GameObject(String TexturePath, int x, int y, int width, int height, short cBits, World world) {
-        this.width = width;
-        this.height = height;
-        this.cBits = cBits;
-        texture = new Texture(TexturePath);
-        body = createBody(x, y, world);
-    }*/
-
     public Type type() {
         return  null;
     }
-
-    public abstract void draw();
 
     public void hit(Type type) {
         // вся физика ударов и т.п.

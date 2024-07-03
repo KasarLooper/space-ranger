@@ -14,10 +14,19 @@ public class GameSettings {
     // Object Setting
   
     // Ship Setting
-    public static final int SHOOTING_COOL_DOWN = 100; // in ms
+    public static final int SHOOTING_COOL_DOWN = 1000; // in ms
     public static final int SHIP_WIDTH = 150;
     public static final int SHIP_HEIGHT = 150;
     public static final int SPEED_SHIP = 4;
+
+    // Enemy Settings
+    public static final int ENEMY_WIDTH = 100;
+    public static final int ENEMY_HEIGHT = 100;
+
+
+    // Core Settings
+    public static final int CORE_WIDTH = 130;
+    public static final int CORE_HEIGHT = 110;
 
     // Bullet Setting
     public static final int BULLET_WIDTH = 15;
