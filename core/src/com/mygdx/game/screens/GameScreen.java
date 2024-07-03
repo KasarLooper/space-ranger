@@ -21,12 +21,12 @@ public abstract class GameScreen extends ScreenAdapter {
 
     public GameScreen(MyGdxGame game) {
         this.myGdxGame = game;
+        pauseButton = new ButtonView(1200, 650, 50, 50, GameResources.PAUSE_ICON_IMG_PATH); // "pause_icon.png"
     }
 
     @Override
     public void show() {
         joystick = new JoystickView(100, 100);
-        pauseButton =new ButtonView(1200, 650, 50, 50, GameResources.PAUSE_ICON_IMG_PATH); // "pause_icon.png"
         showTime = TimeUtils.millis();
     }
 
@@ -39,11 +39,18 @@ public abstract class GameScreen extends ScreenAdapter {
         ScreenUtils.clear(Color.CLEAR);
 
         myGdxGame.batch.begin();
-        draw();
+        drawDynamic();
+        myGdxGame.batch.end();
+
+        myGdxGame.batch.begin();
+        drawStatic();
         myGdxGame.batch.end();
     }
 
-    protected void draw() {
+    protected void drawStatic() {
+    }
+
+    protected void drawDynamic() {
         joystick.draw(myGdxGame.batch);
         pauseButton.draw(myGdxGame.batch);
     }

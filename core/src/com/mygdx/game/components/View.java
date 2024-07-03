@@ -26,11 +26,6 @@ public class View implements Disposable {
     public void draw(SpriteBatch batch) {
     }
 
-    public void onCameraUpdate(float dx, float dy) {
-        x += dx;
-        y += dy;
-    }
-
     @Override
     public void dispose() {
     }

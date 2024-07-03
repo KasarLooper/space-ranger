@@ -68,8 +68,9 @@ public class SpaceGameScreen extends GameScreen {
                 GameResources.SHIP_IMG_PATH,
                 myGdxGame.world
         );
-        fireButton = new ButtonView(1050, 150, 100, 100, GameResources.FIRE_BUTTON_IMG_PATH); // "Remove-bg.ai_1720009081104.png"
-        backgroundFireButton = new ImageView(1000, 100, GameResources.JOYSTICK_BACK_IMG_PATH);
+        fireButton = new ButtonView(1113, 75, 100, 100, GameResources.FIRE_BUTTON_IMG_PATH); // "Remove-bg.ai_1720009081104.png"
+        backgroundFireButton = new ImageView(1060, 25, GameResources.JOYSTICK_BACK_IMG_PATH);
+        joystick = new JoystickView(25, 25);
         bulletArray = new ArrayList<>();
         coreArray = new ArrayList<>();
         enemyArray = new ArrayList<>();
@@ -84,7 +85,6 @@ public class SpaceGameScreen extends GameScreen {
         // Генерация врагов и ядер (просто, чтобы было видно)
         generateCore();
         generateEnemy();
-        joystick = new JoystickView(100, 100);
         showTime = TimeUtils.millis();
     }
 
@@ -115,23 +115,27 @@ public class SpaceGameScreen extends GameScreen {
     }
 
     @Override
-    protected void draw() {
-        backgroundView.draw(myGdxGame.batch);
+    protected void drawStatic() {
         shipObject.draw(myGdxGame.batch);
-        for (BulletObject bullet : bulletArray) bullet.draw(myGdxGame.batch);
-        for (CoreObject core: coreArray) core.draw(myGdxGame.batch);
-        for (EnemyObject enemy: enemyArray) enemy.draw(myGdxGame.batch);
         backgroundFireButton.draw(myGdxGame.batch);
         fireButton.draw(myGdxGame.batch);
         purpose.draw(myGdxGame.batch);
         live.draw(myGdxGame.batch);
-        super.draw();
+        super.drawStatic();
+    }
+
+    @Override
+    protected void drawDynamic() {
+        backgroundView.draw(myGdxGame.batch);
+        for (BulletObject bullet : bulletArray) bullet.draw(myGdxGame.batch);
+        for (CoreObject core: coreArray) core.draw(myGdxGame.batch);
+        for (EnemyObject enemy: enemyArray) enemy.draw(myGdxGame.batch);
+        super.drawDynamic();
     }
 
     @Override
     protected void moveCamera(Vector2 move) {
         super.moveCamera(move);
-        joystick.onCameraUpdate(move.x, move.y);
         backgroundView.move(move.x, move.y);
     }
 
