@@ -28,9 +28,9 @@ public abstract class GameScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         handleInput();
-
         myGdxGame.camera.update();
         myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
+
         ScreenUtils.clear(Color.CLEAR);
 
         myGdxGame.batch.begin();
