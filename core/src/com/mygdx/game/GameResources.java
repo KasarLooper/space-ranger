@@ -10,4 +10,7 @@ public class GameResources {
     public static final String BUTTON_IMG_PATH = "button_bg.png";
     public static final String CORE_IMG_PATH = "core.png";
     public static final String ENEMY_SHIP_IMG_PATH = "Enemy_ship.png";
+    public static final String FIRE_BUTTON_IMG_PATH = "Remove-bg.ai_1720009081104.png";
+    public static final String PAUSE_ICON_IMG_PATH = "pause_icon.png";
+    public static final String MUSIC_SPACE_PATH = "music/Electric_Dark_Souls-Next_Level.mp3";
 }
