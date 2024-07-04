@@ -11,6 +11,7 @@ import static com.mygdx.game.GameSettings.ENEMY_HEIGHT;
 import static com.mygdx.game.GameSettings.ENEMY_WIDTH;
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
+
 import static com.mygdx.game.State.PAUSED;
 import static com.mygdx.game.State.PLAYING;
 import static java.lang.Math.cos;
@@ -32,6 +33,7 @@ import com.mygdx.game.components.LiveView;
 import com.mygdx.game.components.MovingBackgroundView;
 import com.mygdx.game.components.TextView;
 import com.mygdx.game.manager.ContactManager;
+import com.mygdx.game.objects.BoomObject;
 import com.mygdx.game.objects.BulletObject;
 import com.mygdx.game.objects.CoreObject;
 import com.mygdx.game.objects.EnemyObject;
@@ -54,6 +56,8 @@ public class SpaceGameScreen extends GameScreen {
     ArrayList<CoreObject> coreArray;
 
     ArrayList<EnemyObject> enemyArray;
+
+    ArrayList<BoomObject> boomArray;
     ContactManager contactManager;
     MovingBackgroundView backgroundView, black_out_on_pause;
     ButtonView fireButton;
@@ -63,6 +67,7 @@ public class SpaceGameScreen extends GameScreen {
     boolean isTouchedShoot;
     Random rd;
     EntitySpawner spawner;
+
 
     public SpaceGameScreen(MyGdxGame myGdxGame) {
         super(myGdxGame);
@@ -82,6 +87,7 @@ public class SpaceGameScreen extends GameScreen {
         bulletArray = new ArrayList<>();
         coreArray = new ArrayList<>();
         enemyArray = new ArrayList<>();
+        boomArray = new ArrayList<>();
         random = new Random();
         gameSession = new GameSession();
         purpose = new TextView(myGdxGame.averageWhiteFont, 500, 675, "Purpose: energy: 0/3");
@@ -117,6 +123,36 @@ public class SpaceGameScreen extends GameScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
+        final int padding = 50;
+        if (isTouchedShoot && shipObject.needToShoot()) {
+            BulletObject Bullet = new BulletObject(
+                    (int) (shipObject.getX() + cos(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
+                    (int) (shipObject.getY() + sin(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
+                    GameSettings.BULLET_WIDTH, BULLET_HEIGHT,
+                    GameResources.BULLET_IMG_PATH,
+                    myGdxGame.world, shipObject.getRotation()
+            );
+            bulletArray.add(Bullet);
+            myGdxGame.audioManager.soundBullet.play(0.2f);
+        }
+        if (gameSession.shouldSpawn()) {
+            if (rd.nextInt(100) < CHANCE_CORE_SPAWN) generateCore();
+            else generateEnemy();
+        }
+        for (EnemyObject enemy: enemyArray) enemy.move();
+
+        live.setLeftLives(shipObject.getLivesLeft());
+        myGdxGame.stepWorld();
+        updateBullets();
+        updateCore();
+        updateEnemy();
+        updateBoom();
+        if (gameSession.victory())
+            System.out.println("You Won!");
+        if (joystick.isTouched()) {
+            shipObject.setRotation(joystick.getDegrees());
+            Vector2 difference = shipObject.move();
+            moveCamera(difference);
         if (gameSession.state == PLAYING) {
             final int padding = 70;
             if (isTouchedShoot && shipObject.needToShoot()) {
@@ -150,16 +186,21 @@ public class SpaceGameScreen extends GameScreen {
                 moveCamera(difference);
             }
         }
+        for (BoomObject boom: boomArray) {
+            boom.Boom_action();
+
+        }
+        System.out.println(boomArray.size());
     }
 
     @Override
     protected void drawStatic() {
-        if (gameSession.state == PAUSED) { black_out_on_pause.draw(myGdxGame.batch);}
         backgroundFireButton.draw(myGdxGame.batch);
         fireButton.draw(myGdxGame.batch);
         purpose.draw(myGdxGame.batch);
         live.draw(myGdxGame.batch);
         super.drawStatic();
+        if (gameSession.state == PAUSED) black_out_on_pause.draw(myGdxGame.batch);
     }
 
     @Override
@@ -169,6 +210,7 @@ public class SpaceGameScreen extends GameScreen {
         for (BulletObject bullet : bulletArray) bullet.draw(myGdxGame.batch);
         for (CoreObject core: coreArray) core.draw(myGdxGame.batch);
         for (EnemyObject enemy: enemyArray) enemy.draw(myGdxGame.batch);
+        for (BoomObject boom: boomArray) boom.draw(myGdxGame.batch);
         super.drawDynamic();
     }
 
@@ -196,6 +238,14 @@ public class SpaceGameScreen extends GameScreen {
         while(iterator.hasNext()) {
             CoreObject core = iterator.next();
             if (core.destroy()) {
+                BoomObject boom = new BoomObject(
+                        core.x,
+                        core.y,
+                        myGdxGame.world
+                );
+                myGdxGame.world.destroyBody(core.body);
+                boomArray.add(boom);
+                myGdxGame.audioManager.soundBoom.play(0.2f);
                 gameSession.core_was_collected();
                 myGdxGame.world.destroyBody(core.body);
                 purpose.setText(String.format("Purpose: energy: %d/3", gameSession.getCoreCollected()));
@@ -209,8 +259,26 @@ public class SpaceGameScreen extends GameScreen {
         while(iterator.hasNext()) {
             EnemyObject enemy = iterator.next();
             if (enemy.destroy()) {
+                BoomObject boom = new BoomObject(
+                        enemy.x,
+                        enemy.y,
+                        myGdxGame.world
+                );
                 myGdxGame.world.destroyBody(enemy.body);
+                boomArray.add(boom);
+                myGdxGame.audioManager.soundBoom.play(0.2f);
                 iterator.remove();
+            }
+        }
+    }
+    public void updateBoom() {
+        for (int i = 0; i < boomArray.size(); i ++) {
+
+            boolean hasToBeDestroyed = boomArray.get(i).isNotAlive();
+
+            if (hasToBeDestroyed) {
+                myGdxGame.world.destroyBody(boomArray.get(i).body);
+                boomArray.remove(i--);
             }
         }
     }
