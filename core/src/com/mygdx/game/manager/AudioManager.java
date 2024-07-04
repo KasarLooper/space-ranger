@@ -7,12 +7,14 @@ import com.mygdx.game.GameResources;
 
 public class AudioManager {
     public Music spaceMusic;
-    public Sound sound_bullet;
+    public Sound soundBullet;
+    public Sound soundBoom;
 
 
     public AudioManager() {
-        spaceMusic = Gdx.audio.newMusic(Gdx.files.internal(GameResources.MUSIC_SPACE_PATH)); // "spaceMusic/Electric_Dark_Souls-Next_Level.mp3"
-        sound_bullet = Gdx.audio.newSound(Gdx.files.internal(GameResources.SOUND_BULLET_PATH));
+        spaceMusic = Gdx.audio.newMusic(Gdx.files.internal(GameResources.MUSIC_SPACE_PATH));
+        soundBullet = Gdx.audio.newSound(Gdx.files.internal(GameResources.SOUND_BULLET_PATH));
+        soundBoom = Gdx.audio.newSound(Gdx.files.internal(GameResources.SOUND_BOOM_PATH));
 
         spaceMusic.setVolume(0.2f);
         spaceMusic.setLooping(true);

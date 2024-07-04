@@ -16,6 +16,9 @@ public abstract class GameObject {
     public int width;
     public int height;
 
+    public int x;
+    public int y;
+
     public Body body;
     public short cBits;
     Texture texture;
@@ -24,6 +27,8 @@ public abstract class GameObject {
     GameObject(String texturePath, int x, int y, int wight, int height, World world) {
         this.width = wight;
         this.height = height;
+        this.x = x;
+        this.y = y;
 
         texture = new Texture(texturePath);
         body = createBody(x, y, world);
