@@ -2,6 +2,8 @@ package com.mygdx.game.screens;
 
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
+import static com.mygdx.game.State.ENDED;
+import static com.mygdx.game.State.PAUSED;
 import static com.mygdx.game.State.PLAYING;
 
 import com.badlogic.gdx.Gdx;
@@ -19,6 +21,7 @@ import com.mygdx.game.GameSettings;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.ButtonView;
 import com.mygdx.game.components.JoystickView;
+import com.mygdx.game.components.TextView;
 
 public abstract class GameScreen extends ScreenAdapter implements InputProcessor {
     GameSession gameSession;
@@ -26,11 +29,13 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     JoystickView joystick;
     long showTime;
     State state;
-    ButtonView pauseButton;
+    ButtonView pauseButton, endButton;
+
 
     public GameScreen(MyGdxGame game) {
         this.myGdxGame = game;
         pauseButton = new ButtonView(1200, 650, 50, 50, GameResources.PAUSE_ICON_IMG_PATH); // "pause_icon.png"
+        endButton = new ButtonView(430, 446, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Surrender!");
     }
 
     @Override
@@ -60,6 +65,9 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     protected void drawStatic() {
         joystick.draw(myGdxGame.batch);
         pauseButton.draw(myGdxGame.batch);
+        if (gameSession.state == PAUSED) {
+            endButton.draw(myGdxGame.batch);
+        }
     }
 
     protected void drawDynamic() {
@@ -83,6 +91,10 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
         screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
         if (screenX <= SCREEN_WIDTH / 2 && gameSession.state == PLAYING) joystick.onTouch(screenX, SCREEN_HEIGHT - screenY);
         if (pauseButton.isHit(screenX, SCREEN_HEIGHT - screenY)) onPause();
+        if (gameSession.state == PAUSED && endButton.isHit(screenX, SCREEN_HEIGHT - screenY)) {
+            gameSession.state = ENDED;
+            myGdxGame.setScreen(myGdxGame.menuScreen);
+        }
         return true;
     }
 
