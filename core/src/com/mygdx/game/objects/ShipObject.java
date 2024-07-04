@@ -59,6 +59,8 @@ public class ShipObject extends GameObject{
 
     @Override
     public void hit(Type type) {
+        body.setLinearVelocity(0, 0);
+        body.setAngularVelocity(0);
         if (type == Type.Enemy || type == Type.EnemyBullet) {
             livesLeft -= 1;
         }

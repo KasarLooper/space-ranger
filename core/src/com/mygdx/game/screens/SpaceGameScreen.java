@@ -11,6 +11,8 @@ import static com.mygdx.game.GameSettings.ENEMY_HEIGHT;
 import static com.mygdx.game.GameSettings.ENEMY_WIDTH;
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
+import static com.mygdx.game.State.PAUSED;
+import static com.mygdx.game.State.PLAYING;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
@@ -41,8 +43,6 @@ import java.util.Random;
 
 
 public class SpaceGameScreen extends GameScreen {
-
-    GameSession gameSession;
     MyGdxGame myGdxGame;
 
     Random random;
@@ -55,7 +55,7 @@ public class SpaceGameScreen extends GameScreen {
 
     ArrayList<EnemyObject> enemyArray;
     ContactManager contactManager;
-    MovingBackgroundView backgroundView;
+    MovingBackgroundView backgroundView, black_out_on_pause;
     ButtonView fireButton;
     ImageView backgroundFireButton;
     TextView purpose;
@@ -68,6 +68,7 @@ public class SpaceGameScreen extends GameScreen {
         super(myGdxGame);
         this.myGdxGame = myGdxGame;
         backgroundView = new MovingBackgroundView(GameResources.BACKGROUND_IMG_PATH);
+        black_out_on_pause = new MovingBackgroundView(GameResources.BLACKOUT_IMG_PATH);
         contactManager = new ContactManager(myGdxGame.world);
         shipObject = new ShipObject(
                 GameSettings.SCREEN_WIDTH / 2, GameSettings.SCREEN_HEIGHT / 2,
@@ -94,6 +95,15 @@ public class SpaceGameScreen extends GameScreen {
     //Здесь обработайте паузу
     @Override
     public void onPause() {
+        switch (gameSession.state) {
+            case PLAYING:
+                gameSession.pauseGame();
+                break;
+
+            case PAUSED:
+                gameSession.resumeGame();
+                break;
+        }
     }
 
     @Override
@@ -108,41 +118,44 @@ public class SpaceGameScreen extends GameScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        final int padding = 50;
-        if (isTouchedShoot && shipObject.needToShoot()) {
-            BulletObject Bullet = new BulletObject(
-                    (int) (shipObject.getX() + cos(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
-                    (int) (shipObject.getY() + sin(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
-                    GameSettings.BULLET_WIDTH, BULLET_HEIGHT,
-                    GameResources.BULLET_IMG_PATH,
-                    myGdxGame.world, shipObject.getRotation(), Bullet_Speed
-            );
-            bulletArray.add(Bullet);
-        }
-        if (gameSession.shouldSpawn()) {
-            if (rd.nextInt(100) < CHANCE_CORE_SPAWN) generateCore();
-            else generateEnemy();
-        }
-        for (EnemyObject enemy: enemyArray) {
-            BulletObject bullet = enemy.move();
-            if (bullet != null) bulletArray.add(bullet);
-        }
-        live.setLeftLives(shipObject.getLivesLeft());
-        myGdxGame.stepWorld();
-        updateBullets();
-        updateCore();
-        updateEnemy();
-        if (gameSession.victory())
-            System.out.println("You Won!");
-        if (joystick.isTouched()) {
-            shipObject.setRotation(joystick.getDegrees());
-            Vector2 difference = shipObject.move();
-            moveCamera(difference);
+        if (gameSession.state == PLAYING) {
+            final int padding = 50;
+            if (isTouchedShoot && shipObject.needToShoot()) {
+                BulletObject Bullet = new BulletObject(
+                        (int) (shipObject.getX() + cos(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
+                        (int) (shipObject.getY() + sin(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
+                        GameSettings.BULLET_WIDTH, BULLET_HEIGHT,
+                        GameResources.BULLET_IMG_PATH,
+                        myGdxGame.world, shipObject.getRotation(), Bullet_Speed, false
+                );
+                bulletArray.add(Bullet);
+            }
+            if (gameSession.shouldSpawn()) {
+                if (rd.nextInt(100) < CHANCE_CORE_SPAWN) generateCore();
+                else generateEnemy();
+            }
+            for (EnemyObject enemy : enemyArray) {
+                BulletObject bullet = enemy.move(shipObject.getX(), shipObject.getY());
+                if (bullet != null) bulletArray.add(bullet);
+            }
+            live.setLeftLives(shipObject.getLivesLeft());
+            myGdxGame.stepWorld();
+            updateBullets();
+            updateCore();
+            updateEnemy();
+            if (gameSession.victory())
+                System.out.println("You Won!");
+            if (joystick.isTouched()) {
+                shipObject.setRotation(joystick.getDegrees());
+                Vector2 difference = shipObject.move();
+                moveCamera(difference);
+            }
         }
     }
 
     @Override
     protected void drawStatic() {
+        if (gameSession.state == PAUSED) black_out_on_pause.draw(myGdxGame.batch);
         backgroundFireButton.draw(myGdxGame.batch);
         fireButton.draw(myGdxGame.batch);
         purpose.draw(myGdxGame.batch);
@@ -238,7 +251,7 @@ public class SpaceGameScreen extends GameScreen {
         super.touchUp(screenX, screenY, pointer, button);
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
         screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
-        if (backgroundFireButton.isHit(screenX, SCREEN_HEIGHT - screenY)) isTouchedShoot = false;
+        if (backgroundFireButton.isHit(screenX, SCREEN_HEIGHT - screenY) && gameSession.state == PLAYING) isTouchedShoot = false;
         return true;
     }
 
@@ -246,10 +259,10 @@ public class SpaceGameScreen extends GameScreen {
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
         screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
-        if (screenX <= SCREEN_WIDTH / 2) joystick.onTouch(screenX, SCREEN_HEIGHT - screenY);
-        else if (backgroundFireButton.isHit(screenX, SCREEN_HEIGHT - screenY))
+        if (screenX <= SCREEN_WIDTH / 2 && gameSession.state == PLAYING) joystick.onTouch(screenX, SCREEN_HEIGHT - screenY);
+        else if (backgroundFireButton.isHit(screenX, SCREEN_HEIGHT - screenY) && gameSession.state == PLAYING)
             isTouchedShoot = true;
-        else
+        else if (gameSession.state == PLAYING)
             joystick.toDefault();
         return true;
     }
