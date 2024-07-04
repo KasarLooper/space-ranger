@@ -3,6 +3,7 @@ package com.mygdx.game.screens;
 import static com.mygdx.game.GameResources.CORE_IMG_PATH;
 import static com.mygdx.game.GameResources.ENEMY_SHIP_IMG_PATH;
 import static com.mygdx.game.GameSettings.BULLET_HEIGHT;
+import static com.mygdx.game.GameSettings.Bullet_Speed;
 import static com.mygdx.game.GameSettings.CHANCE_CORE_SPAWN;
 import static com.mygdx.game.GameSettings.CORE_HEIGHT;
 import static com.mygdx.game.GameSettings.CORE_WIDTH;
@@ -10,7 +11,6 @@ import static com.mygdx.game.GameSettings.ENEMY_HEIGHT;
 import static com.mygdx.game.GameSettings.ENEMY_WIDTH;
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
-import static com.mygdx.game.GameSettings.SPAWN_COOL_DOWN;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
@@ -81,6 +81,7 @@ public class SpaceGameScreen extends GameScreen {
         bulletArray = new ArrayList<>();
         coreArray = new ArrayList<>();
         enemyArray = new ArrayList<>();
+        enemyArray.add(new EnemyObject(300, 300, ENEMY_WIDTH, ENEMY_HEIGHT, myGdxGame.world, ENEMY_SHIP_IMG_PATH));
         random = new Random();
         gameSession = new GameSession();
         purpose = new TextView(myGdxGame.averageWhiteFont, 500, 675, "Purpose: energy: 0/3");
@@ -114,7 +115,7 @@ public class SpaceGameScreen extends GameScreen {
                     (int) (shipObject.getY() + sin(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
                     GameSettings.BULLET_WIDTH, BULLET_HEIGHT,
                     GameResources.BULLET_IMG_PATH,
-                    myGdxGame.world, shipObject.getRotation()
+                    myGdxGame.world, shipObject.getRotation(), Bullet_Speed
             );
             bulletArray.add(Bullet);
         }
@@ -122,7 +123,10 @@ public class SpaceGameScreen extends GameScreen {
             if (rd.nextInt(100) < CHANCE_CORE_SPAWN) generateCore();
             else generateEnemy();
         }
-        for (EnemyObject enemy: enemyArray) enemy.move();
+        for (EnemyObject enemy: enemyArray) {
+            BulletObject bullet = enemy.move();
+            if (bullet != null) bulletArray.add(bullet);
+        }
         live.setLeftLives(shipObject.getLivesLeft());
         myGdxGame.stepWorld();
         updateBullets();
@@ -216,7 +220,7 @@ public class SpaceGameScreen extends GameScreen {
                 ENEMY_WIDTH, ENEMY_HEIGHT, myGdxGame.world,
                 ENEMY_SHIP_IMG_PATH
         );
-        enemyArray.add(enemy);
+        //enemyArray.add(enemy);
     }
 
     @Override

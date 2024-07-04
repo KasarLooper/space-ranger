@@ -26,6 +26,8 @@ public class GameSettings {
     // Enemy Settings
     public static final int ENEMY_WIDTH = 100;
     public static final int ENEMY_HEIGHT = 100;
+    public static final int SPEED_ENEMY = 3;
+    public static final int ENEMY_SHOOT_COOL_DOWN = 2000;
 
 
     // Core Settings
@@ -36,4 +38,11 @@ public class GameSettings {
     public static final int BULLET_WIDTH = 15;
     public static final int BULLET_HEIGHT = 50;
     public static final int Bullet_Speed = 30; // in ms
+
+    //Enemy behaviour settings
+    public static final int CIRCLE_RADIUS = 200;
+    public static final int CHECK_DISTANCE = 1300;
+    public static final int CHECK_ANGLE = 30;
+    public static final int SHOOT_DISTANCE = 400;
+    public static final int SHOOT_ANGLE = 8;
 }

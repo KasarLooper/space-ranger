@@ -21,6 +21,7 @@ public abstract class GameObject {
     public Body body;
     public short cBits;
     Texture texture;
+    World world;
 
 
     GameObject(String texturePath, int x, int y, int wight, int height, World world) {
@@ -29,6 +30,7 @@ public abstract class GameObject {
 
         texture = new Texture(texturePath);
         body = createBody(x, y, world);
+        this.world = world;
     }
 
     public void draw(SpriteBatch batch) {

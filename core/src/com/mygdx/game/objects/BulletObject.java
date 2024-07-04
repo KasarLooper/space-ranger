@@ -1,6 +1,5 @@
 package com.mygdx.game.objects;
 
-import static com.mygdx.game.GameSettings.Bullet_Speed;
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
 import static java.lang.Math.cos;
@@ -18,9 +17,9 @@ public class BulletObject extends GameObject{
     public boolean wasHit;
 
     Sprite sprite;
-    public BulletObject(int x, int y, int wight, int height, String texturePath, World world, float degrees) {
+    public BulletObject(int x, int y, int wight, int height, String texturePath, World world, float degrees, int speed) {
         super(texturePath, x, y, wight, height, world);
-        body.setLinearVelocity(new Vector2((float) (cos(toRadians(degrees)) * Bullet_Speed), (float) (sin(toRadians(degrees)) * Bullet_Speed)));
+        body.setLinearVelocity(new Vector2((float) (cos(toRadians(degrees)) * speed), (float) (sin(toRadians(degrees)) * speed)));
         body.setBullet(true);
         sprite = new Sprite(texture);
         sprite.setRotation(degrees + 270);
