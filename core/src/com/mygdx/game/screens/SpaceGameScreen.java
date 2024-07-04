@@ -82,7 +82,6 @@ public class SpaceGameScreen extends GameScreen {
         bulletArray = new ArrayList<>();
         coreArray = new ArrayList<>();
         enemyArray = new ArrayList<>();
-        enemyArray.add(new EnemyObject(300, 300, ENEMY_WIDTH, ENEMY_HEIGHT, myGdxGame.world, ENEMY_SHIP_IMG_PATH));
         random = new Random();
         gameSession = new GameSession();
         purpose = new TextView(myGdxGame.averageWhiteFont, 500, 675, "Purpose: energy: 0/3");
@@ -119,7 +118,7 @@ public class SpaceGameScreen extends GameScreen {
     public void render(float delta) {
         super.render(delta);
         if (gameSession.state == PLAYING) {
-            final int padding = 50;
+            final int padding = 70;
             if (isTouchedShoot && shipObject.needToShoot()) {
                 BulletObject Bullet = new BulletObject(
                         (int) (shipObject.getX() + cos(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),

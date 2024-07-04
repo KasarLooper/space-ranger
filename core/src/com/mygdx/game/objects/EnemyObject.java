@@ -1,12 +1,13 @@
 package com.mygdx.game.objects;
 
 import static com.mygdx.game.GameSettings.BULLET_HEIGHT;
+import static com.mygdx.game.GameSettings.ENEMY_CHANCE_CHANGE_AIM;
 import static com.mygdx.game.GameSettings.ENEMY_CHECK_ANGLE;
 import static com.mygdx.game.GameSettings.ENEMY_CHECK_DISTANCE;
 import static com.mygdx.game.GameSettings.ENEMY_SHOOT_ANGLE;
+import static com.mygdx.game.GameSettings.ENEMY_TO_PLAYER_ROTATION_SPEED;
+import static com.mygdx.game.GameSettings.ENEMY_USUAL_ROTATION_SPEED;
 import static com.mygdx.game.GameSettings.SPEED_ENEMY;
-import static com.mygdx.game.GameSettings.TO_PLAYER_ROTATION_SPEED;
-import static com.mygdx.game.GameSettings.USUAL_ROTATION_SPEED;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
@@ -23,6 +24,8 @@ import java.util.Random;
 public class EnemyObject extends GameObject{
     public int x, y;
     private long lastShootTime;
+    private float aim;
+    private boolean hasAim;
 
     Sprite sprite;
     Random rd;
@@ -37,6 +40,7 @@ public class EnemyObject extends GameObject{
         sprite = new Sprite(texture);
         sprite.setBounds(x, y, width, height);
         sprite.setOrigin(width / 2f, height / 2f);
+        hasAim = false;
     }
 
     @Override
@@ -68,11 +72,16 @@ public class EnemyObject extends GameObject{
         float playerAngle = getAngleOfPlayer(playerX, playerY);
         float playerDistance = getPlayerDistance(playerX, playerY);
         if (Math.abs(playerAngle) < ENEMY_CHECK_ANGLE && playerDistance < ENEMY_CHECK_DISTANCE) {
-            sprite.setRotation(sprite.getRotation() + (playerAngle > 0 ? 1 : -1) * TO_PLAYER_ROTATION_SPEED);
+            if (!hasAim || rd.nextInt(100) < ENEMY_CHANCE_CHANGE_AIM) {
+                aim = playerAngle + rd.nextInt(ENEMY_SHOOT_ANGLE) * 2 - ENEMY_CHANCE_CHANGE_AIM;
+            }
+            if (!hasAim) hasAim = true;
+            float da = (aim > 0 ? 1 : -1) * ENEMY_TO_PLAYER_ROTATION_SPEED;
+            aim -= da;
+            sprite.setRotation(sprite.getRotation() + da);
         } else {
-            sprite.setRotation(sprite.getRotation() + USUAL_ROTATION_SPEED);
+            sprite.setRotation(sprite.getRotation() + ENEMY_USUAL_ROTATION_SPEED);
         }
-        sprite.setRotation(sprite.getRotation() - (playerAngle));
         sprite.setBounds(getX(), getY(), width, height);
         int dx = (int) (cos(toRadians(getRotation())) * SPEED_ENEMY);
         int dy = (int) (sin(toRadians(getRotation())) * SPEED_ENEMY);

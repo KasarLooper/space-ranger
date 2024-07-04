@@ -12,7 +12,7 @@ public class GameSettings {
     public static final float SCALE = 0.05f;
 
     //Spawn settings
-    public static final int SPAWN_COOL_DOWN = 1500;
+    public static final int SPAWN_COOL_DOWN = 2000;
     public static final int CHANCE_CORE_SPAWN = 25; // в процентах
 
     // Object Setting
@@ -26,7 +26,7 @@ public class GameSettings {
     // Enemy Settings
     public static final int ENEMY_WIDTH = 100;
     public static final int ENEMY_HEIGHT = 100;
-    public static final int SPEED_ENEMY = 2;
+    public static final int SPEED_ENEMY = 3;
     public static final int ENEMY_SHOOT_COOL_DOWN = 2000;
 
 
@@ -41,9 +41,10 @@ public class GameSettings {
 
     //Enemy behaviour settings
     public static final int ENEMY_CHECK_DISTANCE = 800;
-    public static final int ENEMY_CHECK_ANGLE = 15;
+    public static final int ENEMY_CHECK_ANGLE = 30;
     public static final int ENEMY_SHOOT_DISTANCE = 400;
-    public static final int ENEMY_SHOOT_ANGLE = 15;
-    public static final float USUAL_ROTATION_SPEED = 0.4f;
-    public static final float TO_PLAYER_ROTATION_SPEED = 0.8f;
+    public static final int ENEMY_SHOOT_ANGLE = 10;
+    public static final float ENEMY_USUAL_ROTATION_SPEED = 0.4f;
+    public static final float ENEMY_TO_PLAYER_ROTATION_SPEED = 0.8f;
+    public static final int ENEMY_CHANCE_CHANGE_AIM = 5;
 }
