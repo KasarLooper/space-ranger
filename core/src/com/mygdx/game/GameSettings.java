@@ -11,6 +11,10 @@ public class GameSettings {
     public static final int POSITION_ITERATIONS = 6;
     public static final float SCALE = 0.05f;
 
+    //Spawn settings
+    public static final int SPAWN_COOL_DOWN = 1500;
+    public static final int CHANCE_CORE_SPAWN = 25; // в процентах
+
     // Object Setting
   
     // Ship Setting

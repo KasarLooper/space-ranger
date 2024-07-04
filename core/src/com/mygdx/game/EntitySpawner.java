@@ -20,8 +20,8 @@ public class EntitySpawner {
     public Pair newPair(float playerX, float playerY, int width, int height) {
         while (true) {
             float x, y;
-            float randomDX = rd.nextInt(SCREEN_WIDTH - width / 2);
-            float randomDY = rd.nextInt(SCREEN_HEIGHT - height / 2);
+            float randomDX = rd.nextInt(SCREEN_WIDTH / 2 - width / 2);
+            float randomDY = rd.nextInt(SCREEN_HEIGHT / 2 - height / 2);
 
             if (rd.nextBoolean()) x = playerX - (SCREEN_WIDTH + width) / 2f - randomDX;
             else x = playerX + (SCREEN_WIDTH + width) / 2f + randomDX;
@@ -56,6 +56,6 @@ public class EntitySpawner {
             this.x = x;
             this.y = y;
         }
-        float x, y;
+        public float x, y;
     }
 }

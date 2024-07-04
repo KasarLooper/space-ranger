@@ -3,28 +3,29 @@ package com.mygdx.game.screens;
 import static com.mygdx.game.GameResources.CORE_IMG_PATH;
 import static com.mygdx.game.GameResources.ENEMY_SHIP_IMG_PATH;
 import static com.mygdx.game.GameSettings.BULLET_HEIGHT;
+import static com.mygdx.game.GameSettings.CHANCE_CORE_SPAWN;
 import static com.mygdx.game.GameSettings.CORE_HEIGHT;
 import static com.mygdx.game.GameSettings.CORE_WIDTH;
 import static com.mygdx.game.GameSettings.ENEMY_HEIGHT;
 import static com.mygdx.game.GameSettings.ENEMY_WIDTH;
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
+import static com.mygdx.game.GameSettings.SPAWN_COOL_DOWN;
 import static java.lang.Math.cos;
-import static java.lang.Math.random;
 import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.mygdx.game.EntitySpawner;
 import com.mygdx.game.GameResources;
 import com.mygdx.game.GameSession;
 import com.mygdx.game.GameSettings;
 import com.mygdx.game.MyGdxGame;
-import com.mygdx.game.components.JoystickView;
 import com.mygdx.game.components.ButtonView;
 import com.mygdx.game.components.ImageView;
+import com.mygdx.game.components.JoystickView;
 import com.mygdx.game.components.LiveView;
 import com.mygdx.game.components.MovingBackgroundView;
 import com.mygdx.game.components.TextView;
@@ -60,6 +61,8 @@ public class SpaceGameScreen extends GameScreen {
     TextView purpose;
     LiveView live;
     boolean isTouchedShoot;
+    Random rd;
+    EntitySpawner spawner;
 
     public SpaceGameScreen(MyGdxGame myGdxGame) {
         super(myGdxGame);
@@ -83,6 +86,8 @@ public class SpaceGameScreen extends GameScreen {
         purpose = new TextView(myGdxGame.averageWhiteFont, 500, 675, "Purpose: energy: 0/3");
         live = new LiveView(0, 675);
         isTouchedShoot = false;
+        rd = new Random();
+        spawner = new EntitySpawner();
     }
 
     //Здесь обработайте паузу
@@ -93,9 +98,10 @@ public class SpaceGameScreen extends GameScreen {
     @Override
     public void show() {
         // Генерация врагов и ядер (просто, чтобы было видно)
-        generateCore();
-        generateEnemy();
+        //generateCore();
+        //generateEnemy();
         showTime = TimeUtils.millis();
+        gameSession.startGame();
     }
 
     @Override
@@ -111,6 +117,10 @@ public class SpaceGameScreen extends GameScreen {
                     myGdxGame.world, shipObject.getRotation()
             );
             bulletArray.add(Bullet);
+        }
+        if (gameSession.shouldSpawn()) {
+            if (rd.nextInt(100) < CHANCE_CORE_SPAWN) generateCore();
+            else generateEnemy();
         }
         for (EnemyObject enemy: enemyArray) enemy.move();
         live.setLeftLives(shipObject.getLivesLeft());
@@ -190,27 +200,23 @@ public class SpaceGameScreen extends GameScreen {
 
     // Генераторы
     private void generateCore() {
-        for(int i = 0; i < 3; i++) {
-            CoreObject coreObject = new CoreObject(
-                    shipObject.getX() - random.nextInt(SCREEN_WIDTH / 3) * 5,
-                    shipObject.getY() - random.nextInt(SCREEN_HEIGHT / 3) * 5,
-                    CORE_WIDTH, CORE_HEIGHT, myGdxGame.world,
-                    CORE_IMG_PATH
-            );
-            coreArray.add(coreObject);
-        }
+        EntitySpawner.Pair pair = spawner.newPair(shipObject.getX(), shipObject.getY(), CORE_WIDTH / 2, CORE_HEIGHT / 2);
+        CoreObject coreObject = new CoreObject(
+                (int) pair.x, (int) pair.y,
+                CORE_WIDTH, CORE_HEIGHT, myGdxGame.world,
+                CORE_IMG_PATH
+        );
+        coreArray.add(coreObject);
     }
 
     private void generateEnemy() {
-        for(int i = 0; i < 3; i++) {
-            EnemyObject enemy = new EnemyObject(
-                    shipObject.getX() - random.nextInt(SCREEN_WIDTH / 4) * 6,
-                    shipObject.getY() - random.nextInt(SCREEN_HEIGHT / 4) * 6,
-                    ENEMY_WIDTH, ENEMY_HEIGHT, myGdxGame.world,
-                    ENEMY_SHIP_IMG_PATH
-            );
-            enemyArray.add(enemy);
-        }
+        EntitySpawner.Pair pair = spawner.newPair(shipObject.getX(), shipObject.getY(), ENEMY_WIDTH / 2, ENEMY_HEIGHT / 2);
+        EnemyObject enemy = new EnemyObject(
+                (int) pair.x, (int) pair.y,
+                ENEMY_WIDTH, ENEMY_HEIGHT, myGdxGame.world,
+                ENEMY_SHIP_IMG_PATH
+        );
+        enemyArray.add(enemy);
     }
 
     @Override
