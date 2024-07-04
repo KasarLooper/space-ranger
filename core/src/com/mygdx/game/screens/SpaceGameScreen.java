@@ -83,6 +83,11 @@ public class SpaceGameScreen extends GameScreen {
         isTouchedShoot = false;
     }
 
+    //Здесь обработайте паузу
+    @Override
+    public void onPause() {
+    }
+
     @Override
     public void show() {
         // Генерация врагов и ядер (просто, чтобы было видно)

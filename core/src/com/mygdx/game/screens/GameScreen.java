@@ -52,6 +52,8 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
         myGdxGame.batch.end();
     }
 
+    public abstract void onPause();
+
     protected void drawStatic() {
         joystick.draw(myGdxGame.batch);
         pauseButton.draw(myGdxGame.batch);
@@ -77,6 +79,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
         screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
         if (screenX <= SCREEN_WIDTH / 2) joystick.onTouch(screenX, SCREEN_HEIGHT - screenY);
+        if (pauseButton.isHit(screenX, SCREEN_HEIGHT - screenY)) onPause();
         return true;
     }
 
