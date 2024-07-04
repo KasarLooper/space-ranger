@@ -115,7 +115,7 @@ public class SpaceGameScreen extends GameScreen {
                     (int) (shipObject.getY() + sin(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
                     GameSettings.BULLET_WIDTH, BULLET_HEIGHT,
                     GameResources.BULLET_IMG_PATH,
-                    myGdxGame.world, shipObject.getRotation(), Bullet_Speed, false
+                    myGdxGame.world, shipObject.getRotation(), Bullet_Speed
             );
             bulletArray.add(Bullet);
         }
@@ -124,7 +124,7 @@ public class SpaceGameScreen extends GameScreen {
             else generateEnemy();
         }
         for (EnemyObject enemy: enemyArray) {
-            BulletObject bullet = enemy.move(shipObject.getX(), shipObject.getY());
+            BulletObject bullet = enemy.move();
             if (bullet != null) bulletArray.add(bullet);
         }
         live.setLeftLives(shipObject.getLivesLeft());

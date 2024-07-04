@@ -6,8 +6,12 @@ import com.badlogic.gdx.utils.TimeUtils;
 
 public class GameSession {
     private long startTime;
+
+    private long pauseTime;
     private long lastSpawnTime;
     private int core_collected;
+
+    public State state;
 
     public GameSession() {
         core_collected = 0;
@@ -16,6 +20,17 @@ public class GameSession {
     public void startGame() {
         startTime = TimeUtils.millis();
         lastSpawnTime = TimeUtils.millis();
+        state = State.PLAYING;
+    }
+
+    public void pauseGame() {
+        pauseTime = TimeUtils.millis();
+        state = State.PAUSED;
+    }
+
+    public void resumeGame() {
+        state = State.PLAYING;
+        startTime += TimeUtils.millis() - pauseTime;
     }
 
     public boolean shouldSpawn() {
@@ -35,6 +50,10 @@ public class GameSession {
     }
 
     public boolean victory() {
-        return core_collected >= 3;
+        if (core_collected >= 3) {
+            state = State.ENDED;
+            return true;
+        }
+        return false;
     }
 }
