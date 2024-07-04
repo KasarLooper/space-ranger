@@ -24,11 +24,11 @@ public class ContactManager {
                 ((GameObject) fixA.getUserData()).hit(((GameObject) fixB.getUserData()).type());
                 ((GameObject) fixB.getUserData()).hit(((GameObject) fixA.getUserData()).type());
 
-
             }
 
             @Override
             public void endContact(Contact contact) {
+
             }
 
             @Override

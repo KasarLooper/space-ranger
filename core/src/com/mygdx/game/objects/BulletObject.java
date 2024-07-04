@@ -1,6 +1,5 @@
 package com.mygdx.game.objects;
 
-import static com.mygdx.game.GameSettings.Bullet_Speed;
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
 import static java.lang.Math.cos;
@@ -11,19 +10,18 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.game.Type;
 
 public class BulletObject extends GameObject{
 
     public boolean wasHit;
 
     Sprite sprite;
-    public BulletObject(int x, int y, int wight, int height, String texturePath, World world, float degrees) {
+    public BulletObject(int x, int y, int wight, int height, String texturePath, World world, float degrees, int speed) {
         super(texturePath, x, y, wight, height, world);
-        body.setLinearVelocity(new Vector2((float) (cos(toRadians(degrees)) * Bullet_Speed), (float) (sin(toRadians(degrees)) * Bullet_Speed)));
+        body.setLinearVelocity(new Vector2((float) (cos(toRadians(degrees)) * speed), (float) (sin(toRadians(degrees)) * speed)));
         body.setBullet(true);
         sprite = new Sprite(texture);
-        sprite.setRotation(degrees + 90);
+        sprite.setRotation(degrees + 270);
         wasHit = false;
     }
 
@@ -33,18 +31,12 @@ public class BulletObject extends GameObject{
         sprite.draw(batch);
     }
 
-    @Override
-    public void draw() {
-
-    }
-
-    public void setRotation(float degrees) {
-        sprite.setRotation(degrees);
-    }
 
     @Override
     public void hit(Type type) {
-        wasHit = true;
+        if (type == Type.Enemy || type == Type.Ship) {
+            wasHit = true;
+        }
     }
 
     public boolean destroy(int centreX, int centreY) {
@@ -52,5 +44,8 @@ public class BulletObject extends GameObject{
                 getX() < centreX + (width + SCREEN_WIDTH) / 2 &&
                 getY() > centreY - (height + SCREEN_HEIGHT) / 2 &&
                 getY() < centreY + (height + SCREEN_HEIGHT) / 2);
+    }
+    public Type type() {
+        return Type.Bullet;
     }
 }

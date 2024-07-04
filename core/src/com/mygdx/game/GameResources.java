@@ -31,4 +31,7 @@ public class GameResources {
     public static final String ANIM_SHIP_PORTAL_17 = "anim_ship_portal_17.png";
     public static final String ANIM_SHIP_PORTAL_18 = "anim_ship_portal_18.png";
     public static final String ANIM_SHIP_PORTAL_19 = "anim_ship_portal_19.png";
+    public static final String FIRE_BUTTON_IMG_PATH = "Remove-bg.ai_1720009081104.png";
+    public static final String PAUSE_ICON_IMG_PATH = "pause_icon.png";
+    public static final String MUSIC_SPACE_PATH = "music/Electric_Dark_Souls-Next_Level.mp3";
 }

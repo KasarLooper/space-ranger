@@ -3,7 +3,6 @@ package com.mygdx.game.objects;
 import static com.mygdx.game.GameSettings.SCALE;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
@@ -11,7 +10,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.mygdx.game.Type;
 
 
 public abstract class GameObject {
@@ -21,6 +19,7 @@ public abstract class GameObject {
     public Body body;
     public short cBits;
     Texture texture;
+    World world;
 
 
     GameObject(String texturePath, int x, int y, int wight, int height, World world) {
@@ -29,6 +28,7 @@ public abstract class GameObject {
 
         texture = new Texture(texturePath);
         body = createBody(x, y, world);
+        this.world = world;
     }
 
     public void draw(SpriteBatch batch) {
@@ -39,22 +39,13 @@ public abstract class GameObject {
                 height);
     }
 
-    /*GameObject(String TexturePath, int x, int y, int width, int height, short cBits, World world) {
-        this.width = width;
-        this.height = height;
-        this.cBits = cBits;
-        texture = new Texture(TexturePath);
-        body = createBody(x, y, world);
-    }*/
-
     public Type type() {
         return  null;
     }
 
-    public abstract void draw();
-
     public void hit(Type type) {
         // вся физика ударов и т.п.
+        System.out.println("Hit - 5");
     }
 
     public void dispose() {
@@ -93,7 +84,7 @@ public abstract class GameObject {
         circleShape.setRadius(getRadius());
 
         FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.filter.categoryBits = cBits; // биты
+        //fixtureDef.filter.categoryBits = cBits; // биты
 
         fixtureDef.shape = circleShape;
         fixtureDef.density = 0.1f;
