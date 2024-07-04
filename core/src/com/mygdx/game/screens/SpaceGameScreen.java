@@ -186,6 +186,7 @@ public class SpaceGameScreen extends GameScreen {
             if (core.destroy()) {
                 gameSession.core_was_collected();
                 myGdxGame.world.destroyBody(core.body);
+                purpose.setText(String.format("Purpose: energy: %d/3", gameSession.getCoreCollected()));
                 iterator.remove();
             }
         }
@@ -220,7 +221,7 @@ public class SpaceGameScreen extends GameScreen {
                 ENEMY_WIDTH, ENEMY_HEIGHT, myGdxGame.world,
                 ENEMY_SHIP_IMG_PATH
         );
-        //enemyArray.add(enemy);
+        enemyArray.add(enemy);
     }
 
     @Override
