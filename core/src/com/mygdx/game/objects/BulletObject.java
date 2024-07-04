@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.game.Type;
 
 public class BulletObject extends GameObject{
 
@@ -35,7 +34,9 @@ public class BulletObject extends GameObject{
 
     @Override
     public void hit(Type type) {
-        wasHit = true;
+        if (type == Type.Enemy) {
+            wasHit = true;
+        }
     }
 
     public boolean destroy(int centreX, int centreY) {
@@ -43,5 +44,8 @@ public class BulletObject extends GameObject{
                 getX() < centreX + (width + SCREEN_WIDTH) / 2 &&
                 getY() > centreY - (height + SCREEN_HEIGHT) / 2 &&
                 getY() < centreY + (height + SCREEN_HEIGHT) / 2);
+    }
+    public Type type() {
+        return Type.Bullet;
     }
 }

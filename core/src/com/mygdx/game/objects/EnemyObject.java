@@ -1,9 +1,7 @@
 package com.mygdx.game.objects;
 
 import static com.mygdx.game.GameSettings.BULLET_HEIGHT;
-import static com.mygdx.game.GameSettings.CIRCLE_RADIUS;
 import static com.mygdx.game.GameSettings.SPEED_ENEMY;
-import static com.mygdx.game.GameSettings.SPEED_SHIP;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
@@ -14,7 +12,6 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.GameResources;
 import com.mygdx.game.GameSettings;
-import com.mygdx.game.Type;
 
 public class EnemyObject extends GameObject{
     public int x, y;
