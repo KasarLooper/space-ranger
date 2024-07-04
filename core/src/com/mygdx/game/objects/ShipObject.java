@@ -1,5 +1,7 @@
 package com.mygdx.game.objects;
 
+import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
+import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
 import static com.mygdx.game.GameSettings.SPEED_SHIP;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -57,7 +59,7 @@ public class ShipObject extends GameObject{
 
     @Override
     public void hit(Type type) {
-        if (type == Type.Enemy || type == Type.Bullet) {
+        if (type == Type.Enemy || type == Type.EnemyBullet) {
             livesLeft -= 1;
         }
     }

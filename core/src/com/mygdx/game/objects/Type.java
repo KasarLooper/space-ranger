@@ -5,5 +5,6 @@ public enum Type {
     Enemy,
     Core,
     Bullet,
+    EnemyBullet
 }
 
