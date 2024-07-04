@@ -23,7 +23,7 @@ public class CoreObject extends GameObject {
 
     @Override
     public void hit(Type type) {
-        if (type == Type.Ship) {
+        if (type == Type.Ship || type == Type.Bullet) {
             wasHit = true;
         }
     }
