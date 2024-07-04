@@ -11,12 +11,16 @@ import static com.mygdx.game.GameSettings.ENEMY_HEIGHT;
 import static com.mygdx.game.GameSettings.ENEMY_WIDTH;
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
+import static com.mygdx.game.State.ENDED;
+import static com.mygdx.game.State.PAUSED;
+import static com.mygdx.game.State.PLAYING;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.EntitySpawner;
 import com.mygdx.game.GameResources;
@@ -34,6 +38,8 @@ import com.mygdx.game.objects.BulletObject;
 import com.mygdx.game.objects.CoreObject;
 import com.mygdx.game.objects.EnemyObject;
 import com.mygdx.game.objects.ShipObject;
+
+import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -55,7 +61,7 @@ public class SpaceGameScreen extends GameScreen {
 
     ArrayList<EnemyObject> enemyArray;
     ContactManager contactManager;
-    MovingBackgroundView backgroundView;
+    MovingBackgroundView backgroundView, black_out_on_pause;
     ButtonView fireButton;
     ImageView backgroundFireButton;
     TextView purpose;
@@ -68,6 +74,7 @@ public class SpaceGameScreen extends GameScreen {
         super(myGdxGame);
         this.myGdxGame = myGdxGame;
         backgroundView = new MovingBackgroundView(GameResources.BACKGROUND_IMG_PATH);
+        black_out_on_pause = new MovingBackgroundView(GameResources.BLACKOUT_IMG_PATH);
         contactManager = new ContactManager(myGdxGame.world);
         shipObject = new ShipObject(
                 GameSettings.SCREEN_WIDTH / 2, GameSettings.SCREEN_HEIGHT / 2,
@@ -91,16 +98,22 @@ public class SpaceGameScreen extends GameScreen {
         spawner = new EntitySpawner();
     }
 
-    //Здесь обработайте паузу
     @Override
     public void onPause() {
+        switch (gameSession.state) {
+            case PLAYING:
+                gameSession.pauseGame();
+                break;
+
+            case PAUSED:
+                gameSession.resumeGame();
+                break;
+        }
     }
 
     @Override
     public void show() {
         // Генерация врагов и ядер (просто, чтобы было видно)
-        //generateCore();
-        //generateEnemy();
         showTime = TimeUtils.millis();
         gameSession.startGame();
     }
@@ -108,41 +121,46 @@ public class SpaceGameScreen extends GameScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        final int padding = 50;
-        if (isTouchedShoot && shipObject.needToShoot()) {
-            BulletObject Bullet = new BulletObject(
-                    (int) (shipObject.getX() + cos(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
-                    (int) (shipObject.getY() + sin(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
-                    GameSettings.BULLET_WIDTH, BULLET_HEIGHT,
-                    GameResources.BULLET_IMG_PATH,
-                    myGdxGame.world, shipObject.getRotation(), Bullet_Speed
-            );
-            bulletArray.add(Bullet);
-        }
-        if (gameSession.shouldSpawn()) {
-            if (rd.nextInt(100) < CHANCE_CORE_SPAWN) generateCore();
-            else generateEnemy();
-        }
-        for (EnemyObject enemy: enemyArray) {
-            BulletObject bullet = enemy.move();
-            if (bullet != null) bulletArray.add(bullet);
-        }
-        live.setLeftLives(shipObject.getLivesLeft());
-        myGdxGame.stepWorld();
-        updateBullets();
-        updateCore();
-        updateEnemy();
-        if (gameSession.victory())
-            System.out.println("You Won!");
-        if (joystick.isTouched()) {
-            shipObject.setRotation(joystick.getDegrees());
-            Vector2 difference = shipObject.move();
-            moveCamera(difference);
+        onPause();
+        System.out.println(gameSession.state);
+        if (gameSession.state == PLAYING) {
+            final int padding = 50;
+            if (isTouchedShoot && shipObject.needToShoot()) {
+                BulletObject Bullet = new BulletObject(
+                        (int) (shipObject.getX() + cos(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
+                        (int) (shipObject.getY() + sin(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
+                        GameSettings.BULLET_WIDTH, BULLET_HEIGHT,
+                        GameResources.BULLET_IMG_PATH,
+                        myGdxGame.world, shipObject.getRotation(), Bullet_Speed
+                );
+                bulletArray.add(Bullet);
+            }
+            if (gameSession.shouldSpawn()) {
+                if (rd.nextInt(100) < CHANCE_CORE_SPAWN) generateCore();
+                else generateEnemy();
+            }
+            for (EnemyObject enemy : enemyArray) {
+                BulletObject bullet = enemy.move();
+                if (bullet != null) bulletArray.add(bullet);
+            }
+            live.setLeftLives(shipObject.getLivesLeft());
+            myGdxGame.stepWorld();
+            updateBullets();
+            updateCore();
+            updateEnemy();
+            if (gameSession.victory())
+                System.out.println("You Won!");
+            if (joystick.isTouched()) {
+                shipObject.setRotation(joystick.getDegrees());
+                Vector2 difference = shipObject.move();
+                moveCamera(difference);
+            }
         }
     }
 
     @Override
     protected void drawStatic() {
+        if (gameSession.state == PAUSED) black_out_on_pause.draw(myGdxGame.batch);
         backgroundFireButton.draw(myGdxGame.batch);
         fireButton.draw(myGdxGame.batch);
         purpose.draw(myGdxGame.batch);
