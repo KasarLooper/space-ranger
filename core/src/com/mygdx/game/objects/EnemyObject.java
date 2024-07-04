@@ -13,17 +13,19 @@ public class EnemyObject extends GameObject{
 
     public boolean wasHit;
 
-    public EnemyObject(int x, int y, int wight, int height, World world, String texturePath) {
-        super(texturePath, x, y, wight, height, world);
+    public EnemyObject(int x, int y, int width, int height, World world, String texturePath) {
+        super(texturePath, x, y, width, height, world);
         this.x = x;
         this.y = y;
         wasHit = false;
         sprite = new Sprite(texture);
+        sprite.setBounds(x, y, width, height);
+        sprite.setOrigin(width / 2f, height / 2f);
     }
 
     @Override
     public void draw(SpriteBatch batch) {
-        batch.draw(texture, x, y, width, height);
+        sprite.draw(batch);
     }
 
     @Override
@@ -35,7 +37,7 @@ public class EnemyObject extends GameObject{
 
     // Типо они крутятся :)
     public void move() {
-        sprite.setRotation(sprite.getRotation() + 20);
+        sprite.setRotation(sprite.getRotation() + 1);
     }
 
 

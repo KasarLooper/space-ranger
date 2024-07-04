@@ -5,6 +5,8 @@ import static com.mygdx.game.GameResources.ENEMY_SHIP_IMG_PATH;
 import static com.mygdx.game.GameSettings.BULLET_HEIGHT;
 import static com.mygdx.game.GameSettings.CORE_HEIGHT;
 import static com.mygdx.game.GameSettings.CORE_WIDTH;
+import static com.mygdx.game.GameSettings.ENEMY_HEIGHT;
+import static com.mygdx.game.GameSettings.ENEMY_WIDTH;
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
 import static java.lang.Math.cos;
@@ -78,7 +80,7 @@ public class SpaceGameScreen extends GameScreen {
         enemyArray = new ArrayList<>();
         random = new Random();
         gameSession = new GameSession();
-        purpose = new TextView(myGdxGame.averageWhiteFont, 500, 675, "Purpose: energy: .../3");
+        purpose = new TextView(myGdxGame.averageWhiteFont, 500, 675, "Purpose: energy: 0/3");
         live = new LiveView(0, 675);
         isTouchedShoot = false;
     }
@@ -204,7 +206,7 @@ public class SpaceGameScreen extends GameScreen {
             EnemyObject enemy = new EnemyObject(
                     shipObject.getX() - random.nextInt(SCREEN_WIDTH / 4) * 6,
                     shipObject.getY() - random.nextInt(SCREEN_HEIGHT / 4) * 6,
-                    CORE_WIDTH, CORE_HEIGHT, myGdxGame.world,
+                    ENEMY_WIDTH, ENEMY_HEIGHT, myGdxGame.world,
                     ENEMY_SHIP_IMG_PATH
             );
             enemyArray.add(enemy);
