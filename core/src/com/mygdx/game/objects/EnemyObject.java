@@ -35,7 +35,7 @@ public class EnemyObject extends GameObject{
 
     // Типо они крутятся :)
     public void move() {
-        sprite.setRotation(20);
+        sprite.setRotation(sprite.getRotation() + 20);
     }
 
 

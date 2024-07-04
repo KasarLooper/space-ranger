@@ -1,6 +1,7 @@
 package com.mygdx.game.screens;
 
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
+import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -73,20 +74,29 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        joystick.onTouch(screenX, SCREEN_HEIGHT - screenY);
-        return false;
+        screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
+        screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
+        if (screenX <= SCREEN_WIDTH / 2) joystick.onTouch(screenX, SCREEN_HEIGHT - screenY);
+        return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        joystick.toDefault();
-        return false;
+        screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
+        screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
+        if (screenX <= SCREEN_WIDTH / 2)
+            joystick.toDefault();
+        return true;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        joystick.onTouch(screenX, SCREEN_HEIGHT - screenY);
-        return false;
+        screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
+        screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
+        if (screenX <= SCREEN_WIDTH / 2) joystick.onTouch(screenX, SCREEN_HEIGHT - screenY);
+        else
+            joystick.toDefault();
+        return true;
     }
 
     @Override

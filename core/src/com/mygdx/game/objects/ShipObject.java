@@ -42,31 +42,6 @@ public class ShipObject extends GameObject{
         setX(getX() + dx);
         setY(getY() + dy);
         return new Vector2(dx, dy);
-
-        /*
-        if (22.5 > getRotation() % 360 || getRotation() % 360 > 337.5) {
-            setY(getY() + GameSettings.SPEED_SHIP);
-        } else if (337.5 > getRotation() % 360 && getRotation() % 360 > 292.5) {
-            setY(getY() + GameSettings.SPEED_SHIP);
-            setX(getX() + GameSettings.SPEED_SHIP);
-        }else if (292.5 > getRotation() % 360 && getRotation() % 360 > 247.5) {
-            setX(getX() + GameSettings.SPEED_SHIP);
-        }else if (247.5 > getRotation() % 360 && getRotation() % 360 > 202.5) {
-            setY(getY() - GameSettings.SPEED_SHIP);
-            setX(getX() + GameSettings.SPEED_SHIP);
-        }else if (202.5 > getRotation() % 360 && getRotation() % 360 > 157.5) {
-            setY(getY() - GameSettings.SPEED_SHIP);
-        }else if (157.5 > getRotation() % 360 && getRotation() % 360 > 112.5) {
-            setY(getY() - GameSettings.SPEED_SHIP);
-            setX(getX() - GameSettings.SPEED_SHIP);
-        }else if (112.5 > getRotation() % 360 && getRotation() % 360 > 67.5) {
-            setX(getX() - GameSettings.SPEED_SHIP);
-        }else if (67.5 > getRotation() % 360 && getRotation() % 360 > 22.5) {
-            setY(getY() + GameSettings.SPEED_SHIP);
-            setX(getX() - GameSettings.SPEED_SHIP);
-        }
-        System.out.println(getRotation() % 360);
-         */
     }
 
     @Override

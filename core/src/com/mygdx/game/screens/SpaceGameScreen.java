@@ -14,6 +14,7 @@ import static java.lang.Math.toRadians;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.GameResources;
 import com.mygdx.game.GameSession;
@@ -56,6 +57,7 @@ public class SpaceGameScreen extends GameScreen {
     ImageView backgroundFireButton;
     TextView purpose;
     LiveView live;
+    boolean isTouchedShoot;
 
     public SpaceGameScreen(MyGdxGame myGdxGame) {
         super(myGdxGame);
@@ -78,6 +80,7 @@ public class SpaceGameScreen extends GameScreen {
         gameSession = new GameSession();
         purpose = new TextView(myGdxGame.averageWhiteFont, 500, 675, "Purpose: energy: .../3");
         live = new LiveView(0, 675);
+        isTouchedShoot = false;
     }
 
     @Override
@@ -88,13 +91,11 @@ public class SpaceGameScreen extends GameScreen {
         showTime = TimeUtils.millis();
     }
 
-
-
     @Override
     public void render(float delta) {
         super.render(delta);
-        final int padding = 10;
-        if (shipObject.needToShoot()) {
+        final int padding = 50;
+        if (isTouchedShoot && shipObject.needToShoot()) {
             BulletObject Bullet = new BulletObject(
                     (int) (shipObject.getX() + cos(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
                     (int) (shipObject.getY() + sin(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
@@ -203,5 +204,35 @@ public class SpaceGameScreen extends GameScreen {
             );
             enemyArray.add(enemy);
         }
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        super.touchDown(screenX, screenY, pointer, button);
+        screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
+        screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
+        if (backgroundFireButton.isHit(screenX, SCREEN_HEIGHT - screenY)) isTouchedShoot = true;
+        return true;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        super.touchUp(screenX, screenY, pointer, button);
+        screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
+        screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
+        if (backgroundFireButton.isHit(screenX, SCREEN_HEIGHT - screenY)) isTouchedShoot = false;
+        return true;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
+        screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
+        if (screenX <= SCREEN_WIDTH / 2) joystick.onTouch(screenX, SCREEN_HEIGHT - screenY);
+        else if (backgroundFireButton.isHit(screenX, SCREEN_HEIGHT - screenY))
+            isTouchedShoot = true;
+        else
+            joystick.toDefault();
+        return true;
     }
 }
