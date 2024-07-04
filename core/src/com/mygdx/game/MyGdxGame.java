@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.manager.AudioManager;
+import com.mygdx.game.manager.MemoryManager;
 import com.mygdx.game.screens.MenuScreen;
 import com.mygdx.game.screens.SpaceGameScreen;
 
@@ -34,6 +35,7 @@ public class MyGdxGame extends Game {
 	public AudioManager audioManager;
 	@Override
 	public void create () {
+		boolean isNextLevel = MemoryManager.loadIsNextLevel();
 		Box2D.init();
 		world = new World(new Vector2(0, 0), true);
 

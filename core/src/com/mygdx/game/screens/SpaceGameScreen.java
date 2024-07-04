@@ -154,12 +154,12 @@ public class SpaceGameScreen extends GameScreen {
 
     @Override
     protected void drawStatic() {
-        if (gameSession.state == PAUSED) black_out_on_pause.draw(myGdxGame.batch);
         backgroundFireButton.draw(myGdxGame.batch);
         fireButton.draw(myGdxGame.batch);
         purpose.draw(myGdxGame.batch);
         live.draw(myGdxGame.batch);
         super.drawStatic();
+        if (gameSession.state == PAUSED) black_out_on_pause.draw(myGdxGame.batch);
     }
 
     @Override
