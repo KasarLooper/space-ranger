@@ -1,6 +1,5 @@
 package com.mygdx.game.objects;
 
-import static com.mygdx.game.GameSettings.SCALE;
 import static com.mygdx.game.GameSettings.SPEED_SHIP;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -9,11 +8,9 @@ import static java.lang.Math.toRadians;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.GameSettings;
-import com.mygdx.game.Type;
 
 import java.util.Random;
 
@@ -60,7 +57,7 @@ public class ShipObject extends GameObject{
 
     @Override
     public void hit(Type type) {
-        if (type == Type.Enemy) {
+        if (type == Type.Enemy || type == Type.BulletEnemy) {
             livesLeft -= 1;
         }
     }

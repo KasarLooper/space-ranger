@@ -6,7 +6,6 @@ import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.game.Type;
 
 public class EnemyBulletObject extends GameObject{
 
@@ -28,7 +27,13 @@ public class EnemyBulletObject extends GameObject{
 
     @Override
     public void hit(Type type) {
-        wasHit = true;
+        if (type == Type.Ship){
+            wasHit = true;
+        }
+    }
+
+    public Type type() {
+        return Type.BulletEnemy;
     }
 
     public boolean destroy(int centreX, int centreY) {

@@ -3,7 +3,6 @@ package com.mygdx.game.objects;
 import static com.mygdx.game.GameSettings.SCALE;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
@@ -11,7 +10,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.mygdx.game.Type;
 
 
 public abstract class GameObject {
@@ -45,6 +43,7 @@ public abstract class GameObject {
 
     public void hit(Type type) {
         // вся физика ударов и т.п.
+        System.out.println("Hit - 5");
     }
 
     public void dispose() {
@@ -83,7 +82,7 @@ public abstract class GameObject {
         circleShape.setRadius(getRadius());
 
         FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.filter.categoryBits = cBits; // биты
+        //fixtureDef.filter.categoryBits = cBits; // биты
 
         fixtureDef.shape = circleShape;
         fixtureDef.density = 0.1f;

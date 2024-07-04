@@ -3,7 +3,6 @@ package com.mygdx.game.objects;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
-import com.mygdx.game.Type;
 
 public class EnemyObject extends GameObject{
 
@@ -30,7 +29,7 @@ public class EnemyObject extends GameObject{
 
     @Override
     public void hit(Type type) {
-        if (type == Type.Ship || type == Type.Enemy) {
+        if (type == Type.Ship || type == Type.Bullet) {
             wasHit = true;
         }
     }
