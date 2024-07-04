@@ -1,6 +1,5 @@
 package com.mygdx.game.objects;
 
-import static com.mygdx.game.GameSettings.Bullet_Speed;
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
 import static java.lang.Math.cos;
@@ -13,17 +12,19 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
 public class BulletObject extends GameObject{
-
+    private Type type;
     public boolean wasHit;
 
     Sprite sprite;
-    public BulletObject(int x, int y, int wight, int height, String texturePath, World world, float degrees) {
+    public BulletObject(int x, int y, int wight, int height, String texturePath, World world, float degrees, int speed, boolean isEnemy) {
         super(texturePath, x, y, wight, height, world);
-        body.setLinearVelocity(new Vector2((float) (cos(toRadians(degrees)) * Bullet_Speed), (float) (sin(toRadians(degrees)) * Bullet_Speed)));
+        body.setLinearVelocity(new Vector2((float) (cos(toRadians(degrees)) * speed), (float) (sin(toRadians(degrees)) * speed)));
         body.setBullet(true);
         sprite = new Sprite(texture);
         sprite.setRotation(degrees + 270);
         wasHit = false;
+        if (isEnemy) type = Type.EnemyBullet;
+        else type = Type.Bullet;
     }
 
     @Override
@@ -35,7 +36,7 @@ public class BulletObject extends GameObject{
 
     @Override
     public void hit(Type type) {
-        if (type == Type.Enemy) {
+        if (type == Type.Enemy || type == Type.Ship) {
             wasHit = true;
         }
     }
@@ -47,6 +48,6 @@ public class BulletObject extends GameObject{
                 getY() < centreY + (height + SCREEN_HEIGHT) / 2);
     }
     public Type type() {
-        return Type.Bullet;
+        return type;
     }
 }

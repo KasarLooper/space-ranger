@@ -2,6 +2,7 @@ package com.mygdx.game.screens;
 
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
+import static com.mygdx.game.State.PLAYING;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -13,12 +14,14 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.GameResources;
+import com.mygdx.game.GameSession;
 import com.mygdx.game.GameSettings;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.ButtonView;
 import com.mygdx.game.components.JoystickView;
 
 public abstract class GameScreen extends ScreenAdapter implements InputProcessor {
+    GameSession gameSession;
     MyGdxGame myGdxGame;
     JoystickView joystick;
     long showTime;
@@ -78,7 +81,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
         screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
-        if (screenX <= SCREEN_WIDTH / 2) joystick.onTouch(screenX, SCREEN_HEIGHT - screenY);
+        if (screenX <= SCREEN_WIDTH / 2 && gameSession.state == PLAYING) joystick.onTouch(screenX, SCREEN_HEIGHT - screenY);
         if (pauseButton.isHit(screenX, SCREEN_HEIGHT - screenY)) onPause();
         return true;
     }
@@ -87,7 +90,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
         screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
-        if (screenX <= SCREEN_WIDTH / 2)
+        if (screenX <= SCREEN_WIDTH / 2 && gameSession.state == PLAYING)
             joystick.toDefault();
         return true;
     }
@@ -96,8 +99,8 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
         screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
-        if (screenX <= SCREEN_WIDTH / 2) joystick.onTouch(screenX, SCREEN_HEIGHT - screenY);
-        else
+        if (screenX <= SCREEN_WIDTH / 2 && gameSession.state == PLAYING) joystick.onTouch(screenX, SCREEN_HEIGHT - screenY);
+        else if (gameSession.state == PLAYING)
             joystick.toDefault();
         return true;
     }
