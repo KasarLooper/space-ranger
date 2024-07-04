@@ -108,6 +108,7 @@ public class SpaceGameScreen extends GameScreen {
     public void render(float delta) {
         super.render(delta);
         final int padding = 50;
+        System.out.println(coreArray.size());
         if (isTouchedShoot && shipObject.needToShoot()) {
             BulletObject Bullet = new BulletObject(
                     (int) (shipObject.getX() + cos(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
@@ -117,6 +118,7 @@ public class SpaceGameScreen extends GameScreen {
                     myGdxGame.world, shipObject.getRotation()
             );
             bulletArray.add(Bullet);
+            myGdxGame.audioManager.sound_bullet.play(0.2f);
         }
         if (gameSession.shouldSpawn()) {
             if (rd.nextInt(100) < CHANCE_CORE_SPAWN) generateCore();
