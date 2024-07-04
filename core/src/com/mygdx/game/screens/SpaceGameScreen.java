@@ -112,11 +112,15 @@ public class SpaceGameScreen extends GameScreen {
         updateEnemy();
         if (gameSession.victory())
             System.out.println("You Won!");
+        if (joystick.isTouched()) {
+            shipObject.setRotation(joystick.getDegrees());
+            Vector2 difference = shipObject.move();
+            moveCamera(difference);
+        }
     }
 
     @Override
     protected void drawStatic() {
-        shipObject.draw(myGdxGame.batch);
         backgroundFireButton.draw(myGdxGame.batch);
         fireButton.draw(myGdxGame.batch);
         purpose.draw(myGdxGame.batch);
@@ -127,6 +131,7 @@ public class SpaceGameScreen extends GameScreen {
     @Override
     protected void drawDynamic() {
         backgroundView.draw(myGdxGame.batch);
+        shipObject.draw(myGdxGame.batch);
         for (BulletObject bullet : bulletArray) bullet.draw(myGdxGame.batch);
         for (CoreObject core: coreArray) core.draw(myGdxGame.batch);
         for (EnemyObject enemy: enemyArray) enemy.draw(myGdxGame.batch);
@@ -138,19 +143,6 @@ public class SpaceGameScreen extends GameScreen {
         super.moveCamera(move);
         backgroundView.move(move.x, move.y);
     }
-
-    @Override
-    protected void handleInput() {
-        super.handleInput();
-        if (TimeUtils.millis() - showTime < 100) return;
-        if (Gdx.input.isTouched()) {
-            //myGdxGame.touch = myGdxGame.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
-            shipObject.setRotation(joystick.getDegrees());
-            Vector2 difference = shipObject.move();
-            moveCamera(difference);
-        }
-    }
-
 
     // "Чистилки" объектов
     private void updateBullets() {

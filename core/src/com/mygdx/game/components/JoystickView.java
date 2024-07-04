@@ -7,11 +7,12 @@ import com.mygdx.game.GameResources;
 public class JoystickView extends View {
     private Texture circle;
     private Texture zone;
-    private static float centreX;
-    private static float centreY;
-    private static float circleX;
-    private static float circleY;
-    private static float radius;
+    private float centreX;
+    private float centreY;
+    private float circleX;
+    private float circleY;
+    private float radius;
+    private boolean isTouched;
 
 
     public JoystickView(float x, float y) {
@@ -24,6 +25,7 @@ public class JoystickView extends View {
         circleX = centreX;
         circleY = centreY;
         radius = Math.max(zone.getWidth(), zone.getHeight()) / 2f;
+        isTouched = false;
     }
 
     public void onTouch(int touchX, int touchY) {
@@ -35,11 +37,17 @@ public class JoystickView extends View {
             circleX = centreX + radius * (touchX - centreX) / ratio;
             circleY = centreY + radius * (touchY - centreY) / ratio;
         }
+        isTouched = true;
     }
 
     public void toDefault() {
         circleX = centreX;
         circleY = centreY;
+        isTouched = false;
+    }
+
+    public boolean isTouched() {
+        return isTouched;
     }
 
     private float getDistanceFromCenter(int x, int y) {
@@ -48,11 +56,11 @@ public class JoystickView extends View {
         return (int) Math.round(Math.sqrt(dx * dx + dy * dy));
     }
 
-    public static float getX() {
+    public float getX() {
         return (circleX - centreX) / radius;
     }
 
-    public static float getY() {
+    public float getY() {
         return (circleY - centreY) / radius;
     }
 
