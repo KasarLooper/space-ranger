@@ -94,6 +94,7 @@ public class SpaceGameScreen extends GameScreen {
     @Override
     public void show() {
         super.show();
+        //enemyArray.add(new EnemyObject(100, 100, ENEMY_WIDTH, ENEMY_HEIGHT, myGdxGame.world, ENEMY_SHIP_IMG_PATH));
     }
 
     @Override
@@ -104,49 +105,49 @@ public class SpaceGameScreen extends GameScreen {
             myGdxGame.camera.position.y = shipObject.getY();
             backgroundView.move(shipObject.getX(), shipObject.getY());
             if (!shipObject.isEnd()) {
-                final int padding = 70;
-                if (isTouchedShoot && shipObject.needToShoot()) {
-                    BulletObject Bullet = new BulletObject(
-                            (int) (shipObject.getX() + cos(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
-                            (int) (shipObject.getY() + sin(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
-                            GameSettings.BULLET_WIDTH, BULLET_HEIGHT,
-                            GameResources.BULLET_IMG_PATH,
-                            myGdxGame.world, shipObject.getRotation(), Bullet_Speed, false
-                    );
-                    bulletArray.add(Bullet);
+                if (gameSession.state == PLAYING) {
+                    final int padding = 30;
+                    if (isTouchedShoot && shipObject.needToShoot()) {
+                        BulletObject Bullet = new BulletObject(
+                                (int) (shipObject.getX() + cos(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
+                                (int) (shipObject.getY() + sin(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
+                                GameSettings.BULLET_WIDTH, BULLET_HEIGHT,
+                                GameResources.BULLET_IMG_PATH,
+                                myGdxGame.world, shipObject.getRotation(), Bullet_Speed, false
+                        );
+                        bulletArray.add(Bullet);
+                    }
+                    if (gameSession.shouldSpawn()) {
+                        if (rd.nextInt(100) < CHANCE_CORE_SPAWN) generateCore();
+                        else generateEnemy();
+                    }
+                    for (EnemyObject enemy : enemyArray) {
+                        BulletObject bullet = enemy.move(shipObject.getX(), shipObject.getY());
+                        if (bullet != null) bulletArray.add(bullet);
+                    }
+                    live.setLeftLives(shipObject.getLivesLeft());
+                    myGdxGame.stepWorld();
+                    updateBullets();
+                    updateCore();
+                    updateEnemy();
+                    updateBoom();
+                    if (gameSession.victory()) {
+                        System.out.println("You Won!");
+                        shipObject.moleHoleAnim();
+                        myGdxGame.canAccessPlanetLevel = true;
+                    }
+                    if (joystick.isTouched()) {
+                        shipObject.setRotation(joystick.getDegrees());
+                        shipObject.move();
+                    }
+                    for (BoomObject boomObject : boomArray) boomObject.Boom_action();
                 }
-                if (gameSession.shouldSpawn()) {
-                    if (rd.nextInt(100) < CHANCE_CORE_SPAWN) generateCore();
-                    else generateEnemy();
-                }
-                for (EnemyObject enemy : enemyArray) {
-                    BulletObject bullet = enemy.move(shipObject.getX(), shipObject.getY());
-                    if (bullet != null) bulletArray.add(bullet);
-                }
-                live.setLeftLives(shipObject.getLivesLeft());
-                myGdxGame.stepWorld();
-                updateBullets();
-                updateCore();
-                updateEnemy();
-                updateBoom();
-                if (gameSession.victory()) {
-                    System.out.println("You Won!");
-                    shipObject.moleHoleAnim();
-                }
-                if (joystick.isTouched()) {
-                    shipObject.setRotation(joystick.getDegrees());
-                    shipObject.move();
-                }
-                for (BoomObject boomObject : boomArray) boomObject.Boom_action();
             } else {
                 gameSession.state = ENDED;
             }
         }
         else {
             gameSession.state = ENDED;
-            myGdxGame.camera.position.x = myGdxGame.camera.viewportWidth / 2;
-            myGdxGame.camera.position.y = myGdxGame.camera.viewportHeight / 2;
-            myGdxGame.setScreen(myGdxGame.selectLevelScreen);
         }
     }
 
@@ -241,6 +242,8 @@ public class SpaceGameScreen extends GameScreen {
                 GameResources.SHIP_IMG_PATH,
                 myGdxGame.world
         );
+        purpose.setText("Purpose - energy: 0/3");
+        live.setLeftLives(3);
         bulletArray.clear();
         boomArray.clear();
         gameSession.startGame();

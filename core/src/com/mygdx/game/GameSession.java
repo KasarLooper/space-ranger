@@ -3,6 +3,7 @@ package com.mygdx.game;
 import static com.mygdx.game.GameSettings.SPAWN_COOL_DOWN;
 
 import com.badlogic.gdx.utils.TimeUtils;
+import com.mygdx.game.manager.MemoryManager;
 
 public class GameSession {
     private long startTime;
@@ -51,7 +52,7 @@ public class GameSession {
 
     public boolean victory() {
         if (core_collected >= 3) {
-            state = State.ENDED;
+            MemoryManager.saveIsNextLevel(true);
             return true;
         }
         return false;

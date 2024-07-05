@@ -40,8 +40,7 @@ public class MyGdxGame extends Game {
 	public AudioManager audioManager;
 	@Override
 	public void create () {
-		//isNextLevel = MemoryManager.loadIsNextLevel();
-		canAccessPlanetLevel = false;
+		canAccessPlanetLevel = MemoryManager.loadIsNextLevel();
 		Box2D.init();
 		world = new World(new Vector2(0, 0), true);
 
