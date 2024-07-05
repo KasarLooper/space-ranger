@@ -96,9 +96,6 @@ public class SpaceGameScreen extends GameScreen {
 
     @Override
     public void show() {
-        // Генерация врагов и ядер (просто, чтобы было видно)
-        //generateCore();
-        //generateEnemy();
         super.show();
     }
 
