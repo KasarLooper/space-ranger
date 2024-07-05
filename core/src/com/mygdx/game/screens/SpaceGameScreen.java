@@ -144,6 +144,8 @@ public class SpaceGameScreen extends GameScreen {
         }
         else {
             gameSession.state = ENDED;
+            myGdxGame.camera.position.x = myGdxGame.camera.viewportWidth / 2;
+            myGdxGame.camera.position.y = myGdxGame.camera.viewportHeight / 2;
             myGdxGame.setScreen(myGdxGame.selectLevelScreen);
         }
     }
