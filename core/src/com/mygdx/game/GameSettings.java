@@ -41,7 +41,7 @@ public class GameSettings {
 
     //Enemy behaviour settings
     public static final int ENEMY_CHECK_DISTANCE = 800;
-    public static final int ENEMY_CHECK_ANGLE = 30;
+    public static final int ENEMY_CHECK_ANGLE = 60;
     public static final int ENEMY_SHOOT_DISTANCE = 400;
     public static final int ENEMY_SHOOT_ANGLE = 10;
     public static final float ENEMY_USUAL_ROTATION_SPEED = 0.4f;

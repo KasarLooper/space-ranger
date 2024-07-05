@@ -81,6 +81,7 @@ public class EnemyObject extends GameObject{
             sprite.setRotation(sprite.getRotation() + da);
         } else {
             sprite.setRotation(sprite.getRotation() + ENEMY_USUAL_ROTATION_SPEED);
+            hasAim = false;
         }
         sprite.setBounds(getX(), getY(), width, height);
         int dx = (int) (cos(toRadians(getRotation())) * SPEED_ENEMY);

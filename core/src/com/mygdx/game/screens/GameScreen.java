@@ -42,7 +42,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
 
     @Override
     public void show() {
-        joystick = new JoystickView(100, 100);
+        joystick = new JoystickView(25, 25);
         showTime = TimeUtils.millis();
         if (isReload) {
             myGdxGame.camera.position.x = camX;

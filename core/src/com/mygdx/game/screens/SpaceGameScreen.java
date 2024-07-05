@@ -170,11 +170,11 @@ public class SpaceGameScreen extends GameScreen {
     @Override
     protected void drawDynamic() {
         backgroundView.draw(myGdxGame.batch);
+        for (BoomObject boom: boomArray) boom.draw(myGdxGame.batch);
         shipObject.draw(myGdxGame.batch);
         for (BulletObject bullet : bulletArray) bullet.draw(myGdxGame.batch);
         for (CoreObject core: coreArray) core.draw(myGdxGame.batch);
         for (EnemyObject enemy: enemyArray) enemy.draw(myGdxGame.batch);
-        for (BoomObject boom: boomArray) boom.draw(myGdxGame.batch);
         super.drawDynamic();
     }
 
@@ -205,6 +205,7 @@ public class SpaceGameScreen extends GameScreen {
                 gameSession.core_was_collected();
                 myGdxGame.world.destroyBody(core.body);
                 purpose.setText(String.format("Purpose: energy: %d/3", gameSession.getCoreCollected()));
+                boomArray.add(new BoomObject(core.x, core.y));
                 iterator.remove();
             }
         }
