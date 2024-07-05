@@ -90,6 +90,8 @@ public class SpaceGameScreen extends GameScreen {
         rd = new Random();
         spawner = new EntitySpawner();
         boomArray = new ArrayList<>();
+
+        //myGdxGame.audioManager.spaceMusic.play();
     }
 
     @Override
@@ -102,6 +104,7 @@ public class SpaceGameScreen extends GameScreen {
 
     @Override
     public void render(float delta) {
+        myGdxGame.audioManager.spaceMusic.play();
         super.render(delta);
         if (!shipObject.isEnd()) {
             final int padding = 70;
@@ -114,6 +117,7 @@ public class SpaceGameScreen extends GameScreen {
                         myGdxGame.world, shipObject.getRotation(), Bullet_Speed, false
                 );
                 bulletArray.add(Bullet);
+                myGdxGame.audioManager.soundBullet.play(0.2f);
             }
             if (gameSession.shouldSpawn()) {
                 if (rd.nextInt(100) < CHANCE_CORE_SPAWN) generateCore();
@@ -191,9 +195,12 @@ public class SpaceGameScreen extends GameScreen {
                 if (core.wasCollected) {
                     gameSession.core_was_collected();
                     purpose.setText(String.format("Purpose: energy: %d/3", gameSession.getCoreCollected()));
+                    myGdxGame.audioManager.soundEnergyGive.play(0.2f);
+                } else {
+                    boomArray.add(new BoomObject(core.x, core.y));
+                    myGdxGame.audioManager.soundBoom.play(0.2f);
                 }
                 myGdxGame.world.destroyBody(core.body);
-                boomArray.add(new BoomObject(core.x, core.y));
                 iterator.remove();
             }
         }
@@ -207,6 +214,7 @@ public class SpaceGameScreen extends GameScreen {
                 myGdxGame.world.destroyBody(enemy.body);
                 BoomObject boom = new BoomObject(enemy.getX(), enemy.getY());
                 boomArray.add(boom);
+                myGdxGame.audioManager.soundBoom.play(0.2f);
                 iterator.remove();
             }
         }

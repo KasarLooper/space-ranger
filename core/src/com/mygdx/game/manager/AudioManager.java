@@ -9,17 +9,22 @@ public class AudioManager {
     public Music spaceMusic;
     public Sound soundBullet;
     public Sound soundBoom;
+    public Sound soundEnergyGive;
+    public Music menuMusic;
 
 
     public AudioManager() {
         spaceMusic = Gdx.audio.newMusic(Gdx.files.internal(GameResources.MUSIC_SPACE_PATH));
         soundBullet = Gdx.audio.newSound(Gdx.files.internal(GameResources.SOUND_BULLET_PATH));
         soundBoom = Gdx.audio.newSound(Gdx.files.internal(GameResources.SOUND_BOOM_PATH));
+        soundEnergyGive = Gdx.audio.newSound(Gdx.files.internal(GameResources.SOUND_ENERGY_PATH));
+        menuMusic = Gdx.audio.newMusic(Gdx.files.internal(GameResources.MUSIC_MENU_PATH));
 
         spaceMusic.setVolume(0.2f);
-        spaceMusic.setLooping(true);
+        menuMusic.setVolume(0.2f);
+
+        menuMusic.play();
 
 
-        spaceMusic.play();
     }
 }
