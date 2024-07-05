@@ -12,8 +12,8 @@ public class GameSettings {
     public static final float SCALE = 0.05f;
 
     //Spawn settings
-    public static final int SPAWN_COOL_DOWN = 2000 / 20;
-    public static final int CHANCE_CORE_SPAWN = 100; // в процентах // 25
+    public static final int SPAWN_COOL_DOWN = 2000;
+    public static final int CHANCE_CORE_SPAWN = 25; // в процентах // 25
 
     // Object Setting
   
