@@ -38,5 +38,4 @@ public class GameResources {
     public static final String MUSIC_SPACE_PATH = "music/Electric_Dark_Souls-Next_Level.mp3";
     public static final String SOUND_BULLET_PATH = "music/burst_fire.mp3";
     public static final String SOUND_BOOM_PATH = "music/Boom.mp3";
-    public static final String BOOM_IMG_PATH = "Boom.png";
 }

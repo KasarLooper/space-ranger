@@ -112,6 +112,7 @@ public class SpaceGameScreen extends GameScreen {
         // Генерация врагов и ядер (просто, чтобы было видно)
         //generateCore();
         //generateEnemy();
+        super.show();
         showTime = TimeUtils.millis();
         gameSession.startGame();
     }

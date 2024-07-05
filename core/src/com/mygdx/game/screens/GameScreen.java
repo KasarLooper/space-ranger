@@ -12,7 +12,6 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.GameResources;
@@ -21,7 +20,6 @@ import com.mygdx.game.GameSettings;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.ButtonView;
 import com.mygdx.game.components.JoystickView;
-import com.mygdx.game.components.TextView;
 
 public abstract class GameScreen extends ScreenAdapter implements InputProcessor {
     GameSession gameSession;
@@ -30,6 +28,10 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     long showTime;
     State state;
     ButtonView pauseButton, endButton;
+
+    private boolean isReload = false;
+    private float camX;
+    private float camY;
 
 
     public GameScreen(MyGdxGame game) {
@@ -42,6 +44,10 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     public void show() {
         joystick = new JoystickView(100, 100);
         showTime = TimeUtils.millis();
+        if (isReload) {
+            myGdxGame.camera.position.x = camX;
+            myGdxGame.camera.position.y = camY;
+        }
     }
 
     @Override
@@ -94,6 +100,11 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
         if (gameSession.state == PAUSED && endButton.isHit(screenX, SCREEN_HEIGHT - screenY)) {
             gameSession.state = ENDED;
             myGdxGame.setScreen(myGdxGame.menuScreen);
+            isReload = true;
+            camX = myGdxGame.camera.position.x;
+            camY = myGdxGame.camera.position.y;
+            myGdxGame.camera.position.x = myGdxGame.camera.viewportWidth / 2;
+            myGdxGame.camera.position.y = myGdxGame.camera.viewportHeight / 2;
         }
         return true;
     }

@@ -36,9 +36,7 @@ public class BulletObject extends GameObject{
 
     @Override
     public void hit(Type type) {
-        if (type == Type.Enemy || type == Type.Ship) {
-            wasHit = true;
-        }
+        wasHit = true;
     }
 
     public boolean destroy(int centreX, int centreY) {
