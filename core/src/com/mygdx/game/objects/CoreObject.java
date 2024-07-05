@@ -8,6 +8,7 @@ public class CoreObject extends GameObject {
     public int x, y;
 
     public boolean wasHit;
+    public boolean wasCollected;
 
     public CoreObject(int x, int y, int wight, int height, World world, String texturePath) {
         super(texturePath, x, y, wight, height, world);
@@ -24,6 +25,7 @@ public class CoreObject extends GameObject {
     @Override
     public void hit(Type type) {
         wasHit = true;
+        if (type == Type.Ship) wasCollected = true;
     }
 
     public boolean destroy() {

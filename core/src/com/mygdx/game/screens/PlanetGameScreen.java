@@ -10,6 +10,5 @@ public class PlanetGameScreen extends GameScreen {
 
     @Override
     public void onPause() {
-
     }
 }

@@ -204,9 +204,11 @@ public class SpaceGameScreen extends GameScreen {
         while(iterator.hasNext()) {
             CoreObject core = iterator.next();
             if (core.destroy()) {
-                gameSession.core_was_collected();
+                if (core.wasCollected) {
+                    gameSession.core_was_collected();
+                    purpose.setText(String.format("Purpose: energy: %d/3", gameSession.getCoreCollected()));
+                }
                 myGdxGame.world.destroyBody(core.body);
-                purpose.setText(String.format("Purpose: energy: %d/3", gameSession.getCoreCollected()));
                 boomArray.add(new BoomObject(core.x, core.y));
                 iterator.remove();
             }
