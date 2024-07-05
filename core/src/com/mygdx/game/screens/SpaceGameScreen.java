@@ -11,6 +11,7 @@ import static com.mygdx.game.GameSettings.ENEMY_HEIGHT;
 import static com.mygdx.game.GameSettings.ENEMY_WIDTH;
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
+import static com.mygdx.game.State.ENDED;
 import static com.mygdx.game.State.PAUSED;
 import static com.mygdx.game.State.PLAYING;
 import static java.lang.Math.cos;
@@ -100,7 +101,7 @@ public class SpaceGameScreen extends GameScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        if (!shipObject.isEnd()) {
+        if (gameSession.state == PLAYING || gameSession.state == ENDED && !shipObject.isEnd()) {
             final int padding = 70;
             if (isTouchedShoot && shipObject.needToShoot()) {
                 BulletObject Bullet = new BulletObject(
@@ -139,8 +140,6 @@ public class SpaceGameScreen extends GameScreen {
             backgroundView.move(myGdxGame.camera.position.x,
                     myGdxGame.camera.position.y);
             for (BoomObject boomObject : boomArray) boomObject.Boom_action();
-        } else {
-            myGdxGame.secondLevel();
         }
     }
 
