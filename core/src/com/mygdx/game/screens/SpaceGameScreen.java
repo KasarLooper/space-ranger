@@ -100,6 +100,9 @@ public class SpaceGameScreen extends GameScreen {
     public void render(float delta) {
         super.render(delta);
         if (shipObject.isAlive()) {
+            myGdxGame.camera.position.x = shipObject.getX();
+            myGdxGame.camera.position.y = shipObject.getY();
+            backgroundView.move(shipObject.getX(), shipObject.getY());
             if (!shipObject.isEnd()) {
                 final int padding = 70;
                 if (isTouchedShoot && shipObject.needToShoot()) {
@@ -132,8 +135,7 @@ public class SpaceGameScreen extends GameScreen {
                 }
                 if (joystick.isTouched()) {
                     shipObject.setRotation(joystick.getDegrees());
-                    Vector2 difference = shipObject.move();
-                    moveCamera(difference);
+                    shipObject.move();
                 }
                 for (BoomObject boomObject : boomArray) boomObject.Boom_action();
             } else {
@@ -164,12 +166,6 @@ public class SpaceGameScreen extends GameScreen {
         for (CoreObject core: coreArray) core.draw(myGdxGame.batch);
         for (EnemyObject enemy: enemyArray) enemy.draw(myGdxGame.batch);
         super.drawDynamic();
-    }
-
-    @Override
-    protected void moveCamera(Vector2 move) {
-        super.moveCamera(move);
-        backgroundView.move(move.x, move.y);
     }
 
     // "Чистилки" объектов

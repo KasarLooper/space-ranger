@@ -106,11 +106,6 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     protected void drawDynamic() {
     }
 
-    protected void moveCamera(Vector2 move) {
-        myGdxGame.camera.position.x += move.x;
-        myGdxGame.camera.position.y += move.y;
-    }
-
     @Override
     public void dispose() {
         super.dispose();
