@@ -38,7 +38,8 @@ public class MyGdxGame extends Game {
 	public AudioManager audioManager;
 	@Override
 	public void create () {
-		isNextLevel = MemoryManager.loadIsNextLevel();
+		//isNextLevel = MemoryManager.loadIsNextLevel();
+		isNextLevel = false;
 		Box2D.init();
 		world = new World(new Vector2(0, 0), true);
 
@@ -71,6 +72,7 @@ public class MyGdxGame extends Game {
 		camera.position.x = camera.viewportWidth / 2;
 		camera.position.y = camera.viewportHeight / 2;
 		MemoryManager.saveIsNextLevel(true);
+		Gdx.input.setInputProcessor(planetScreen);
 		setScreen(planetScreen);
 	}
 	

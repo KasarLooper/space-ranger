@@ -56,7 +56,7 @@ public class SpaceGameScreen extends GameScreen {
 
     ArrayList<EnemyObject> enemyArray;
     ContactManager contactManager;
-    MovingBackgroundView backgroundView, black_out_on_pause;
+    MovingBackgroundView backgroundView;
     ButtonView fireButton;
     ImageView backgroundFireButton;
     TextView purpose;
@@ -69,7 +69,6 @@ public class SpaceGameScreen extends GameScreen {
         super(myGdxGame);
         this.myGdxGame = myGdxGame;
         backgroundView = new MovingBackgroundView(GameResources.BACKGROUND_IMG_PATH);
-        black_out_on_pause = new MovingBackgroundView(GameResources.BLACKOUT_IMG_PATH);
         contactManager = new ContactManager(myGdxGame.world);
         shipObject = new ShipObject(
                 GameSettings.SCREEN_WIDTH / 2, GameSettings.SCREEN_HEIGHT / 2,
@@ -93,28 +92,12 @@ public class SpaceGameScreen extends GameScreen {
         boomArray = new ArrayList<>();
     }
 
-    //Здесь обработайте паузу
-    @Override
-    public void onPause() {
-        switch (gameSession.state) {
-            case PLAYING:
-                gameSession.pauseGame();
-                break;
-
-            case PAUSED:
-                gameSession.resumeGame();
-                break;
-        }
-    }
-
     @Override
     public void show() {
         // Генерация врагов и ядер (просто, чтобы было видно)
         //generateCore();
         //generateEnemy();
         super.show();
-        showTime = TimeUtils.millis();
-        gameSession.startGame();
     }
 
     @Override
@@ -156,12 +139,13 @@ public class SpaceGameScreen extends GameScreen {
                 moveCamera(difference);
             }
             for (BoomObject boomObject : boomArray) boomObject.Boom_action();
+        } else {
+            myGdxGame.secondLevel();
         }
     }
 
     @Override
     protected void drawStatic() {
-        if (gameSession.state == PAUSED) black_out_on_pause.draw(myGdxGame.batch);
         backgroundFireButton.draw(myGdxGame.batch);
         fireButton.draw(myGdxGame.batch);
         purpose.draw(myGdxGame.batch);

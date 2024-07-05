@@ -50,7 +50,7 @@ public class MenuScreen extends ScreenAdapter {
 
             if (startButtonView.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
                 myGdxGame.setScreen(myGdxGame.isNextLevel ? myGdxGame.planetScreen : myGdxGame.spaceScreen);
-                Gdx.input.setInputProcessor(myGdxGame.spaceScreen);
+                Gdx.input.setInputProcessor(myGdxGame.isNextLevel ? myGdxGame.planetScreen : myGdxGame.spaceScreen);
             }
             if (exitButtonView.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
                 Gdx.app.exit();
