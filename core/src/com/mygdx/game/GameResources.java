@@ -36,4 +36,7 @@ public class GameResources {
     public static final String FIRE_BUTTON_IMG_PATH = "Remove-bg.ai_1720009081104.png";
     public static final String PAUSE_ICON_IMG_PATH = "pause_icon.png";
     public static final String MUSIC_SPACE_PATH = "music/Electric_Dark_Souls-Next_Level.mp3";
+    public static final String SOUND_BULLET_PATH = "music/burst_fire.mp3";
+    public static final String SOUND_BOOM_PATH = "music/Boom.mp3";
+    public static final String BOOM_IMG_PATH = "Boom.png";
 }
