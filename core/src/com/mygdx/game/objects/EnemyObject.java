@@ -62,7 +62,7 @@ public class EnemyObject extends GameObject{
             return new BulletObject((int) (getX() + width / 2 + cos(toRadians(getRotation())) * (getRadius() / 2 + BULLET_HEIGHT + padding)),
                     (int) (getY() + height / 2 + sin(toRadians(getRotation())) * (getRadius() / 2 + BULLET_HEIGHT + padding)),
                     GameSettings.BULLET_WIDTH, BULLET_HEIGHT,
-                    GameResources.BULLET_IMG_PATH, world,
+                    GameResources.ENEMY_BULLET_IMG_PATH, world,
                     getRotation(), GameSettings.Bullet_Speed, true);
         }
         return null;
