@@ -18,11 +18,12 @@ import com.mygdx.game.manager.AudioManager;
 import com.mygdx.game.manager.MemoryManager;
 import com.mygdx.game.screens.MenuScreen;
 import com.mygdx.game.screens.PlanetGameScreen;
+import com.mygdx.game.screens.SelectLevelScreen;
 import com.mygdx.game.screens.SpaceGameScreen;
 
 public class MyGdxGame extends Game {
 	public World world;
-	public boolean isNextLevel;
+	public boolean canAccessPlanetLevel;
 	private float accumulator;
 
 
@@ -32,6 +33,7 @@ public class MyGdxGame extends Game {
 	public SpaceGameScreen spaceScreen;
 	public PlanetGameScreen planetScreen;
 	public MenuScreen menuScreen;
+	public SelectLevelScreen selectLevelScreen;
 	public BitmapFont commonWhiteFont;
 	public BitmapFont averageWhiteFont;
 
@@ -39,7 +41,7 @@ public class MyGdxGame extends Game {
 	@Override
 	public void create () {
 		//isNextLevel = MemoryManager.loadIsNextLevel();
-		isNextLevel = false;
+		canAccessPlanetLevel = false;
 		Box2D.init();
 		world = new World(new Vector2(0, 0), true);
 
@@ -53,6 +55,7 @@ public class MyGdxGame extends Game {
 		spaceScreen = new SpaceGameScreen(this);
 		planetScreen = new PlanetGameScreen(this);
 		menuScreen = new MenuScreen(this);
+		selectLevelScreen = new SelectLevelScreen(this);
 		audioManager = new AudioManager();
 
 		setScreen(menuScreen);
@@ -66,14 +69,6 @@ public class MyGdxGame extends Game {
 			accumulator -= STEP_TIME;
 			world.step(STEP_TIME, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 		}
-	}
-
-	public void secondLevel() {
-		camera.position.x = camera.viewportWidth / 2;
-		camera.position.y = camera.viewportHeight / 2;
-		MemoryManager.saveIsNextLevel(true);
-		Gdx.input.setInputProcessor(planetScreen);
-		setScreen(planetScreen);
 	}
 	
 	@Override
