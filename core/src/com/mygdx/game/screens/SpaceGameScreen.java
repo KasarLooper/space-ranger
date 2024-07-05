@@ -83,7 +83,7 @@ public class SpaceGameScreen extends GameScreen {
         enemyArray = new ArrayList<>();
         random = new Random();
         gameSession = new GameSession();
-        purpose = new TextView(myGdxGame.averageWhiteFont, 500, 675, "Purpose: energy: 0/3");
+        purpose = new TextView(myGdxGame.averageWhiteFont, 500, 675, "Purpose - energy: 0/3");
         live = new LiveView(0, 675);
         isTouchedShoot = false;
         rd = new Random();
@@ -188,7 +188,7 @@ public class SpaceGameScreen extends GameScreen {
             if (core.destroy()) {
                 if (core.wasCollected) {
                     gameSession.core_was_collected();
-                    purpose.setText(String.format("Purpose: energy: %d/3", gameSession.getCoreCollected()));
+                    purpose.setText(String.format("Purpose - energy: %d/3", gameSession.getCoreCollected()));
                 }
                 myGdxGame.world.destroyBody(core.body);
                 boomArray.add(new BoomObject(core.x, core.y));
