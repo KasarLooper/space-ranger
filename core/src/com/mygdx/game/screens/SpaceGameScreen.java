@@ -95,7 +95,6 @@ public class SpaceGameScreen extends GameScreen {
     @Override
     public void show() {
         super.show();
-        enemyArray.add(new EnemyObject(100, 100, ENEMY_WIDTH, ENEMY_HEIGHT, myGdxGame.world, ENEMY_SHIP_IMG_PATH));
     }
 
     @Override
