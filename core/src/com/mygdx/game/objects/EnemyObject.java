@@ -72,13 +72,22 @@ public class EnemyObject extends GameObject{
         float playerAngle = getAngleOfPlayer(playerX, playerY);
         float playerDistance = getPlayerDistance(playerX, playerY);
         if (Math.abs(playerAngle) < ENEMY_CHECK_ANGLE && playerDistance < ENEMY_CHECK_DISTANCE) {
-            if (!hasAim || rd.nextInt(100) < ENEMY_CHANCE_CHANGE_AIM) {
-                aim = playerAngle + rd.nextInt(ENEMY_SHOOT_ANGLE) * 2 - ENEMY_CHANCE_CHANGE_AIM;
+            if (!hasAim /*|| rd.nextInt(100) < ENEMY_CHANCE_CHANGE_AIM*/) {
+                aim = -playerAngle - rd.nextInt(ENEMY_SHOOT_ANGLE) * 2 + ENEMY_CHANCE_CHANGE_AIM;
             }
             if (!hasAim) hasAim = true;
-            float da = (aim > 0 ? 1 : -1) * ENEMY_TO_PLAYER_ROTATION_SPEED;
-            aim -= da;
+            float da = Math.min(ENEMY_TO_PLAYER_ROTATION_SPEED, Math.abs(aim));
+            if (aim < 0) da = -da;
             sprite.setRotation(sprite.getRotation() + da);
+            aim -= da;
+            /*
+            if (Math.abs(aim) <= ENEMY_TO_PLAYER_ROTATION_SPEED) sprite.setRotation(sprite.getRotation() + aim);
+            else {
+                float da = (aim > 0 ? 1 : -1) * ENEMY_TO_PLAYER_ROTATION_SPEED;
+                aim -= da;
+                sprite.setRotation(sprite.getRotation() + da);
+            }
+             */
         } else {
             sprite.setRotation(sprite.getRotation() + ENEMY_USUAL_ROTATION_SPEED);
             hasAim = false;
