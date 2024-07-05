@@ -13,7 +13,7 @@ public class GameSettings {
 
     //Spawn settings
     public static final int SPAWN_COOL_DOWN = 2000;
-    public static final int CHANCE_CORE_SPAWN = 25; // в процентах // 25
+    public static final int CHANCE_CORE_SPAWN = 100; // в процентах // 25
 
     // Object Setting
   
@@ -22,6 +22,7 @@ public class GameSettings {
     public static final int SHIP_WIDTH = 150;
     public static final int SHIP_HEIGHT = 150;
     public static final int SPEED_SHIP = 3;
+    public static final int COUNT_FRAMES_ONE_IMG = 3;
 
     // Enemy Settings
     public static final int ENEMY_WIDTH = 100;

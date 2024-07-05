@@ -120,7 +120,7 @@ public class SpaceGameScreen extends GameScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        if (gameSession.state == PLAYING) {
+        if (!shipObject.isEnd()) {
             final int padding = 70;
             if (isTouchedShoot && shipObject.needToShoot()) {
                 BulletObject Bullet = new BulletObject(
@@ -146,8 +146,10 @@ public class SpaceGameScreen extends GameScreen {
             updateCore();
             updateEnemy();
             updateBoom();
-            if (gameSession.victory())
+            if (gameSession.victory()) {
                 System.out.println("You Won!");
+                shipObject.moleHoleAnim();
+            }
             if (joystick.isTouched()) {
                 shipObject.setRotation(joystick.getDegrees());
                 Vector2 difference = shipObject.move();

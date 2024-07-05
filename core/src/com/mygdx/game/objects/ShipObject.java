@@ -1,5 +1,6 @@
 package com.mygdx.game.objects;
 
+import static com.mygdx.game.GameSettings.COUNT_FRAMES_ONE_IMG;
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
 import static com.mygdx.game.GameSettings.SPEED_SHIP;
@@ -7,11 +8,13 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.mygdx.game.GameResources;
 import com.mygdx.game.GameSettings;
 
 import java.util.Random;
@@ -25,6 +28,7 @@ public class ShipObject extends GameObject{
 
     public float shot_cool_down;
     private float degrees;
+    int i = 0;
 
     public ShipObject(int x, int y, int wight, int height, String texturePath, World world) {
         super(texturePath, x, y, wight, height, world);
@@ -43,9 +47,19 @@ public class ShipObject extends GameObject{
         return new Vector2(dx, dy);
     }
 
+    public void moleHoleAnim() {
+        i += 1;
+    }
+
+    public boolean isEnd() {
+        return i >= 19 * COUNT_FRAMES_ONE_IMG;
+    }
+
     @Override
     public void draw(SpriteBatch batch) {
         sprite.setBounds(getX() - width / 2f, getY() - height / 2f, width, height);
+        if (i > 0 && i < 19 * COUNT_FRAMES_ONE_IMG) sprite.setTexture(new Texture(String.format(GameResources.ANIM_SHIP_PORTAL_IMG_PATH_PATTERN,
+                i / COUNT_FRAMES_ONE_IMG + 1)));
         sprite.draw(batch);
     }
 
