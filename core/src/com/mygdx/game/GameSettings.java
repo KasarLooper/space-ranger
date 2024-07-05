@@ -13,7 +13,7 @@ public class GameSettings {
 
     //Spawn settings
     public static final int SPAWN_COOL_DOWN = 2000;
-    public static final int CHANCE_CORE_SPAWN = 25; // в процентах
+    public static final int CHANCE_CORE_SPAWN = 25; // в процентах // 25
 
     // Object Setting
   

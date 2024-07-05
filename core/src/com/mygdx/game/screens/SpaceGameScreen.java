@@ -32,6 +32,7 @@ import com.mygdx.game.components.LiveView;
 import com.mygdx.game.components.MovingBackgroundView;
 import com.mygdx.game.components.TextView;
 import com.mygdx.game.manager.ContactManager;
+import com.mygdx.game.objects.BoomObject;
 import com.mygdx.game.objects.BulletObject;
 import com.mygdx.game.objects.CoreObject;
 import com.mygdx.game.objects.EnemyObject;
@@ -50,8 +51,8 @@ public class SpaceGameScreen extends GameScreen {
     // Objects
     public ShipObject shipObject;
     ArrayList<BulletObject> bulletArray;
-
     ArrayList<CoreObject> coreArray;
+    ArrayList<BoomObject> boomArray;
 
     ArrayList<EnemyObject> enemyArray;
     ContactManager contactManager;
@@ -89,6 +90,7 @@ public class SpaceGameScreen extends GameScreen {
         isTouchedShoot = false;
         rd = new Random();
         spawner = new EntitySpawner();
+        boomArray = new ArrayList<>();
     }
 
     //Здесь обработайте паузу
@@ -142,6 +144,7 @@ public class SpaceGameScreen extends GameScreen {
             updateBullets();
             updateCore();
             updateEnemy();
+            updateBoom();
             if (gameSession.victory())
                 System.out.println("You Won!");
             if (joystick.isTouched()) {
@@ -149,6 +152,7 @@ public class SpaceGameScreen extends GameScreen {
                 Vector2 difference = shipObject.move();
                 moveCamera(difference);
             }
+            for (BoomObject boomObject : boomArray) boomObject.Boom_action();
         }
     }
 
@@ -169,6 +173,7 @@ public class SpaceGameScreen extends GameScreen {
         for (BulletObject bullet : bulletArray) bullet.draw(myGdxGame.batch);
         for (CoreObject core: coreArray) core.draw(myGdxGame.batch);
         for (EnemyObject enemy: enemyArray) enemy.draw(myGdxGame.batch);
+        for (BoomObject boom: boomArray) boom.draw(myGdxGame.batch);
         super.drawDynamic();
     }
 
@@ -210,6 +215,18 @@ public class SpaceGameScreen extends GameScreen {
             EnemyObject enemy = iterator.next();
             if (enemy.destroy()) {
                 myGdxGame.world.destroyBody(enemy.body);
+                BoomObject boom = new BoomObject(enemy.getX(), enemy.getY());
+                boomArray.add(boom);
+                iterator.remove();
+            }
+        }
+    }
+
+    private void updateBoom() {
+        Iterator<BoomObject> iterator = boomArray.iterator();
+        while (iterator.hasNext()) {
+            BoomObject boom = iterator.next();
+            if (boom.isNotAlive()) {
                 iterator.remove();
             }
         }
