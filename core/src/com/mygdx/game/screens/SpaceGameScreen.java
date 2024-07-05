@@ -137,11 +137,12 @@ public class SpaceGameScreen extends GameScreen {
                 }
                 for (BoomObject boomObject : boomArray) boomObject.Boom_action();
             } else {
-                myGdxGame.secondLevel();
+                gameSession.state = ENDED;
             }
         }
         else {
             gameSession.state = ENDED;
+            myGdxGame.setScreen(myGdxGame.selectLevelScreen);
         }
     }
 

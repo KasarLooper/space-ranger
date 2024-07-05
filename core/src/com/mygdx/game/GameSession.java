@@ -14,13 +14,13 @@ public class GameSession {
     public State state;
 
     public GameSession() {
-        core_collected = 0;
     }
 
     public void startGame() {
         startTime = TimeUtils.millis();
         lastSpawnTime = TimeUtils.millis();
         state = State.PLAYING;
+        core_collected = 0;
     }
 
     public void pauseGame() {
