@@ -132,9 +132,12 @@ public class SpaceGameScreen extends GameScreen {
             }
             if (joystick.isTouched()) {
                 shipObject.setRotation(joystick.getDegrees());
-                Vector2 difference = shipObject.move();
-                moveCamera(difference);
+                shipObject.move();
             }
+            myGdxGame.camera.position.x = shipObject.getX();
+            myGdxGame.camera.position.y = shipObject.getY();
+            backgroundView.move(myGdxGame.camera.position.x,
+                    myGdxGame.camera.position.y);
             for (BoomObject boomObject : boomArray) boomObject.Boom_action();
         } else {
             myGdxGame.secondLevel();
@@ -164,7 +167,6 @@ public class SpaceGameScreen extends GameScreen {
     @Override
     protected void moveCamera(Vector2 move) {
         super.moveCamera(move);
-        backgroundView.move(move.x, move.y);
     }
 
     // "Чистилки" объектов

@@ -35,9 +35,9 @@ public class MovingBackgroundView extends View{
         texture4X = SCREEN_WIDTH;
         texture4Y = SCREEN_HEIGHT;
     }
-    public void move(float dx, float dy) {
-        cameraX += dx;
-        cameraY += dy;
+    public void move(float newX, float newY) {
+        cameraX = newX - SCREEN_WIDTH / 2f;
+        cameraY = newY - SCREEN_HEIGHT / 2f;
 
         float left = Math.min(Math.min(texture1X, texture2X), Math.min(texture3X, texture4X));
         float right = Math.max(Math.max(texture1X, texture2X), Math.max(texture3X, texture4X)) + SCREEN_WIDTH;
