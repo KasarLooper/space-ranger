@@ -47,4 +47,13 @@ public class GameResources {
     public static final String SOUND_BOOM_PATH = "music/Boom.mp3";
     public static final String SOUND_ENERGY_PATH = "music/f7b30b479a2a752.mp3";
     public static final String MUSIC_MENU_PATH = "music/Cerrone-The_Impact.mp3";
+
+    //Второй уровень
+    public static final String COSMONAUT_ANIM_1 = "cosmonaut_anim_1.png";
+    public static final String COSMONAUT_ANIM_2 = "cosmonaut_anim_2.png";
+    public static final String COSMONAUT_ANIM_3 = "cosmonaut_anim_3.png";
+    public static final String COSMONAUT_ANIM_4 = "cosmonaut_anim_4.png";
+    public static final String COSMONAUT_ANIM_5 = "cosmonaut_anim_5.png";
+    public static final String COSMONAUT_ANIM_6 = "cosmonaut_anim_6.png";
+    public static final String COSMONAUT_ANIM_7 = "cosmonaut_anim_7.png";
 }
