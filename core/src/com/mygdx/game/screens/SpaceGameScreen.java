@@ -11,7 +11,6 @@ import static com.mygdx.game.GameSettings.ENEMY_HEIGHT;
 import static com.mygdx.game.GameSettings.ENEMY_WIDTH;
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
-import static com.mygdx.game.State.ENDED;
 import static com.mygdx.game.State.PAUSED;
 import static com.mygdx.game.State.PLAYING;
 import static java.lang.Math.cos;
@@ -51,6 +50,7 @@ public class SpaceGameScreen extends GameScreen {
 
     // Objects
     public ShipObject shipObject;
+    ImageView shield;
     ArrayList<BulletObject> bulletArray;
     ArrayList<CoreObject> coreArray;
     ArrayList<BoomObject> boomArray;
@@ -77,6 +77,7 @@ public class SpaceGameScreen extends GameScreen {
                 GameResources.SHIP_IMG_PATH,
                 myGdxGame.world
         );
+        shield = new ImageView(150, 150, (float) GameSettings.SCREEN_WIDTH / 2 - 70, (float) GameSettings.SCREEN_HEIGHT / 2 - 70, GameResources.SHIELD_IMG_PATH);
         fireButton = new ButtonView(1113, 75, 100, 100, GameResources.FIRE_BUTTON_IMG_PATH); // "Remove-bg.ai_1720009081104.png"
         backgroundFireButton = new ImageView(1060, 25, GameResources.JOYSTICK_BACK_IMG_PATH);
         joystick = new JoystickView(25, 25);
@@ -97,6 +98,9 @@ public class SpaceGameScreen extends GameScreen {
 
     @Override
     public void show() {
+        // Генерация врагов и ядер (просто, чтобы было видно)
+        //generateCore();
+        //generateEnemy();
         super.show();
     }
 
@@ -104,7 +108,7 @@ public class SpaceGameScreen extends GameScreen {
     public void render(float delta) {
         myGdxGame.audioManager.spaceMusic.play();
         super.render(delta);
-        if (gameSession.state == PLAYING || gameSession.state == ENDED && !shipObject.isEnd()) {
+        if (!shipObject.isEnd()) {
             final int padding = 70;
             if (isTouchedShoot && shipObject.needToShoot()) {
                 BulletObject Bullet = new BulletObject(
@@ -137,13 +141,12 @@ public class SpaceGameScreen extends GameScreen {
             }
             if (joystick.isTouched()) {
                 shipObject.setRotation(joystick.getDegrees());
-                shipObject.move();
+                Vector2 difference = shipObject.move();
+                moveCamera(difference);
             }
-            myGdxGame.camera.position.x = shipObject.getX();
-            myGdxGame.camera.position.y = shipObject.getY();
-            backgroundView.move(myGdxGame.camera.position.x,
-                    myGdxGame.camera.position.y);
             for (BoomObject boomObject : boomArray) boomObject.Boom_action();
+        } else {
+            myGdxGame.secondLevel();
         }
     }
 
@@ -153,6 +156,7 @@ public class SpaceGameScreen extends GameScreen {
         fireButton.draw(myGdxGame.batch);
         purpose.draw(myGdxGame.batch);
         live.draw(myGdxGame.batch);
+        shield.draw(myGdxGame.batch);
         super.drawStatic();
     }
 
@@ -170,6 +174,7 @@ public class SpaceGameScreen extends GameScreen {
     @Override
     protected void moveCamera(Vector2 move) {
         super.moveCamera(move);
+        backgroundView.move(move.x, move.y);
     }
 
     // "Чистилки" объектов

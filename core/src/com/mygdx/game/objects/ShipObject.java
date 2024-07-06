@@ -20,7 +20,7 @@ import com.mygdx.game.GameSettings;
 import java.util.Random;
 
 public class ShipObject extends GameObject{
-    int livesLeft;
+    public int livesLeft;
     Sprite sprite;
     Random random = new Random();
 
