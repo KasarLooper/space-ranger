@@ -12,15 +12,12 @@ import static com.mygdx.game.GameSettings.ENEMY_WIDTH;
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
 import static com.mygdx.game.State.ENDED;
-import static com.mygdx.game.State.PAUSED;
 import static com.mygdx.game.State.PLAYING;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.EntitySpawner;
 import com.mygdx.game.GameResources;
 import com.mygdx.game.GameSession;
@@ -70,12 +67,12 @@ public class SpaceGameScreen extends GameScreen {
         super(myGdxGame);
         this.myGdxGame = myGdxGame;
         backgroundView = new MovingBackgroundView(GameResources.BACKGROUND_IMG_PATH);
-        contactManager = new ContactManager(myGdxGame.world);
+        contactManager = new ContactManager(myGdxGame.space);
         shipObject = new ShipObject(
                 GameSettings.SCREEN_WIDTH / 2, GameSettings.SCREEN_HEIGHT / 2,
                 GameSettings.SHIP_WIDTH, GameSettings.SHIP_HEIGHT,
                 String.format(GameResources.SHIP_IMG_PATH, 3),
-                myGdxGame.world
+                myGdxGame.space
         );
         fireButton = new ButtonView(1113, 75, 100, 100, GameResources.FIRE_BUTTON_IMG_PATH); // "Remove-bg.ai_1720009081104.png"
         backgroundFireButton = new ImageView(1060, 25, GameResources.JOYSTICK_BACK_IMG_PATH);
@@ -112,7 +109,7 @@ public class SpaceGameScreen extends GameScreen {
                         (int) (shipObject.getY() + sin(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
                         GameSettings.BULLET_WIDTH, BULLET_HEIGHT,
                         GameResources.BULLET_IMG_PATH,
-                        myGdxGame.world, shipObject.getRotation(), Bullet_Speed, false
+                        myGdxGame.space, shipObject.getRotation(), Bullet_Speed, false
                 );
                 bulletArray.add(Bullet);
                 myGdxGame.audioManager.soundBullet.play(0.2f);
@@ -126,7 +123,7 @@ public class SpaceGameScreen extends GameScreen {
                 if (bullet != null) bulletArray.add(bullet);
             }
             live.setLeftLives(shipObject.getLivesLeft());
-            myGdxGame.stepWorld();
+            myGdxGame.stepWorld(myGdxGame.space);
             updateBullets();
             updateCore();
             updateEnemy();
@@ -175,7 +172,7 @@ public class SpaceGameScreen extends GameScreen {
         while(iterator.hasNext()) {
             BulletObject bulletObject_now = iterator.next();
             if (bulletObject_now.destroy(shipObject.getX(), shipObject.getY())) {
-                myGdxGame.world.destroyBody(bulletObject_now.body);
+                myGdxGame.space.destroyBody(bulletObject_now.body);
                 iterator.remove();
             }
         }
@@ -194,7 +191,7 @@ public class SpaceGameScreen extends GameScreen {
                     boomArray.add(new BoomObject(core.x, core.y));
                     myGdxGame.audioManager.soundBoom.play(0.2f);
                 }
-                myGdxGame.world.destroyBody(core.body);
+                myGdxGame.space.destroyBody(core.body);
                 iterator.remove();
             }
         }
@@ -205,7 +202,7 @@ public class SpaceGameScreen extends GameScreen {
         while(iterator.hasNext()) {
             EnemyObject enemy = iterator.next();
             if (enemy.destroy()) {
-                myGdxGame.world.destroyBody(enemy.body);
+                myGdxGame.space.destroyBody(enemy.body);
                 BoomObject boom = new BoomObject(enemy.getX(), enemy.getY());
                 boomArray.add(boom);
                 myGdxGame.audioManager.soundBoom.play(0.2f);
@@ -229,7 +226,7 @@ public class SpaceGameScreen extends GameScreen {
         EntitySpawner.Pair pair = spawner.newPair(shipObject.getX(), shipObject.getY(), CORE_WIDTH / 2, CORE_HEIGHT / 2);
         CoreObject coreObject = new CoreObject(
                 (int) pair.x, (int) pair.y,
-                CORE_WIDTH, CORE_HEIGHT, myGdxGame.world,
+                CORE_WIDTH, CORE_HEIGHT, myGdxGame.space,
                 CORE_IMG_PATH
         );
         coreArray.add(coreObject);
@@ -239,7 +236,7 @@ public class SpaceGameScreen extends GameScreen {
         EntitySpawner.Pair pair = spawner.newPair(shipObject.getX(), shipObject.getY(), ENEMY_WIDTH / 2, ENEMY_HEIGHT / 2);
         EnemyObject enemy = new EnemyObject(
                 (int) pair.x, (int) pair.y,
-                ENEMY_WIDTH, ENEMY_HEIGHT, myGdxGame.world,
+                ENEMY_WIDTH, ENEMY_HEIGHT, myGdxGame.space,
                 ENEMY_SHIP_IMG_PATH
         );
         enemyArray.add(enemy);

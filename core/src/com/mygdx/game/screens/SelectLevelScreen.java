@@ -59,10 +59,13 @@ public class SelectLevelScreen extends ScreenAdapter {
             if (spaceLevelButton.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
                 myGdxGame.setScreen(myGdxGame.spaceScreen);
                 Gdx.input.setInputProcessor(myGdxGame.spaceScreen);
+                myGdxGame.audioManager.menuMusic.stop();
+                myGdxGame.audioManager.spaceMusic.play();
             }
             else if (planetLevelButton.isHit(myGdxGame.touch.x, myGdxGame.touch.y) && myGdxGame.canAccessPlanetLevel) {
                 myGdxGame.setScreen(myGdxGame.planetScreen);
                 Gdx.input.setInputProcessor(myGdxGame.planetScreen);
+                myGdxGame.audioManager.menuMusic.stop();
             }
             else if (returnButton.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
                 myGdxGame.setScreen(myGdxGame.menuScreen);

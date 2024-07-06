@@ -9,37 +9,38 @@ import com.mygdx.game.objects.BulletObject;
 import com.mygdx.game.objects.CoreObject;
 import com.mygdx.game.objects.EnemyObject;
 import com.mygdx.game.objects.ShipObject;
+import com.mygdx.game.objects.SpacemanObject;
 
 public class PlanetGameScreen extends GameScreen {
 
     MovingBackgroundView backgroundView;
 
-    ShipObject shipObject;
+    SpacemanObject spaceman;
 
 
 
     public PlanetGameScreen(MyGdxGame game) {
         super(game);
         backgroundView = new MovingBackgroundView(GameResources.BACKGROUND_2_IMG_PATH);
-        shipObject = new ShipObject(
-                GameSettings.SCREEN_WIDTH / 2, GameSettings.SCREEN_HEIGHT / 2,
-                GameSettings.SHIP_WIDTH, GameSettings.SHIP_HEIGHT,
-                String.format(GameResources.SHIP_IMG_PATH, 3),
-                myGdxGame.world
+        spaceman = new SpacemanObject(
+                0, 0,
+                150, 150,
+                "ship.png",
+                myGdxGame.planet
         );
     }
 
     @Override
     public void render(float delta) {
         super.render(delta);
-        myGdxGame.camera.position.x = shipObject.getX();
-        myGdxGame.camera.position.y = shipObject.getY();
-        backgroundView.move(shipObject.getX(), shipObject.getY());
-        myGdxGame.stepWorld();
-        if (joystick.isTouched()) {
-            shipObject.setRotation(joystick.getDegrees());
-            shipObject.move();
-        }
+        myGdxGame.camera.position.x = spaceman.getX();
+        myGdxGame.camera.position.y = spaceman.getY();
+        backgroundView.move(spaceman.getX(), spaceman.getY());
+        myGdxGame.stepWorld(myGdxGame.planet);
+//        if (joystick.isTouched()) {
+//            spaceman.setRotation(joystick.getDegrees());
+//            spaceman.move();
+//        }
     }
 
     @Override
@@ -50,7 +51,7 @@ public class PlanetGameScreen extends GameScreen {
     @Override
     public void drawDynamic() {
         backgroundView.draw(myGdxGame.batch);
-        shipObject.draw(myGdxGame.batch);
+        spaceman.draw(myGdxGame.batch);
         super.drawDynamic();
     }
 
