@@ -1,10 +1,13 @@
 package com.mygdx.game.screens;
 
+import static com.mygdx.game.GameSettings.CORE_HEIGHT;
+import static com.mygdx.game.GameSettings.COSMONAUT_HEIGHT;
+import static com.mygdx.game.GameSettings.COSMONAUT_WIDTH;
+
 import com.mygdx.game.GameResources;
 import com.mygdx.game.GameSettings;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.MovingBackgroundView;
-import com.mygdx.game.objects.ShipObject;
 import com.mygdx.game.objects.SpacemanObject;
 
 public class PlanetGameScreen extends GameScreen {
@@ -13,15 +16,13 @@ public class PlanetGameScreen extends GameScreen {
 
     SpacemanObject spaceman;
 
-
-
     public PlanetGameScreen(MyGdxGame game) {
         super(game);
         backgroundView = new MovingBackgroundView(GameResources.BACKGROUND_2_IMG_PATH);
         spaceman = new SpacemanObject(
                 0, 0,
-                150, 150,
-                "ship.png",
+                COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
+                GameResources.COSMONAUT_ANIM_LEFT_1,
                 myGdxGame.planet
         );
     }
@@ -29,10 +30,12 @@ public class PlanetGameScreen extends GameScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
-        myGdxGame.camera.position.x = spaceman.getX();
-        myGdxGame.camera.position.y = spaceman.getY();
-        backgroundView.move(spaceman.getX(), spaceman.getY());
-        myGdxGame.stepWorld(myGdxGame.planet);
+        if (gameSession.state == com.mygdx.game.State.PLAYING) {
+            myGdxGame.camera.position.x = spaceman.getX();
+            myGdxGame.camera.position.y = spaceman.getY();
+            backgroundView.move(spaceman.getX(), spaceman.getY());
+            myGdxGame.stepWorld(myGdxGame.planet);
+        }
 //        if (joystick.isTouched()) {
 //            spaceman.setRotation(joystick.getDegrees());
 //            spaceman.move();
@@ -53,7 +56,14 @@ public class PlanetGameScreen extends GameScreen {
 
     @Override
     public void restartGame() {
-
+        super.restartGame();
+        myGdxGame.planet.destroyBody(spaceman.body);
+        spaceman = new SpacemanObject(
+                0, 0,
+                COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
+                GameResources.COSMONAUT_ANIM_LEFT_1,
+                myGdxGame.planet
+        );
     }
 
     @Override

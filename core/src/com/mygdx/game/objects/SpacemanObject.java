@@ -14,6 +14,7 @@ public class SpacemanObject extends GameObject{
 
     @Override
     public void draw(SpriteBatch batch) {
+        sprite.setBounds(getX() - (width / 2f), getY() - (height / 2f), width, height);
         sprite.draw(batch);
     }
 
