@@ -22,7 +22,9 @@ import com.mygdx.game.screens.SelectLevelScreen;
 import com.mygdx.game.screens.SpaceGameScreen;
 
 public class MyGdxGame extends Game {
-	public World world;
+	public World space;
+	public World planet;
+
 	public boolean canAccessPlanetLevel;
 	private float accumulator;
 
@@ -44,7 +46,8 @@ public class MyGdxGame extends Game {
 	public void create () {
 		canAccessPlanetLevel = MemoryManager.loadIsNextLevel();
 		Box2D.init();
-		world = new World(new Vector2(0, 0), true);
+		space = new World(new Vector2(0, 0), true);
+		planet = new World(new Vector2((float) GameSettings.GRAVITY_PLANET_X, (float) GameSettings.GRAVITY_PLANET_Y), true);
 
 		commonWhiteFont = FontBuilder.generate(50, Color.WHITE, GameResources.FONT_PATH);
 		averageWhiteFont = FontBuilder.generate(25, Color.WHITE, GameResources.FONT_PATH);
@@ -59,10 +62,10 @@ public class MyGdxGame extends Game {
 		selectLevelScreen = new SelectLevelScreen(this);
 		audioManager = new AudioManager();
 		state = State.ENDED;
-		setScreen(menuScreen);
+		setScreen(planetScreen);
 	}
 
-	public void stepWorld() {
+	public void stepWorld(World world) {
 		float delta = Gdx.graphics.getDeltaTime();
 		accumulator += Math.min(delta, 0.25f);
 

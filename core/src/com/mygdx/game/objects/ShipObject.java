@@ -22,7 +22,6 @@ import java.util.Random;
 public class ShipObject extends GameObject{
     public int livesLeft;
     Sprite sprite;
-    Random random = new Random();
 
     public long lastShotTime;
 

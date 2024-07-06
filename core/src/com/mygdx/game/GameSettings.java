@@ -13,7 +13,7 @@ public class GameSettings {
 
     //Spawn settings
     public static final int SPAWN_COOL_DOWN = 2000;
-    public static final int CHANCE_CORE_SPAWN = 25; // в процентах // 25
+    public static final int CHANCE_CORE_SPAWN = 100; // в процентах // 25
 
     // Object Setting
   
@@ -48,4 +48,7 @@ public class GameSettings {
     public static final float ENEMY_USUAL_ROTATION_SPEED = 1f;
     public static final float ENEMY_TO_PLAYER_ROTATION_SPEED = 10f;
     public static final int ENEMY_CHANCE_CHANGE_AIM = 10; // 5
+
+    public static final double GRAVITY_PLANET_Y = -9.780;
+    public static final double GRAVITY_PLANET_X = 0;
 }
