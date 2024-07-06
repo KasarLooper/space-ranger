@@ -49,4 +49,27 @@ public class GameResources {
     public static final String SOUND_BOOM_PATH = "music/Boom.mp3";
     public static final String SOUND_ENERGY_PATH = "music/f7b30b479a2a752.mp3";
     public static final String MUSIC_MENU_PATH = "music/Cerrone-The_Impact.mp3";
+
+    //Второй уровень
+    public static final String LIGHTNING_RIGHT_IMG_PATH = "lightning_right.png";
+    public static final String LIGHTNING_LEFT_IMG_PATH = "lightning_left.png";
+
+    //cosmonaut_anim_right
+    public static final String COSMONAUT_ANIM_RIGHT_1 = "cosmonaut_anim_right_1.png";
+    public static final String COSMONAUT_ANIM_RIGHT_2 = "cosmonaut_anim_right_2.png";
+    public static final String COSMONAUT_ANIM_RIGHT_3 = "cosmonaut_anim_right_3.png";
+    public static final String COSMONAUT_ANIM_RIGHT_4 = "cosmonaut_anim_right_4.png";
+    public static final String COSMONAUT_ANIM_RIGHT_5 = "cosmonaut_anim_right_5.png";
+    public static final String COSMONAUT_ANIM_RIGHT_6 = "cosmonaut_anim_right_6.png";
+    public static final String COSMONAUT_ANIM_RIGHT_7 = "cosmonaut_anim_right_7.png";
+
+    //cosmonaut_anim_left
+
+    public static final String COSMONAUT_ANIM_LEFT_1 = "cosmonaut_anim_left_1.png";
+    public static final String COSMONAUT_ANIM_LEFT_2 = "cosmonaut_anim_left_2.png";
+    public static final String COSMONAUT_ANIM_LEFT_3 = "cosmonaut_anim_left_3.png";
+    public static final String COSMONAUT_ANIM_LEFT_4 = "cosmonaut_anim_left_4.png";
+    public static final String COSMONAUT_ANIM_LEFT_5 = "cosmonaut_anim_left_5.png";
+    public static final String COSMONAUT_ANIM_LEFT_6 = "cosmonaut_anim_left_6.png";
+    public static final String COSMONAUT_ANIM_LEFT_7 = "cosmonaut_anim_left_7.png";
 }
