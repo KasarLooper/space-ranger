@@ -49,7 +49,8 @@ public class GameResources {
     public static final String MUSIC_MENU_PATH = "music/Cerrone-The_Impact.mp3";
 
     //Второй уровень
-    public static final String LIGHTNING_IMG_PATH = "lightning.png";
+    public static final String LIGHTNING_RIGHT_IMG_PATH = "lightning_right.png";
+    public static final String LIGHTNING_LEFT_IMG_PATH = "lightning_left.png";
 
     //cosmonaut_anim_right
     public static final String COSMONAUT_ANIM_RIGHT_1 = "cosmonaut_anim_right_1.png";
