@@ -6,6 +6,7 @@ import static com.mygdx.game.GameSettings.COSMONAUT_WIDTH;
 import com.mygdx.game.GameResources;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.MovingBackgroundView;
+import com.mygdx.game.objects.Earth;
 import com.mygdx.game.objects.SpacemanObject;
 
 public class PlanetGameScreen extends GameScreen {
@@ -13,6 +14,7 @@ public class PlanetGameScreen extends GameScreen {
     MovingBackgroundView backgroundView;
 
     SpacemanObject spaceman;
+    Earth earth;
 
     public PlanetGameScreen(MyGdxGame game) {
         super(game);
@@ -23,6 +25,13 @@ public class PlanetGameScreen extends GameScreen {
                 String.format(GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 1),
                 myGdxGame.planet
         );
+        earth = new Earth(
+                -100, -100,
+                163, 1216,
+                GameResources.EARTH_IMG_PATH,
+                myGdxGame.planet
+        );
+
     }
 
     @Override
@@ -49,7 +58,13 @@ public class PlanetGameScreen extends GameScreen {
     public void drawDynamic() {
         backgroundView.draw(myGdxGame.batch);
         spaceman.draw(myGdxGame.batch);
+        earth.draw(myGdxGame.batch);
         super.drawDynamic();
+    }
+
+    @Override
+    public void drawStatic() {
+        //
     }
 
     @Override

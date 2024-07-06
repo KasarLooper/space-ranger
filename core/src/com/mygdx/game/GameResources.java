@@ -7,7 +7,7 @@ public class GameResources {
     public static final String BULLET_IMG_PATH = "bullet.png";
     public static final String BACKGROUND_IMG_PATH = "background.png";
 
-    public static final String BACKGROUND_2_IMG_PATH = "back_2.jpg";
+    public static final String BACKGROUND_2_IMG_PATH = "back_2.png";
     public static final String BLACKOUT_IMG_PATH = "blackout_full.png";
 
     public static final String SWORDS_IMG_PATH = "swords.png";
@@ -73,5 +73,6 @@ public class GameResources {
     public static final String COSMONAUT_ANIM_LEFT_5 = "cosmonaut_anim_left_5.png";
     public static final String COSMONAUT_ANIM_LEFT_6 = "cosmonaut_anim_left_6.png";
     public static final String COSMONAUT_ANIM_LEFT_7 = "cosmonaut_anim_left_7.png";
+    public static final String EARTH_IMG_PATH = "earth.png";
     public static final String COSMONAUT_ANIM_LEFT_IMG_PATTERN = "cosmonaut_anim_left/cosmonaut_anim_left_%d.png";
 }
