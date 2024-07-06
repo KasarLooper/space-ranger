@@ -25,6 +25,6 @@ public class SpacemanObject extends GameObject{
 
     public Type type() {
         return Type.Ship;
-        // сли я правильно понял
+        // Если я правильно понял
     }
 }
