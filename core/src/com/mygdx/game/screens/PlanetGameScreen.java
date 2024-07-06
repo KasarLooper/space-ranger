@@ -4,10 +4,6 @@ import com.mygdx.game.GameResources;
 import com.mygdx.game.GameSettings;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.MovingBackgroundView;
-import com.mygdx.game.objects.BoomObject;
-import com.mygdx.game.objects.BulletObject;
-import com.mygdx.game.objects.CoreObject;
-import com.mygdx.game.objects.EnemyObject;
 import com.mygdx.game.objects.ShipObject;
 import com.mygdx.game.objects.SpacemanObject;
 
