@@ -65,7 +65,7 @@ public class GameResources {
 
     //cosmonaut_anim_left
 
-    public static final String COSMONAUT_ANIM_LEFT_1 = "cosmonaut_anim_left_1.png";
+    public static final String COSMONAUT_ANIM_LEFT_1 = "cosmonaut_anim_left/cosmonaut_anim_left_1.png";
     public static final String COSMONAUT_ANIM_LEFT_2 = "cosmonaut_anim_left_2.png";
     public static final String COSMONAUT_ANIM_LEFT_3 = "cosmonaut_anim_left_3.png";
     public static final String COSMONAUT_ANIM_LEFT_4 = "cosmonaut_anim_left_4.png";
