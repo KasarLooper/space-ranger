@@ -6,6 +6,8 @@ public class GameResources {
     public static final String JOYSTICK_CIRCLE_IMG_PATH = "joystick-circle.png";
     public static final String BULLET_IMG_PATH = "bullet.png";
     public static final String BACKGROUND_IMG_PATH = "background.png";
+
+    public static final String BACKGROUND_2_IMG_PATH = "back_2.jpg";
     public static final String BLACKOUT_IMG_PATH = "blackout_full.png";
 
     public static final String SWORDS_IMG_PATH = "swords.png";
