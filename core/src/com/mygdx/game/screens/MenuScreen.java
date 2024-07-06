@@ -51,6 +51,7 @@ public class MenuScreen extends ScreenAdapter {
 
             if (startButtonView.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
                 myGdxGame.setScreen(myGdxGame.selectLevelScreen);
+                myGdxGame.audioManager.menuMusic.stop();
             }
             if (exitButtonView.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
                 Gdx.app.exit();
