@@ -75,9 +75,10 @@ public class ShipObject extends GameObject{
     public void hit(Type type) {
         body.setLinearVelocity(0, 0);
         body.setAngularVelocity(0);
-        if (type == Type.Enemy || type == Type.EnemyBullet) {
+        if (type == Type.Enemy || type == Type.EnemyBullet || type == Type.Bullet) {
             livesLeft -= 1;
         }
+        if (livesLeft > 0) sprite.setTexture(new Texture(String.format(GameResources.SHIP_IMG_PATH, livesLeft)));
     }
 
     public float getRotation() {
@@ -94,7 +95,7 @@ public class ShipObject extends GameObject{
     }
 
     public boolean isAlive() {
-        return  livesLeft > 0;
+        return livesLeft > 0;
     }
 
     public int getLivesLeft() {

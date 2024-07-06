@@ -1,15 +1,21 @@
 package com.mygdx.game;
 
 public class GameResources {
-    public static final String SHIP_IMG_PATH = "ship.png";
-    public static final String SHIELD_IMG_PATH = "shield_3.png";
+    public static final String SHIP_IMG_PATH = "ship_%d.png";
     public static final String JOYSTICK_BACK_IMG_PATH = "joystick-zone.png";
     public static final String JOYSTICK_CIRCLE_IMG_PATH = "joystick-circle.png";
     public static final String BULLET_IMG_PATH = "bullet.png";
     public static final String BACKGROUND_IMG_PATH = "background.png";
+
+    public static final String BACKGROUND_2_IMG_PATH = "back_2.jpg";
     public static final String BLACKOUT_IMG_PATH = "blackout_full.png";
+
+    public static final String SWORDS_IMG_PATH = "swords.png";
+
+    public static final String MIDDLE_BLACKOUT_IMG_PATH = "button_background_long.png";
     public static final String FONT_PATH = "fonts/ofont.ru_Montserrat.ttf";
-    public static final String BUTTON_IMG_PATH = "button_bg.png";
+    public static final String BUTTON_IMG_PATH = "button.png";
+
     public static final String CORE_IMG_PATH = "core.png";
     public static final String ENEMY_SHIP_IMG_PATH = "Enemy_ship.png";
     public static final String BOOM_IMG_PATH = "Boom.png";
