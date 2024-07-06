@@ -39,7 +39,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     public GameScreen(MyGdxGame game) {
         this.myGdxGame = game;
         pauseButton = new ButtonView(1200, 650, 50, 50, GameResources.PAUSE_ICON_IMG_PATH); // "pause_icon.png"
-        endButton = new ButtonView(430, 516, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Surrender!");
+        endButton = new ButtonView(430, 516, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Go to Level choose");
         restartButton = new ButtonView(430, 416, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Restart");
         black_out_on_pause = new MovingBackgroundView(GameResources.BLACKOUT_IMG_PATH);
         gameSession = new GameSession();
@@ -88,6 +88,9 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     protected void drawStatic() {
         joystick.draw(myGdxGame.batch);
         pauseButton.draw(myGdxGame.batch);
+        if (gameSession.state == null) {
+            gameSession.startGame();
+        }
         switch (gameSession.state) {
             case PLAYING:
                 break;
@@ -114,7 +117,9 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     }
 
 
-    public abstract void restartGame();
+    public void restartGame() {
+        gameSession.startGame();
+    }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
@@ -197,7 +202,5 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     }
 
     enum State {
-        play,
-        pause
     }
 }

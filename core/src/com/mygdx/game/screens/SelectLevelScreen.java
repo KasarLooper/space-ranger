@@ -28,7 +28,6 @@ public class SelectLevelScreen extends ScreenAdapter {
         planetLevelButton = new ButtonView(430, 176, 440, 70, myGdxGame.commonWhiteFont, GameResources.BUTTON_IMG_PATH, "Planet Level");
         returnButton = new ButtonView(430, 76, 440, 70, myGdxGame.commonWhiteFont, GameResources.BUTTON_IMG_PATH, "Go back");
         blocked = new ImageView(430, 176, GameResources.MIDDLE_BLACKOUT_IMG_PATH);
-        // пасхалка
         swords = new ImageView(520, 380, GameResources.SWORDS_IMG_PATH);
     }
     @Override

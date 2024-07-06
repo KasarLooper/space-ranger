@@ -26,6 +26,8 @@ public class MyGdxGame extends Game {
 	public boolean canAccessPlanetLevel;
 	private float accumulator;
 
+	public State state;
+
 
 	public SpriteBatch batch;
 	public Vector3 touch;
@@ -40,6 +42,7 @@ public class MyGdxGame extends Game {
 	public AudioManager audioManager;
 	@Override
 	public void create () {
+		MemoryManager.saveIsNextLevel(false);
 		canAccessPlanetLevel = MemoryManager.loadIsNextLevel();
 		Box2D.init();
 		world = new World(new Vector2(0, 0), true);
@@ -56,7 +59,7 @@ public class MyGdxGame extends Game {
 		menuScreen = new MenuScreen(this);
 		selectLevelScreen = new SelectLevelScreen(this);
 		audioManager = new AudioManager();
-
+		state = State.ENDED;
 		setScreen(menuScreen);
 	}
 

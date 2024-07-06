@@ -31,6 +31,7 @@ import com.mygdx.game.components.LiveView;
 import com.mygdx.game.components.MovingBackgroundView;
 import com.mygdx.game.components.TextView;
 import com.mygdx.game.manager.ContactManager;
+import com.mygdx.game.manager.MemoryManager;
 import com.mygdx.game.objects.BoomObject;
 import com.mygdx.game.objects.BulletObject;
 import com.mygdx.game.objects.CoreObject;
@@ -134,7 +135,8 @@ public class SpaceGameScreen extends GameScreen {
                     if (gameSession.victory()) {
                         System.out.println("You Won!");
                         shipObject.moleHoleAnim();
-                        myGdxGame.canAccessPlanetLevel = true;
+                        MemoryManager.saveIsNextLevel(true);
+                        myGdxGame.canAccessPlanetLevel = MemoryManager.loadIsNextLevel();
                     }
                     if (joystick.isTouched()) {
                         shipObject.setRotation(joystick.getDegrees());
