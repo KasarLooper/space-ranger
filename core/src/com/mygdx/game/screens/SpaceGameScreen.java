@@ -227,6 +227,7 @@ public class SpaceGameScreen extends GameScreen {
 
     @Override
     public void restartGame() {
+        super.restartGame();
         Iterator<CoreObject> iterator_core = coreArray.iterator();
         while (iterator_core.hasNext()) {
             myGdxGame.world.destroyBody(iterator_core.next().body);
