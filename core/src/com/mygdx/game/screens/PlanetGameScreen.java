@@ -24,7 +24,7 @@ public class PlanetGameScreen extends GameScreen {
         shipObject = new ShipObject(
                 GameSettings.SCREEN_WIDTH / 2, GameSettings.SCREEN_HEIGHT / 2,
                 GameSettings.SHIP_WIDTH, GameSettings.SHIP_HEIGHT,
-                GameResources.SHIP_IMG_PATH,
+                String.format(GameResources.SHIP_IMG_PATH, 3),
                 myGdxGame.world
         );
     }

@@ -20,7 +20,7 @@ import com.mygdx.game.GameSettings;
 import java.util.Random;
 
 public class ShipObject extends GameObject{
-    int livesLeft;
+    public int livesLeft;
     Sprite sprite;
     Random random = new Random();
 
@@ -78,6 +78,7 @@ public class ShipObject extends GameObject{
         if (type == Type.Enemy || type == Type.EnemyBullet || type == Type.Bullet) {
             livesLeft -= 1;
         }
+        if (livesLeft > 0) sprite.setTexture(new Texture(String.format(GameResources.SHIP_IMG_PATH, livesLeft)));
     }
 
     public float getRotation() {

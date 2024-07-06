@@ -25,7 +25,9 @@ public class CoreObject extends GameObject {
     @Override
     public void hit(Type type) {
         wasHit = true;
-        if (type == Type.Ship) wasCollected = true;
+        if (type == Type.Ship) {
+            wasCollected = true;
+        }
     }
 
     public boolean destroy() {

@@ -21,7 +21,7 @@ public abstract class GameObject {
 
     public Body body;
     public short cBits;
-    Texture texture;
+    public Texture texture;
     World world;
 
 
