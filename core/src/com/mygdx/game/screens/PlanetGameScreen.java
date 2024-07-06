@@ -1,11 +1,9 @@
 package com.mygdx.game.screens;
 
-import static com.mygdx.game.GameSettings.CORE_HEIGHT;
 import static com.mygdx.game.GameSettings.COSMONAUT_HEIGHT;
 import static com.mygdx.game.GameSettings.COSMONAUT_WIDTH;
 
 import com.mygdx.game.GameResources;
-import com.mygdx.game.GameSettings;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.MovingBackgroundView;
 import com.mygdx.game.objects.Earth;
@@ -24,7 +22,7 @@ public class PlanetGameScreen extends GameScreen {
         spaceman = new SpacemanObject(
                 0, 0,
                 COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
-                GameResources.COSMONAUT_ANIM_LEFT_1,
+                String.format(GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 1),
                 myGdxGame.planet
         );
         earth = new Earth(
@@ -76,9 +74,8 @@ public class PlanetGameScreen extends GameScreen {
         spaceman = new SpacemanObject(
                 0, 0,
                 COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
-                GameResources.COSMONAUT_ANIM_LEFT_1,
-                myGdxGame.planet
-        );
+                String.format(GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 1),
+                myGdxGame.planet);
     }
 
     @Override

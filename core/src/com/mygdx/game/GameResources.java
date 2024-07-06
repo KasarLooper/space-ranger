@@ -62,6 +62,7 @@ public class GameResources {
     public static final String COSMONAUT_ANIM_RIGHT_5 = "cosmonaut_anim_right_5.png";
     public static final String COSMONAUT_ANIM_RIGHT_6 = "cosmonaut_anim_right_6.png";
     public static final String COSMONAUT_ANIM_RIGHT_7 = "cosmonaut_anim_right_7.png";
+    public static final String COSMONAUT_ANIM_RIGHT_IMG_PATTERN = "cosmonaut_anim_right/cosmonaut_anim_right_%d.png";
 
     //cosmonaut_anim_left
 
@@ -73,4 +74,5 @@ public class GameResources {
     public static final String COSMONAUT_ANIM_LEFT_6 = "cosmonaut_anim_left_6.png";
     public static final String COSMONAUT_ANIM_LEFT_7 = "cosmonaut_anim_left_7.png";
     public static final String EARTH_IMG_PATH = "earth.png";
+    public static final String COSMONAUT_ANIM_LEFT_IMG_PATTERN = "cosmonaut_anim_left/cosmonaut_anim_left_%d.png";
 }
