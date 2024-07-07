@@ -8,9 +8,12 @@ import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
 import static com.mygdx.game.State.PLAYING;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.mygdx.game.GameResources;
+import com.mygdx.game.GameSettings;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.ButtonView;
+import com.mygdx.game.components.MovingBackgroundLeftRightView;
 import com.mygdx.game.components.MovingBackgroundView;
 import com.mygdx.game.objects.Earth;
 import com.mygdx.game.objects.SpacemanObject;
@@ -27,7 +30,7 @@ public class PlanetGameScreen extends GameScreen {
 
     public PlanetGameScreen(MyGdxGame game) {
         super(game);
-        backgroundView = new MovingBackgroundView(GameResources.BACKGROUND_2_IMG_PATH);
+        backgroundView = new MovingBackgroundLeftRightView(GameResources.BACKGROUND_2_IMG_PATH);
         spaceman = new SpacemanObject(
                 0, GROUND_HEIGHT + COSMONAUT_HEIGHT / 2,
                 COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
@@ -41,6 +44,7 @@ public class PlanetGameScreen extends GameScreen {
 
     @Override
     public void render(float delta) {
+        myGdxGame.camera.position.y += GROUND_HEIGHT;
         super.render(delta);
         if (gameSession.state == com.mygdx.game.State.PLAYING) {
             myGdxGame.camera.position.x = spaceman.getX();
@@ -77,7 +81,7 @@ public class PlanetGameScreen extends GameScreen {
         super.restartGame();
         myGdxGame.planet.destroyBody(spaceman.body);
         spaceman = new SpacemanObject(
-                0, GROUND_HEIGHT + COSMONAUT_HEIGHT / 2 + 100,
+                0, GROUND_HEIGHT + COSMONAUT_HEIGHT / 2,
                 COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
                 String.format(GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4),
                 myGdxGame.planet);
@@ -126,6 +130,37 @@ public class PlanetGameScreen extends GameScreen {
                 spaceman.stepLeft();
             else spaceman.stepRight();
         }
+        if (screenX > SCREEN_WIDTH / 2 && gameSession.state == PLAYING) {
+            if (!pauseButton.isHit(screenX, Gdx.graphics.getHeight() - screenY) && !jumpButton.isHit(screenX, Gdx.graphics.getHeight() - screenY)) {
+                isJump = false;
+            }
+        }
         return true;
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.A) {
+            joystick.left();
+            spaceman.stepLeft();
+        }
+        else if (keycode == Input.Keys.D) {
+            joystick.right();
+            spaceman.stepRight();
+        }
+        if (keycode == Input.Keys.SPACE)
+            isJump = true;
+        return super.keyDown(keycode);
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        if (keycode == Input.Keys.A || keycode == Input.Keys.D) {
+            joystick.toDefault();
+            spaceman.stop();
+        }
+        if (keycode == Input.Keys.SPACE)
+            isJump = false;
+        return super.keyUp(keycode);
     }
 }

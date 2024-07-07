@@ -62,7 +62,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     @Override
     public void render(float delta) {
         myGdxGame.camera.update();
-        ScreenUtils.clear(Color.CLEAR);
+        ScreenUtils.clear(255f / 255f, 172f / 255f, 188f / 255f, 0);
 
         myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
         myGdxGame.batch.begin();

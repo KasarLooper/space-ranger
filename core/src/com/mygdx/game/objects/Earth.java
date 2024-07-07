@@ -26,7 +26,7 @@ public class Earth{
         FixtureDef fixture = new FixtureDef();
         fixture.shape = shape;
         fixture.friction = 0.5f;
-        fixture.restitution = 0.3f;
+        fixture.restitution = 0;
         body.createFixture(fixture);
 
         shape.dispose();

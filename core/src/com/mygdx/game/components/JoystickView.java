@@ -82,4 +82,12 @@ public class JoystickView extends View {
         circle.dispose();
         zone.dispose();
     }
+
+    public void left() {
+        onTouch((int) (centreX - 100), (int) circleY);
+    }
+
+    public void right() {
+        onTouch((int) (centreY + 100), (int) circleY);
+    }
 }
