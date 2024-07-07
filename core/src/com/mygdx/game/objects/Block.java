@@ -36,10 +36,10 @@ public class Block{
         texture = new Texture(texturePath);
 
         Vector2[] vertices = new Vector2[4];
-        vertices[0] = new Vector2(x, y);
-        vertices[1] = new Vector2(x, y + height);
-        vertices[2] = new Vector2(x + wight, y + height);
-        vertices[3] = new Vector2(x + wight, y);
+        vertices[0] = new Vector2(x * SCALE, y * SCALE);
+        vertices[1] = new Vector2(x * SCALE, (y + height) * SCALE);
+        vertices[2] = new Vector2((x + wight) * SCALE, (y + height) * SCALE);
+        vertices[3] = new Vector2((x + wight) * SCALE, y * SCALE);
 
         PolygonShape shape = new PolygonShape();
         shape.set(vertices);

@@ -15,6 +15,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.manager.AudioManager;
+import com.mygdx.game.manager.LevelMapManager;
 import com.mygdx.game.manager.MemoryManager;
 import com.mygdx.game.screens.MenuScreen;
 import com.mygdx.game.screens.PlanetGameScreen;
@@ -40,6 +41,7 @@ public class MyGdxGame extends Game {
 	public SelectLevelScreen selectLevelScreen;
 	public BitmapFont commonWhiteFont;
 	public BitmapFont averageWhiteFont;
+	public LevelMapManager levelMapManager;
 
 	public AudioManager audioManager;
 	@Override
@@ -64,6 +66,8 @@ public class MyGdxGame extends Game {
 		//state = State.ENDED;
 		setScreen(planetScreen);
 		Gdx.input.setInputProcessor(planetScreen);
+
+		levelMapManager = new LevelMapManager();
 	}
 
 	public void stepWorld(World world) {
