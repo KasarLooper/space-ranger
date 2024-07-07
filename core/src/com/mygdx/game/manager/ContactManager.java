@@ -8,6 +8,8 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.objects.GameObject;
 
+import org.w3c.dom.ls.LSOutput;
+
 public class ContactManager {
     World world;
 
@@ -17,7 +19,6 @@ public class ContactManager {
         world.setContactListener(new ContactListener() {
             @Override
             public void beginContact(Contact contact) {
-
                 Fixture fixA = contact.getFixtureA();
                 Fixture fixB = contact.getFixtureB();
 

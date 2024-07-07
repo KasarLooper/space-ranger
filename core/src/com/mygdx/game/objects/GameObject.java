@@ -51,7 +51,6 @@ public abstract class GameObject {
 
     public void hit(Type type) {
         // вся физика ударов и т.п.
-        System.out.println("Hit - 5");
     }
 
     public void dispose() {

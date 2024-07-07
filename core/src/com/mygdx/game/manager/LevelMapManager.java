@@ -31,9 +31,4 @@ public class LevelMapManager {
             ioException.printStackTrace();
         }
     }
-
-    public void run(String image) {
-        LevelMapManager mapManager = new  LevelMapManager();
-        mapManager.loadMap(image);
-    }
 }
