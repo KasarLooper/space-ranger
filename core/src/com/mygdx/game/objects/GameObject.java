@@ -5,6 +5,7 @@ import static com.mygdx.game.GameSettings.SCALE;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -85,21 +86,26 @@ public abstract class GameObject {
         def.fixedRotation = true; // запрет на вращение
         Body body = world.createBody(def);
 
-        CircleShape circleShape = new CircleShape();
-        circleShape.setRadius(getRadius());
+        Shape shape = getShape(x, y, (float) width,  (float) height);
 
         FixtureDef fixtureDef = new FixtureDef();
         //fixtureDef.filter.categoryBits = cBits; // биты
 
-        fixtureDef.shape = circleShape;
+        fixtureDef.shape = shape;
         fixtureDef.density = 0.1f;
         fixtureDef.friction = 1f;
 
         Fixture fixture = body.createFixture(fixtureDef);
         fixture.setUserData(this);
-        circleShape.dispose();
+        shape.dispose();
 
         body.setTransform(x * SCALE, y * SCALE, 0);
         return body;
+    }
+
+    protected Shape getShape(float x, float y, float width, float height) {
+        CircleShape shape = new CircleShape();
+        shape.setRadius(getRadius());
+        return shape;
     }
 }
