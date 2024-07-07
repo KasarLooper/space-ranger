@@ -1,5 +1,6 @@
 package com.mygdx.game.objects;
 
+import static com.mygdx.game.GameSettings.COSMONAUT_JUMP_FORCE;
 import static com.mygdx.game.GameSettings.COSMONAUT_SPEED;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -69,7 +70,7 @@ public class SpacemanObject extends GameObject{
             System.out.println("jump");
             isJump = true;
             jumpTime = TimeUtils.millis();
-            body.applyForceToCenter(0, GameSettings.COSMONAUT_JUMP_FORCE, false);
+            body.applyLinearImpulse(new Vector2(0, COSMONAUT_JUMP_FORCE), body.getWorldCenter(), false);
         }
     }
 
@@ -99,6 +100,7 @@ public class SpacemanObject extends GameObject{
 
     public void updateJump() {
         if (Math.abs(body.getLinearVelocity().y) < 0.01 && TimeUtils.millis() - jumpTime > 50) {
+            body.setAwake(true);
             isJump = false;
         }
     }

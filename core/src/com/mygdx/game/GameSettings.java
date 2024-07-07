@@ -64,5 +64,5 @@ public class GameSettings {
     public static final int COSMONAUT_WIDTH = 300;
     public static final int COSMONAUT_HEIGHT = 300;
     public static final int COSMONAUT_SPEED = 10;
-    public static final int COSMONAUT_JUMP_FORCE = 10000;
+    public static final int COSMONAUT_JUMP_FORCE = 200;
 }
