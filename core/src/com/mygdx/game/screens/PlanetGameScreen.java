@@ -12,6 +12,7 @@ import com.mygdx.game.GameResources;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.ButtonView;
 import com.mygdx.game.components.MovingBackgroundView;
+import com.mygdx.game.objects.Block;
 import com.mygdx.game.objects.Earth;
 import com.mygdx.game.objects.SpacemanObject;
 
@@ -21,6 +22,7 @@ public class PlanetGameScreen extends GameScreen {
 
     SpacemanObject spaceman;
     Earth earth;
+    Block block;
 
     ButtonView jumpButton;
     boolean isJump;
@@ -35,6 +37,7 @@ public class PlanetGameScreen extends GameScreen {
                 myGdxGame.planet
         );
         earth = new Earth(GROUND_HEIGHT, myGdxGame.planet);
+        block = new Block(100, 200, 100, 100, GameResources.BOOM_IMG_PATH, myGdxGame.planet);
         jumpButton = new ButtonView(1150, 25, 100, 100, GameResources.JUMP_BUTTON_IMG_PATH);
         isJump = false;
     }
@@ -52,6 +55,7 @@ public class PlanetGameScreen extends GameScreen {
             myGdxGame.stepWorld(myGdxGame.planet);
             spaceman.updateJump();
         }
+        System.out.println(spaceman.getX() + " " + spaceman.getY());
     }
 
     @Override
@@ -63,6 +67,7 @@ public class PlanetGameScreen extends GameScreen {
     public void drawDynamic() {
         backgroundView.draw(myGdxGame.batch);
         spaceman.draw(myGdxGame.batch);
+        block.draw(myGdxGame.batch);
         super.drawDynamic();
     }
 
