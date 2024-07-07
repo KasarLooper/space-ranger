@@ -29,12 +29,13 @@ public class PlanetGameScreen extends GameScreen {
 
     ButtonView jumpButton;
     boolean isJump;
+    private int padding = 0;
 
     public PlanetGameScreen(MyGdxGame game) {
         super(game);
         backgroundView = new MovingBackgroundLeftRightView(GameResources.BACKGROUND_2_IMG_PATH);
         spaceman = new SpacemanObject(
-                0, GROUND_HEIGHT + COSMONAUT_HEIGHT / 2,
+                0, GROUND_HEIGHT + COSMONAUT_HEIGHT / 2 + padding,
                 COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
                 String.format(GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4),
                 myGdxGame.planet
@@ -86,7 +87,7 @@ public class PlanetGameScreen extends GameScreen {
         super.restartGame();
         myGdxGame.planet.destroyBody(spaceman.body);
         spaceman = new SpacemanObject(
-                0, GROUND_HEIGHT + COSMONAUT_HEIGHT / 2,
+                0, GROUND_HEIGHT + COSMONAUT_HEIGHT / 2 + padding,
                 COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
                 String.format(GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4),
                 myGdxGame.planet);

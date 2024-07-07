@@ -109,7 +109,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     }
 
     protected void drawDynamic() {
-        //debugRenderer.render(myGdxGame.planet, myGdxGame.camera.combined);
+        debugRenderer.render(myGdxGame.planet, myGdxGame.camera.combined);
     }
 
     @Override

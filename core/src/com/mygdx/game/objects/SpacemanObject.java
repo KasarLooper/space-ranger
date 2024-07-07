@@ -2,11 +2,14 @@ package com.mygdx.game.objects;
 
 import static com.mygdx.game.GameSettings.COSMONAUT_JUMP_FORCE;
 import static com.mygdx.game.GameSettings.COSMONAUT_SPEED;
+import static com.mygdx.game.GameSettings.SCALE;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.GameResources;
@@ -43,6 +46,13 @@ public class SpacemanObject extends GameObject{
         }
         i = 0;
         isJump = false;
+    }
+
+    @Override
+    protected Shape getShape(float x, float y, float width, float height) {
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(width * SCALE / 2f, height * SCALE / 2f);
+        return shape;
     }
 
     @Override
