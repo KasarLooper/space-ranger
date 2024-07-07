@@ -12,6 +12,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.GameResources;
@@ -34,6 +35,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     private boolean isReload = false;
     private float camX;
     private float camY;
+    Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
 
     public GameScreen(MyGdxGame game) {
@@ -107,6 +109,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     }
 
     protected void drawDynamic() {
+        //debugRenderer.render(myGdxGame.planet, myGdxGame.camera.combined);
     }
 
     @Override

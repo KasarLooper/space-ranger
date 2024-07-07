@@ -1,55 +1,113 @@
 package com.mygdx.game.objects;
 
+import static com.mygdx.game.GameSettings.COSMONAUT_SPEED;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.GameResources;
+import com.mygdx.game.GameSettings;
+
+import java.security.PublicKey;
 
 public class SpacemanObject extends GameObject{
+    int defaultY;
     Sprite sprite;
     int i;
-    boolean isRightDirection;
     boolean isRightStep;
     boolean isLeftStep;
+    boolean isStop;
+    boolean isJump;
     Texture[] left;
     Texture[] right;
+    long jumpTime;
 
     public SpacemanObject(int x, int y, int wight, int height, String texturePath, World world) {
         super(texturePath, x, y, wight, height, world);
+        defaultY = y;
         sprite = new Sprite(texture);
-        left = new Texture[7];
-        right = new Texture[7];
-        for (int i = 1; i <= 7; i++) {
-            int j = i + 3;
+
+        left = new Texture[14];
+        right = new Texture[14];
+        for (int i = 2; i <= 14; i+=2) {
+            int j = i / 2 + 3;
             if (j > 7) j -= 7;
+            left[i - 2] = new Texture(String.format(GameResources.COSMONAUT_ANIM_LEFT_IMG_PATTERN, j));
             left[i - 1] = new Texture(String.format(GameResources.COSMONAUT_ANIM_LEFT_IMG_PATTERN, j));
+            right[i - 2] = new Texture(String.format(GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN, j));
             right[i - 1] = new Texture(String.format(GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN, j));
         }
         i = 0;
+        isJump = false;
     }
 
     @Override
     public void draw(SpriteBatch batch) {
         sprite.setBounds(getX() - (width / 2f), getY() - (height / 2f), width, height);
-        if (isLeftStep) sprite.setTexture(left[i]);
-        if (isRightStep) sprite.setTexture(right[i]);
         sprite.draw(batch);
     }
 
     public void stepLeft() {
+        if (!isJump) {
+            isRightStep = false;
+            isLeftStep = true;
+        }
     }
 
     public void stepRight() {
+        if (!isJump) {
+            isRightStep = true;
+            isLeftStep = false;
+        }
+    }
+
+    public void jump() {
+        if (!isJump) {
+            System.out.println("jump");
+            isJump = true;
+            jumpTime = TimeUtils.millis();
+            body.applyForceToCenter(0, GameSettings.COSMONAUT_JUMP_FORCE, false);
+        }
+    }
+
+    public void stop() {
+        body.setLinearVelocity(0, body.getLinearVelocity().y);
+        isStop = true;
+    }
+
+    public void updateFrames() {
+        if (isJump) return;
+        if (isStop) {
+            if (i == 0) {
+                isStop = false;
+                isLeftStep = false;
+                isRightStep = false;
+                body.setLinearVelocity(0, body.getLinearVelocity().y);
+            }
+        }
+        if (isRightStep || isLeftStep) {
+            i++;
+            if (i >= 14) i = 0;
+            sprite.setTexture(isLeftStep ? left[i] : right[i]);
+        }
+        if (isRightStep) body.setLinearVelocity(COSMONAUT_SPEED, body.getLinearVelocity().y);
+        else if (isLeftStep) body.setLinearVelocity(-COSMONAUT_SPEED, body.getLinearVelocity().y);
+    }
+
+    public void updateJump() {
+        if (Math.abs(body.getLinearVelocity().y) < 0.01 && TimeUtils.millis() - jumpTime > 50) {
+            isJump = false;
+        }
     }
 
     @Override
     public void hit(Type type) {
-        // В мире то пока не никого, с кем сталкиваться?
     }
 
     public Type type() {
         return Type.Ship;
-        // Если я правильно понял
     }
 }
