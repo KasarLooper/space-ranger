@@ -60,7 +60,8 @@ public class PlanetGameScreen extends GameScreen {
             myGdxGame.stepWorld(myGdxGame.planet);
             spaceman.updateJump();
         }
-        System.out.println(spaceman.getX() + " " + spaceman.getY());
+        //System.out.println(spaceman.getX() + " " + spaceman.getY());
+        myGdxGame.levelMapManager.run("core/src/com/mygdx/game/manager/photo_2024-07-07_16-58-04.png");
     }
 
     @Override
