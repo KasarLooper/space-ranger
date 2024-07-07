@@ -52,17 +52,13 @@ public class SpacemanObject extends GameObject{
     }
 
     public void stepLeft() {
-        if (!isJump) {
-            isRightStep = false;
-            isLeftStep = true;
-        }
+        isRightStep = false;
+        isLeftStep = true;
     }
 
     public void stepRight() {
-        if (!isJump) {
-            isRightStep = true;
-            isLeftStep = false;
-        }
+        isRightStep = true;
+        isLeftStep = false;
     }
 
     public void jump() {
@@ -80,7 +76,6 @@ public class SpacemanObject extends GameObject{
     }
 
     public void updateFrames() {
-        if (isJump) return;
         if (isStop) {
             if (i == 0) {
                 isStop = false;
@@ -89,7 +84,7 @@ public class SpacemanObject extends GameObject{
                 body.setLinearVelocity(0, body.getLinearVelocity().y);
             }
         }
-        if (isRightStep || isLeftStep) {
+        if ((isRightStep || isLeftStep) && !isJump) {
             i++;
             if (i >= 14) i = 0;
             sprite.setTexture(isLeftStep ? left[i] : right[i]);
