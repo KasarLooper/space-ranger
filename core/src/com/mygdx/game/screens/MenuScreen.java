@@ -53,14 +53,24 @@ public class MenuScreen extends ScreenAdapter {
             myGdxGame.touch = myGdxGame.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 
             if (startButtonView.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
-               if (!myGdxGame.canAccessPlanetLevel) {
-                   myGdxGame.setScreen(new HistoryScreen(myGdxGame, GraphicsSettings.SPACE_HISTORY_ARRAY, myGdxGame.spaceScreen));
-               } else {
-                   myGdxGame.setScreen(new HistoryScreen(myGdxGame, GraphicsSettings.PLANET_HISTORY_SETTINGS, myGdxGame.planetScreen));
-               }
+                System.out.println(myGdxGame.canAccessPlanetLevel);
+                myGdxGame.isContinue = true;
+                if (!myGdxGame.canAccessPlanetLevel) {
+                    if (myGdxGame.needToSpaceIntro)
+                        myGdxGame.setScreen(myGdxGame.spaceHistory);
+                    else myGdxGame.spaceLevel();
+                }
+                else {
+                    if (myGdxGame.needToPlanetIntro)
+                        myGdxGame.setScreen(myGdxGame.planetHistory);
+                    else myGdxGame.planetLevel();
+                }
             }
             if (memoryButton.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
-                myGdxGame.setScreen(myGdxGame.memoriesScreen);
+                myGdxGame.isContinue = false;
+                if (!myGdxGame.canAccessPlanetLevel)
+                    myGdxGame.spaceLevel();
+                else myGdxGame.planetLevel();
             }
 
             if (exitButtonView.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {

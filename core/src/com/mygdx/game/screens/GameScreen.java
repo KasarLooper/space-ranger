@@ -42,7 +42,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
         this.myGdxGame = game;
         pauseButton = new ButtonView(1200, 650, 50, 50, GameResources.PAUSE_ICON_IMG_PATH); // "pause_icon.png"
         endButton = new ButtonView(430, 516, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Меню");
-        continueButton = new ButtonView(430, 406, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "продолжить");
+        continueButton = new ButtonView(430, 406, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Продолжить");
         restartButton = new ButtonView(430, 416, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Заново");
         black_out_on_pause = new MovingBackgroundView(GameResources.BLACKOUT_IMG_PATH);
         gameSession = new GameSession();
@@ -64,6 +64,10 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     public void render(float delta) {
         myGdxGame.camera.update();
         ScreenUtils.clear(85f / 255f, 172f / 255f, 188f / 255f, 0);
+
+        if (gameSession.victory()) {
+            restartButton = new ButtonView(430, 416, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Далее");
+        }
 
         myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
         myGdxGame.batch.begin();
@@ -146,12 +150,21 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
             myGdxGame.mainMenuMusic();
         }
         if (gameSession.state == ENDED && restartButton.isHit(screenX, SCREEN_HEIGHT - screenY)) {
-            myGdxGame.spaceLevel();
             isReload = true;
             camX = myGdxGame.camera.position.x;
             camY = myGdxGame.camera.position.y;
             myGdxGame.camera.position.x = myGdxGame.camera.viewportWidth / 2;
             myGdxGame.camera.position.y = myGdxGame.camera.viewportHeight / 2;
+            if (myGdxGame.isContinue && gameSession.victory()) {
+                if (this instanceof SpaceGameScreen) {
+                    myGdxGame.setScreen(myGdxGame.planetHistory);
+                } else {
+                    myGdxGame.setScreen(myGdxGame.endHistory);
+                }
+                myGdxGame.mainMenuMusic();
+            } else {
+                myGdxGame.spaceLevel();
+            }
             restartGame();
         }
         if ((gameSession.state == PAUSED) && continueButton.isHit(screenX, SCREEN_HEIGHT - screenY)) {

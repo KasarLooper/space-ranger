@@ -14,4 +14,28 @@ public class MemoryManager {
         preferences.putBoolean("isNextLevel", isNextLevel);
         preferences.flush();
     }
+
+    public static boolean lodeHasSeenSpaceIntro() {
+        return preferences.getBoolean("hasSeenSpaceIntro", false);
+    }
+
+    public static void saveHasSeenSpaceIntro(boolean hasSeen) {
+        preferences.putBoolean("hasSeenSpaceIntro", hasSeen);
+        preferences.flush();
+    }
+
+    public static boolean loadHasSeenPlanetIntro() {
+        return preferences.getBoolean("hasSeenPlanetIntro", false);
+    }
+
+    public static void saveHasSeenPlanetIntro(boolean hasSeen) {
+        preferences.putBoolean("hasSeenPlanetIntro", hasSeen);
+        preferences.flush();
+    }
+
+    public static void clear() {
+        saveIsNextLevel(false);
+        saveHasSeenSpaceIntro(false);
+        saveHasSeenPlanetIntro(false);
+    }
 }

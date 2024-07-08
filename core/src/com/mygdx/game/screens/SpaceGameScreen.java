@@ -135,10 +135,8 @@ public class SpaceGameScreen extends GameScreen {
                     updateEnemy();
                     updateBoom();
                     if (gameSession.victory()) {
-                        System.out.println("You Won!");
+                        myGdxGame.passSpaceLevel();
                         shipObject.moleHoleAnim();
-                        MemoryManager.saveIsNextLevel(true);
-                        myGdxGame.canAccessPlanetLevel = MemoryManager.loadIsNextLevel();
                     }
                     if (joystick.isTouched()) {
                         shipObject.setRotation(joystick.getDegrees());
