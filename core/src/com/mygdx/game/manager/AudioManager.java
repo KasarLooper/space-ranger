@@ -31,7 +31,7 @@ public class AudioManager {
         planetMusic.setLooping(true);
 
         menuMusic.play();
-
-
     }
+
+
 }

@@ -143,7 +143,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
             camY = myGdxGame.camera.position.y;
             myGdxGame.camera.position.x = myGdxGame.camera.viewportWidth / 2;
             myGdxGame.camera.position.y = myGdxGame.camera.viewportHeight / 2;
-            //myGdxGame.setScreen(myGdxGame.selectLevelScreen);
+            myGdxGame.mainMenuMusic();
         }
         if (gameSession.state == ENDED && restartButton.isHit(screenX, SCREEN_HEIGHT - screenY)) {
             myGdxGame.spaceLevel();

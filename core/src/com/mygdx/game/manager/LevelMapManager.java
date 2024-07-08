@@ -45,10 +45,6 @@ public class LevelMapManager {
         return null;
     }
 
-    public static void main(String[] args) {
-        new LevelMapManager().loadMap();
-    }
-
     private Block getBlock(int red, int green, int blue, int x, int y, World world) {
         Color color = new Color(red / 255f, green / 255f, blue / 255f);
         if (red == 0 && green == 0 && blue == 0) {
