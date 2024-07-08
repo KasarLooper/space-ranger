@@ -65,14 +65,14 @@ public class MyGdxGame extends Game {
 		planetScreen = new PlanetGameScreen(this);
 		menuScreen = new MenuScreen(this);
 		memoriesScreen = new MemoriesScreen(this);
-		historyScreen = new HistoryScreen(this, SPACE_HISTORY_ARRAY, planetScreen);
+		historyScreen = new HistoryScreen(this, SPACE_HISTORY_ARRAY, spaceScreen);
 		audioManager = new AudioManager();
 		//state = State.ENDED;
 
-		//setScreen(planetScreen);
-		Gdx.input.setInputProcessor(planetScreen);
+		//planetLevel();
 
 		//setScreen(historyScreen);
+		setScreen(menuScreen);
 
 		levelMapManager = new LevelMapManager();
 	}
@@ -85,6 +85,16 @@ public class MyGdxGame extends Game {
 			accumulator -= STEP_TIME;
 			world.step(STEP_TIME, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 		}
+	}
+
+	public void spaceLevel() {
+		setScreen(spaceScreen);
+		Gdx.input.setInputProcessor(spaceScreen);
+	}
+
+	public void planetLevel() {
+		setScreen(planetScreen);
+		Gdx.input.setInputProcessor(planetScreen);
 	}
 	
 	@Override

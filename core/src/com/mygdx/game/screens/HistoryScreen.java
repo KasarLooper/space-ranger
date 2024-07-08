@@ -58,9 +58,8 @@ public class HistoryScreen extends ScreenAdapter {
             if (button.isHit(game.touch.x, game.touch.y)) {
                 i++;
                 if (i >= texts.length) {
-                    if (nextScreen instanceof GameScreen)
-                        Gdx.input.setInputProcessor((InputProcessor) nextScreen);
-                    game.setScreen(nextScreen);
+                    if (nextScreen instanceof SpaceGameScreen) game.spaceLevel();
+                    else if (nextScreen instanceof PlanetGameScreen) game.planetLevel();
                 }
                 else text.setText(texts[i]);
             }

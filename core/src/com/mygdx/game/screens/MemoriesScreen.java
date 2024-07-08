@@ -65,7 +65,7 @@ public class MemoriesScreen extends ScreenAdapter {
 
 
             if (Space.isHit(myGdxGame.touch.x, myGdxGame.touch.y) && myGdxGame.canAccessPlanetLevel) {
-                myGdxGame.setScreen(myGdxGame.spaceScreen);
+                myGdxGame.spaceLevel();
             }
             /*
             if (Planet.isHit(myGdxGame.touch.x, myGdxGame.touch.y) || ...) {
