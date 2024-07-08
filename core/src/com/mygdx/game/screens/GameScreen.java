@@ -146,7 +146,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
             //myGdxGame.setScreen(myGdxGame.selectLevelScreen);
         }
         if (gameSession.state == ENDED && restartButton.isHit(screenX, SCREEN_HEIGHT - screenY)) {
-            myGdxGame.setScreen(myGdxGame.spaceScreen);
+            myGdxGame.spaceLevel();
             isReload = true;
             camX = myGdxGame.camera.position.x;
             camY = myGdxGame.camera.position.y;
