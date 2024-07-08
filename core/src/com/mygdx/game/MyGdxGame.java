@@ -68,6 +68,7 @@ public class MyGdxGame extends Game {
 		historyScreen = new HistoryScreen(this, SPACE_HISTORY_ARRAY, planetScreen);
 		audioManager = new AudioManager();
 		//state = State.ENDED;
+		setScreen(menuScreen);
 
 		//setScreen(planetScreen);
 		Gdx.input.setInputProcessor(planetScreen);

@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.GameResources;
+import com.mygdx.game.GraphicsSettings;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.ButtonView;
 import com.mygdx.game.components.MovingBackgroundView;
@@ -66,6 +67,8 @@ public class MemoriesScreen extends ScreenAdapter {
 
             if (Space.isHit(myGdxGame.touch.x, myGdxGame.touch.y) && myGdxGame.canAccessPlanetLevel) {
                 myGdxGame.setScreen(myGdxGame.spaceScreen);
+                myGdxGame.setScreen(new HistoryScreen(myGdxGame, GraphicsSettings.SPACE_HISTORY_ARRAY, myGdxGame.spaceScreen));
+
             }
             /*
             if (Planet.isHit(myGdxGame.touch.x, myGdxGame.touch.y) || ...) {
