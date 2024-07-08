@@ -25,7 +25,7 @@ public class HistoryScreen extends ScreenAdapter {
         this.texts = texts;
         this.nextScreen = nextScreen;
         i = 0;
-        button = new MiddleButtonView(50, 440, 70, game.commonWhiteFont, GameResources.BUTTON_IMG_PATH, "Continue");
+        button = new MiddleButtonView(50, 440, 70, game.commonWhiteFont, GameResources.BUTTON_IMG_PATH, "Дальше");
         text = new MiddleTextView(game.averageWhiteFont, texts[0]);
     }
 

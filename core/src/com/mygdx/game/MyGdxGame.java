@@ -19,9 +19,9 @@ import com.mygdx.game.manager.AudioManager;
 import com.mygdx.game.manager.LevelMapManager;
 import com.mygdx.game.manager.MemoryManager;
 import com.mygdx.game.screens.HistoryScreen;
+import com.mygdx.game.screens.MemoriesScreen;
 import com.mygdx.game.screens.MenuScreen;
 import com.mygdx.game.screens.PlanetGameScreen;
-import com.mygdx.game.screens.SelectLevelScreen;
 import com.mygdx.game.screens.SpaceGameScreen;
 
 public class MyGdxGame extends Game {
@@ -40,8 +40,8 @@ public class MyGdxGame extends Game {
 	public SpaceGameScreen spaceScreen;
 	public PlanetGameScreen planetScreen;
 	public MenuScreen menuScreen;
-	public SelectLevelScreen selectLevelScreen;
-	HistoryScreen historyScreen;
+	public MemoriesScreen memoriesScreen;
+	public HistoryScreen historyScreen;
 	public BitmapFont commonWhiteFont;
 	public BitmapFont averageWhiteFont;
 	public LevelMapManager levelMapManager;
@@ -64,12 +64,12 @@ public class MyGdxGame extends Game {
 		spaceScreen = new SpaceGameScreen(this);
 		planetScreen = new PlanetGameScreen(this);
 		menuScreen = new MenuScreen(this);
-		selectLevelScreen = new SelectLevelScreen(this);
+		memoriesScreen = new MemoriesScreen(this);
 		historyScreen = new HistoryScreen(this, SPACE_HISTORY_ARRAY, planetScreen);
 		audioManager = new AudioManager();
 		//state = State.ENDED;
 
-		setScreen(planetScreen);
+		//setScreen(planetScreen);
 		Gdx.input.setInputProcessor(planetScreen);
 
 		//setScreen(historyScreen);

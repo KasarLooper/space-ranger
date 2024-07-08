@@ -42,4 +42,15 @@ public class ButtonView extends View{
         texture.dispose();
         if (bitmapFont != null) bitmapFont.dispose();
     }
+
+    public void setText(String newText){
+        this.text = newText;
+
+        GlyphLayout glyphLayout = new GlyphLayout(bitmapFont, text);
+        float textWidth = glyphLayout.width;
+        float textHeight = glyphLayout.height;
+
+        textX = x + (width - textWidth) / 2;
+        textY = y + (height + textHeight) / 2;
+    }
 }
