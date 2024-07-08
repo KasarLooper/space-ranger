@@ -63,6 +63,8 @@ public class HistoryScreen extends ScreenAdapter {
                     game.audioManager.menuMusic.stop();
                     if (nextScreen == game.spaceScreen) {
                         game.audioManager.spaceMusic.play();
+                    } else if (nextScreen == game.planetScreen) {
+                        game.audioManager.planetMusic.play();
                     }
                     game.setScreen(nextScreen);
                 }

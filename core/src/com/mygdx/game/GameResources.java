@@ -53,6 +53,7 @@ public class GameResources {
     //Второй уровень
     public static final String LIGHTNING_RIGHT_IMG_PATH = "lightning_right.png";
     public static final String LIGHTNING_LEFT_IMG_PATH = "lightning_left.png";
+    public static final String MUSIC_PLANET_PATH = "music/Extreme.mp3";
 
     //cosmonaut_anim_right
     public static final String COSMONAUT_ANIM_RIGHT_1 = "cosmonaut_anim_right_1.png";
@@ -100,4 +101,5 @@ public class GameResources {
     public static final String ALIEN_ANIM_LEFT_7 = "Alien_anim_left/alien_anim_left_7.png";
     public static final String ALIEN_ANIM_LEFT_8 = "Alien_anim_left/alien_anim_left_8.png";
     public static final String ALIEN_ANIM_LEFT_9 = "Alien_anim_left/alien_anim_left_9.png";
+
 }

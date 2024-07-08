@@ -11,6 +11,7 @@ public class AudioManager {
     public Sound soundBoom;
     public Sound soundEnergyGive;
     public Music menuMusic;
+    public Music planetMusic;
 
 
     public AudioManager() {
@@ -19,9 +20,15 @@ public class AudioManager {
         soundBoom = Gdx.audio.newSound(Gdx.files.internal(GameResources.SOUND_BOOM_PATH));
         soundEnergyGive = Gdx.audio.newSound(Gdx.files.internal(GameResources.SOUND_ENERGY_PATH));
         menuMusic = Gdx.audio.newMusic(Gdx.files.internal(GameResources.MUSIC_MENU_PATH));
+        planetMusic = Gdx.audio.newMusic(Gdx.files.internal(GameResources.MUSIC_PLANET_PATH));
 
         spaceMusic.setVolume(0.2f);
         menuMusic.setVolume(0.2f);
+        planetMusic.setVolume(0.2f);
+
+        spaceMusic.setLooping(true);
+        menuMusic.setLooping(true);
+        planetMusic.setLooping(true);
 
         menuMusic.play();
 
