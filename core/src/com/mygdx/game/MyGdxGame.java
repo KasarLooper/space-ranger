@@ -64,7 +64,7 @@ public class MyGdxGame extends Game {
 		selectLevelScreen = new SelectLevelScreen(this);
 		audioManager = new AudioManager();
 		//state = State.ENDED;
-		setScreen(planetScreen);
+		setScreen(menuScreen);
 		Gdx.input.setInputProcessor(planetScreen);
 
 		levelMapManager = new LevelMapManager();
