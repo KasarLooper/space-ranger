@@ -51,10 +51,6 @@ public class GameSession {
     }
 
     public boolean victory() {
-        if (core_collected >= 3) {
-            MemoryManager.saveIsNextLevel(true);
-            return true;
-        }
-        return false;
+        return core_collected >= 3;
     }
 }
