@@ -69,8 +69,8 @@ public class MyGdxGame extends Game {
 		audioManager = new AudioManager();
 		setScreen(menuScreen);
 
-		//setScreen(planetScreen);
-		//Gdx.input.setInputProcessor(planetScreen);
+		setScreen(planetScreen);
+		Gdx.input.setInputProcessor(planetScreen);
 
 		//setScreen(historyScreen);
 

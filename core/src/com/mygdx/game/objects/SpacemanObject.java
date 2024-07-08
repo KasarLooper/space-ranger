@@ -13,11 +13,8 @@ import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.GameResources;
-import com.mygdx.game.GameSettings;
 
-import java.security.PublicKey;
-
-public class SpacemanObject extends GameObject{
+public class SpacemanObject extends PhysicsObject {
     int defaultY;
     Sprite sprite;
     int i;

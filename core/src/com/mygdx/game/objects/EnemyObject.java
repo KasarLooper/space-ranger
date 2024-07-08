@@ -21,7 +21,7 @@ import com.mygdx.game.GameSettings;
 
 import java.util.Random;
 
-public class EnemyObject extends GameObject{
+public class EnemyObject extends PhysicsObject {
     public int x, y;
     private long lastShootTime;
     private float aim;
