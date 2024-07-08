@@ -58,8 +58,15 @@ public class HistoryScreen extends ScreenAdapter {
             if (button.isHit(game.touch.x, game.touch.y)) {
                 i++;
                 if (i >= texts.length) {
-                    if (nextScreen instanceof SpaceGameScreen) game.spaceLevel();
-                    else if (nextScreen instanceof PlanetGameScreen) game.planetLevel();
+                    if (nextScreen instanceof GameScreen)
+                        Gdx.input.setInputProcessor((InputProcessor) nextScreen);
+                    game.audioManager.menuMusic.stop();
+                    if (nextScreen == game.spaceScreen) {
+                        game.audioManager.spaceMusic.play();
+                    } else if (nextScreen == game.planetScreen) {
+                        game.audioManager.planetMusic.play();
+                    }
+                    game.setScreen(nextScreen);
                 }
                 else text.setText(texts[i]);
             }

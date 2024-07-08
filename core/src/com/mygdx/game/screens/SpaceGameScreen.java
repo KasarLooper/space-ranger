@@ -118,6 +118,7 @@ public class SpaceGameScreen extends GameScreen {
                                 myGdxGame.space, shipObject.getRotation(), Bullet_Speed, false
                         );
                         bulletArray.add(Bullet);
+                        myGdxGame.audioManager.soundBullet.play(0.2f);
                     }
                     if (gameSession.shouldSpawn()) {
                         if (rd.nextInt(100) < CHANCE_CORE_SPAWN) generateCore();
@@ -195,9 +196,12 @@ public class SpaceGameScreen extends GameScreen {
                 if (core.wasCollected) {
                     gameSession.core_was_collected();
                     purpose.setText(String.format("Цель - энергия: %d/3", gameSession.getCoreCollected()));
+                    myGdxGame.audioManager.soundEnergyGive.play(0.2f);
+                } else {
+                    boomArray.add(new BoomObject(core.x, core.y));
+                    myGdxGame.audioManager.soundBoom.play(0.2f);
                 }
                 myGdxGame.space.destroyBody(core.body);
-                boomArray.add(new BoomObject(core.x, core.y));
                 iterator.remove();
             }
         }
@@ -211,6 +215,7 @@ public class SpaceGameScreen extends GameScreen {
                 myGdxGame.space.destroyBody(enemy.body);
                 BoomObject boom = new BoomObject(enemy.getX(), enemy.getY());
                 boomArray.add(boom);
+                myGdxGame.audioManager.soundBoom.play(0.2f);
                 iterator.remove();
             }
         }
