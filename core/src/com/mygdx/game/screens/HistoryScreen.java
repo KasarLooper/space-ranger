@@ -60,6 +60,10 @@ public class HistoryScreen extends ScreenAdapter {
                 if (i >= texts.length) {
                     if (nextScreen instanceof GameScreen)
                         Gdx.input.setInputProcessor((InputProcessor) nextScreen);
+                    game.audioManager.menuMusic.stop();
+                    if (nextScreen == game.spaceScreen) {
+                        game.audioManager.spaceMusic.play();
+                    }
                     game.setScreen(nextScreen);
                 }
                 else text.setText(texts[i]);
