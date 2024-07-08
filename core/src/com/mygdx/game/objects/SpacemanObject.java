@@ -70,7 +70,6 @@ public class SpacemanObject extends PhysicsObject {
 
     public void jump() {
         if (!isJump) {
-            System.out.println("jump");
             isJump = true;
             jumpTime = TimeUtils.millis();
             body.applyLinearImpulse(new Vector2(0, COSMONAUT_JUMP_FORCE), body.getWorldCenter(), false);

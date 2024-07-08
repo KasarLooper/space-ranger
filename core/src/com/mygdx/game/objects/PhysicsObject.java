@@ -13,7 +13,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 
-public abstract class PhysicsObject extends GameObject {
+public abstract class PhysicsObject extends GameObject implements Drawable {
     public int width;
     public int height;
 
@@ -33,6 +33,7 @@ public abstract class PhysicsObject extends GameObject {
         this.world = world;
     }
 
+    @Override
     public void draw(SpriteBatch batch) {
         batch.draw(texture,
                 getX() - (width / 2f),

@@ -50,7 +50,6 @@ public class PlanetGameScreen extends GameScreen {
         myGdxGame.camera.position.y += GROUND_HEIGHT;
         super.render(delta);
         if (gameSession.state == com.mygdx.game.State.PLAYING) {
-            System.out.println(spaceman.getX() + " " + spaceman.getY() + " " + block.getX() + " " + block.getY());
             myGdxGame.camera.position.x = spaceman.getX();
             myGdxGame.camera.position.y = spaceman.getY();
             backgroundView.move(spaceman.getX(), spaceman.getY());

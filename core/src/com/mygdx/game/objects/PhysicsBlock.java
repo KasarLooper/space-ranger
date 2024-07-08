@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class PhysicsBlock extends Block {
+public class PhysicsBlock extends Block implements Drawable {
     public int width;
     public int height;
 
@@ -21,7 +21,7 @@ public class PhysicsBlock extends Block {
     World world;
 
 
-    public PhysicsBlock(int x, int y, int wight, int height, String texturePath,  World world) {
+    public PhysicsBlock(int x, int y, int wight, int height, String texturePath, World world) {
         this.width = wight;
         this.height = height;
         this.x = x;
@@ -32,6 +32,7 @@ public class PhysicsBlock extends Block {
         this.world = world;
     }
 
+    @Override
     public void draw(SpriteBatch batch) {
         batch.draw(texture,
                 getX() - (width / 2f),
