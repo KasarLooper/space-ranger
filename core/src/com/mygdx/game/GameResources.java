@@ -74,6 +74,7 @@ public class GameResources {
     public static final String COSMONAUT_ANIM_LEFT_6 = "cosmonaut_anim_left_6.png";
     public static final String COSMONAUT_ANIM_LEFT_7 = "cosmonaut_anim_left_7.png";
     public static final String EARTH_IMG_PATH = "earth.png";
+    public static final String LEVEL_MAP_IMG_PATH = "example.png";
     public static final String COSMONAUT_ANIM_LEFT_IMG_PATTERN = "cosmonaut_anim_left/cosmonaut_anim_left_%d.png";
 
     public static final String JUMP_BUTTON_IMG_PATH = "upbutton.png";

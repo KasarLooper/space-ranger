@@ -60,6 +60,9 @@ public class GameSettings {
     public static final double GRAVITY_PLANET_X = 0;
     public static final int GROUND_HEIGHT = 200;
 
+    // Block settings
+    public static final int BLOCK_SIZE = 100;
+
     // Cosmonaut settings
     public static final int COSMONAUT_WIDTH = 50;
     public static final int COSMONAUT_HEIGHT = 75;
