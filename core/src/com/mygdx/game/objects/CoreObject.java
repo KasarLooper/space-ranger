@@ -3,7 +3,7 @@ package com.mygdx.game.objects;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class CoreObject extends GameObject {
+public class CoreObject extends PhysicsObject {
 
     public int x, y;
 

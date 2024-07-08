@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.GameResources;
 
-public class BoomObject {
+public class BoomObject{
     int i = 3;
     private int x, y;
     private int width;

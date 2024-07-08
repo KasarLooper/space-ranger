@@ -3,6 +3,7 @@ package com.mygdx.game;
 import static com.mygdx.game.GameSettings.POSITION_ITERATIONS;
 import static com.mygdx.game.GameSettings.STEP_TIME;
 import static com.mygdx.game.GameSettings.VELOCITY_ITERATIONS;
+import static com.mygdx.game.GraphicsSettings.SPACE_HISTORY_ARRAY;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.manager.AudioManager;
 import com.mygdx.game.manager.LevelMapManager;
 import com.mygdx.game.manager.MemoryManager;
+import com.mygdx.game.screens.HistoryScreen;
 import com.mygdx.game.screens.MenuScreen;
 import com.mygdx.game.screens.PlanetGameScreen;
 import com.mygdx.game.screens.SelectLevelScreen;
@@ -39,6 +41,7 @@ public class MyGdxGame extends Game {
 	public PlanetGameScreen planetScreen;
 	public MenuScreen menuScreen;
 	public SelectLevelScreen selectLevelScreen;
+	HistoryScreen historyScreen;
 	public BitmapFont commonWhiteFont;
 	public BitmapFont averageWhiteFont;
 	public LevelMapManager levelMapManager;
@@ -62,10 +65,14 @@ public class MyGdxGame extends Game {
 		planetScreen = new PlanetGameScreen(this);
 		menuScreen = new MenuScreen(this);
 		selectLevelScreen = new SelectLevelScreen(this);
+		historyScreen = new HistoryScreen(this, SPACE_HISTORY_ARRAY, planetScreen);
 		audioManager = new AudioManager();
 		//state = State.ENDED;
-		setScreen(menuScreen);
+
+		setScreen(planetScreen);
 		Gdx.input.setInputProcessor(planetScreen);
+
+		//setScreen(historyScreen);
 
 		levelMapManager = new LevelMapManager();
 	}

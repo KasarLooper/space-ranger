@@ -1,8 +1,6 @@
 package com.mygdx.game.objects;
 
 import static com.mygdx.game.GameSettings.COUNT_FRAMES_ONE_IMG;
-import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
-import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
 import static com.mygdx.game.GameSettings.SPEED_SHIP;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -17,9 +15,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.GameResources;
 import com.mygdx.game.GameSettings;
 
-import java.util.Random;
-
-public class ShipObject extends GameObject{
+public class ShipObject extends PhysicsObject {
     public int livesLeft;
     Sprite sprite;
 
