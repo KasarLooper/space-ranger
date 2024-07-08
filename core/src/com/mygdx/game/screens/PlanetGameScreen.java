@@ -47,11 +47,10 @@ public class PlanetGameScreen extends GameScreen {
 
     @Override
     public void render(float delta) {
-        myGdxGame.camera.position.y += GROUND_HEIGHT;
+        myGdxGame.camera.position.x = spaceman.getX();
+        myGdxGame.camera.position.y = spaceman.getY() + GROUND_HEIGHT;
         super.render(delta);
         if (gameSession.state == com.mygdx.game.State.PLAYING) {
-            myGdxGame.camera.position.x = spaceman.getX();
-            myGdxGame.camera.position.y = spaceman.getY();
             backgroundView.move(spaceman.getX(), spaceman.getY());
             if (isJump)
                 spaceman.jump();

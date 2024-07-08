@@ -41,7 +41,6 @@ public class MyGdxGame extends Game {
 	public PlanetGameScreen planetScreen;
 	public MenuScreen menuScreen;
 	public MemoriesScreen memoriesScreen;
-	public HistoryScreen historyScreen;
 	public BitmapFont commonWhiteFont;
 	public BitmapFont averageWhiteFont;
 	public LevelMapManager levelMapManager;
@@ -65,7 +64,6 @@ public class MyGdxGame extends Game {
 		planetScreen = new PlanetGameScreen(this);
 		menuScreen = new MenuScreen(this);
 		memoriesScreen = new MemoriesScreen(this);
-		historyScreen = new HistoryScreen(this, SPACE_HISTORY_ARRAY, spaceScreen);
 		audioManager = new AudioManager();
 		//state = State.ENDED;
 		setScreen(menuScreen);
@@ -73,7 +71,6 @@ public class MyGdxGame extends Game {
 		//planetLevel();
 
 		//setScreen(historyScreen);
-		setScreen(menuScreen);
 
 		levelMapManager = new LevelMapManager();
 	}
