@@ -58,7 +58,8 @@ public class GameSettings {
 
     public static final double GRAVITY_PLANET_Y = -30;
     public static final double GRAVITY_PLANET_X = 0;
-    public static final int GROUND_HEIGHT = 200;
+    public static final int GROUND_HEIGHT = 100;
+    public static final int CAMERA_Y_FROM_CENTER = 200;
 
     // Block settings
     public static final int BLOCK_SIZE = 100;

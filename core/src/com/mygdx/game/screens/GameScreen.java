@@ -63,7 +63,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     @Override
     public void render(float delta) {
         myGdxGame.camera.update();
-        ScreenUtils.clear(85f / 255f, 172f / 255f, 188f / 255f, 0);
+        ScreenUtils.clear(108f / 255f, 123f / 255f, 188f / 255f, 0);
 
         if (gameSession.victory()) {
             restartButton = new ButtonView(430, 416, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Далее");

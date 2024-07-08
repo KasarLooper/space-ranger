@@ -1,5 +1,6 @@
 package com.mygdx.game.screens;
 
+import static com.mygdx.game.GameSettings.CAMERA_Y_FROM_CENTER;
 import static com.mygdx.game.GameSettings.COSMONAUT_HEIGHT;
 import static com.mygdx.game.GameSettings.COSMONAUT_WIDTH;
 import static com.mygdx.game.GameSettings.GROUND_HEIGHT;
@@ -48,7 +49,7 @@ public class PlanetGameScreen extends GameScreen {
     @Override
     public void render(float delta) {
         myGdxGame.camera.position.x = spaceman.getX();
-        myGdxGame.camera.position.y = spaceman.getY() + GROUND_HEIGHT;
+        myGdxGame.camera.position.y = spaceman.getY() + GROUND_HEIGHT + CAMERA_Y_FROM_CENTER;
         super.render(delta);
         if (gameSession.state == com.mygdx.game.State.PLAYING) {
             backgroundView.move(spaceman.getX(), spaceman.getY());
