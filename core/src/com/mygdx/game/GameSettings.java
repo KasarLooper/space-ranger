@@ -56,13 +56,13 @@ public class GameSettings {
 
     // PLANET
 
-    public static final double GRAVITY_PLANET_Y = -9.780;
+    public static final double GRAVITY_PLANET_Y = -30;
     public static final double GRAVITY_PLANET_X = 0;
     public static final int GROUND_HEIGHT = 200;
 
     // Cosmonaut settings
-    public static final int COSMONAUT_WIDTH = 100;
-    public static final int COSMONAUT_HEIGHT = 150;
+    public static final int COSMONAUT_WIDTH = 50;
+    public static final int COSMONAUT_HEIGHT = 75;
     public static final int COSMONAUT_SPEED = 10;
-    public static final int COSMONAUT_JUMP_FORCE = 30;
+    public static final int COSMONAUT_JUMP_FORCE = 14;
 }
