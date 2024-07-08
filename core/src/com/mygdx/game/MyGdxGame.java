@@ -3,6 +3,7 @@ package com.mygdx.game;
 import static com.mygdx.game.GameSettings.POSITION_ITERATIONS;
 import static com.mygdx.game.GameSettings.STEP_TIME;
 import static com.mygdx.game.GameSettings.VELOCITY_ITERATIONS;
+import static com.mygdx.game.GraphicsSettings.SPACE_HISTORY_ARRAY;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -64,14 +65,7 @@ public class MyGdxGame extends Game {
 		planetScreen = new PlanetGameScreen(this);
 		menuScreen = new MenuScreen(this);
 		selectLevelScreen = new SelectLevelScreen(this);
-		historyScreen = new HistoryScreen(this, new String[]{
-				"Ты, капитан космического корабля \"Авангард\", отправился на одиночную экспедицию к новой обитаемой планете через кротовую нору.",
-				"Твоя цель ясна: установить контакт с новой цивилизацией и открыть новые горизонты для человечества.",
-				"Всё шло по плану, когда вдруг системы корабля начали показывать аномалии. Ты понимаешь, что твой путь отклонился, и вместо мирной обитаемой планеты ты оказался в районе космоса, кишащем враждебными силами. Враги начинают атаку на \"Авангард\", и тебе предстоит быстро занять боевой пост.",
-				"Теперь ты управляешь \"Авангардом\", уклоняясь от вражеских атак и уничтожая вражеские корабли. В процессе боя тебе необходимо собирать энергетические ядра, разбросанные по полю боя, чтобы накапливать энергию для кротовой норы, которая позволит совершить переход на следующий уровень.",
-				"Каждое энергетическое ядро приближает корабль к спасению, но враги становятся всё более агрессивными, и битва требует не только ловкости, но и стратегического мышления!"
-		},
-				planetScreen);
+		historyScreen = new HistoryScreen(this, SPACE_HISTORY_ARRAY, planetScreen);
 		audioManager = new AudioManager();
 		setScreen(menuScreen);
 
