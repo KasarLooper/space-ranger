@@ -77,4 +77,27 @@ public class GameResources {
     public static final String COSMONAUT_ANIM_LEFT_IMG_PATTERN = "cosmonaut_anim_left/cosmonaut_anim_left_%d.png";
 
     public static final String JUMP_BUTTON_IMG_PATH = "upbutton.png";
+
+    //Alien
+    //Alien_anim_right
+    public static final String ALIEN_ANIM_RIGHT_1 = "Alien_anim_right/alien_anim_right_1.png";
+    public static final String ALIEN_ANIM_RIGHT_2 = "Alien_anim_right/alien_anim_right_2.png";
+    public static final String ALIEN_ANIM_RIGHT_3 = "Alien_anim_right/alien_anim_right_3.png";
+    public static final String ALIEN_ANIM_RIGHT_4 = "Alien_anim_right/alien_anim_right_4.png";
+    public static final String ALIEN_ANIM_RIGHT_5 = "Alien_anim_right/alien_anim_right_5.png";
+    public static final String ALIEN_ANIM_RIGHT_6 = "Alien_anim_right/alien_anim_right_6.png";
+    public static final String ALIEN_ANIM_RIGHT_7 = "Alien_anim_right/alien_anim_right_7.png";
+    public static final String ALIEN_ANIM_RIGHT_8 = "Alien_anim_right/alien_anim_right_8.png";
+    public static final String ALIEN_ANIM_RIGHT_9 = "Alien_anim_right/alien_anim_right_9.png";
+
+    //Alien_anim_left
+    public static final String ALIEN_ANIM_LEFT_1 = "Alien_anim_left/alien_anim_left_1.png";
+    public static final String ALIEN_ANIM_LEFT_2 = "Alien_anim_left/alien_anim_left_2.png";
+    public static final String ALIEN_ANIM_LEFT_3 = "Alien_anim_left/alien_anim_left_3.png";
+    public static final String ALIEN_ANIM_LEFT_4 = "Alien_anim_left/alien_anim_left_4.png";
+    public static final String ALIEN_ANIM_LEFT_5 = "Alien_anim_left/alien_anim_left_5.png";
+    public static final String ALIEN_ANIM_LEFT_6 = "Alien_anim_left/alien_anim_left_6.png";
+    public static final String ALIEN_ANIM_LEFT_7 = "Alien_anim_left/alien_anim_left_7.png";
+    public static final String ALIEN_ANIM_LEFT_8 = "Alien_anim_left/alien_anim_left_8.png";
+    public static final String ALIEN_ANIM_LEFT_9 = "Alien_anim_left/alien_anim_left_9.png";
 }
