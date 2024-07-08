@@ -12,29 +12,18 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.EdgeShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class Block{
-    Body body;
-
-    public int wight;
-    public int height;
-    public int x;
-    public int y;
-
-    public Texture texture;
+public class Block extends GameObject{
 
     public Block(int x, int y, int wight, int height, String texturePath, World world) {
-        this.x = x;
-        this.y = y;
-        this.wight = wight;
-        this.height = height;
+        super(texturePath, x, y, wight, height, world);
+    }
 
-        BodyDef def = new BodyDef();
-        def.type = BodyDef.BodyType.StaticBody;
-        body = world.createBody(def);
-        texture = new Texture(texturePath);
-
+    @Override
+    protected Shape getShape(float x, float y, float width, float height) {
+        /*
         Vector2[] vertices = new Vector2[4];
         vertices[0] = new Vector2(x * SCALE, y * SCALE);
         vertices[1] = new Vector2(x * SCALE, (y + height) * SCALE);
@@ -43,42 +32,21 @@ public class Block{
 
         PolygonShape shape = new PolygonShape();
         shape.set(vertices);
+         */
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(width * SCALE / 2f, height * SCALE / 2f);
 
-
-        FixtureDef fixture = new FixtureDef();
-        fixture.shape = shape;
-        fixture.friction = 0.5f;
-        fixture.restitution = 0.3f;
-        body.createFixture(fixture);
-
-        shape.dispose();
-
+        return shape;
     }
 
-    public void draw(SpriteBatch batch) {
-        batch.draw(texture,
-                x, y,
-                wight,
-                height);
+    @Override
+    protected BodyDef.BodyType getBodyType() {
+        return BodyDef.BodyType.StaticBody;
     }
 
-    public void dispose() {
-        texture.dispose();
+    @Override
+    protected float getFriction() {
+        return 0;
     }
 
-    public int getX() {
-        return (int) (body.getPosition().x / SCALE);
-    }
-
-    public int getY() {
-        return (int) (body.getPosition().y / SCALE);
-    }
-
-    public void setX(int x) {
-        body.setTransform(x * SCALE, body.getPosition().y, 0);
-    }
-
-    public void setY(int y) {
-        body.setTransform(body.getPosition().x, y * SCALE, 0);
-    }
 }

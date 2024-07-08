@@ -81,7 +81,7 @@ public abstract class GameObject {
     private Body createBody(float x, float y, World world) {
         BodyDef def = new BodyDef();
 
-        def.type = BodyDef.BodyType.DynamicBody;
+        def.type = getBodyType();
         def.fixedRotation = true; // запрет на вращение
         Body body = world.createBody(def);
 
@@ -91,8 +91,9 @@ public abstract class GameObject {
         //fixtureDef.filter.categoryBits = cBits; // биты
 
         fixtureDef.shape = shape;
-        fixtureDef.density = 0.1f;
-        fixtureDef.friction = 1f;
+        fixtureDef.density = getDensity();
+        fixtureDef.friction = getFriction();
+        fixtureDef.restitution = getRestitution();
 
         Fixture fixture = body.createFixture(fixtureDef);
         fixture.setUserData(this);
@@ -106,5 +107,21 @@ public abstract class GameObject {
         CircleShape shape = new CircleShape();
         shape.setRadius(getRadius());
         return shape;
+    }
+
+    protected BodyDef.BodyType getBodyType() {
+        return BodyDef.BodyType.DynamicBody;
+    }
+
+    protected float getRestitution() {
+        return 0f;
+    }
+
+    protected float getDensity() {
+        return 0.1f;
+    }
+
+    protected float getFriction() {
+        return 1f;
     }
 }
