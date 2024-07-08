@@ -29,6 +29,8 @@ public class HistoryScreen extends ScreenAdapter {
         text = new MiddleTextView(game.averageWhiteFont, texts[0]);
     }
 
+    // texts - возьми константу из GraphicsSettings
+    // nextScreen - экран, на который пользователь перейдёт, когда закончит нажимать на кнопки continue
     public void set(String[] texts, Screen nextScreen) {
         this.texts = texts;
         this.nextScreen = nextScreen;
@@ -56,7 +58,8 @@ public class HistoryScreen extends ScreenAdapter {
             if (button.isHit(game.touch.x, game.touch.y)) {
                 i++;
                 if (i >= texts.length) {
-                    Gdx.input.setInputProcessor((InputProcessor) nextScreen);
+                    if (nextScreen instanceof GameScreen)
+                        Gdx.input.setInputProcessor((InputProcessor) nextScreen);
                     game.setScreen(nextScreen);
                 }
                 else text.setText(texts[i]);
