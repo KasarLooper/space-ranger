@@ -29,7 +29,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     JoystickView joystick;
     long showTime;
     State state;
-    ButtonView pauseButton, endButton, restartButton;
+    ButtonView pauseButton, endButton, continueButton, restartButton;
     MovingBackgroundView black_out_on_pause;
 
     private boolean isReload = false;
@@ -41,8 +41,9 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     public GameScreen(MyGdxGame game) {
         this.myGdxGame = game;
         pauseButton = new ButtonView(1200, 650, 50, 50, GameResources.PAUSE_ICON_IMG_PATH); // "pause_icon.png"
-        endButton = new ButtonView(430, 516, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Back to menu");
-        restartButton = new ButtonView(430, 416, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Restart");
+        endButton = new ButtonView(430, 516, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Меню");
+        continueButton = new ButtonView(430, 406, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "продолжить");
+        restartButton = new ButtonView(430, 416, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Заново");
         black_out_on_pause = new MovingBackgroundView(GameResources.BLACKOUT_IMG_PATH);
         gameSession = new GameSession();
     }
@@ -99,6 +100,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
             case PAUSED:
                 black_out_on_pause.draw(myGdxGame.batch);
                 endButton.draw(myGdxGame.batch);
+                continueButton.draw(myGdxGame.batch);
                 break;
             case ENDED:
                 black_out_on_pause.draw(myGdxGame.batch);
@@ -151,6 +153,9 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
             myGdxGame.camera.position.x = myGdxGame.camera.viewportWidth / 2;
             myGdxGame.camera.position.y = myGdxGame.camera.viewportHeight / 2;
             restartGame();
+        }
+        if ((gameSession.state == PAUSED) && continueButton.isHit(screenX, SCREEN_HEIGHT - screenY)) {
+            gameSession.state = PLAYING;
         }
         return true;
     }

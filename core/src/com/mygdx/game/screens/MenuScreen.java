@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.GameResources;
+import com.mygdx.game.GraphicsSettings;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.ButtonView;
 import com.mygdx.game.components.MovingBackgroundView;
@@ -52,7 +53,11 @@ public class MenuScreen extends ScreenAdapter {
             myGdxGame.touch = myGdxGame.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 
             if (startButtonView.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
-               myGdxGame.setScreen(myGdxGame.historyScreen);
+               if (!myGdxGame.canAccessPlanetLevel) {
+                   myGdxGame.setScreen(new HistoryScreen(myGdxGame, GraphicsSettings.SPACE_HISTORY_ARRAY, myGdxGame.spaceScreen));
+               } else {
+                   myGdxGame.setScreen(new HistoryScreen(myGdxGame, GraphicsSettings.PLANET_HISTORY_SETTINGS, myGdxGame.planetScreen));
+               }
             }
             if (memoryButton.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
                 myGdxGame.setScreen(myGdxGame.memoriesScreen);
