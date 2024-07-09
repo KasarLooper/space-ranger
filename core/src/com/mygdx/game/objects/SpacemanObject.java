@@ -18,8 +18,8 @@ public class SpacemanObject extends PhysicsObject {
     int defaultY;
     Sprite sprite;
     int i;
-    boolean isRightStep;
-    boolean isLeftStep;
+    public boolean isRightStep;
+    public boolean isLeftStep;
     boolean isStop;
     boolean isJump;
     Texture[] left;
