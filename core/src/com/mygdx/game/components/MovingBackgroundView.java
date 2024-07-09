@@ -5,7 +5,6 @@ import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygdx.game.GraphicsSettings;
 
 public class MovingBackgroundView extends View{
     Texture texture;
@@ -47,7 +46,7 @@ public class MovingBackgroundView extends View{
 
     protected void depthMove(float newX, float newY) {
         newX -= SCREEN_WIDTH / 2f;
-        newY -= SCREEN_HEIGHT / 2f;
+        newY = getNewY(newY);
 
         int dx = Math.round((newX - cameraX) * (1 - ratio));
         int dy = Math.round((newY - cameraY) * (1 - ratio));
@@ -64,6 +63,10 @@ public class MovingBackgroundView extends View{
 
         cameraX = newX;
         cameraY = newY;
+    }
+
+    protected float getNewY(float newY) {
+        return newY - SCREEN_HEIGHT / 2f;
     }
 
     public void move(float newX, float newY) {

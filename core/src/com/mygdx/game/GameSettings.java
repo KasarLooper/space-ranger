@@ -59,20 +59,20 @@ public class GameSettings {
     public static final double GRAVITY_PLANET_Y = -30;
     public static final double GRAVITY_PLANET_X = 0;
     public static final int GROUND_HEIGHT = 100;
-    public static final int CAMERA_Y_FROM_CENTER = 200;
+    public static final int CAMERA_Y_FROM_CENTER = 100;
 
     // Block settings
     public static final int BLOCK_SIZE = 100;
 
     // Cosmonaut settings
-    public static final int COSMONAUT_WIDTH = 50;
-    public static final int COSMONAUT_HEIGHT = 75;
+    public static final int COSMONAUT_WIDTH = 100;
+    public static final int COSMONAUT_HEIGHT = 150;
     public static final int COSMONAUT_SPEED = 10;
-    public static final int COSMONAUT_JUMP_FORCE = 14;
+    public static final int COSMONAUT_JUMP_FORCE = 100;
 
     // Alien settings
-    public static final int ALIEN_WIDTH = 50;
-    public static final int ALIEN_HEIGHT = 75;
+    public static final int ALIEN_WIDTH = 100;
+    public static final int ALIEN_HEIGHT = 150;
     public static final int ALIEN_SPEED = 6;
-    public static final int ALIEN_JUMP_FORCE = 14;
+    public static final int ALIEN_JUMP_FORCE = 100;
 }

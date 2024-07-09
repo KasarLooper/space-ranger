@@ -1,5 +1,7 @@
 package com.mygdx.game.components;
 
+import static com.mygdx.game.GameSettings.CAMERA_Y_FROM_CENTER;
+import static com.mygdx.game.GameSettings.GROUND_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
 
@@ -37,11 +39,13 @@ public class MovingBackgroundLeftRightView extends MovingBackgroundView{
         }
     }
 
+    protected float getNewY(float newY) {
+        return newY - SCREEN_HEIGHT / 2f + GROUND_HEIGHT + CAMERA_Y_FROM_CENTER;
+    }
+
     @Override
     public void draw(SpriteBatch batch) {
         batch.draw(texture, texture1X, texture1Y, SCREEN_WIDTH, SCREEN_HEIGHT);
         batch.draw(texture, texture2X, texture2Y, SCREEN_WIDTH, SCREEN_HEIGHT);
-        //batch.draw(texture, texture3X, texture3Y, SCREEN_WIDTH, SCREEN_HEIGHT);
-        //batch.draw(texture, texture4X, texture4Y, SCREEN_WIDTH, SCREEN_HEIGHT);
     }
 }
