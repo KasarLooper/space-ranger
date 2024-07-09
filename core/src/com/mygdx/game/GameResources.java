@@ -54,6 +54,11 @@ public class GameResources {
     public static final String LIGHTNING_RIGHT_IMG_PATH = "lightning_right.png";
     public static final String LIGHTNING_LEFT_IMG_PATH = "lightning_left.png";
     public static final String MUSIC_PLANET_PATH = "music/Extreme.mp3";
+    public static final String EARTH_BACKGROUND_IMG_PATH = "earth_background.png";
+
+    //текстуры блоков для платформ
+    public static final String TEXTURE_BOX_1 = "texture_box_1.png";
+    public static final String TEXTURE_BOX_2 = "texture_box_2.png";
 
     //cosmonaut_anim_right
     public static final String COSMONAUT_ANIM_RIGHT_1 = "cosmonaut_anim_right_1.png";
