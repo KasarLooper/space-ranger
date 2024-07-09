@@ -1,7 +1,7 @@
 package com.mygdx.game.objects;
 
 public enum Type {
-    Ship,
+    Player,
     Enemy,
     Core,
     Bullet,

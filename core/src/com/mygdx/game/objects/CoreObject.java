@@ -25,7 +25,7 @@ public class CoreObject extends PhysicsObject {
     @Override
     public void hit(Type type) {
         wasHit = true;
-        if (type == Type.Ship) {
+        if (type == Type.Player) {
             wasCollected = true;
         }
     }

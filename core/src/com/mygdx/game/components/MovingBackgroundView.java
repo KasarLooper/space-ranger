@@ -16,7 +16,13 @@ public class MovingBackgroundView extends View{
     float texture3X, texture3Y;
     float texture4X, texture4Y;
 
+    float ratio;
+
     public MovingBackgroundView(String pathToTexture) {
+        this(pathToTexture, 0);
+    }
+
+    public MovingBackgroundView(String pathToTexture, float ratio) {
         super(0, 0);
         texture = new Texture(pathToTexture);
 
@@ -34,10 +40,37 @@ public class MovingBackgroundView extends View{
 
         texture4X = SCREEN_WIDTH;
         texture4Y = SCREEN_HEIGHT;
+
+        this.ratio = ratio;
     }
+
+    protected void depthMove(float newX, float newY) {
+        newX -= SCREEN_WIDTH / 2f;
+        newY = getNewY(newY);
+
+        int dx = Math.round((newX - cameraX) * (1 - ratio));
+        int dy = Math.round((newY - cameraY) * (1 - ratio));
+
+        texture1X += dx;
+        texture2X += dx;
+        texture3X += dx;
+        texture4X += dx;
+
+        texture1Y += dy;
+        texture2Y += dy;
+        texture3Y += dy;
+        texture4Y += dy;
+
+        cameraX = newX;
+        cameraY = newY;
+    }
+
+    protected float getNewY(float newY) {
+        return newY - SCREEN_HEIGHT / 2f;
+    }
+
     public void move(float newX, float newY) {
-        cameraX = newX - SCREEN_WIDTH / 2f;
-        cameraY = newY - SCREEN_HEIGHT / 2f;
+        depthMove(newX, newY);
 
         float left = Math.min(Math.min(texture1X, texture2X), Math.min(texture3X, texture4X));
         float right = Math.max(Math.max(texture1X, texture2X), Math.max(texture3X, texture4X)) + SCREEN_WIDTH;

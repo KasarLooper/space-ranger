@@ -1,5 +1,7 @@
 package com.mygdx.game.components;
 
+import static com.mygdx.game.GameSettings.CAMERA_Y_FROM_CENTER;
+import static com.mygdx.game.GameSettings.GROUND_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
 
@@ -10,9 +12,13 @@ public class MovingBackgroundLeftRightView extends MovingBackgroundView{
         super(pathToTexture);
     }
 
+    public MovingBackgroundLeftRightView(String pathToTexture, float ratio) {
+        super(pathToTexture, ratio);
+    }
+
     @Override
     public void move(float newX, float newY) {
-        cameraX = newX - SCREEN_WIDTH / 2f;
+        depthMove(newX, newY);
 
         float left = Math.min(Math.min(texture1X, texture2X), Math.min(texture3X, texture4X));
         float right = Math.max(Math.max(texture1X, texture2X), Math.max(texture3X, texture4X)) + SCREEN_WIDTH;
@@ -33,11 +39,13 @@ public class MovingBackgroundLeftRightView extends MovingBackgroundView{
         }
     }
 
+    protected float getNewY(float newY) {
+        return newY - SCREEN_HEIGHT / 2f + GROUND_HEIGHT + CAMERA_Y_FROM_CENTER;
+    }
+
     @Override
     public void draw(SpriteBatch batch) {
         batch.draw(texture, texture1X, texture1Y, SCREEN_WIDTH, SCREEN_HEIGHT);
         batch.draw(texture, texture2X, texture2Y, SCREEN_WIDTH, SCREEN_HEIGHT);
-        //batch.draw(texture, texture3X, texture3Y, SCREEN_WIDTH, SCREEN_HEIGHT);
-        //batch.draw(texture, texture4X, texture4Y, SCREEN_WIDTH, SCREEN_HEIGHT);
     }
 }
