@@ -19,6 +19,7 @@ import static com.mygdx.game.State.PLAYING;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.mygdx.game.GameResources;
+import com.mygdx.game.GraphicsSettings;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.ButtonView;
 import com.mygdx.game.components.MovingBackgroundLeftRightView;
@@ -47,7 +48,7 @@ public class PlanetGameScreen extends GameScreen {
         super(game);
         loader = new LevelMapManager();
         blocks = loader.loadMap();
-        backgroundView = new MovingBackgroundLeftRightView(GameResources.BACKGROUND_2_IMG_PATH);
+        backgroundView = new MovingBackgroundLeftRightView(GameResources.BACKGROUND_2_IMG_PATH, GraphicsSettings.DEPTH_PLANET_BACKGROUND_SPEED_RATIO);
         spaceman = new SpacemanObject(
                 0, GROUND_HEIGHT + COSMONAUT_HEIGHT / 2 + padding,
                 COSMONAUT_WIDTH, COSMONAUT_HEIGHT,

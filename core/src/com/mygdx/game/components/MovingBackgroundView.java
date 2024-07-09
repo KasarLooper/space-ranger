@@ -2,10 +2,10 @@ package com.mygdx.game.components;
 
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
-import static com.mygdx.game.GraphicsSettings.DEPTH_BACKGROUND_SPEED;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.GraphicsSettings;
 
 public class MovingBackgroundView extends View{
     Texture texture;
@@ -17,7 +17,13 @@ public class MovingBackgroundView extends View{
     float texture3X, texture3Y;
     float texture4X, texture4Y;
 
+    float ratio;
+
     public MovingBackgroundView(String pathToTexture) {
+        this(pathToTexture, 0);
+    }
+
+    public MovingBackgroundView(String pathToTexture, float ratio) {
         super(0, 0);
         texture = new Texture(pathToTexture);
 
@@ -35,34 +41,26 @@ public class MovingBackgroundView extends View{
 
         texture4X = SCREEN_WIDTH;
         texture4Y = SCREEN_HEIGHT;
+
+        this.ratio = ratio;
     }
 
     protected void depthMove(float newX, float newY) {
         newX -= SCREEN_WIDTH / 2f;
         newY -= SCREEN_HEIGHT / 2f;
 
-        if (newX > cameraX) {
-            texture1X += DEPTH_BACKGROUND_SPEED;
-            texture2X += DEPTH_BACKGROUND_SPEED;
-            texture3X += DEPTH_BACKGROUND_SPEED;
-            texture4X += DEPTH_BACKGROUND_SPEED;
-        } else if (newX < cameraX) {
-            texture1X -= DEPTH_BACKGROUND_SPEED;
-            texture2X -= DEPTH_BACKGROUND_SPEED;
-            texture3X -= DEPTH_BACKGROUND_SPEED;
-            texture4X -= DEPTH_BACKGROUND_SPEED;
-        }
-        if (newY > cameraY) {
-            texture1Y += DEPTH_BACKGROUND_SPEED;
-            texture2Y += DEPTH_BACKGROUND_SPEED;
-            texture3Y += DEPTH_BACKGROUND_SPEED;
-            texture4Y += DEPTH_BACKGROUND_SPEED;
-        } else if (newY < cameraY) {
-            texture1Y -= DEPTH_BACKGROUND_SPEED;
-            texture2Y -= DEPTH_BACKGROUND_SPEED;
-            texture3Y -= DEPTH_BACKGROUND_SPEED;
-            texture4Y -= DEPTH_BACKGROUND_SPEED;
-        }
+        int dx = Math.round((newX - cameraX) * (1 - ratio));
+        int dy = Math.round((newY - cameraY) * (1 - ratio));
+
+        texture1X += dx;
+        texture2X += dx;
+        texture3X += dx;
+        texture4X += dx;
+
+        texture1Y += dy;
+        texture2Y += dy;
+        texture3Y += dy;
+        texture4Y += dy;
 
         cameraX = newX;
         cameraY = newY;

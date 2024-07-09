@@ -2,13 +2,16 @@ package com.mygdx.game.components;
 
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
-import static com.mygdx.game.GraphicsSettings.DEPTH_BACKGROUND_SPEED;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MovingBackgroundLeftRightView extends MovingBackgroundView{
     public MovingBackgroundLeftRightView(String pathToTexture) {
         super(pathToTexture);
+    }
+
+    public MovingBackgroundLeftRightView(String pathToTexture, float ratio) {
+        super(pathToTexture, ratio);
     }
 
     @Override

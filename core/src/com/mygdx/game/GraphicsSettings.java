@@ -17,5 +17,6 @@ public class GraphicsSettings {
     public static final String[] END_HISTORY_ARRAY = new String[] {
             "Несмотря на все испытания, ты не теряешь веры в свою миссию. Впереди ещё много неизвестного, но благодаря твоей смелости и решимости, ты готов встретить любые трудности на своём пути. \"Авангард\" снова выходит в космос, на этот раз с ещё большей осторожностью, но с той же целью - открыть новые горизонты для человечества."
     };
-    public static final int DEPTH_BACKGROUND_SPEED = 2;
+    public static final float DEPTH_PLANET_BACKGROUND_SPEED_RATIO = 0.2f;
+    public static final float DEPTH_SPACE_BACKGROUND_SPEED_RATIO = 0.4f;
 }
