@@ -56,6 +56,9 @@ public class GameResources {
     public static final String MUSIC_PLANET_PATH = "music/Extreme.mp3";
     public static final String EARTH_BACKGROUND_IMG_PATH = "earth_background.png";
 
+    //платформы
+    public static final String LEVEL_PLATFORM= "level_platform.png";
+
     //текстуры блоков для платформ
     public static final String TEXTURE_BOX_1 = "texture_box_1.png";
     public static final String TEXTURE_BOX_2 = "texture_box_2.png";
