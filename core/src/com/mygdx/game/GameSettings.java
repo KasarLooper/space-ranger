@@ -73,6 +73,6 @@ public class GameSettings {
     // Alien settings
     public static final int ALIEN_WIDTH = 50;
     public static final int ALIEN_HEIGHT = 75;
-    public static final int ALIEN_SPEED = 10;
+    public static final int ALIEN_SPEED = 6;
     public static final int ALIEN_JUMP_FORCE = 14;
 }

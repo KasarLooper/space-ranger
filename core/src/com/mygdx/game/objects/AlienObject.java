@@ -24,4 +24,9 @@ public class AlienObject extends SpacemanObject{
         i = 0;
         isJump = false;
     }
+
+    public void move(int playerX, int playerY, Block[] blocks) {
+        if (playerX < getX()) stepLeft();
+        else if (playerX > getX()) stepRight();
+    }
 }

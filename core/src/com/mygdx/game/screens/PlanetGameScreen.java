@@ -1,6 +1,5 @@
 package com.mygdx.game.screens;
 
-import static com.mygdx.game.GameResources.ALIEN_ANIM_RIGHT_1;
 import static com.mygdx.game.GameResources.ALIEN_ANIM_RIGHT_IMG_PATTERN;
 import static com.mygdx.game.GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN;
 import static com.mygdx.game.GameSettings.ALIEN_HEIGHT;
@@ -24,8 +23,9 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.ButtonView;
 import com.mygdx.game.components.MovingBackgroundLeftRightView;
 import com.mygdx.game.components.MovingBackgroundView;
+import com.mygdx.game.manager.LevelMapManager;
 import com.mygdx.game.objects.AlienObject;
-import com.mygdx.game.objects.PhysicsBlock;
+import com.mygdx.game.objects.Block;
 import com.mygdx.game.objects.Earth;
 import com.mygdx.game.objects.SpacemanObject;
 
@@ -33,10 +33,11 @@ public class PlanetGameScreen extends GameScreen {
 
     MovingBackgroundView backgroundView;
 
+    LevelMapManager loader;
     SpacemanObject spaceman;
     AlienObject alien;
     Earth earth;
-    PhysicsBlock block;
+    Block[] blocks;
 
     ButtonView jumpButton;
     boolean isJump;
@@ -44,6 +45,8 @@ public class PlanetGameScreen extends GameScreen {
 
     public PlanetGameScreen(MyGdxGame game) {
         super(game);
+        loader = new LevelMapManager();
+        blocks = loader.loadMap();
         backgroundView = new MovingBackgroundLeftRightView(GameResources.BACKGROUND_2_IMG_PATH);
         spaceman = new SpacemanObject(
                 0, GROUND_HEIGHT + COSMONAUT_HEIGHT / 2 + padding,
@@ -57,7 +60,6 @@ public class PlanetGameScreen extends GameScreen {
                 ALIEN_SPEED, ALIEN_JUMP_FORCE,
                 myGdxGame.planet);
         earth = new Earth(GROUND_HEIGHT, myGdxGame.planet);
-        block = new PhysicsBlock(100, 200, 100, 100, GameResources.BOOM_IMG_PATH, myGdxGame.planet);
         jumpButton = new ButtonView(1150, 25, 100, 100, GameResources.JUMP_BUTTON_IMG_PATH);
         isJump = false;
     }
@@ -72,6 +74,7 @@ public class PlanetGameScreen extends GameScreen {
             if (isJump)
                 spaceman.jump();
             spaceman.updateFrames();
+            alien.move(spaceman.getX(), spaceman.getY(), blocks);
             alien.updateFrames();
             myGdxGame.stepWorld(myGdxGame.planet);
             spaceman.updateJump();
@@ -90,7 +93,6 @@ public class PlanetGameScreen extends GameScreen {
         spaceman.draw(myGdxGame.batch);
         alien.draw(myGdxGame.batch);
         super.drawDynamic();
-        block.draw(myGdxGame.batch);
     }
 
     @Override
