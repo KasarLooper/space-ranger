@@ -12,8 +12,11 @@ import com.badlogic.gdx.Input;
 import com.mygdx.game.GameResources;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.ButtonView;
+import com.mygdx.game.components.ImageView;
+import com.mygdx.game.components.LiveView;
 import com.mygdx.game.components.MovingBackgroundLeftRightView;
 import com.mygdx.game.components.MovingBackgroundView;
+import com.mygdx.game.components.TextView;
 import com.mygdx.game.objects.PhysicsBlock;
 import com.mygdx.game.objects.Earth;
 import com.mygdx.game.objects.SpacemanObject;
@@ -26,7 +29,12 @@ public class PlanetGameScreen extends GameScreen {
     Earth earth;
     PhysicsBlock block;
 
+    LiveView lives;
     ButtonView jumpButton;
+    TextView purpose;
+    ButtonView fireButton;
+    ImageView fireButtonImg;
+
     boolean isJump;
     private int padding = 0;
 
@@ -42,6 +50,10 @@ public class PlanetGameScreen extends GameScreen {
         earth = new Earth(GROUND_HEIGHT, myGdxGame.planet);
         block = new PhysicsBlock(100, 200, 100, 100, GameResources.BOOM_IMG_PATH, myGdxGame.planet);
         jumpButton = new ButtonView(1150, 25, 100, 100, GameResources.JUMP_BUTTON_IMG_PATH);
+        lives = new LiveView(0, 675);
+        purpose = new TextView(myGdxGame.averageWhiteFont, 300, 675, "Цель - обломки коробля(0/...) и минераллы(0/...)");
+        fireButton = new ButtonView(1000, 25, 100, 100, GameResources.FIRE_BUTTON_PLANET_IMG_PATH);
+        fireButtonImg = new ImageView(100, 100, 1000, 25, GameResources.JOYSTICK_BACK_IMG_PATH);
         isJump = false;
     }
 
@@ -58,6 +70,7 @@ public class PlanetGameScreen extends GameScreen {
             myGdxGame.stepWorld(myGdxGame.planet);
             spaceman.updateJump();
         }
+        lives.setLeftLives(spaceman.liveLeft);
     }
 
     @Override
@@ -77,6 +90,10 @@ public class PlanetGameScreen extends GameScreen {
     public void drawStatic() {
         super.drawStatic();
         jumpButton.draw(myGdxGame.batch);
+        lives.draw(myGdxGame.batch);
+        purpose.draw(myGdxGame.batch);
+        fireButton.draw(myGdxGame.batch);
+        fireButtonImg.draw(myGdxGame.batch);
     }
 
     @Override

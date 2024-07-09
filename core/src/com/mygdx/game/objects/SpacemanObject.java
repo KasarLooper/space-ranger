@@ -25,6 +25,7 @@ public class SpacemanObject extends PhysicsObject {
     Texture[] left;
     Texture[] right;
     long jumpTime;
+    public int liveLeft;
 
     public SpacemanObject(int x, int y, int wight, int height, String texturePath, World world) {
         super(texturePath, x, y, wight, height, world);
@@ -43,6 +44,7 @@ public class SpacemanObject extends PhysicsObject {
         }
         i = 0;
         isJump = false;
+        liveLeft = 3;
     }
 
     @Override

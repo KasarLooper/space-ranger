@@ -103,4 +103,5 @@ public class GameResources {
     public static final String ALIEN_ANIM_LEFT_8 = "Alien_anim_left/alien_anim_left_8.png";
     public static final String ALIEN_ANIM_LEFT_9 = "Alien_anim_left/alien_anim_left_9.png";
 
+    public static final String FIRE_BUTTON_PLANET_IMG_PATH = "fireButtonPlanet.png";
 }
