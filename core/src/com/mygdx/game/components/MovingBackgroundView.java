@@ -2,6 +2,7 @@ package com.mygdx.game.components;
 
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
+import static com.mygdx.game.GraphicsSettings.DEPTH_BACKGROUND_SPEED;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -35,9 +36,40 @@ public class MovingBackgroundView extends View{
         texture4X = SCREEN_WIDTH;
         texture4Y = SCREEN_HEIGHT;
     }
+
+    protected void depthMove(float newX, float newY) {
+        newX -= SCREEN_WIDTH / 2f;
+        newY -= SCREEN_HEIGHT / 2f;
+
+        if (newX > cameraX) {
+            texture1X += DEPTH_BACKGROUND_SPEED;
+            texture2X += DEPTH_BACKGROUND_SPEED;
+            texture3X += DEPTH_BACKGROUND_SPEED;
+            texture4X += DEPTH_BACKGROUND_SPEED;
+        } else if (newX < cameraX) {
+            texture1X -= DEPTH_BACKGROUND_SPEED;
+            texture2X -= DEPTH_BACKGROUND_SPEED;
+            texture3X -= DEPTH_BACKGROUND_SPEED;
+            texture4X -= DEPTH_BACKGROUND_SPEED;
+        }
+        if (newY > cameraY) {
+            texture1Y += DEPTH_BACKGROUND_SPEED;
+            texture2Y += DEPTH_BACKGROUND_SPEED;
+            texture3Y += DEPTH_BACKGROUND_SPEED;
+            texture4Y += DEPTH_BACKGROUND_SPEED;
+        } else if (newY < cameraY) {
+            texture1Y -= DEPTH_BACKGROUND_SPEED;
+            texture2Y -= DEPTH_BACKGROUND_SPEED;
+            texture3Y -= DEPTH_BACKGROUND_SPEED;
+            texture4Y -= DEPTH_BACKGROUND_SPEED;
+        }
+
+        cameraX = newX;
+        cameraY = newY;
+    }
+
     public void move(float newX, float newY) {
-        cameraX = newX - SCREEN_WIDTH / 2f;
-        cameraY = newY - SCREEN_HEIGHT / 2f;
+        depthMove(newX, newY);
 
         float left = Math.min(Math.min(texture1X, texture2X), Math.min(texture3X, texture4X));
         float right = Math.max(Math.max(texture1X, texture2X), Math.max(texture3X, texture4X)) + SCREEN_WIDTH;

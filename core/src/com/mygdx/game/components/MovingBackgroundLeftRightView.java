@@ -2,6 +2,7 @@ package com.mygdx.game.components;
 
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
+import static com.mygdx.game.GraphicsSettings.DEPTH_BACKGROUND_SPEED;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -12,7 +13,7 @@ public class MovingBackgroundLeftRightView extends MovingBackgroundView{
 
     @Override
     public void move(float newX, float newY) {
-        cameraX = newX - SCREEN_WIDTH / 2f;
+        depthMove(newX, newY);
 
         float left = Math.min(Math.min(texture1X, texture2X), Math.min(texture3X, texture4X));
         float right = Math.max(Math.max(texture1X, texture2X), Math.max(texture3X, texture4X)) + SCREEN_WIDTH;

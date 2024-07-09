@@ -1,7 +1,16 @@
 package com.mygdx.game.screens;
 
+import static com.mygdx.game.GameResources.ALIEN_ANIM_RIGHT_1;
+import static com.mygdx.game.GameResources.ALIEN_ANIM_RIGHT_IMG_PATTERN;
+import static com.mygdx.game.GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN;
+import static com.mygdx.game.GameSettings.ALIEN_HEIGHT;
+import static com.mygdx.game.GameSettings.ALIEN_JUMP_FORCE;
+import static com.mygdx.game.GameSettings.ALIEN_SPEED;
+import static com.mygdx.game.GameSettings.ALIEN_WIDTH;
 import static com.mygdx.game.GameSettings.CAMERA_Y_FROM_CENTER;
 import static com.mygdx.game.GameSettings.COSMONAUT_HEIGHT;
+import static com.mygdx.game.GameSettings.COSMONAUT_JUMP_FORCE;
+import static com.mygdx.game.GameSettings.COSMONAUT_SPEED;
 import static com.mygdx.game.GameSettings.COSMONAUT_WIDTH;
 import static com.mygdx.game.GameSettings.GROUND_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
@@ -15,6 +24,7 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.ButtonView;
 import com.mygdx.game.components.MovingBackgroundLeftRightView;
 import com.mygdx.game.components.MovingBackgroundView;
+import com.mygdx.game.objects.AlienObject;
 import com.mygdx.game.objects.PhysicsBlock;
 import com.mygdx.game.objects.Earth;
 import com.mygdx.game.objects.SpacemanObject;
@@ -24,6 +34,7 @@ public class PlanetGameScreen extends GameScreen {
     MovingBackgroundView backgroundView;
 
     SpacemanObject spaceman;
+    AlienObject alien;
     Earth earth;
     PhysicsBlock block;
 
@@ -37,9 +48,14 @@ public class PlanetGameScreen extends GameScreen {
         spaceman = new SpacemanObject(
                 0, GROUND_HEIGHT + COSMONAUT_HEIGHT / 2 + padding,
                 COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
-                String.format(GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4),
-                myGdxGame.planet
-        );
+                COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4,
+                COSMONAUT_SPEED, COSMONAUT_JUMP_FORCE,
+                myGdxGame.planet);
+        alien = new AlienObject(
+                 -300, GROUND_HEIGHT + COSMONAUT_HEIGHT / 2 + padding,
+                ALIEN_WIDTH, ALIEN_HEIGHT, ALIEN_ANIM_RIGHT_IMG_PATTERN, 5,
+                ALIEN_SPEED, ALIEN_JUMP_FORCE,
+                myGdxGame.planet);
         earth = new Earth(GROUND_HEIGHT, myGdxGame.planet);
         block = new PhysicsBlock(100, 200, 100, 100, GameResources.BOOM_IMG_PATH, myGdxGame.planet);
         jumpButton = new ButtonView(1150, 25, 100, 100, GameResources.JUMP_BUTTON_IMG_PATH);
@@ -56,8 +72,10 @@ public class PlanetGameScreen extends GameScreen {
             if (isJump)
                 spaceman.jump();
             spaceman.updateFrames();
+            alien.updateFrames();
             myGdxGame.stepWorld(myGdxGame.planet);
             spaceman.updateJump();
+            alien.updateJump();
         }
     }
 
@@ -70,6 +88,7 @@ public class PlanetGameScreen extends GameScreen {
     public void drawDynamic() {
         backgroundView.draw(myGdxGame.batch);
         spaceman.draw(myGdxGame.batch);
+        alien.draw(myGdxGame.batch);
         super.drawDynamic();
         block.draw(myGdxGame.batch);
     }
@@ -87,7 +106,13 @@ public class PlanetGameScreen extends GameScreen {
         spaceman = new SpacemanObject(
                 0, GROUND_HEIGHT + COSMONAUT_HEIGHT / 2 + padding,
                 COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
-                String.format(GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4),
+                COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4,
+                COSMONAUT_SPEED, COSMONAUT_JUMP_FORCE,
+                myGdxGame.planet);
+        alien = new AlienObject(
+                -300, GROUND_HEIGHT + COSMONAUT_HEIGHT / 2 + padding,
+                ALIEN_WIDTH, ALIEN_HEIGHT, ALIEN_ANIM_RIGHT_IMG_PATTERN, 5,
+                ALIEN_SPEED, ALIEN_JUMP_FORCE,
                 myGdxGame.planet);
     }
 
@@ -95,6 +120,7 @@ public class PlanetGameScreen extends GameScreen {
     public void dispose() {
         super.dispose();
         spaceman.dispose();
+        alien.dispose();
         jumpButton.dispose();
     }
 

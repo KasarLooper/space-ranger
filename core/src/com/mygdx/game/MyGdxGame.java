@@ -84,9 +84,9 @@ public class MyGdxGame extends Game {
 		//state = State.ENDED;
 		setScreen(menuScreen);
 
-		//planetLevel();
+		planetLevel();
 
-		//setScreen(historyScreen);
+		//setScreen(planetHistory);
 
 		levelMapManager = new LevelMapManager();
 	}

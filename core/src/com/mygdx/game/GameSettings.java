@@ -69,4 +69,10 @@ public class GameSettings {
     public static final int COSMONAUT_HEIGHT = 75;
     public static final int COSMONAUT_SPEED = 10;
     public static final int COSMONAUT_JUMP_FORCE = 14;
+
+    // Alien settings
+    public static final int ALIEN_WIDTH = 50;
+    public static final int ALIEN_HEIGHT = 75;
+    public static final int ALIEN_SPEED = 10;
+    public static final int ALIEN_JUMP_FORCE = 14;
 }
