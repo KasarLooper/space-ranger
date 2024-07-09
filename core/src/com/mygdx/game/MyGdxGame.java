@@ -3,6 +3,8 @@ package com.mygdx.game;
 import static com.mygdx.game.GameSettings.POSITION_ITERATIONS;
 import static com.mygdx.game.GameSettings.STEP_TIME;
 import static com.mygdx.game.GameSettings.VELOCITY_ITERATIONS;
+import static com.mygdx.game.GraphicsSettings.END_HISTORY_ARRAY;
+import static com.mygdx.game.GraphicsSettings.PLANET_HISTORY_ARRAY;
 import static com.mygdx.game.GraphicsSettings.SPACE_HISTORY_ARRAY;
 
 import com.badlogic.gdx.Game;
@@ -44,11 +46,22 @@ public class MyGdxGame extends Game {
 	public BitmapFont commonWhiteFont;
 	public BitmapFont averageWhiteFont;
 	public LevelMapManager levelMapManager;
+	public HistoryScreen spaceHistory;
+	public HistoryScreen planetHistory;
+	public HistoryScreen endHistory;
+	public boolean isContinue;
+	public boolean needToSpaceIntro;
+	public boolean needToPlanetIntro;
 
 	public AudioManager audioManager;
 	@Override
 	public void create () {
+		//MemoryManager.clear();
+		needToSpaceIntro = !MemoryManager.lodeHasSeenSpaceIntro();
+		needToPlanetIntro = !MemoryManager.loadHasSeenPlanetIntro();
 		canAccessPlanetLevel = MemoryManager.loadIsNextLevel();
+		isContinue = false;
+
 		Box2D.init();
 		space = new World(new Vector2(0, 0), true);
 		planet = new World(new Vector2((float) GameSettings.GRAVITY_PLANET_X, (float) GameSettings.GRAVITY_PLANET_Y), true);
@@ -64,13 +77,16 @@ public class MyGdxGame extends Game {
 		planetScreen = new PlanetGameScreen(this);
 		menuScreen = new MenuScreen(this);
 		memoriesScreen = new MemoriesScreen(this);
+		spaceHistory = new HistoryScreen(this, SPACE_HISTORY_ARRAY, spaceScreen);
+		planetHistory = new HistoryScreen(this, PLANET_HISTORY_ARRAY, planetScreen);
+		endHistory = new HistoryScreen(this, END_HISTORY_ARRAY, menuScreen);
 		audioManager = new AudioManager();
 		//state = State.ENDED;
 		setScreen(menuScreen);
 
-		//planetLevel();
+		planetLevel();
 
-		//setScreen(historyScreen);
+		//setScreen(planetHistory);
 
 		levelMapManager = new LevelMapManager();
 	}
@@ -105,6 +121,24 @@ public class MyGdxGame extends Game {
 		audioManager.menuMusic.play();
 		audioManager.spaceMusic.stop();
 		audioManager.planetMusic.stop();
+	}
+
+	public void showSpaceIntro() {
+		needToSpaceIntro = false;
+		MemoryManager.saveHasSeenSpaceIntro(true);
+	}
+
+	public void showPlanetIntro() {
+		needToPlanetIntro = false;
+		MemoryManager.saveHasSeenPlanetIntro(true);
+	}
+
+	public void passSpaceLevel() {
+		canAccessPlanetLevel = true;
+		MemoryManager.saveIsNextLevel(true);
+	}
+
+	public void passPlanetLevel() {
 	}
 	
 	@Override

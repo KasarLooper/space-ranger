@@ -17,7 +17,6 @@ import com.mygdx.game.components.LiveView;
 import com.mygdx.game.components.MovingBackgroundLeftRightView;
 import com.mygdx.game.components.MovingBackgroundView;
 import com.mygdx.game.components.TextView;
-import com.mygdx.game.objects.LightningBulletObject;
 import com.mygdx.game.objects.PhysicsBlock;
 import com.mygdx.game.objects.Earth;
 import com.mygdx.game.objects.SpacemanObject;
@@ -27,7 +26,6 @@ public class PlanetGameScreen extends GameScreen {
     MovingBackgroundView backgroundView;
 
     SpacemanObject spaceman;
-    LightningBulletObject lightning;
     Earth earth;
     PhysicsBlock block;
 
@@ -35,9 +33,9 @@ public class PlanetGameScreen extends GameScreen {
     ButtonView jumpButton;
     TextView purpose;
     ButtonView fireButton;
+    ImageView fireButtonImg;
 
     boolean isJump;
-    boolean isLightning;
     private int padding = 0;
 
     public PlanetGameScreen(MyGdxGame game) {
@@ -54,10 +52,9 @@ public class PlanetGameScreen extends GameScreen {
         jumpButton = new ButtonView(1150, 25, 100, 100, GameResources.JUMP_BUTTON_IMG_PATH);
         lives = new LiveView(0, 675);
         purpose = new TextView(myGdxGame.averageWhiteFont, 300, 675, "Цель - обломки коробля(0/...) и минераллы(0/...)");
-        fireButton = new ButtonView(1150, 150, 100, 100, GameResources.FIRE_BUTTON_PLANET_IMG_PATH);
-        lightning = new LightningBulletObject(spaceman, 100, 200, myGdxGame.planet);
+        fireButton = new ButtonView(1000, 25, 100, 100, GameResources.FIRE_BUTTON_PLANET_IMG_PATH);
+        fireButtonImg = new ImageView(100, 100, 1000, 25, GameResources.JOYSTICK_BACK_IMG_PATH);
         isJump = false;
-        isLightning = false;
     }
 
     @Override
@@ -87,7 +84,6 @@ public class PlanetGameScreen extends GameScreen {
         spaceman.draw(myGdxGame.batch);
         super.drawDynamic();
         block.draw(myGdxGame.batch);
-        if (isLightning) lightning.draw(myGdxGame.batch);
     }
 
     @Override
@@ -97,6 +93,7 @@ public class PlanetGameScreen extends GameScreen {
         lives.draw(myGdxGame.batch);
         purpose.draw(myGdxGame.batch);
         fireButton.draw(myGdxGame.batch);
+        fireButtonImg.draw(myGdxGame.batch);
     }
 
     @Override
@@ -129,10 +126,6 @@ public class PlanetGameScreen extends GameScreen {
         }
         if (jumpButton.isHit(screenX, Gdx.graphics.getHeight() - screenY))
             isJump = true;
-        if (fireButton.isHit(screenX, Gdx.graphics.getHeight() - screenY)) {
-            lightning.setCondition();
-            isLightning = true;
-        }
         return true;
     }
 

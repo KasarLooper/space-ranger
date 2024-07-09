@@ -50,7 +50,7 @@ public class EnemyObject extends PhysicsObject {
 
     @Override
     public void hit(Type type) {
-        if (type == Type.Ship || type == Type.Enemy || type == Type.Bullet) {
+        if (type == Type.Player || type == Type.Enemy || type == Type.Bullet) {
             wasHit = true;
         }
     }

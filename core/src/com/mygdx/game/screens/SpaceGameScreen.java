@@ -69,7 +69,7 @@ public class SpaceGameScreen extends GameScreen {
     public SpaceGameScreen(MyGdxGame myGdxGame) {
         super(myGdxGame);
         this.myGdxGame = myGdxGame;
-        backgroundView = new MovingBackgroundView(GameResources.BACKGROUND_IMG_PATH);
+        backgroundView = new MovingBackgroundView(GameResources.BACKGROUND_IMG_PATH, GraphicsSettings.DEPTH_SPACE_BACKGROUND_SPEED_RATIO);
         contactManager = new ContactManager(myGdxGame.space);
         shipObject = new ShipObject(
                 GameSettings.SCREEN_WIDTH / 2, GameSettings.SCREEN_HEIGHT / 2,
@@ -135,10 +135,8 @@ public class SpaceGameScreen extends GameScreen {
                     updateEnemy();
                     updateBoom();
                     if (gameSession.victory()) {
-                        System.out.println("You Won!");
+                        myGdxGame.passSpaceLevel();
                         shipObject.moleHoleAnim();
-                        MemoryManager.saveIsNextLevel(true);
-                        myGdxGame.canAccessPlanetLevel = MemoryManager.loadIsNextLevel();
                     }
                     if (joystick.isTouched()) {
                         shipObject.setRotation(joystick.getDegrees());

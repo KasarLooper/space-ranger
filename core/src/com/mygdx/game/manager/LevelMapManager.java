@@ -1,8 +1,6 @@
 package com.mygdx.game.manager;
 
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.GameResources;
 import com.mygdx.game.GameSettings;
@@ -12,11 +10,7 @@ import com.mygdx.game.objects.PhysicsBlock;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Path;
 
 import javax.imageio.ImageIO;
 

@@ -1,7 +1,5 @@
 package com.mygdx.game.objects;
 
-import static com.mygdx.game.GameSettings.COSMONAUT_JUMP_FORCE;
-import static com.mygdx.game.GameSettings.COSMONAUT_SPEED;
 import static com.mygdx.game.GameSettings.SCALE;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -16,6 +14,9 @@ import com.mygdx.game.GameResources;
 
 public class SpacemanObject extends PhysicsObject {
     int defaultY;
+    int defaultFrame;
+    int speed;
+    int jumpImpulse;
     Sprite sprite;
     int i;
     public boolean isRightStep;
@@ -27,11 +28,18 @@ public class SpacemanObject extends PhysicsObject {
     long jumpTime;
     public int liveLeft;
 
-    public SpacemanObject(int x, int y, int wight, int height, String texturePath, World world) {
-        super(texturePath, x, y, wight, height, world);
+    public SpacemanObject(int x, int y, int wight, int height, String texturePath, int defaultFrame, int speed, int jumpImpulse, World world) {
+        super(String.format(texturePath, defaultFrame), x, y, wight, height, world);
         defaultY = y;
+        this.defaultFrame = defaultFrame;
+        this.speed = speed;
+        this.jumpImpulse = jumpImpulse;
         sprite = new Sprite(texture);
 
+        initTextures(defaultFrame);
+    }
+
+    protected void initTextures(int defaultFrame) {
         left = new Texture[14];
         right = new Texture[14];
         for (int i = 2; i <= 14; i+=2) {
@@ -74,7 +82,7 @@ public class SpacemanObject extends PhysicsObject {
         if (!isJump) {
             isJump = true;
             jumpTime = TimeUtils.millis();
-            body.applyLinearImpulse(new Vector2(0, COSMONAUT_JUMP_FORCE), body.getWorldCenter(), false);
+            body.applyLinearImpulse(new Vector2(0, jumpImpulse), body.getWorldCenter(), false);
         }
     }
 
@@ -94,11 +102,11 @@ public class SpacemanObject extends PhysicsObject {
         }
         if ((isRightStep || isLeftStep) && !isJump) {
             i++;
-            if (i >= 14) i = 0;
+            if (i >= right.length) i = 0;
             sprite.setTexture(isLeftStep ? left[i] : right[i]);
         }
-        if (isRightStep) body.setLinearVelocity(COSMONAUT_SPEED, body.getLinearVelocity().y);
-        else if (isLeftStep) body.setLinearVelocity(-COSMONAUT_SPEED, body.getLinearVelocity().y);
+        if (isRightStep) body.setLinearVelocity(speed, body.getLinearVelocity().y);
+        else if (isLeftStep) body.setLinearVelocity(-speed, body.getLinearVelocity().y);
     }
 
     public void updateJump() {
@@ -113,6 +121,6 @@ public class SpacemanObject extends PhysicsObject {
     }
 
     public Type type() {
-        return Type.Ship;
+        return Type.Player;
     }
 }

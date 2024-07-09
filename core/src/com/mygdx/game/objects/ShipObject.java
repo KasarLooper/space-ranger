@@ -86,7 +86,7 @@ public class ShipObject extends PhysicsObject {
     }
 
     public Type type() {
-        return Type.Ship;
+        return Type.Player;
     }
 
     public boolean isAlive() {
