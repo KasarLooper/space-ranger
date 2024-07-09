@@ -93,6 +93,7 @@ public class PlanetGameScreen extends GameScreen {
     @Override
     public void drawDynamic() {
         backgroundView.draw(myGdxGame.batch);
+        earth.draw(myGdxGame.batch, spaceman.getX());
         spaceman.draw(myGdxGame.batch);
         alien.draw(myGdxGame.batch);
         super.drawDynamic();
