@@ -66,17 +66,18 @@ public class GameSettings {
     public static final int EARTH_HEIGHT = 130;
 
     // Block settings
-    public static final int BLOCK_SIZE = 100;
+    public static final int BLOCK_SIZE = 85;
+    public static final int MAP_HEIGHT = 16;
 
     // Cosmonaut settings
-    public static final int COSMONAUT_WIDTH = 100;
-    public static final int COSMONAUT_HEIGHT = 150;
+    public static final int COSMONAUT_WIDTH = 85;
+    public static final int COSMONAUT_HEIGHT = 170;
     public static final int COSMONAUT_SPEED = 10;
     public static final int COSMONAUT_JUMP_FORCE = 100;
 
     // Alien settings
-    public static final int ALIEN_WIDTH = 100;
-    public static final int ALIEN_HEIGHT = 150;
+    public static final int ALIEN_WIDTH = 85;
+    public static final int ALIEN_HEIGHT = 170;
     public static final int ALIEN_SPEED = 6;
     public static final int ALIEN_JUMP_FORCE = 100;
 }

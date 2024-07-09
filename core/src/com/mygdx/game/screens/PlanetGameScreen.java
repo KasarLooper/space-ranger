@@ -28,7 +28,10 @@ import com.mygdx.game.manager.LevelMapManager;
 import com.mygdx.game.objects.AlienObject;
 import com.mygdx.game.objects.Block;
 import com.mygdx.game.objects.Earth;
+import com.mygdx.game.objects.PhysicsBlock;
 import com.mygdx.game.objects.SpacemanObject;
+
+import java.util.ArrayList;
 
 public class PlanetGameScreen extends GameScreen {
 
@@ -38,7 +41,7 @@ public class PlanetGameScreen extends GameScreen {
     SpacemanObject spaceman;
     AlienObject alien;
     Earth earth;
-    Block[] blocks;
+    ArrayList<PhysicsBlock> blocks;
 
     ButtonView jumpButton;
     boolean isJump;
@@ -47,10 +50,11 @@ public class PlanetGameScreen extends GameScreen {
     public PlanetGameScreen(MyGdxGame game) {
         super(game);
         loader = new LevelMapManager();
-        blocks = loader.loadMap();
+        loader.loadMap(myGdxGame.planet);
+        blocks = loader.getPhysics();
         backgroundView = new MovingBackgroundLeftRightView(GameResources.BACKGROUND_2_IMG_PATH, GraphicsSettings.DEPTH_PLANET_BACKGROUND_SPEED_RATIO);
         spaceman = new SpacemanObject(
-                0, GROUND_HEIGHT + COSMONAUT_HEIGHT / 2 + padding,
+                0, loader.getPlayerWorldY(),
                 COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
                 COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4,
                 COSMONAUT_SPEED, COSMONAUT_JUMP_FORCE,
@@ -75,7 +79,7 @@ public class PlanetGameScreen extends GameScreen {
             if (isJump)
                 spaceman.jump();
             spaceman.updateFrames();
-            alien.move(spaceman.getX(), spaceman.getY(), blocks);
+            //alien.move(spaceman.getX(), spaceman.getY(), blocks);
             //spaceman.setY(spaceman.getY() + 50);
             System.out.println(spaceman.getY());
             alien.updateFrames();
@@ -94,6 +98,7 @@ public class PlanetGameScreen extends GameScreen {
     public void drawDynamic() {
         backgroundView.draw(myGdxGame.batch);
         earth.draw(myGdxGame.batch, spaceman.getX());
+        for (PhysicsBlock block : blocks) block.draw(myGdxGame.batch);
         spaceman.draw(myGdxGame.batch);
         alien.draw(myGdxGame.batch);
         super.drawDynamic();
@@ -110,7 +115,7 @@ public class PlanetGameScreen extends GameScreen {
         super.restartGame();
         myGdxGame.planet.destroyBody(spaceman.body);
         spaceman = new SpacemanObject(
-                0, GROUND_HEIGHT + COSMONAUT_HEIGHT / 2 + padding,
+                0, loader.getPlayerWorldY(),
                 COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
                 COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4,
                 COSMONAUT_SPEED, COSMONAUT_JUMP_FORCE,
