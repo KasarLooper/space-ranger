@@ -2,7 +2,7 @@ package com.mygdx.game;
 
 public class GameResources {
     public static final String EARTH_IMG_PATH = "earth.png";
-    public static final String LEVEL_MAP_IMG_PATH = "example.png";
+    public static final String LEVEL_MAP_IMG_PATH = "level_platform.png";
     public static final String SHIP_IMG_PATH = "ship_%d.png";
     public static final String JOYSTICK_BACK_IMG_PATH = "joystick-zone.png";
     public static final String JOYSTICK_CIRCLE_IMG_PATH = "joystick-circle.png";

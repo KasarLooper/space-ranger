@@ -56,7 +56,7 @@ public class SpacemanObject extends PhysicsObject {
     @Override
     protected Shape getShape(float x, float y, float width, float height) {
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width * SCALE / 2f, height * SCALE / 2f);
+        shape.setAsBox((width - 20) * SCALE / 2f, (height - 10) * SCALE / 2f);
         return shape;
     }
 

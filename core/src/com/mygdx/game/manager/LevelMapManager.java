@@ -9,7 +9,6 @@ import static com.mygdx.game.GameSettings.MAP_HEIGHT;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.GameResources;
 import com.mygdx.game.GameSettings;
-import com.mygdx.game.objects.Block;
 import com.mygdx.game.objects.DecorativeBlock;
 import com.mygdx.game.objects.PhysicsBlock;
 
@@ -23,8 +22,9 @@ import javax.imageio.ImageIO;
 public class LevelMapManager {
     ArrayList<PhysicsBlock> physics;
     ArrayList<DecorativeBlock> decors;
+    int playerX;
+    int playerY;
     int playerPixelX;
-    int playerWorldY;
 
     public void loadMap(World world) {
         physics = new ArrayList<>();
@@ -70,22 +70,33 @@ public class LevelMapManager {
         return decors;
     }
 
-    public int getPlayerWorldY() {
-        return playerWorldY;
+    public int getPlayerX() {
+        return playerX;
+    }
+
+    public int getPlayerY() {
+        return playerY;
     }
 
     private void initPlayer(int red, int green, int blue, int x, int y, World world) {
         if (red == 255 && green == 0 && blue == 0) {
+            playerX = x * BLOCK_SIZE;
+            playerY = GROUND_HEIGHT + COSMONAUT_HEIGHT / 2 + (MAP_HEIGHT - y) * BLOCK_SIZE;
             playerPixelX = x;
-            playerWorldY = GROUND_HEIGHT + COSMONAUT_HEIGHT / 2 + (MAP_HEIGHT - y - 1) * BLOCK_SIZE;
         }
     }
 
     private void initBlocks(int red, int green, int blue, int x, int y, World world) {
         if (red == 0 && green == 255 && blue == 0) {
-            physics.add(new PhysicsBlock((x - playerPixelX) * BLOCK_SIZE, (MAP_HEIGHT - y - 1) * BLOCK_SIZE, GameSettings.BLOCK_SIZE, GameSettings.BLOCK_SIZE, GameResources.TEXTURE_BOX_GREEN, world));
+            physics.add(new PhysicsBlock( playerX + (x - playerPixelX) * BLOCK_SIZE,
+                    playerY + (MAP_HEIGHT - y - 3) * BLOCK_SIZE,
+                    GameSettings.BLOCK_SIZE, GameSettings.BLOCK_SIZE,
+                    GameResources.TEXTURE_BOX_GREEN, world));
         } else if (red == 0 && green == 0 && blue == 0) {
-            physics.add(new PhysicsBlock((x - playerPixelX) * BLOCK_SIZE, (MAP_HEIGHT - y - 1) * BLOCK_SIZE, GameSettings.BLOCK_SIZE, GameSettings.BLOCK_SIZE, GameResources.TEXTURE_BOX_BLACK, world));
+            physics.add(new PhysicsBlock( playerX + (x - playerPixelX) * BLOCK_SIZE,
+                    playerY + (MAP_HEIGHT - y - 3) * BLOCK_SIZE,
+                    GameSettings.BLOCK_SIZE, GameSettings.BLOCK_SIZE,
+                    GameResources.TEXTURE_BOX_BLACK, world));
         }
     }
 }

@@ -26,7 +26,6 @@ import com.mygdx.game.components.MovingBackgroundLeftRightView;
 import com.mygdx.game.components.MovingBackgroundView;
 import com.mygdx.game.manager.LevelMapManager;
 import com.mygdx.game.objects.AlienObject;
-import com.mygdx.game.objects.Block;
 import com.mygdx.game.objects.Earth;
 import com.mygdx.game.objects.PhysicsBlock;
 import com.mygdx.game.objects.SpacemanObject;
@@ -54,7 +53,7 @@ public class PlanetGameScreen extends GameScreen {
         blocks = loader.getPhysics();
         backgroundView = new MovingBackgroundLeftRightView(GameResources.BACKGROUND_2_IMG_PATH, GraphicsSettings.DEPTH_PLANET_BACKGROUND_SPEED_RATIO);
         spaceman = new SpacemanObject(
-                0, loader.getPlayerWorldY(),
+                loader.getPlayerX(), loader.getPlayerY(),
                 COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
                 COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4,
                 COSMONAUT_SPEED, COSMONAUT_JUMP_FORCE,
@@ -115,7 +114,7 @@ public class PlanetGameScreen extends GameScreen {
         super.restartGame();
         myGdxGame.planet.destroyBody(spaceman.body);
         spaceman = new SpacemanObject(
-                0, loader.getPlayerWorldY(),
+                loader.getPlayerX(), loader.getPlayerY(),
                 COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
                 COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4,
                 COSMONAUT_SPEED, COSMONAUT_JUMP_FORCE,
