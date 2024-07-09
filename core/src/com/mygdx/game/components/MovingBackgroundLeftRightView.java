@@ -45,7 +45,7 @@ public class MovingBackgroundLeftRightView extends MovingBackgroundView{
 
     @Override
     public void draw(SpriteBatch batch) {
-        batch.draw(texture, texture1X, texture1Y, SCREEN_WIDTH, SCREEN_HEIGHT);
-        batch.draw(texture, texture2X, texture2Y, SCREEN_WIDTH, SCREEN_HEIGHT);
+        batch.draw(texture, texture1X, texture1Y, SCREEN_WIDTH, SCREEN_HEIGHT * 2f);
+        batch.draw(texture, texture2X, texture2Y, SCREEN_WIDTH, SCREEN_HEIGHT * 2f);
     }
 }

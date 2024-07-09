@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 public class LevelMapManager {
 
     public Block[] loadMap() {
+        /*
         try {
 
             File file = new File(System.getProperty("user.dir") + "/assets/" + GameResources.LEVEL_MAP_IMG_PATH);
@@ -36,6 +37,8 @@ public class LevelMapManager {
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
+        return null;
+        */
         return null;
     }
 

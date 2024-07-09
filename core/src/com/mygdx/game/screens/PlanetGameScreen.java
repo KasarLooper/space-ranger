@@ -76,6 +76,8 @@ public class PlanetGameScreen extends GameScreen {
                 spaceman.jump();
             spaceman.updateFrames();
             alien.move(spaceman.getX(), spaceman.getY(), blocks);
+            //spaceman.setY(spaceman.getY() + 50);
+            System.out.println(spaceman.getY());
             alien.updateFrames();
             myGdxGame.stepWorld(myGdxGame.planet);
             spaceman.updateJump();
