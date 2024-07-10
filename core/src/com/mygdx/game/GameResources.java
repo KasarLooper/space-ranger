@@ -56,6 +56,10 @@ public class GameResources {
     public static final String MUSIC_PLANET_PATH = "music/Extreme.mp3";
     public static final String EARTH_BACKGROUND_IMG_PATH = "earth_background.png";
 
+    //ресурсы
+    public static final String CRYSTAL_IMG_PATH = "crystal.png";
+    public static final String WRECKAGE_IMG_PATH = "wreckage.png";
+
     //платформы
     public static final String LEVEL_PLATFORM= "level_platform.png";
 
@@ -113,4 +117,7 @@ public class GameResources {
 
     public static final String ALIEN_ANIM_RIGHT_IMG_PATTERN = "Alien_anim_right/alien_anim_right_%d.png";
     public static final String ALIEN_ANIM_LEFT_IMG_PATTERN = "Alien_anim_left/alien_anim_left_%d.png";
+
+    //Заставка для конца игры
+    public static final String BACKGROUND_END_IMG_PATH = "background_end.png";
 }
