@@ -1,6 +1,11 @@
 package com.mygdx.game.screens;
 
+import static com.mygdx.game.GameResources.ALIEN_ANIM_RIGHT_IMG_PATTERN;
 import static com.mygdx.game.GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN;
+import static com.mygdx.game.GameResources.CRYSTAL_IMG_PATH;
+import static com.mygdx.game.GameSettings.ALIEN_JUMP_FORCE;
+import static com.mygdx.game.GameSettings.ALIEN_SPEED;
+import static com.mygdx.game.GameSettings.BLOCK_SIZE;
 import static com.mygdx.game.GameSettings.CAMERA_Y_FROM_CENTER;
 import static com.mygdx.game.GameSettings.COSMONAUT_HEIGHT;
 import static com.mygdx.game.GameSettings.COSMONAUT_JUMP_FORCE;
@@ -25,6 +30,7 @@ import com.mygdx.game.components.TextView;
 import com.mygdx.game.manager.ContactManager;
 import com.mygdx.game.manager.LevelMapManager;
 import com.mygdx.game.objects.AlienObject;
+import com.mygdx.game.objects.CapsuleObject;
 import com.mygdx.game.objects.Earth;
 import com.mygdx.game.objects.EnemyObject;
 import com.mygdx.game.objects.GameObject;
@@ -40,6 +46,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 
 import jdk.internal.loader.Resource;
+import java.util.Random;
 
 public class PlanetGameScreen extends GameScreen {
     LevelMapManager loader;
@@ -54,6 +61,7 @@ public class PlanetGameScreen extends GameScreen {
     ArrayList<ResourceObject> crystals;
     ArrayList<GameObject> mobSpawns;
     ArrayList<GameObject> resSpawns;
+    CapsuleObject capsule;
 
     LiveView lives;
     ButtonView jumpButton;
@@ -84,6 +92,7 @@ public class PlanetGameScreen extends GameScreen {
         aliens = new ArrayList<>();
         wrecks = new ArrayList<>();
         crystals = new ArrayList<>();
+        capsule = new CapsuleObject(loader.getCapsuleX(), loader.getCapsuleY(), loader.getCapsuleWidth(), loader.getCapsuleHeight());
         jumpButton = new ButtonView(1150, 25, 100, 100, GameResources.JUMP_BUTTON_IMG_PATH);
         lives = new LiveView(0, 675);
         purpose = new TextView(myGdxGame.averageWhiteFont, 300, 675,
@@ -134,6 +143,7 @@ public class PlanetGameScreen extends GameScreen {
     @Override
     public void drawDynamic() {
         backgroundView.draw(myGdxGame.batch);
+        capsule.draw(myGdxGame.batch);
         earth.draw(myGdxGame.batch, spaceman.getX());
         for (PhysicsBlock block : physics) block.draw(myGdxGame.batch);
         spaceman.draw(myGdxGame.batch);
@@ -153,14 +163,51 @@ public class PlanetGameScreen extends GameScreen {
         fireButton.draw(myGdxGame.batch);
     }
 
+    Random rd = new Random();
+
     public void spawnAlien() {
+        int i = rd.nextInt(mobSpawns.size());
+        while (true) {
+            int x = mobSpawns.get(i).x;
+            int y = mobSpawns.get(i).y;
+            boolean isContinue = false;
+            for (AlienObject res : aliens)
+                if (Math.abs(res.getX() - x) < 10 && Math.abs(res.getY() - y) < 10) {
+                    i++;
+                    if (i >= mobSpawns.size())
+                        i -= mobSpawns.size();
+                    isContinue = true;
+                    break;
+                }
+            if (isContinue) continue;
+            mobSpawns.add(new AlienObject(x, y, BLOCK_SIZE, BLOCK_SIZE, ALIEN_ANIM_RIGHT_IMG_PATTERN,
+                    5, ALIEN_SPEED, ALIEN_JUMP_FORCE, myGdxGame.planet));
+            break;
+        }
     }
 
     public void spawnWreck() {
     }
 
     public void spawnCrystal() {
-
+        if (crystals.size() >= resSpawns.size()) return;
+        int i = rd.nextInt(resSpawns.size());
+        while (true) {
+            int x = resSpawns.get(i).x;
+            int y = resSpawns.get(i).y;
+            boolean isContinue = false;
+            for (ResourceObject res : crystals)
+                if (Math.abs(res.getX() - x) < 10 && Math.abs(res.getY() - y) < 10) {
+                    i++;
+                    if (i >= resSpawns.size())
+                        i -= resSpawns.size();
+                    isContinue = true;
+                    break;
+                }
+            if (isContinue) continue;
+            crystals.add(new ResourceObject(x, y, BLOCK_SIZE, BLOCK_SIZE, CRYSTAL_IMG_PATH, myGdxGame.planet));
+            break;
+        }
     }
 
     @Override
@@ -180,6 +227,7 @@ public class PlanetGameScreen extends GameScreen {
     public void dispose() {
         super.dispose();
         spaceman.dispose();
+        capsule.dispose();
         jumpButton.dispose();
     }
 

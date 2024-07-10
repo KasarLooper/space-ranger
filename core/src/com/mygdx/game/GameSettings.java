@@ -74,7 +74,7 @@ public class GameSettings {
     public static final int COSMONAUT_WIDTH = 85;
     public static final int COSMONAUT_HEIGHT = 170;
     public static final int COSMONAUT_SPEED = 10;
-    public static final int COSMONAUT_JUMP_FORCE = 65;
+    public static final int COSMONAUT_JUMP_FORCE = 75;
 
     // Lightning settings
     public static final int LIGHTING_WIDTH = 140;
@@ -86,5 +86,5 @@ public class GameSettings {
     public static final int ALIEN_WIDTH = 85;
     public static final int ALIEN_HEIGHT = 170;
     public static final int ALIEN_SPEED = 6;
-    public static final int ALIEN_JUMP_FORCE = 100;
+    public static final int ALIEN_JUMP_FORCE = 75;
 }

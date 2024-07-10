@@ -16,4 +16,12 @@ public class GameObject {
     public void hit(Type type) {
         // вся физика ударов и т.п.
     }
+
+    @Override
+    public String toString() {
+        return "GameObject{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }

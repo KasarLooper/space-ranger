@@ -74,6 +74,7 @@ public class LevelMapManager {
                 if (red != 255 && green != 255 && blue != 255) break;
                 capsuleEndY++;
             }
+            capsuleEndY--;
 
             for (int x = capsuleStartX; x < width; x++) {
                 int rgb = image.getRGB(x, capsuleStartY);
@@ -83,6 +84,7 @@ public class LevelMapManager {
                 if (red != 255 && green != 255 && blue != 255) break;
                 capsuleEndX++;
             }
+            capsuleEndX--;
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
@@ -151,7 +153,9 @@ public class LevelMapManager {
             resSpawns.add(new GameObject(getX(x), getY(y)));
         } else if (red == 255 && green == 255 && blue == 0) {
             mobSpawns.add(new GameObject(getX(x), getY(y)));
-        } else if (red == 255 && green == 255 && blue == 255 && capsuleStartX == -1 && capsuleStartY == -1) {
+        } else if ((red == 255 && green == 255 && blue == 255 ||
+                red == 255 && green == 0 && blue == 0) &&
+                capsuleStartX == -1 && capsuleStartY == -1) {
             capsuleStartX = x;
             capsuleStartY = y;
             capsuleEndX = x;
