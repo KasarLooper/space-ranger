@@ -82,6 +82,7 @@ public class PlanetGameScreen extends GameScreen {
         purpose = new TextView(myGdxGame.averageWhiteFont, 300, 675,
                 String.format(GraphicsSettings.PLANET_AIM1_PATTERN, 0, 0));
         fireButton = new ButtonView(1000, 25, 100, 100, GameResources.FIRE_BUTTON_PLANET_IMG_PATH);
+        isLighting = false;
         isJump = false;
     }
 
@@ -103,6 +104,7 @@ public class PlanetGameScreen extends GameScreen {
         if (isLighting) {
             if (lightning.destroy()) {
                 isLighting = false;
+                myGdxGame.planet.destroyBody(lightning.body);
             }
         }
     }
@@ -175,7 +177,7 @@ public class PlanetGameScreen extends GameScreen {
 
         if (fireButton.isHit(screenX, Gdx.graphics.getHeight() - screenY) && ((PlanetGameSession)session).shouldSpawnLighting()) {
             isLighting = true;
-            lightning = new LightningBulletObject(100, 200, spaceman, myGdxGame.planet);
+            lightning = new LightningBulletObject(spaceman, myGdxGame.planet);
         }
         return true;
     }
