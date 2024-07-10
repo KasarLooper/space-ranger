@@ -7,6 +7,9 @@ import static com.mygdx.game.GameSettings.ALIEN_JUMP_FORCE;
 import static com.mygdx.game.GameSettings.ALIEN_SPEED;
 import static com.mygdx.game.GameSettings.BLOCK_SIZE;
 import static com.mygdx.game.GameSettings.CAMERA_Y_FROM_CENTER;
+import static com.mygdx.game.GameSettings.CHANCE_CRYSTAL_DROP;
+import static com.mygdx.game.GameSettings.CHANCE_CRYSTAL_SPAWN;
+import static com.mygdx.game.GameSettings.CHANCE_WRECK_DROP;
 import static com.mygdx.game.GameSettings.COSMONAUT_HEIGHT;
 import static com.mygdx.game.GameSettings.COSMONAUT_JUMP_FORCE;
 import static com.mygdx.game.GameSettings.COSMONAUT_SPEED;
@@ -126,7 +129,7 @@ public class PlanetGameScreen extends GameScreen {
 
         if (((PlanetGameSession)session).shouldSpawnCore()) {
             Random random = new Random();
-            if (random.nextInt(100) > GameSettings.CHANCE_CORE_SPAWN) {
+            if (random.nextInt(100) > CHANCE_CRYSTAL_SPAWN) {
                 spawnAlien();
             } else {
                 spawnCrystal();
@@ -166,46 +169,62 @@ public class PlanetGameScreen extends GameScreen {
     Random rd = new Random();
 
     public void spawnAlien() {
-        int i = rd.nextInt(mobSpawns.size());
+        ArrayList<GameObject> near = new ArrayList<>();
+        for (GameObject cords : mobSpawns) {
+            float dx = Math.abs(cords.x - spaceman.getX());
+            if (dx > SCREEN_WIDTH / 2f && dx < SCREEN_WIDTH * 2.5f)
+                near.add(cords);
+        }
+        System.out.println("Possible alien spawn: " + near.size());
+        int i = rd.nextInt(near.size());
         while (true) {
-            int x = mobSpawns.get(i).x;
-            int y = mobSpawns.get(i).y;
+            int x = near.get(i).x;
+            int y = near.get(i).y;
             boolean isContinue = false;
+            int cnt = 0;
             for (AlienObject res : aliens)
                 if (Math.abs(res.getX() - x) < 10 && Math.abs(res.getY() - y) < 10) {
+                    cnt++;
                     i++;
-                    if (i >= mobSpawns.size())
-                        i -= mobSpawns.size();
+                    if (i >= near.size())
+                        i -= near.size();
                     isContinue = true;
                     break;
                 }
+            if (cnt >= near.size()) break;
             if (isContinue) continue;
-            mobSpawns.add(new AlienObject(x, y, BLOCK_SIZE, BLOCK_SIZE, ALIEN_ANIM_RIGHT_IMG_PATTERN,
+            aliens.add(new AlienObject(x, y, BLOCK_SIZE, BLOCK_SIZE, ALIEN_ANIM_RIGHT_IMG_PATTERN,
                     5, ALIEN_SPEED, ALIEN_JUMP_FORCE, myGdxGame.planet));
+            System.out.printf("Spawn alien %d %d\n", x, y);
             break;
         }
     }
 
-    public void spawnWreck() {
-    }
-
     public void spawnCrystal() {
-        if (crystals.size() >= resSpawns.size()) return;
-        int i = rd.nextInt(resSpawns.size());
+        ArrayList<GameObject> near = new ArrayList<>();
+        for (GameObject cords : resSpawns) {
+            float dx = Math.abs(cords.x - spaceman.getX());
+            if (dx > SCREEN_WIDTH / 2f && dx < SCREEN_WIDTH * 2.5f)
+                near.add(cords);
+        }
+        System.out.println("Possible crystal spawn: " + near.size());
+        if (crystals.size() >= near.size()) return;
+        int i = rd.nextInt(near.size());
         while (true) {
-            int x = resSpawns.get(i).x;
-            int y = resSpawns.get(i).y;
+            int x = near.get(i).x;
+            int y = near.get(i).y;
             boolean isContinue = false;
             for (ResourceObject res : crystals)
                 if (Math.abs(res.getX() - x) < 10 && Math.abs(res.getY() - y) < 10) {
                     i++;
-                    if (i >= resSpawns.size())
-                        i -= resSpawns.size();
+                    if (i >= near.size())
+                        i -= near.size();
                     isContinue = true;
                     break;
                 }
             if (isContinue) continue;
             crystals.add(new ResourceObject(x, y, BLOCK_SIZE, BLOCK_SIZE, CRYSTAL_IMG_PATH, myGdxGame.planet));
+            System.out.printf("Spawn cristal %d %d\n", x, y);
             break;
         }
     }
@@ -312,19 +331,18 @@ public class PlanetGameScreen extends GameScreen {
         while (iterator.hasNext()) {
             AlienObject alien = iterator.next();
             if (!alien.isAlive()) {
-                Random random = new Random();
-                if (random.nextInt(100) > 50) {
+                if (rd.nextInt(100) < CHANCE_CRYSTAL_DROP) {
                     ResourceObject crystal = new ResourceObject(
                             alien.x, alien.y,
-                            100,100,
+                            BLOCK_SIZE,BLOCK_SIZE,
                             GameResources.CRYSTAL_IMG_PATH,
                             myGdxGame.planet
                     );
                     crystals.add(crystal);
-                } else {
+                } else if (rd.nextInt(100) < CHANCE_WRECK_DROP) {
                     ResourceObject wreck = new ResourceObject(
                             alien.x, alien.y,
-                            100, 100,
+                            BLOCK_SIZE, BLOCK_SIZE,
                             GameResources.WRECKAGE_IMG_PATH,
                             myGdxGame.planet
                     );

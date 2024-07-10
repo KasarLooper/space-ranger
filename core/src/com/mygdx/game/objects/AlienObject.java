@@ -24,6 +24,7 @@ public class AlienObject extends SpacemanObject{
         }
         i = 0;
         isJump = false;
+        liveLeft = 2;
     }
 
     @Override
