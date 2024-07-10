@@ -88,13 +88,6 @@ public class PhysicsBlock extends Block implements Drawable {
         return body;
     }
 
-    static int cnt = 0;
-
-    @Override
-    public void hit(Type type) {
-        if (type == Type.Player) System.out.println(getX() + " " + getY());
-    }
-
     @Override
     public Type type() {
         return Type.Block;

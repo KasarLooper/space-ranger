@@ -1,6 +1,11 @@
 package com.mygdx.game.screens;
 
+import static com.mygdx.game.GameResources.ALIEN_ANIM_RIGHT_IMG_PATTERN;
 import static com.mygdx.game.GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN;
+import static com.mygdx.game.GameResources.CRYSTAL_IMG_PATH;
+import static com.mygdx.game.GameSettings.ALIEN_JUMP_FORCE;
+import static com.mygdx.game.GameSettings.ALIEN_SPEED;
+import static com.mygdx.game.GameSettings.BLOCK_SIZE;
 import static com.mygdx.game.GameSettings.CAMERA_Y_FROM_CENTER;
 import static com.mygdx.game.GameSettings.COSMONAUT_HEIGHT;
 import static com.mygdx.game.GameSettings.COSMONAUT_JUMP_FORCE;
@@ -34,6 +39,7 @@ import com.mygdx.game.objects.SpacemanObject;
 import com.mygdx.game.session.PlanetGameSession;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class PlanetGameScreen extends GameScreen {
     LevelMapManager loader;
@@ -137,13 +143,51 @@ public class PlanetGameScreen extends GameScreen {
         fireButton.draw(myGdxGame.batch);
     }
 
+    Random rd = new Random();
+
     public void spawnAlien() {
+        int i = rd.nextInt(mobSpawns.size());
+        while (true) {
+            int x = mobSpawns.get(i).x;
+            int y = mobSpawns.get(i).y;
+            boolean isContinue = false;
+            for (AlienObject res : aliens)
+                if (Math.abs(res.getX() - x) < 10 && Math.abs(res.getY() - y) < 10) {
+                    i++;
+                    if (i >= mobSpawns.size())
+                        i -= mobSpawns.size();
+                    isContinue = true;
+                    break;
+                }
+            if (isContinue) continue;
+            mobSpawns.add(new AlienObject(x, y, BLOCK_SIZE, BLOCK_SIZE, ALIEN_ANIM_RIGHT_IMG_PATTERN,
+                    5, ALIEN_SPEED, ALIEN_JUMP_FORCE, myGdxGame.planet));
+            break;
+        }
     }
 
     public void spawnWreck() {
     }
 
     public void spawnCrystal() {
+        if (crystals.size() >= resSpawns.size()) return;
+        int i = rd.nextInt(resSpawns.size());
+        while (true) {
+            int x = resSpawns.get(i).x;
+            int y = resSpawns.get(i).y;
+            boolean isContinue = false;
+            for (ResourceObject res : crystals)
+                if (Math.abs(res.getX() - x) < 10 && Math.abs(res.getY() - y) < 10) {
+                    i++;
+                    if (i >= resSpawns.size())
+                        i -= resSpawns.size();
+                    isContinue = true;
+                    break;
+                }
+            if (isContinue) continue;
+            crystals.add(new ResourceObject(x, y, BLOCK_SIZE, BLOCK_SIZE, CRYSTAL_IMG_PATH, myGdxGame.planet));
+            break;
+        }
     }
 
     @Override

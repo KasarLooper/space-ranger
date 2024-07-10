@@ -85,7 +85,6 @@ public class LevelMapManager {
                 capsuleEndX++;
             }
             capsuleEndX--;
-            System.out.println(capsuleStartX + " " + capsuleStartY + " " + capsuleEndX + " " + capsuleEndY);
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
