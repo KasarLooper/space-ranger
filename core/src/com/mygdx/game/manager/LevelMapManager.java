@@ -17,6 +17,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.imageio.ImageIO;
 
@@ -104,10 +105,12 @@ public class LevelMapManager {
     }
 
     public ArrayList<GameObject> getMobSpawns() {
+        Collections.sort(mobSpawns, (o1, o2) -> Integer.compare(o1.x, o2.x));
         return mobSpawns;
     }
 
     public ArrayList<GameObject> getResSpawns() {
+        Collections.sort(resSpawns, (o1, o2) -> Integer.compare(o1.x, o2.x));
         return resSpawns;
     }
 

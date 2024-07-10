@@ -25,6 +25,7 @@ import com.mygdx.game.manager.ContactManager;
 import com.mygdx.game.manager.LevelMapManager;
 import com.mygdx.game.objects.AlienObject;
 import com.mygdx.game.objects.Earth;
+import com.mygdx.game.objects.GameObject;
 import com.mygdx.game.objects.LightningBulletObject;
 import com.mygdx.game.objects.PhysicsBlock;
 import com.mygdx.game.objects.ResourceObject;
@@ -44,6 +45,8 @@ public class PlanetGameScreen extends GameScreen {
     ArrayList<AlienObject> aliens;
     ArrayList<ResourceObject> wrecks;
     ArrayList<ResourceObject> crystals;
+    ArrayList<GameObject> mobSpawns;
+    ArrayList<GameObject> resSpawns;
 
     LiveView lives;
     ButtonView jumpButton;
@@ -61,6 +64,8 @@ public class PlanetGameScreen extends GameScreen {
         contactManager = new ContactManager(myGdxGame.planet);
         loader.loadMap(myGdxGame.planet);
         physics = loader.getPhysics();
+        mobSpawns = loader.getMobSpawns();
+        resSpawns = loader.getResSpawns();
         backgroundView = new MovingBackgroundLeftRightView(GameResources.BACKGROUND_2_IMG_PATH);
         spaceman = new SpacemanObject(
                 loader.getPlayerX(), loader.getPlayerY(),
