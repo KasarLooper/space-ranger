@@ -47,7 +47,7 @@ public class GameSession {
     }
 
     public boolean shouldSpawnLighting() {
-        if (TimeUtils.millis() - lastLightningSpawnTime > (SPAWN_COOL_DOWN + 500)) {
+        if (TimeUtils.millis() - lastLightningSpawnTime > (SPAWN_COOL_DOWN / 2)) {
             lastLightningSpawnTime = TimeUtils.millis();
             return true;
         }
