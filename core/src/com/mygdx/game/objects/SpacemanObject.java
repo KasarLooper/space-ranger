@@ -132,4 +132,9 @@ public class SpacemanObject extends PhysicsObject {
     public Type type() {
         return Type.Player;
     }
+
+    @Override
+    protected float getFriction() {
+        return 0;
+    }
 }

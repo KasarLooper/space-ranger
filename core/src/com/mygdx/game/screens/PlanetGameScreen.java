@@ -3,8 +3,10 @@ package com.mygdx.game.screens;
 import static com.mygdx.game.GameResources.ALIEN_ANIM_RIGHT_IMG_PATTERN;
 import static com.mygdx.game.GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN;
 import static com.mygdx.game.GameResources.CRYSTAL_IMG_PATH;
+import static com.mygdx.game.GameSettings.ALIEN_HEIGHT;
 import static com.mygdx.game.GameSettings.ALIEN_JUMP_FORCE;
 import static com.mygdx.game.GameSettings.ALIEN_SPEED;
+import static com.mygdx.game.GameSettings.ALIEN_WIDTH;
 import static com.mygdx.game.GameSettings.BLOCK_SIZE;
 import static com.mygdx.game.GameSettings.CAMERA_Y_FROM_CENTER;
 import static com.mygdx.game.GameSettings.CHANCE_CRYSTAL_DROP;
@@ -22,7 +24,6 @@ import static com.mygdx.game.State.PLAYING;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.mygdx.game.GameResources;
-import com.mygdx.game.GameSettings;
 import com.mygdx.game.GraphicsSettings;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.ButtonView;
@@ -35,20 +36,16 @@ import com.mygdx.game.manager.LevelMapManager;
 import com.mygdx.game.objects.AlienObject;
 import com.mygdx.game.objects.CapsuleObject;
 import com.mygdx.game.objects.Earth;
-import com.mygdx.game.objects.EnemyObject;
 import com.mygdx.game.objects.GameObject;
 import com.mygdx.game.objects.LightningBulletObject;
 import com.mygdx.game.objects.PhysicsBlock;
+import com.mygdx.game.objects.PhysicsObject;
 import com.mygdx.game.objects.ResourceObject;
 import com.mygdx.game.objects.SpacemanObject;
 import com.mygdx.game.session.PlanetGameSession;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Random;
-import java.util.ResourceBundle;
-
-import jdk.internal.loader.Resource;
 import java.util.Random;
 
 public class PlanetGameScreen extends GameScreen {
@@ -175,28 +172,15 @@ public class PlanetGameScreen extends GameScreen {
             if (dx > SCREEN_WIDTH / 2f && dx < SCREEN_WIDTH * 2.5f)
                 near.add(cords);
         }
+        removeCollapsed(near);
         System.out.println("Possible alien spawn: " + near.size());
-        int i = rd.nextInt(near.size());
-        while (true) {
+        if (!near.isEmpty()) {
+            int i = rd.nextInt(near.size());
             int x = near.get(i).x;
             int y = near.get(i).y;
-            boolean isContinue = false;
-            int cnt = 0;
-            for (AlienObject res : aliens)
-                if (Math.abs(res.getX() - x) < 10 && Math.abs(res.getY() - y) < 10) {
-                    cnt++;
-                    i++;
-                    if (i >= near.size())
-                        i -= near.size();
-                    isContinue = true;
-                    break;
-                }
-            if (cnt >= near.size()) break;
-            if (isContinue) continue;
             System.out.printf("Spawn alien %d %d\n", x, y);
-            aliens.add(new AlienObject(x, y, BLOCK_SIZE, BLOCK_SIZE, ALIEN_ANIM_RIGHT_IMG_PATTERN,
+            aliens.add(new AlienObject(x, y, ALIEN_WIDTH, ALIEN_HEIGHT, ALIEN_ANIM_RIGHT_IMG_PATTERN,
                     5, ALIEN_SPEED, ALIEN_JUMP_FORCE, myGdxGame.planet));
-            break;
         }
     }
 
@@ -207,26 +191,56 @@ public class PlanetGameScreen extends GameScreen {
             if (dx > SCREEN_WIDTH / 2f && dx < SCREEN_WIDTH * 2.5f)
                 near.add(cords);
         }
+        removeCollapsed(near);
         System.out.println("Possible crystal spawn: " + near.size());
-        if (crystals.size() >= near.size()) return;
-        int i = rd.nextInt(near.size());
-        while (true) {
+        if (!near.isEmpty()) {
+            int i = rd.nextInt(near.size());
             int x = near.get(i).x;
             int y = near.get(i).y;
-            boolean isContinue = false;
-            for (ResourceObject res : crystals)
-                if (Math.abs(res.getX() - x) < 10 && Math.abs(res.getY() - y) < 10) {
-                    i++;
-                    if (i >= near.size())
-                        i -= near.size();
-                    isContinue = true;
+            System.out.printf("Add crystal %d %d\n", x, y);
+            crystals.add(new ResourceObject(x, y, BLOCK_SIZE, BLOCK_SIZE, CRYSTAL_IMG_PATH, myGdxGame.planet));
+        }
+    }
+
+    private void removeCollapsed(ArrayList<GameObject> near) {
+        Iterator<GameObject> iterator = near.iterator();
+        while (iterator.hasNext()) {
+            GameObject object1 = iterator.next();
+            boolean shouldRemove = false;
+
+            for (PhysicsObject object2 : wrecks) {
+                if (Math.abs(object1.x - object2.getX()) <= BLOCK_SIZE &&
+                        Math.abs(object1.y - object2.getY()) <= BLOCK_SIZE) {
+                    shouldRemove = true;
                     break;
                 }
-            if (isContinue) continue;
-            System.out.printf("Spawn cristal %d %d\n", x, y);
-            crystals.add(new ResourceObject(x, y, BLOCK_SIZE, BLOCK_SIZE, CRYSTAL_IMG_PATH, myGdxGame.planet));
-            break;
+            }
+
+            if (!shouldRemove) {
+                for (PhysicsObject object2 : aliens) {
+                    if (Math.abs(object1.x - object2.getX()) <= BLOCK_SIZE &&
+                            Math.abs(object1.y - object2.getY()) <= BLOCK_SIZE) {
+                        shouldRemove = true;
+                        break;
+                    }
+                }
+            }
+
+            if (!shouldRemove) {
+                for (PhysicsObject object2 : crystals) {
+                    if (Math.abs(object1.x - object2.getX()) <= BLOCK_SIZE &&
+                            Math.abs(object1.y - object2.getY()) <= BLOCK_SIZE) {
+                        shouldRemove = true;
+                        break;
+                    }
+                }
+            }
+
+            if (shouldRemove) {
+                iterator.remove();
+            }
         }
+
     }
 
     @Override

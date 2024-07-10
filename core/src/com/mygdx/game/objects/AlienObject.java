@@ -45,4 +45,9 @@ public class AlienObject extends SpacemanObject{
     public boolean isAlive() {
         return liveLeft > 0;
     }
+
+    @Override
+    protected float getFriction() {
+        return 0;
+    }
 }
