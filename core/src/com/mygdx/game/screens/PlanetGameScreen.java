@@ -27,6 +27,7 @@ import com.mygdx.game.objects.AlienObject;
 import com.mygdx.game.objects.Earth;
 import com.mygdx.game.objects.LightningBulletObject;
 import com.mygdx.game.objects.PhysicsBlock;
+import com.mygdx.game.objects.ResourceObject;
 import com.mygdx.game.objects.SpacemanObject;
 import com.mygdx.game.session.PlanetGameSession;
 
@@ -40,6 +41,9 @@ public class PlanetGameScreen extends GameScreen {
     SpacemanObject spaceman;
     Earth earth;
     ArrayList<PhysicsBlock> physics;
+    ArrayList<AlienObject> aliens;
+    ArrayList<ResourceObject> wrecks;
+    ArrayList<ResourceObject> crystals;
 
     LiveView lives;
     ButtonView jumpButton;
@@ -65,6 +69,9 @@ public class PlanetGameScreen extends GameScreen {
                 COSMONAUT_SPEED, COSMONAUT_JUMP_FORCE,
                 myGdxGame.planet);
         earth = new Earth(GROUND_HEIGHT, myGdxGame.planet);
+        aliens = new ArrayList<>();
+        wrecks = new ArrayList<>();
+        crystals = new ArrayList<>();
         jumpButton = new ButtonView(1150, 25, 100, 100, GameResources.JUMP_BUTTON_IMG_PATH);
         lives = new LiveView(0, 675);
         purpose = new TextView(myGdxGame.averageWhiteFont, 300, 675,
@@ -117,6 +124,15 @@ public class PlanetGameScreen extends GameScreen {
         lives.draw(myGdxGame.batch);
         purpose.draw(myGdxGame.batch);
         fireButton.draw(myGdxGame.batch);
+    }
+
+    public void spawnAlien() {
+    }
+
+    public void spawnWreck() {
+    }
+
+    public void spawnCrystal() {
     }
 
     @Override
