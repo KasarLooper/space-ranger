@@ -23,6 +23,7 @@ import com.mygdx.game.components.MovingBackgroundView;
 import com.mygdx.game.components.TextView;
 import com.mygdx.game.manager.ContactManager;
 import com.mygdx.game.manager.LevelMapManager;
+import com.mygdx.game.objects.AlienObject;
 import com.mygdx.game.objects.Earth;
 import com.mygdx.game.objects.LightningBulletObject;
 import com.mygdx.game.objects.PhysicsBlock;
@@ -48,7 +49,6 @@ public class PlanetGameScreen extends GameScreen {
     boolean isLighting;
 
     boolean isJump;
-    private int padding = 0;
 
     public PlanetGameScreen(MyGdxGame game) {
         super(game);
