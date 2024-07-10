@@ -17,7 +17,8 @@ public class GameSettings {
     //SPACE
 
     //Spawn settings
-    public static final int SPAWN_COOL_DOWN = 2000;
+    public static final int SPACE_SPAWN_COOL_DOWN = 2000;
+    public static final int PLANET_SPAWN_COOL_DOWN = 2000;
     public static final int CHANCE_CORE_SPAWN = 25; // в процентах // 25
 
     // Object Setting

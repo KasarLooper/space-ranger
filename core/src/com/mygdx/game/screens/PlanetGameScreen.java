@@ -27,6 +27,7 @@ import com.mygdx.game.objects.Earth;
 import com.mygdx.game.objects.LightningBulletObject;
 import com.mygdx.game.objects.PhysicsBlock;
 import com.mygdx.game.objects.SpacemanObject;
+import com.mygdx.game.session.PlanetGameSession;
 
 import java.util.ArrayList;
 
@@ -51,6 +52,7 @@ public class PlanetGameScreen extends GameScreen {
 
     public PlanetGameScreen(MyGdxGame game) {
         super(game);
+        session = new PlanetGameSession();
         loader = new LevelMapManager();
         contactManager = new ContactManager(myGdxGame.planet);
         loader.loadMap(myGdxGame.planet);
@@ -76,7 +78,7 @@ public class PlanetGameScreen extends GameScreen {
         super.render(delta);
         myGdxGame.camera.position.x = spaceman.getX();
         myGdxGame.camera.position.y = spaceman.getY() + GROUND_HEIGHT - CAMERA_Y_FROM_CENTER;
-        if (gameSession.state == com.mygdx.game.State.PLAYING) {
+        if (session.state == com.mygdx.game.State.PLAYING) {
             backgroundView.move(spaceman.getX(), spaceman.getY());
             if (isJump)
                 spaceman.jump();
@@ -142,7 +144,7 @@ public class PlanetGameScreen extends GameScreen {
         super.touchDown(screenX, screenY, pointer, button);
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
         screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
-        if (screenX <= SCREEN_WIDTH / 2 && gameSession.state == PLAYING) {
+        if (screenX <= SCREEN_WIDTH / 2 && session.state == PLAYING) {
             if (joystick.getDegrees() % 360 > 0 && joystick.getDegrees() % 360 <= 180)
                 spaceman.stepLeft();
             else spaceman.stepRight();
@@ -150,7 +152,7 @@ public class PlanetGameScreen extends GameScreen {
         if (jumpButton.isHit(screenX, Gdx.graphics.getHeight() - screenY))
             isJump = true;
 
-        if (fireButton.isHit(screenX, Gdx.graphics.getHeight() - screenY) && gameSession.shouldSpawnLighting()) {
+        if (fireButton.isHit(screenX, Gdx.graphics.getHeight() - screenY) && ((PlanetGameSession)session).shouldSpawnLighting()) {
             isLighting = true;
             lightning = new LightningBulletObject(100, 200, spaceman, myGdxGame.planet);
         }
@@ -162,7 +164,7 @@ public class PlanetGameScreen extends GameScreen {
         super.touchUp(screenX, screenY, pointer, button);
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
         screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
-        if (screenX <= SCREEN_WIDTH / 2 && gameSession.state == PLAYING) spaceman.stop();
+        if (screenX <= SCREEN_WIDTH / 2 && session.state == PLAYING) spaceman.stop();
         if (jumpButton.isHit(screenX, Gdx.graphics.getHeight() - screenY))
             isJump = false;
         return true;
@@ -173,12 +175,12 @@ public class PlanetGameScreen extends GameScreen {
         super.touchDragged(screenX, screenY, pointer);
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
         screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
-        if (screenX <= SCREEN_WIDTH / 2 && gameSession.state == PLAYING) {
+        if (screenX <= SCREEN_WIDTH / 2 && session.state == PLAYING) {
             if (joystick.getDegrees() % 360 > 0 && joystick.getDegrees() % 360 <= 180)
                 spaceman.stepLeft();
             else spaceman.stepRight();
         }
-        if (screenX > SCREEN_WIDTH / 2 && gameSession.state == PLAYING) {
+        if (screenX > SCREEN_WIDTH / 2 && session.state == PLAYING) {
             if (!pauseButton.isHit(screenX, Gdx.graphics.getHeight() - screenY) && !jumpButton.isHit(screenX, Gdx.graphics.getHeight() - screenY)) {
                 isJump = false;
             }

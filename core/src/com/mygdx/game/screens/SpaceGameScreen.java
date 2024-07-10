@@ -18,10 +18,9 @@ import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.EntitySpawner;
 import com.mygdx.game.GameResources;
-import com.mygdx.game.GameSession;
+import com.mygdx.game.session.GameSession;
 import com.mygdx.game.GameSettings;
 import com.mygdx.game.GraphicsSettings;
 import com.mygdx.game.MyGdxGame;
@@ -32,12 +31,12 @@ import com.mygdx.game.components.LiveView;
 import com.mygdx.game.components.MovingBackgroundView;
 import com.mygdx.game.components.TextView;
 import com.mygdx.game.manager.ContactManager;
-import com.mygdx.game.manager.MemoryManager;
 import com.mygdx.game.objects.BoomObject;
 import com.mygdx.game.objects.BulletObject;
 import com.mygdx.game.objects.CoreObject;
 import com.mygdx.game.objects.EnemyObject;
 import com.mygdx.game.objects.ShipObject;
+import com.mygdx.game.session.SpaceGameSession;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -69,6 +68,7 @@ public class SpaceGameScreen extends GameScreen {
     public SpaceGameScreen(MyGdxGame myGdxGame) {
         super(myGdxGame);
         this.myGdxGame = myGdxGame;
+        session = new SpaceGameSession();
         backgroundView = new MovingBackgroundView(GameResources.BACKGROUND_IMG_PATH, GraphicsSettings.DEPTH_SPACE_BACKGROUND_SPEED_RATIO);
         contactManager = new ContactManager(myGdxGame.space);
         shipObject = new ShipObject(
@@ -84,7 +84,6 @@ public class SpaceGameScreen extends GameScreen {
         coreArray = new ArrayList<>();
         enemyArray = new ArrayList<>();
         random = new Random();
-        gameSession = new GameSession();
         purpose = new TextView(myGdxGame.averageWhiteFont, 500, 675, "Цель - энергия: 0/3");
         live = new LiveView(0, 675);
         isTouchedShoot = false;
@@ -107,7 +106,7 @@ public class SpaceGameScreen extends GameScreen {
             myGdxGame.camera.position.y = shipObject.getY();
             backgroundView.move(shipObject.getX(), shipObject.getY());
             if (!shipObject.isEnd()) {
-                if (gameSession.state == PLAYING) {
+                if (session.state == PLAYING) {
                     final int padding = 30;
                     if (isTouchedShoot && shipObject.needToShoot()) {
                         BulletObject Bullet = new BulletObject(
@@ -120,7 +119,7 @@ public class SpaceGameScreen extends GameScreen {
                         bulletArray.add(Bullet);
                         myGdxGame.audioManager.soundBullet.play(0.2f);
                     }
-                    if (gameSession.shouldSpawn()) {
+                    if (session.shouldSpawn()) {
                         if (rd.nextInt(100) < CHANCE_CORE_SPAWN) generateCore();
                         else generateEnemy();
                     }
@@ -134,7 +133,7 @@ public class SpaceGameScreen extends GameScreen {
                     updateCore();
                     updateEnemy();
                     updateBoom();
-                    if (gameSession.victory()) {
+                    if (session.victory()) {
                         myGdxGame.passSpaceLevel();
                         shipObject.moleHoleAnim();
                     }
@@ -145,11 +144,11 @@ public class SpaceGameScreen extends GameScreen {
                     for (BoomObject boomObject : boomArray) boomObject.Boom_action();
                 }
             } else {
-                gameSession.state = ENDED;
+                session.state = ENDED;
             }
         }
         else {
-            gameSession.state = ENDED;
+            session.state = ENDED;
         }
     }
 
@@ -192,8 +191,8 @@ public class SpaceGameScreen extends GameScreen {
             CoreObject core = iterator.next();
             if (core.destroy()) {
                 if (core.wasCollected) {
-                    gameSession.core_was_collected();
-                    purpose.setText(String.format("Цель - энергия: %d/3", gameSession.getCoreCollected()));
+                    ((SpaceGameSession) session).core_was_collected();
+                    purpose.setText(String.format("Цель - энергия: %d/3", ((SpaceGameSession) session).getCoreCollected()));
                     myGdxGame.audioManager.soundEnergyGive.play(0.2f);
                 } else {
                     boomArray.add(new BoomObject(core.x, core.y));
@@ -253,7 +252,7 @@ public class SpaceGameScreen extends GameScreen {
         live.setLeftLives(3);
         bulletArray.clear();
         boomArray.clear();
-        gameSession.startGame();
+        session.startGame();
     }
 
     // Генераторы
@@ -291,7 +290,7 @@ public class SpaceGameScreen extends GameScreen {
         super.touchUp(screenX, screenY, pointer, button);
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
         screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
-        if (backgroundFireButton.isHit(screenX, SCREEN_HEIGHT - screenY) && gameSession.state == PLAYING) isTouchedShoot = false;
+        if (backgroundFireButton.isHit(screenX, SCREEN_HEIGHT - screenY) && session.state == PLAYING) isTouchedShoot = false;
         return true;
     }
 
@@ -299,10 +298,10 @@ public class SpaceGameScreen extends GameScreen {
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
         screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
-        if (screenX <= SCREEN_WIDTH / 2 && gameSession.state == PLAYING) joystick.onTouch(screenX, SCREEN_HEIGHT - screenY);
-        else if (backgroundFireButton.isHit(screenX, SCREEN_HEIGHT - screenY) && gameSession.state == PLAYING)
+        if (screenX <= SCREEN_WIDTH / 2 && session.state == PLAYING) joystick.onTouch(screenX, SCREEN_HEIGHT - screenY);
+        else if (backgroundFireButton.isHit(screenX, SCREEN_HEIGHT - screenY) && session.state == PLAYING)
             isTouchedShoot = true;
-        else if (gameSession.state == PLAYING)
+        else if (session.state == PLAYING)
             joystick.toDefault();
         return true;
     }
