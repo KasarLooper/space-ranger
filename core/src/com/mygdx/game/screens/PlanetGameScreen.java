@@ -20,6 +20,7 @@ import com.mygdx.game.components.LiveView;
 import com.mygdx.game.components.MovingBackgroundLeftRightView;
 import com.mygdx.game.components.MovingBackgroundView;
 import com.mygdx.game.components.TextView;
+import com.mygdx.game.manager.ContactManager;
 import com.mygdx.game.manager.LevelMapManager;
 import com.mygdx.game.objects.Earth;
 import com.mygdx.game.objects.LightningBulletObject;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 
 public class PlanetGameScreen extends GameScreen {
     LevelMapManager loader;
+    ContactManager contactManager;
     MovingBackgroundView backgroundView;
 
     SpacemanObject spaceman;
@@ -49,6 +51,7 @@ public class PlanetGameScreen extends GameScreen {
     public PlanetGameScreen(MyGdxGame game) {
         super(game);
         loader = new LevelMapManager();
+        contactManager = new ContactManager(myGdxGame.planet);
         loader.loadMap(myGdxGame.planet);
         physics = loader.getPhysics();
         backgroundView = new MovingBackgroundLeftRightView(GameResources.BACKGROUND_2_IMG_PATH);
