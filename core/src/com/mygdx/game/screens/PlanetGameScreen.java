@@ -14,6 +14,7 @@ import static com.mygdx.game.State.PLAYING;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.mygdx.game.GameResources;
+import com.mygdx.game.GraphicsSettings;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.ButtonView;
 import com.mygdx.game.components.LiveView;
@@ -64,7 +65,8 @@ public class PlanetGameScreen extends GameScreen {
         earth = new Earth(GROUND_HEIGHT, myGdxGame.planet);
         jumpButton = new ButtonView(1150, 25, 100, 100, GameResources.JUMP_BUTTON_IMG_PATH);
         lives = new LiveView(0, 675);
-        purpose = new TextView(myGdxGame.averageWhiteFont, 300, 675, "Цель - обломки корабля(0/...) и минераллы(0/...)");
+        purpose = new TextView(myGdxGame.averageWhiteFont, 300, 675,
+                String.format(GraphicsSettings.PLANET_AIM1_PATTERN, 0, 0));
         fireButton = new ButtonView(1000, 25, 100, 100, GameResources.FIRE_BUTTON_PLANET_IMG_PATH);
         isJump = false;
     }
@@ -125,6 +127,7 @@ public class PlanetGameScreen extends GameScreen {
                 COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4,
                 COSMONAUT_SPEED, COSMONAUT_JUMP_FORCE,
                 myGdxGame.planet);
+        purpose.setText(String.format(GraphicsSettings.PLANET_AIM1_PATTERN, 0, 0));
     }
 
     @Override
