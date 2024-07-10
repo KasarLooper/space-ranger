@@ -58,7 +58,7 @@ public class SpacemanObject extends PhysicsObject {
     @Override
     protected Shape getShape(float x, float y, float width, float height) {
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width * SCALE / 2f, height * SCALE / 2f);
+        shape.setAsBox((width - 20) * SCALE / 2f, (height - 10) * SCALE / 2f);
         return shape;
     }
 
@@ -105,12 +105,16 @@ public class SpacemanObject extends PhysicsObject {
             if (i >= right.length) i = 0;
             sprite.setTexture(isLeftStep ? left[i] : right[i]);
         }
-        if (isRightStep) body.setLinearVelocity(speed, body.getLinearVelocity().y);
-        else if (isLeftStep) body.setLinearVelocity(-speed, body.getLinearVelocity().y);
+        if (isRightStep) {
+            body.setLinearVelocity(speed, body.getLinearVelocity().y);
+        }
+        else if (isLeftStep) {
+            body.setLinearVelocity(-speed, body.getLinearVelocity().y);
+        }
     }
 
     public void updateJump() {
-        if (Math.abs(body.getLinearVelocity().y) < 0.01 && TimeUtils.millis() - jumpTime > 50) {
+        if (Math.abs(body.getLinearVelocity().y) == 0 && TimeUtils.millis() - jumpTime > 50) {
             body.setAwake(true);
             isJump = false;
         }
@@ -118,6 +122,7 @@ public class SpacemanObject extends PhysicsObject {
 
     @Override
     public void hit(Type type) {
+        body.applyLinearImpulse(new Vector2(0, 2), body.getWorldCenter(), true);
     }
 
     public Type type() {

@@ -42,12 +42,9 @@ public abstract class PhysicsObject extends GameObject implements Drawable {
                 height);
     }
 
+    @Override
     public Type type() {
-        return  null;
-    }
-
-    public void hit(Type type) {
-        // вся физика ударов и т.п.
+        return Type.Block;
     }
 
     public void dispose() {
