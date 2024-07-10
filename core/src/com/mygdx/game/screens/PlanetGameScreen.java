@@ -24,6 +24,7 @@ import com.mygdx.game.components.TextView;
 import com.mygdx.game.manager.ContactManager;
 import com.mygdx.game.manager.LevelMapManager;
 import com.mygdx.game.objects.AlienObject;
+import com.mygdx.game.objects.CapsuleObject;
 import com.mygdx.game.objects.Earth;
 import com.mygdx.game.objects.GameObject;
 import com.mygdx.game.objects.LightningBulletObject;
@@ -47,6 +48,7 @@ public class PlanetGameScreen extends GameScreen {
     ArrayList<ResourceObject> crystals;
     ArrayList<GameObject> mobSpawns;
     ArrayList<GameObject> resSpawns;
+    CapsuleObject capsule;
 
     LiveView lives;
     ButtonView jumpButton;
@@ -77,6 +79,7 @@ public class PlanetGameScreen extends GameScreen {
         aliens = new ArrayList<>();
         wrecks = new ArrayList<>();
         crystals = new ArrayList<>();
+        capsule = new CapsuleObject(loader.getCapsuleX(), loader.getCapsuleY(), loader.getCapsuleWidth(), loader.getCapsuleHeight());
         jumpButton = new ButtonView(1150, 25, 100, 100, GameResources.JUMP_BUTTON_IMG_PATH);
         lives = new LiveView(0, 675);
         purpose = new TextView(myGdxGame.averageWhiteFont, 300, 675,
@@ -117,6 +120,7 @@ public class PlanetGameScreen extends GameScreen {
     @Override
     public void drawDynamic() {
         backgroundView.draw(myGdxGame.batch);
+        capsule.draw(myGdxGame.batch);
         earth.draw(myGdxGame.batch, spaceman.getX());
         for (PhysicsBlock block : physics) block.draw(myGdxGame.batch);
         spaceman.draw(myGdxGame.batch);
@@ -159,6 +163,7 @@ public class PlanetGameScreen extends GameScreen {
     public void dispose() {
         super.dispose();
         spaceman.dispose();
+        capsule.dispose();
         jumpButton.dispose();
     }
 
