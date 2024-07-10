@@ -1,16 +1,14 @@
-package com.mygdx.game;
-
-import static com.mygdx.game.GameSettings.SPAWN_COOL_DOWN;
+package com.mygdx.game.session;
 
 import com.badlogic.gdx.utils.TimeUtils;
-import com.mygdx.game.manager.MemoryManager;
+import com.mygdx.game.State;
 
-public class GameSession {
+public abstract class GameSession {
     private long startTime;
 
-    private long pauseTime;
-    private long lastSpawnTime;
-    private int core_collected;
+    protected int coolDown;
+    protected long pauseTime;
+    protected long lastSpawnTime;
 
     public State state;
 
@@ -21,7 +19,6 @@ public class GameSession {
         startTime = TimeUtils.millis();
         lastSpawnTime = TimeUtils.millis();
         state = State.PLAYING;
-        core_collected = 0;
     }
 
     public void pauseGame() {
@@ -35,22 +32,12 @@ public class GameSession {
     }
 
     public boolean shouldSpawn() {
-        if (TimeUtils.millis() - lastSpawnTime > SPAWN_COOL_DOWN) {
+        if (TimeUtils.millis() - lastSpawnTime > coolDown) {
             lastSpawnTime = TimeUtils.millis();
             return true;
         }
         return false;
     }
 
-    public void core_was_collected() {
-        core_collected += 1;
-    }
-
-    public int getCoreCollected() {
-        return core_collected;
-    }
-
-    public boolean victory() {
-        return core_collected >= 3;
-    }
+    public abstract boolean victory();
 }

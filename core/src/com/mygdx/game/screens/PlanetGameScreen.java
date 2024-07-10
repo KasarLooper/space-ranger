@@ -1,11 +1,6 @@
 package com.mygdx.game.screens;
 
-import static com.mygdx.game.GameResources.ALIEN_ANIM_RIGHT_IMG_PATTERN;
 import static com.mygdx.game.GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN;
-import static com.mygdx.game.GameSettings.ALIEN_HEIGHT;
-import static com.mygdx.game.GameSettings.ALIEN_JUMP_FORCE;
-import static com.mygdx.game.GameSettings.ALIEN_SPEED;
-import static com.mygdx.game.GameSettings.ALIEN_WIDTH;
 import static com.mygdx.game.GameSettings.CAMERA_Y_FROM_CENTER;
 import static com.mygdx.game.GameSettings.COSMONAUT_HEIGHT;
 import static com.mygdx.game.GameSettings.COSMONAUT_JUMP_FORCE;
@@ -22,64 +17,81 @@ import com.mygdx.game.GameResources;
 import com.mygdx.game.GraphicsSettings;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.ButtonView;
+import com.mygdx.game.components.LiveView;
 import com.mygdx.game.components.MovingBackgroundLeftRightView;
 import com.mygdx.game.components.MovingBackgroundView;
+import com.mygdx.game.components.TextView;
+import com.mygdx.game.manager.ContactManager;
 import com.mygdx.game.manager.LevelMapManager;
-import com.mygdx.game.objects.AlienObject;
-import com.mygdx.game.objects.Block;
 import com.mygdx.game.objects.Earth;
+import com.mygdx.game.objects.LightningBulletObject;
+import com.mygdx.game.objects.PhysicsBlock;
 import com.mygdx.game.objects.SpacemanObject;
+import com.mygdx.game.session.PlanetGameSession;
+
+import java.util.ArrayList;
 
 public class PlanetGameScreen extends GameScreen {
-
+    LevelMapManager loader;
+    ContactManager contactManager;
     MovingBackgroundView backgroundView;
 
-    LevelMapManager loader;
     SpacemanObject spaceman;
-    AlienObject alien;
     Earth earth;
-    Block[] blocks;
+    ArrayList<PhysicsBlock> physics;
 
+    LiveView lives;
     ButtonView jumpButton;
+    TextView purpose;
+    ButtonView fireButton;
+    LightningBulletObject lightning;
+    boolean isLighting;
+
     boolean isJump;
     private int padding = 0;
 
     public PlanetGameScreen(MyGdxGame game) {
         super(game);
+        session = new PlanetGameSession();
         loader = new LevelMapManager();
-        blocks = loader.loadMap();
-        backgroundView = new MovingBackgroundLeftRightView(GameResources.BACKGROUND_2_IMG_PATH, GraphicsSettings.DEPTH_PLANET_BACKGROUND_SPEED_RATIO);
+        contactManager = new ContactManager(myGdxGame.planet);
+        loader.loadMap(myGdxGame.planet);
+        physics = loader.getPhysics();
+        backgroundView = new MovingBackgroundLeftRightView(GameResources.BACKGROUND_2_IMG_PATH);
         spaceman = new SpacemanObject(
-                0, GROUND_HEIGHT + COSMONAUT_HEIGHT / 2 + padding,
+                loader.getPlayerX(), loader.getPlayerY(),
                 COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
                 COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4,
                 COSMONAUT_SPEED, COSMONAUT_JUMP_FORCE,
                 myGdxGame.planet);
-        alien = new AlienObject(
-                 -300, GROUND_HEIGHT + COSMONAUT_HEIGHT / 2 + padding,
-                ALIEN_WIDTH, ALIEN_HEIGHT, ALIEN_ANIM_RIGHT_IMG_PATTERN, 5,
-                ALIEN_SPEED, ALIEN_JUMP_FORCE,
-                myGdxGame.planet);
         earth = new Earth(GROUND_HEIGHT, myGdxGame.planet);
         jumpButton = new ButtonView(1150, 25, 100, 100, GameResources.JUMP_BUTTON_IMG_PATH);
+        lives = new LiveView(0, 675);
+        purpose = new TextView(myGdxGame.averageWhiteFont, 300, 675,
+                String.format(GraphicsSettings.PLANET_AIM1_PATTERN, 0, 0));
+        fireButton = new ButtonView(1000, 25, 100, 100, GameResources.FIRE_BUTTON_PLANET_IMG_PATH);
         isJump = false;
     }
 
     @Override
     public void render(float delta) {
-        myGdxGame.camera.position.x = spaceman.getX();
-        myGdxGame.camera.position.y = spaceman.getY() + GROUND_HEIGHT + CAMERA_Y_FROM_CENTER;
         super.render(delta);
-        if (gameSession.state == com.mygdx.game.State.PLAYING) {
+        myGdxGame.camera.position.x = spaceman.getX();
+        myGdxGame.camera.position.y = spaceman.getY() + GROUND_HEIGHT - CAMERA_Y_FROM_CENTER;
+        if (session.state == com.mygdx.game.State.PLAYING) {
             backgroundView.move(spaceman.getX(), spaceman.getY());
             if (isJump)
                 spaceman.jump();
             spaceman.updateFrames();
-            alien.move(spaceman.getX(), spaceman.getY(), blocks);
-            alien.updateFrames();
             myGdxGame.stepWorld(myGdxGame.planet);
             spaceman.updateJump();
-            alien.updateJump();
+        }
+        lives.setLeftLives(spaceman.liveLeft);
+
+        if (isLighting) {
+            if (lightning.destroy()) {
+                isLighting = false;
+            }
         }
     }
 
@@ -91,15 +103,20 @@ public class PlanetGameScreen extends GameScreen {
     @Override
     public void drawDynamic() {
         backgroundView.draw(myGdxGame.batch);
+        earth.draw(myGdxGame.batch, spaceman.getX());
+        for (PhysicsBlock block : physics) block.draw(myGdxGame.batch);
         spaceman.draw(myGdxGame.batch);
-        alien.draw(myGdxGame.batch);
         super.drawDynamic();
+        if (isLighting) lightning.draw(myGdxGame.batch);
     }
 
     @Override
     public void drawStatic() {
         super.drawStatic();
         jumpButton.draw(myGdxGame.batch);
+        lives.draw(myGdxGame.batch);
+        purpose.draw(myGdxGame.batch);
+        fireButton.draw(myGdxGame.batch);
     }
 
     @Override
@@ -107,23 +124,18 @@ public class PlanetGameScreen extends GameScreen {
         super.restartGame();
         myGdxGame.planet.destroyBody(spaceman.body);
         spaceman = new SpacemanObject(
-                0, GROUND_HEIGHT + COSMONAUT_HEIGHT / 2 + padding,
+                loader.getPlayerX(), loader.getPlayerY(),
                 COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
                 COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4,
                 COSMONAUT_SPEED, COSMONAUT_JUMP_FORCE,
                 myGdxGame.planet);
-        alien = new AlienObject(
-                -300, GROUND_HEIGHT + COSMONAUT_HEIGHT / 2 + padding,
-                ALIEN_WIDTH, ALIEN_HEIGHT, ALIEN_ANIM_RIGHT_IMG_PATTERN, 5,
-                ALIEN_SPEED, ALIEN_JUMP_FORCE,
-                myGdxGame.planet);
+        purpose.setText(String.format(GraphicsSettings.PLANET_AIM1_PATTERN, 0, 0));
     }
 
     @Override
     public void dispose() {
         super.dispose();
         spaceman.dispose();
-        alien.dispose();
         jumpButton.dispose();
     }
 
@@ -132,13 +144,18 @@ public class PlanetGameScreen extends GameScreen {
         super.touchDown(screenX, screenY, pointer, button);
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
         screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
-        if (screenX <= SCREEN_WIDTH / 2 && gameSession.state == PLAYING) {
+        if (screenX <= SCREEN_WIDTH / 2 && session.state == PLAYING) {
             if (joystick.getDegrees() % 360 > 0 && joystick.getDegrees() % 360 <= 180)
                 spaceman.stepLeft();
             else spaceman.stepRight();
         }
         if (jumpButton.isHit(screenX, Gdx.graphics.getHeight() - screenY))
             isJump = true;
+
+        if (fireButton.isHit(screenX, Gdx.graphics.getHeight() - screenY) && ((PlanetGameSession)session).shouldSpawnLighting()) {
+            isLighting = true;
+            lightning = new LightningBulletObject(100, 200, spaceman, myGdxGame.planet);
+        }
         return true;
     }
 
@@ -147,7 +164,7 @@ public class PlanetGameScreen extends GameScreen {
         super.touchUp(screenX, screenY, pointer, button);
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
         screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
-        if (screenX <= SCREEN_WIDTH / 2 && gameSession.state == PLAYING) spaceman.stop();
+        if (screenX <= SCREEN_WIDTH / 2 && session.state == PLAYING) spaceman.stop();
         if (jumpButton.isHit(screenX, Gdx.graphics.getHeight() - screenY))
             isJump = false;
         return true;
@@ -158,12 +175,12 @@ public class PlanetGameScreen extends GameScreen {
         super.touchDragged(screenX, screenY, pointer);
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
         screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
-        if (screenX <= SCREEN_WIDTH / 2 && gameSession.state == PLAYING) {
+        if (screenX <= SCREEN_WIDTH / 2 && session.state == PLAYING) {
             if (joystick.getDegrees() % 360 > 0 && joystick.getDegrees() % 360 <= 180)
                 spaceman.stepLeft();
             else spaceman.stepRight();
         }
-        if (screenX > SCREEN_WIDTH / 2 && gameSession.state == PLAYING) {
+        if (screenX > SCREEN_WIDTH / 2 && session.state == PLAYING) {
             if (!pauseButton.isHit(screenX, Gdx.graphics.getHeight() - screenY) && !jumpButton.isHit(screenX, Gdx.graphics.getHeight() - screenY)) {
                 isJump = false;
             }

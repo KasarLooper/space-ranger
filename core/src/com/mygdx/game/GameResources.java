@@ -1,13 +1,15 @@
 package com.mygdx.game;
 
 public class GameResources {
+    public static final String EARTH_IMG_PATH = "earth.png";
+    public static final String LEVEL_MAP_IMG_PATH = "level_platform.png";
     public static final String SHIP_IMG_PATH = "ship_%d.png";
     public static final String JOYSTICK_BACK_IMG_PATH = "joystick-zone.png";
     public static final String JOYSTICK_CIRCLE_IMG_PATH = "joystick-circle.png";
     public static final String BULLET_IMG_PATH = "bullet.png";
     public static final String BACKGROUND_IMG_PATH = "background.png";
 
-    public static final String BACKGROUND_2_IMG_PATH = "back_2.jpg";
+    public static final String BACKGROUND_2_IMG_PATH = "back_2.png";
     public static final String BLACKOUT_IMG_PATH = "blackout_full.png";
 
     public static final String SWORDS_IMG_PATH = "swords.png";
@@ -64,8 +66,8 @@ public class GameResources {
     public static final String LEVEL_PLATFORM= "level_platform.png";
 
     //текстуры блоков для платформ
-    public static final String TEXTURE_BOX_1 = "texture_box_1.png";
-    public static final String TEXTURE_BOX_2 = "texture_box_2.png";
+    public static final String TEXTURE_BOX_GREEN = "texture_box_1.png";
+    public static final String TEXTURE_BOX_BLACK = "texture_box_2.png";
 
     //cosmonaut_anim_right
     public static final String COSMONAUT_ANIM_RIGHT_1 = "cosmonaut_anim_right_1.png";
@@ -86,8 +88,6 @@ public class GameResources {
     public static final String COSMONAUT_ANIM_LEFT_5 = "cosmonaut_anim_left_5.png";
     public static final String COSMONAUT_ANIM_LEFT_6 = "cosmonaut_anim_left_6.png";
     public static final String COSMONAUT_ANIM_LEFT_7 = "cosmonaut_anim_left_7.png";
-    public static final String EARTH_IMG_PATH = "earth.png";
-    public static final String LEVEL_MAP_IMG_PATH = "example.png";
     public static final String COSMONAUT_ANIM_LEFT_IMG_PATTERN = "cosmonaut_anim_left/cosmonaut_anim_left_%d.png";
 
     public static final String JUMP_BUTTON_IMG_PATH = "upbutton.png";
@@ -120,4 +120,5 @@ public class GameResources {
 
     //Заставка для конца игры
     public static final String BACKGROUND_END_IMG_PATH = "background_end.png";
+    public static final String FIRE_BUTTON_PLANET_IMG_PATH = "fireButtonPlanet.png";
 }
