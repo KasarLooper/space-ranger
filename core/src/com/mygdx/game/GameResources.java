@@ -55,13 +55,15 @@ public class GameResources {
     public static final String LIGHTNING_LEFT_IMG_PATH = "lightning_left.png";
     public static final String MUSIC_PLANET_PATH = "music/Extreme.mp3";
     public static final String EARTH_BACKGROUND_IMG_PATH = "earth_background.png";
+    public static final String CAPSULE_IMG_PATH = "capsule.png";
 
     //ресурсы
     public static final String CRYSTAL_IMG_PATH = "crystal.png";
     public static final String WRECKAGE_IMG_PATH = "wreckage.png";
 
     //платформы
-    public static final String LEVEL_PLATFORM= "level_platform.png";
+    public static final String LEVEL_PLATFORMS= "level_platforms.png";
+    //public static final String LEVEL_PLATFORM= "level_platform.png";
 
     //текстуры блоков для платформ
     public static final String TEXTURE_BOX_1 = "texture_box_1.png";
