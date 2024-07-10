@@ -19,6 +19,7 @@ import static com.mygdx.game.State.PLAYING;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.mygdx.game.GameResources;
+import com.mygdx.game.GameSettings;
 import com.mygdx.game.GraphicsSettings;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.ButtonView;
@@ -31,6 +32,7 @@ import com.mygdx.game.manager.LevelMapManager;
 import com.mygdx.game.objects.AlienObject;
 import com.mygdx.game.objects.CapsuleObject;
 import com.mygdx.game.objects.Earth;
+import com.mygdx.game.objects.EnemyObject;
 import com.mygdx.game.objects.GameObject;
 import com.mygdx.game.objects.LightningBulletObject;
 import com.mygdx.game.objects.PhysicsBlock;
@@ -39,6 +41,11 @@ import com.mygdx.game.objects.SpacemanObject;
 import com.mygdx.game.session.PlanetGameSession;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
+import java.util.ResourceBundle;
+
+import jdk.internal.loader.Resource;
 import java.util.Random;
 
 public class PlanetGameScreen extends GameScreen {
@@ -116,6 +123,16 @@ public class PlanetGameScreen extends GameScreen {
                 myGdxGame.planet.destroyBody(lightning.body);
             }
         }
+
+        if (((PlanetGameSession)session).shouldSpawnCore()) {
+            Random random = new Random();
+            if (random.nextInt(100) > GameSettings.CHANCE_CORE_SPAWN) {
+                spawnAlien();
+            } else {
+                spawnCrystal();
+            }
+        }
+        updateAlien();
     }
 
     @Override
@@ -132,6 +149,9 @@ public class PlanetGameScreen extends GameScreen {
         spaceman.draw(myGdxGame.batch);
         super.drawDynamic();
         if (isLighting) lightning.draw(myGdxGame.batch);
+        for (ResourceObject wreck : wrecks) wreck.draw(myGdxGame.batch);
+        for (ResourceObject crystal : crystals) crystal.draw(myGdxGame.batch);
+        for (AlienObject alien : aliens) alien.draw(myGdxGame.batch);
     }
 
     @Override
@@ -211,6 +231,7 @@ public class PlanetGameScreen extends GameScreen {
         jumpButton.dispose();
     }
 
+
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         super.touchDown(screenX, screenY, pointer, button);
@@ -284,5 +305,34 @@ public class PlanetGameScreen extends GameScreen {
         if (keycode == Input.Keys.SPACE)
             isJump = false;
         return super.keyUp(keycode);
+    }
+
+    public void updateAlien() {
+        Iterator<AlienObject> iterator = aliens.iterator();
+        while (iterator.hasNext()) {
+            AlienObject alien = iterator.next();
+            if (!alien.isAlive()) {
+                Random random = new Random();
+                if (random.nextInt(100) > 50) {
+                    ResourceObject crystal = new ResourceObject(
+                            alien.x, alien.y,
+                            100,100,
+                            GameResources.CRYSTAL_IMG_PATH,
+                            myGdxGame.planet
+                    );
+                    crystals.add(crystal);
+                } else {
+                    ResourceObject wreck = new ResourceObject(
+                            alien.x, alien.y,
+                            100, 100,
+                            GameResources.WRECKAGE_IMG_PATH,
+                            myGdxGame.planet
+                    );
+                    wrecks.add(wreck);
+                }
+                myGdxGame.planet.destroyBody(alien.body);
+                iterator.remove();
+            }
+        }
     }
 }

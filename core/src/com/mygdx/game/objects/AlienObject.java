@@ -40,4 +40,8 @@ public class AlienObject extends SpacemanObject{
     public Type type() {
         return Type.Enemy;
     }
+
+    public boolean isAlive() {
+        return liveLeft > 0;
+    }
 }
