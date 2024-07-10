@@ -77,8 +77,8 @@ public class GameSettings {
     public static final int COSMONAUT_JUMP_FORCE = 65;
 
     // Lightning settings
-    public static final int LIGHTING_WIDTH = 400;
-    public static final int LIGHTING_HEIGHT = 200;
+    public static final int LIGHTING_WIDTH = 140;
+    public static final int LIGHTING_HEIGHT = 70;
 
 
 

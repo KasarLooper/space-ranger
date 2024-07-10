@@ -19,6 +19,7 @@ public class SpacemanObject extends PhysicsObject {
     int jumpImpulse;
     Sprite sprite;
     int i;
+    public boolean isRightDirection;
     public boolean isRightStep;
     public boolean isLeftStep;
     boolean isStop;
@@ -37,6 +38,7 @@ public class SpacemanObject extends PhysicsObject {
         sprite = new Sprite(texture);
 
         initTextures(defaultFrame);
+        isRightDirection = true;
     }
 
     protected void initTextures(int defaultFrame) {
@@ -71,11 +73,13 @@ public class SpacemanObject extends PhysicsObject {
     public void stepLeft() {
         isRightStep = false;
         isLeftStep = true;
+        isRightDirection = false;
     }
 
     public void stepRight() {
         isRightStep = true;
         isLeftStep = false;
+        isRightDirection = true;
     }
 
     public void jump() {

@@ -26,6 +26,11 @@ public class AlienObject extends SpacemanObject{
         isJump = false;
     }
 
+    @Override
+    public void hit(Type type) {
+        if (type == Type.Bullet) liveLeft--;
+    }
+
     public void move(int playerX, int playerY, Block[] blocks) {
         if (playerX < getX()) stepLeft();
         else if (playerX > getX()) stepRight();
