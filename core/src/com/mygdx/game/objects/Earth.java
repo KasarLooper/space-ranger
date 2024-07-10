@@ -27,6 +27,7 @@ public class Earth extends GameObject{
     float[] earthXs;
 
     public Earth(int y, World world) {
+        super(0, y);
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.StaticBody;
         Body body = world.createBody(def);

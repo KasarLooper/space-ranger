@@ -22,6 +22,7 @@ public class PhysicsBlock extends Block implements Drawable {
 
 
     public PhysicsBlock(int x, int y, int wight, int height, String texturePath, World world) {
+        super(x, y);
         this.width = wight;
         this.height = height;
         this.x = x;

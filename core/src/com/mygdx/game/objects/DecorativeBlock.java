@@ -9,6 +9,7 @@ public class DecorativeBlock extends Block implements Drawable {
     Texture texture;
 
     public DecorativeBlock(int x, int y, int wight, int height, String texturePath) {
+        super(x, y);
         this.x = x;
         this.y = y;
         this.width = wight;

@@ -22,7 +22,9 @@ public abstract class PhysicsObject extends GameObject implements Drawable {
     World world;
 
 
+
     PhysicsObject(String texturePath, int x, int y, int wight, int height, World world) {
+        super(x, y);
         this.width = wight;
         this.height = height;
         this.x = x;
