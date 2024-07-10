@@ -113,4 +113,5 @@ public class GameResources {
 
     public static final String ALIEN_ANIM_RIGHT_IMG_PATTERN = "Alien_anim_right/alien_anim_right_%d.png";
     public static final String ALIEN_ANIM_LEFT_IMG_PATTERN = "Alien_anim_left/alien_anim_left_%d.png";
+    public static final String FIRE_BUTTON_PLANET_IMG_PATH = "fireButtonPlanet.png";
 }

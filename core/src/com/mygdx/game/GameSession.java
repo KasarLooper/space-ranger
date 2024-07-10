@@ -10,6 +10,9 @@ public class GameSession {
 
     private long pauseTime;
     private long lastSpawnTime;
+
+    private long lastLightningSpawnTime;
+
     private int core_collected;
 
     public State state;
@@ -19,6 +22,7 @@ public class GameSession {
 
     public void startGame() {
         startTime = TimeUtils.millis();
+        lastSpawnTime = TimeUtils.millis();
         lastSpawnTime = TimeUtils.millis();
         state = State.PLAYING;
         core_collected = 0;
@@ -37,6 +41,14 @@ public class GameSession {
     public boolean shouldSpawn() {
         if (TimeUtils.millis() - lastSpawnTime > SPAWN_COOL_DOWN) {
             lastSpawnTime = TimeUtils.millis();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean shouldSpawnLighting() {
+        if (TimeUtils.millis() - lastLightningSpawnTime > (SPAWN_COOL_DOWN + 500)) {
+            lastLightningSpawnTime = TimeUtils.millis();
             return true;
         }
         return false;

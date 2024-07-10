@@ -19,13 +19,14 @@ public class SpacemanObject extends PhysicsObject {
     int jumpImpulse;
     Sprite sprite;
     int i;
-    boolean isRightStep;
-    boolean isLeftStep;
+    public boolean isRightStep;
+    public boolean isLeftStep;
     boolean isStop;
     boolean isJump;
     Texture[] left;
     Texture[] right;
     long jumpTime;
+    public int liveLeft;
 
     public SpacemanObject(int x, int y, int wight, int height, String texturePath, int defaultFrame, int speed, int jumpImpulse, World world) {
         super(String.format(texturePath, defaultFrame), x, y, wight, height, world);
@@ -51,6 +52,7 @@ public class SpacemanObject extends PhysicsObject {
         }
         i = 0;
         isJump = false;
+        liveLeft = 3;
     }
 
     @Override

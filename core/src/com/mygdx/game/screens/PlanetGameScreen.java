@@ -1,15 +1,6 @@
 package com.mygdx.game.screens;
 
-import static com.mygdx.game.GameResources.ALIEN_ANIM_RIGHT_IMG_PATTERN;
-import static com.mygdx.game.GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN;
-import static com.mygdx.game.GameSettings.ALIEN_HEIGHT;
-import static com.mygdx.game.GameSettings.ALIEN_JUMP_FORCE;
-import static com.mygdx.game.GameSettings.ALIEN_SPEED;
-import static com.mygdx.game.GameSettings.ALIEN_WIDTH;
-import static com.mygdx.game.GameSettings.CAMERA_Y_FROM_CENTER;
 import static com.mygdx.game.GameSettings.COSMONAUT_HEIGHT;
-import static com.mygdx.game.GameSettings.COSMONAUT_JUMP_FORCE;
-import static com.mygdx.game.GameSettings.COSMONAUT_SPEED;
 import static com.mygdx.game.GameSettings.COSMONAUT_WIDTH;
 import static com.mygdx.game.GameSettings.GROUND_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
@@ -19,75 +10,73 @@ import static com.mygdx.game.State.PLAYING;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.mygdx.game.GameResources;
-import com.mygdx.game.GraphicsSettings;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.ButtonView;
+import com.mygdx.game.components.ImageView;
+import com.mygdx.game.components.LiveView;
 import com.mygdx.game.components.MovingBackgroundLeftRightView;
 import com.mygdx.game.components.MovingBackgroundView;
-import com.mygdx.game.manager.ContactManager;
-import com.mygdx.game.manager.LevelMapManager;
-import com.mygdx.game.objects.AlienObject;
-import com.mygdx.game.objects.Earth;
+import com.mygdx.game.components.TextView;
+import com.mygdx.game.objects.LightningBulletObject;
 import com.mygdx.game.objects.PhysicsBlock;
+import com.mygdx.game.objects.Earth;
 import com.mygdx.game.objects.SpacemanObject;
-
-import java.util.ArrayList;
 
 public class PlanetGameScreen extends GameScreen {
 
     MovingBackgroundView backgroundView;
 
-    LevelMapManager loader;
     SpacemanObject spaceman;
-    AlienObject alien;
     Earth earth;
-    ContactManager contactManager;
-    ArrayList<PhysicsBlock> blocks;
+    PhysicsBlock block;
 
+    LiveView lives;
     ButtonView jumpButton;
+    TextView purpose;
+    ButtonView fireButton;
+    LightningBulletObject lightning;
+    boolean isLighting;
+
     boolean isJump;
     private int padding = 0;
 
     public PlanetGameScreen(MyGdxGame game) {
         super(game);
-        contactManager = new ContactManager(myGdxGame.planet);
-        loader = new LevelMapManager();
-        loader.loadMap(myGdxGame.planet);
-        blocks = loader.getPhysics();
-        backgroundView = new MovingBackgroundLeftRightView(GameResources.BACKGROUND_2_IMG_PATH, GraphicsSettings.DEPTH_PLANET_BACKGROUND_SPEED_RATIO);
+        backgroundView = new MovingBackgroundLeftRightView(GameResources.BACKGROUND_2_IMG_PATH);
         spaceman = new SpacemanObject(
-                loader.getPlayerX(), loader.getPlayerY(),
+                0, GROUND_HEIGHT + COSMONAUT_HEIGHT / 2 + padding,
                 COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
-                COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4,
-                COSMONAUT_SPEED, COSMONAUT_JUMP_FORCE,
-                myGdxGame.planet);
-        alien = new AlienObject(
-                 -300, GROUND_HEIGHT + COSMONAUT_HEIGHT / 2 + padding,
-                ALIEN_WIDTH, ALIEN_HEIGHT, ALIEN_ANIM_RIGHT_IMG_PATTERN, 5,
-                ALIEN_SPEED, ALIEN_JUMP_FORCE,
-                myGdxGame.planet);
+                String.format(GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4),
+                myGdxGame.planet
+        );
         earth = new Earth(GROUND_HEIGHT, myGdxGame.planet);
+        block = new PhysicsBlock(100, 200, 100, 100, GameResources.BOOM_IMG_PATH, myGdxGame.planet);
         jumpButton = new ButtonView(1150, 25, 100, 100, GameResources.JUMP_BUTTON_IMG_PATH);
+        lives = new LiveView(0, 675);
+        purpose = new TextView(myGdxGame.averageWhiteFont, 300, 675, "Цель - обломки корабля(0/...) и минераллы(0/...)");
+        fireButton = new ButtonView(1000, 25, 100, 100, GameResources.FIRE_BUTTON_PLANET_IMG_PATH);
         isJump = false;
     }
 
     @Override
     public void render(float delta) {
         myGdxGame.camera.position.x = spaceman.getX();
-        myGdxGame.camera.position.y = spaceman.getY() + GROUND_HEIGHT + CAMERA_Y_FROM_CENTER;
+        myGdxGame.camera.position.y = spaceman.getY() + GROUND_HEIGHT;
         super.render(delta);
         if (gameSession.state == com.mygdx.game.State.PLAYING) {
             backgroundView.move(spaceman.getX(), spaceman.getY());
             if (isJump)
                 spaceman.jump();
             spaceman.updateFrames();
-            //alien.move(spaceman.getX(), spaceman.getY(), blocks);
-            //spaceman.setY(spaceman.getY() + 50);
-            //System.out.println(spaceman.getY());
-            alien.updateFrames();
             myGdxGame.stepWorld(myGdxGame.planet);
             spaceman.updateJump();
-            alien.updateJump();
+        }
+        lives.setLeftLives(spaceman.liveLeft);
+
+        if (isLighting) {
+            if (lightning.destroy()) {
+                isLighting = false;
+            }
         }
     }
 
@@ -99,17 +88,19 @@ public class PlanetGameScreen extends GameScreen {
     @Override
     public void drawDynamic() {
         backgroundView.draw(myGdxGame.batch);
-        earth.draw(myGdxGame.batch, spaceman.getX());
-        super.drawDynamic();
-        for (PhysicsBlock block : blocks) block.draw(myGdxGame.batch);
         spaceman.draw(myGdxGame.batch);
-        alien.draw(myGdxGame.batch);
+        super.drawDynamic();
+        block.draw(myGdxGame.batch);
+        if (isLighting) lightning.draw(myGdxGame.batch);
     }
 
     @Override
     public void drawStatic() {
         super.drawStatic();
         jumpButton.draw(myGdxGame.batch);
+        lives.draw(myGdxGame.batch);
+        purpose.draw(myGdxGame.batch);
+        fireButton.draw(myGdxGame.batch);
     }
 
     @Override
@@ -117,15 +108,9 @@ public class PlanetGameScreen extends GameScreen {
         super.restartGame();
         myGdxGame.planet.destroyBody(spaceman.body);
         spaceman = new SpacemanObject(
-                loader.getPlayerX(), loader.getPlayerY(),
+                0, GROUND_HEIGHT + COSMONAUT_HEIGHT / 2 + padding,
                 COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
-                COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4,
-                COSMONAUT_SPEED, COSMONAUT_JUMP_FORCE,
-                myGdxGame.planet);
-        alien = new AlienObject(
-                -300, GROUND_HEIGHT + COSMONAUT_HEIGHT / 2 + padding,
-                ALIEN_WIDTH, ALIEN_HEIGHT, ALIEN_ANIM_RIGHT_IMG_PATTERN, 5,
-                ALIEN_SPEED, ALIEN_JUMP_FORCE,
+                String.format(GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4),
                 myGdxGame.planet);
     }
 
@@ -133,7 +118,6 @@ public class PlanetGameScreen extends GameScreen {
     public void dispose() {
         super.dispose();
         spaceman.dispose();
-        alien.dispose();
         jumpButton.dispose();
     }
 
@@ -149,6 +133,11 @@ public class PlanetGameScreen extends GameScreen {
         }
         if (jumpButton.isHit(screenX, Gdx.graphics.getHeight() - screenY))
             isJump = true;
+
+        if (fireButton.isHit(screenX, Gdx.graphics.getHeight() - screenY) && gameSession.shouldSpawnLighting()) {
+            isLighting = true;
+            lightning = new LightningBulletObject(100, 200, spaceman, myGdxGame.planet);
+        }
         return true;
     }
 
