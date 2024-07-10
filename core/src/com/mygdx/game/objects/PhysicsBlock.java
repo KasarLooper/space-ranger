@@ -87,9 +87,21 @@ public class PhysicsBlock extends Block implements Drawable {
         return body;
     }
 
+    static int cnt = 0;
+
+    @Override
+    public void hit(Type type) {
+        if (type == Type.Player) System.out.println(getX() + " " + getY());
+    }
+
+    @Override
+    public Type type() {
+        return Type.Block;
+    }
+
     protected Shape getShape(float x, float y, float width, float height) {
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(width * SCALE / 2f, height * SCALE / 2f);
+        shape.setAsBox((width) * SCALE / 2f, (height) * SCALE / 2f);
 
         return shape;
     }

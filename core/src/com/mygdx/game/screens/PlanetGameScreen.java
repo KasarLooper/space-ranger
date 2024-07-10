@@ -24,6 +24,7 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.ButtonView;
 import com.mygdx.game.components.MovingBackgroundLeftRightView;
 import com.mygdx.game.components.MovingBackgroundView;
+import com.mygdx.game.manager.ContactManager;
 import com.mygdx.game.manager.LevelMapManager;
 import com.mygdx.game.objects.AlienObject;
 import com.mygdx.game.objects.Earth;
@@ -40,6 +41,7 @@ public class PlanetGameScreen extends GameScreen {
     SpacemanObject spaceman;
     AlienObject alien;
     Earth earth;
+    ContactManager contactManager;
     ArrayList<PhysicsBlock> blocks;
 
     ButtonView jumpButton;
@@ -48,6 +50,7 @@ public class PlanetGameScreen extends GameScreen {
 
     public PlanetGameScreen(MyGdxGame game) {
         super(game);
+        contactManager = new ContactManager(myGdxGame.planet);
         loader = new LevelMapManager();
         loader.loadMap(myGdxGame.planet);
         blocks = loader.getPhysics();
@@ -80,7 +83,7 @@ public class PlanetGameScreen extends GameScreen {
             spaceman.updateFrames();
             //alien.move(spaceman.getX(), spaceman.getY(), blocks);
             //spaceman.setY(spaceman.getY() + 50);
-            System.out.println(spaceman.getY());
+            //System.out.println(spaceman.getY());
             alien.updateFrames();
             myGdxGame.stepWorld(myGdxGame.planet);
             spaceman.updateJump();
@@ -97,10 +100,10 @@ public class PlanetGameScreen extends GameScreen {
     public void drawDynamic() {
         backgroundView.draw(myGdxGame.batch);
         earth.draw(myGdxGame.batch, spaceman.getX());
+        super.drawDynamic();
         for (PhysicsBlock block : blocks) block.draw(myGdxGame.batch);
         spaceman.draw(myGdxGame.batch);
         alien.draw(myGdxGame.batch);
-        super.drawDynamic();
     }
 
     @Override

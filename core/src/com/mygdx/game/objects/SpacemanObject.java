@@ -103,12 +103,16 @@ public class SpacemanObject extends PhysicsObject {
             if (i >= right.length) i = 0;
             sprite.setTexture(isLeftStep ? left[i] : right[i]);
         }
-        if (isRightStep) body.setLinearVelocity(speed, body.getLinearVelocity().y);
-        else if (isLeftStep) body.setLinearVelocity(-speed, body.getLinearVelocity().y);
+        if (isRightStep) {
+            body.setLinearVelocity(speed, body.getLinearVelocity().y);
+        }
+        else if (isLeftStep) {
+            body.setLinearVelocity(-speed, body.getLinearVelocity().y);
+        }
     }
 
     public void updateJump() {
-        if (Math.abs(body.getLinearVelocity().y) < 0.01 && TimeUtils.millis() - jumpTime > 50) {
+        if (Math.abs(body.getLinearVelocity().y) == 0 && TimeUtils.millis() - jumpTime > 50) {
             body.setAwake(true);
             isJump = false;
         }
@@ -116,6 +120,7 @@ public class SpacemanObject extends PhysicsObject {
 
     @Override
     public void hit(Type type) {
+        body.applyLinearImpulse(new Vector2(0, 2), body.getWorldCenter(), true);
     }
 
     public Type type() {

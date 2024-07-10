@@ -6,6 +6,7 @@ public enum Type {
     Core,
     Bullet,
     EnemyBullet,
-    Earth
+    Earth,
+    Block
 }
 
