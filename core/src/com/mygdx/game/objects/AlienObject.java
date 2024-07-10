@@ -1,6 +1,7 @@
 package com.mygdx.game.objects;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.GameResources;
 
@@ -28,5 +29,10 @@ public class AlienObject extends SpacemanObject{
     public void move(int playerX, int playerY, Block[] blocks) {
         if (playerX < getX()) stepLeft();
         else if (playerX > getX()) stepRight();
+    }
+
+    @Override
+    public Type type() {
+        return Type.Enemy;
     }
 }

@@ -9,14 +9,12 @@ import static com.mygdx.game.State.PLAYING;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.GameResources;
-import com.mygdx.game.GameSession;
+import com.mygdx.game.session.GameSession;
 import com.mygdx.game.GameSettings;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.ButtonView;
@@ -24,7 +22,7 @@ import com.mygdx.game.components.JoystickView;
 import com.mygdx.game.components.MovingBackgroundView;
 
 public abstract class GameScreen extends ScreenAdapter implements InputProcessor {
-    GameSession gameSession;
+    protected GameSession session;
     MyGdxGame myGdxGame;
     JoystickView joystick;
     long showTime;
@@ -45,7 +43,6 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
         continueButton = new ButtonView(430, 406, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Продолжить");
         restartButton = new ButtonView(430, 416, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Заново");
         black_out_on_pause = new MovingBackgroundView(GameResources.BLACKOUT_IMG_PATH);
-        gameSession = new GameSession();
     }
 
     @Override
@@ -65,7 +62,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
         myGdxGame.camera.update();
         ScreenUtils.clear(108f / 255f, 123f / 255f, 188f / 255f, 0);
 
-        if (gameSession.victory()) {
+        if (session.victory()) {
             restartButton = new ButtonView(430, 416, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Далее");
         }
 
@@ -81,13 +78,13 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     }
 
     public void onPause() {
-        switch (gameSession.state) {
+        switch (session.state) {
             case PLAYING:
-                gameSession.pauseGame();
+                session.pauseGame();
                 break;
 
             case PAUSED:
-                gameSession.resumeGame();
+                session.resumeGame();
                 break;
         }
     }
@@ -95,10 +92,10 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     protected void drawStatic() {
         joystick.draw(myGdxGame.batch);
         pauseButton.draw(myGdxGame.batch);
-        if (gameSession.state == null) {
-            gameSession.startGame();
+        if (session.state == null) {
+            session.startGame();
         }
-        switch (gameSession.state) {
+        switch (session.state) {
             case PLAYING:
                 break;
             case PAUSED:
@@ -127,18 +124,18 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
 
 
     public void restartGame() {
-        gameSession.startGame();
+        session.startGame();
     }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
         screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
-        if (screenX <= SCREEN_WIDTH / 2 && gameSession.state == PLAYING) joystick.onTouch(screenX, SCREEN_HEIGHT - screenY);
+        if (screenX <= SCREEN_WIDTH / 2 && session.state == PLAYING) joystick.onTouch(screenX, SCREEN_HEIGHT - screenY);
         if (pauseButton.isHit(screenX, SCREEN_HEIGHT - screenY))
             onPause();
-        if ((gameSession.state == PAUSED || gameSession.state == ENDED) && endButton.isHit(screenX, SCREEN_HEIGHT - screenY)) {
-            gameSession.state = ENDED;
+        if ((session.state == PAUSED || session.state == ENDED) && endButton.isHit(screenX, SCREEN_HEIGHT - screenY)) {
+            session.state = ENDED;
             myGdxGame.setScreen(myGdxGame.menuScreen);
             myGdxGame.audioManager.spaceMusic.stop();
             myGdxGame.audioManager.menuMusic.play();
@@ -149,13 +146,13 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
             myGdxGame.camera.position.y = myGdxGame.camera.viewportHeight / 2;
             myGdxGame.mainMenuMusic();
         }
-        if (gameSession.state == ENDED && restartButton.isHit(screenX, SCREEN_HEIGHT - screenY)) {
+        if (session.state == ENDED && restartButton.isHit(screenX, SCREEN_HEIGHT - screenY)) {
             isReload = true;
             camX = myGdxGame.camera.position.x;
             camY = myGdxGame.camera.position.y;
             myGdxGame.camera.position.x = myGdxGame.camera.viewportWidth / 2;
             myGdxGame.camera.position.y = myGdxGame.camera.viewportHeight / 2;
-            if (myGdxGame.isContinue && gameSession.victory()) {
+            if (myGdxGame.isContinue && session.victory()) {
                 if (this instanceof SpaceGameScreen) {
                     myGdxGame.setScreen(myGdxGame.planetHistory);
                 } else {
@@ -167,8 +164,8 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
             }
             restartGame();
         }
-        if ((gameSession.state == PAUSED) && continueButton.isHit(screenX, SCREEN_HEIGHT - screenY)) {
-            gameSession.state = PLAYING;
+        if ((session.state == PAUSED) && continueButton.isHit(screenX, SCREEN_HEIGHT - screenY)) {
+            session.state = PLAYING;
         }
         return true;
     }
@@ -177,7 +174,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
         screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
-        if (screenX <= SCREEN_WIDTH / 2 && gameSession.state == PLAYING)
+        if (screenX <= SCREEN_WIDTH / 2 && session.state == PLAYING)
             joystick.toDefault();
         return true;
     }
@@ -186,8 +183,8 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
         screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
-        if (screenX <= SCREEN_WIDTH / 2 && gameSession.state == PLAYING) joystick.onTouch(screenX, SCREEN_HEIGHT - screenY);
-        else if (gameSession.state == PLAYING)
+        if (screenX <= SCREEN_WIDTH / 2 && session.state == PLAYING) joystick.onTouch(screenX, SCREEN_HEIGHT - screenY);
+        else if (session.state == PLAYING)
             joystick.toDefault();
         return true;
     }

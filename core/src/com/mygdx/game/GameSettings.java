@@ -17,8 +17,9 @@ public class GameSettings {
     //SPACE
 
     //Spawn settings
-    public static final int SPAWN_COOL_DOWN = 2000 / 10;
-    public static final int CHANCE_CORE_SPAWN = 100; // в процентах // 25
+    public static final int SPACE_SPAWN_COOL_DOWN = 2000;
+    public static final int PLANET_SPAWN_COOL_DOWN = 2000;
+    public static final int CHANCE_CORE_SPAWN = 25; // в процентах // 25
 
     // Object Setting
   
@@ -58,21 +59,26 @@ public class GameSettings {
 
     public static final double GRAVITY_PLANET_Y = -30;
     public static final double GRAVITY_PLANET_X = 0;
-    public static final int GROUND_HEIGHT = 100;
-    public static final int CAMERA_Y_FROM_CENTER = 100;
+    public static final int GROUND_HEIGHT = 10;
+    public static final int CAMERA_Y_FROM_CENTER = 0;
+
+    // Earth settings
+    public static final int EARTH_WIDTH = 640;
+    public static final int EARTH_HEIGHT = 130;
 
     // Block settings
-    public static final int BLOCK_SIZE = 100;
+    public static final int BLOCK_SIZE = 85;
+    public static final int MAP_HEIGHT = 16;
 
     // Cosmonaut settings
-    public static final int COSMONAUT_WIDTH = 100;
-    public static final int COSMONAUT_HEIGHT = 150;
+    public static final int COSMONAUT_WIDTH = 85;
+    public static final int COSMONAUT_HEIGHT = 170;
     public static final int COSMONAUT_SPEED = 10;
-    public static final int COSMONAUT_JUMP_FORCE = 100;
+    public static final int COSMONAUT_JUMP_FORCE = 65;
 
     // Alien settings
-    public static final int ALIEN_WIDTH = 100;
-    public static final int ALIEN_HEIGHT = 150;
+    public static final int ALIEN_WIDTH = 85;
+    public static final int ALIEN_HEIGHT = 170;
     public static final int ALIEN_SPEED = 6;
     public static final int ALIEN_JUMP_FORCE = 100;
 }

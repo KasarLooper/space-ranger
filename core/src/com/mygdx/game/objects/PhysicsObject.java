@@ -22,7 +22,9 @@ public abstract class PhysicsObject extends GameObject implements Drawable {
     World world;
 
 
+
     PhysicsObject(String texturePath, int x, int y, int wight, int height, World world) {
+        super(x, y);
         this.width = wight;
         this.height = height;
         this.x = x;
@@ -42,12 +44,9 @@ public abstract class PhysicsObject extends GameObject implements Drawable {
                 height);
     }
 
+    @Override
     public Type type() {
-        return  null;
-    }
-
-    public void hit(Type type) {
-        // вся физика ударов и т.п.
+        return Type.Block;
     }
 
     public void dispose() {
