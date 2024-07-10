@@ -193,9 +193,9 @@ public class PlanetGameScreen extends GameScreen {
                 }
             if (cnt >= near.size()) break;
             if (isContinue) continue;
+            System.out.printf("Spawn alien %d %d\n", x, y);
             aliens.add(new AlienObject(x, y, BLOCK_SIZE, BLOCK_SIZE, ALIEN_ANIM_RIGHT_IMG_PATTERN,
                     5, ALIEN_SPEED, ALIEN_JUMP_FORCE, myGdxGame.planet));
-            System.out.printf("Spawn alien %d %d\n", x, y);
             break;
         }
     }
@@ -223,8 +223,8 @@ public class PlanetGameScreen extends GameScreen {
                     break;
                 }
             if (isContinue) continue;
-            crystals.add(new ResourceObject(x, y, BLOCK_SIZE, BLOCK_SIZE, CRYSTAL_IMG_PATH, myGdxGame.planet));
             System.out.printf("Spawn cristal %d %d\n", x, y);
+            crystals.add(new ResourceObject(x, y, BLOCK_SIZE, BLOCK_SIZE, CRYSTAL_IMG_PATH, myGdxGame.planet));
             break;
         }
     }
