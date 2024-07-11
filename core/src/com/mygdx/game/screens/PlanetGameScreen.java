@@ -100,13 +100,18 @@ public class PlanetGameScreen extends GameScreen {
         fireButton = new ButtonView(1000, 25, 100, 100, GameResources.FIRE_BUTTON_PLANET_IMG_PATH);
         isLighting = false;
         isJump = false;
+
+        dx = 0;
+        dy = 0;
     }
+
+    float dx, dy;
 
     @Override
     public void render(float delta) {
         super.render(delta);
-        myGdxGame.camera.position.x = spaceman.getX();
-        myGdxGame.camera.position.y = spaceman.getY() + GROUND_HEIGHT - CAMERA_Y_FROM_CENTER;
+        myGdxGame.camera.position.x = spaceman.getX() + dx;
+        myGdxGame.camera.position.y = spaceman.getY() + GROUND_HEIGHT - CAMERA_Y_FROM_CENTER + dy;
         if (session.state == com.mygdx.game.State.PLAYING) {
             backgroundView.move(spaceman.getX(), spaceman.getY());
             if (isJump)
@@ -316,6 +321,21 @@ public class PlanetGameScreen extends GameScreen {
 
     @Override
     public boolean keyDown(int keycode) {
+        final float padding = 300;
+
+        if (keycode == Input.Keys.RIGHT)
+            dx += padding;
+        if (keycode == Input.Keys.LEFT)
+            dx -= padding;
+        if (keycode == Input.Keys.UP)
+            dy += padding;
+        if (keycode == Input.Keys.DOWN)
+            dy -= padding;
+        if (keycode == Input.Keys.ESCAPE) {
+            dx = 0;
+            dy = 0;
+        }
+
         if (keycode == Input.Keys.A) {
             joystick.left();
             spaceman.stepLeft();
