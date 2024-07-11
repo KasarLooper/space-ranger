@@ -2,7 +2,6 @@ package com.mygdx.game;
 
 public class GameResources {
     public static final String EARTH_IMG_PATH = "earth.png";
-    public static final String LEVEL_MAP_IMG_PATH = "level_platform.png";
     public static final String SHIP_IMG_PATH = "ship_%d.png";
     public static final String JOYSTICK_BACK_IMG_PATH = "joystick-zone.png";
     public static final String JOYSTICK_CIRCLE_IMG_PATH = "joystick-circle.png";
@@ -64,6 +63,8 @@ public class GameResources {
     public static final String CRYSTAL_IMG_PATH = "crystal.png";
     public static final String WRECKAGE_IMG_PATH = "wreckage.png";
 
+    //платформы
+    public static final String LEVEL_MAP_IMG_PATH = "level_platforms.png";
 
     //текстуры блоков для платформ
     public static final String TEXTURE_BOX_GREEN = "texture_box_1.png";

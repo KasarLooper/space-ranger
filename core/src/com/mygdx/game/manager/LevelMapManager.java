@@ -6,6 +6,9 @@ import static com.mygdx.game.GameSettings.COSMONAUT_HEIGHT;
 import static com.mygdx.game.GameSettings.GROUND_HEIGHT;
 import static com.mygdx.game.GameSettings.MAP_HEIGHT;
 
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.GameResources;
 import com.mygdx.game.GameSettings;
@@ -13,13 +16,8 @@ import com.mygdx.game.objects.DecorativeBlock;
 import com.mygdx.game.objects.GameObject;
 import com.mygdx.game.objects.PhysicsBlock;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-
-import javax.imageio.ImageIO;
 
 public class LevelMapManager {
     ArrayList<PhysicsBlock> physics;
@@ -38,56 +36,63 @@ public class LevelMapManager {
         resSpawns = new ArrayList<>();
         capsuleStartX = -1;
         capsuleStartY = -1;
-        try {
 
-            File file = new File(System.getProperty("user.dir") + "/assets/" + GameResources.LEVEL_MAP_IMG_PATH);
-            BufferedImage image = ImageIO.read(file);
+        // Load the texture
+        Texture texture = new Texture(GameResources.LEVEL_MAP_IMG_PATH);
+        // Get the texture data
+        TextureData textureData = texture.getTextureData();
 
-            int width = image.getWidth();
-            int height = image.getHeight();
-
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
-                    int rgb = image.getRGB(x, y);
-                    int red = (rgb >> 16) & 0xFF;
-                    int green = (rgb >> 8) & 0xFF;
-                    int blue = rgb & 0xFF;
-                    initPlayer(red, green, blue, x, y, world);
-                }
-            }
-
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
-                    int rgb = image.getRGB(x, y);
-                    int red = (rgb >> 16) & 0xFF;
-                    int green = (rgb >> 8) & 0xFF;
-                    int blue = rgb & 0xFF;
-                    initBlocks(red, green, blue, x, y, world);
-                }
-            }
-
-            for (int y = capsuleStartY; y < height; y++) {
-                int rgb = image.getRGB(capsuleStartX, y);
-                int red = (rgb >> 16) & 0xFF;
-                int green = (rgb >> 8) & 0xFF;
-                int blue = rgb & 0xFF;
-                if (red != 255 && green != 255 && blue != 255) break;
-                capsuleEndY++;
-            }
-            capsuleEndY--;
-
-            for (int x = capsuleStartX; x < width; x++) {
-                int rgb = image.getRGB(x, capsuleStartY);
-                int red = (rgb >> 16) & 0xFF;
-                int green = (rgb >> 8) & 0xFF;
-                int blue = rgb & 0xFF;
-                if (red != 255 && green != 255 && blue != 255) break;
-                capsuleEndX++;
-            }
-            capsuleEndX--;
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
+        if (!textureData.isPrepared()) {
+            textureData.prepare();
         }
+
+        // Create a Pixmap from the texture data
+        Pixmap image = textureData.consumePixmap();
+
+        // Get image dimensions
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int rgb = image.getPixel(x, y);
+                int red = (rgb >> 24) & 0xFF;
+                int green = (rgb >> 16) & 0xFF;
+                int blue = (rgb >> 8) & 0xFF;
+                initPlayer(red, green, blue, x, y, world);
+            }
+        }
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int rgb = image.getPixel(x, y);
+                int red = (rgb >> 24) & 0xFF;
+                int green = (rgb >> 16) & 0xFF;
+                int blue = (rgb >> 8) & 0xFF;
+                initBlocks(red, green, blue, x, y, world);
+            }
+        }
+
+        for (int y = capsuleStartY; y < height; y++) {
+            int rgb = image.getPixel(capsuleStartX, y);
+            int red = (rgb >> 24) & 0xFF;
+            int green = (rgb >> 16) & 0xFF;
+            int blue = (rgb >> 8) & 0xFF;
+            if (red != 255 && green != 255 && blue != 255) break;
+            capsuleEndY++;
+        }
+        capsuleEndY--;
+
+        for (int x = capsuleStartX; x < width; x++) {
+            int rgb = image.getPixel(x, capsuleStartY);
+            int red = (rgb >> 24) & 0xFF;
+            int green = (rgb >> 16) & 0xFF;
+            int blue = (rgb >> 8) & 0xFF;
+            if (red != 255 && green != 255 && blue != 255) break;
+            capsuleEndX++;
+        }
+        capsuleEndX--;
     }
 
     public ArrayList<PhysicsBlock> getPhysics() {
