@@ -37,22 +37,13 @@ public class LevelMapManager {
         capsuleStartX = -1;
         capsuleStartY = -1;
 
-        // Load the texture
         Texture texture = new Texture(GameResources.LEVEL_MAP_IMG_PATH);
-        // Get the texture data
         TextureData textureData = texture.getTextureData();
-
-        if (!textureData.isPrepared()) {
-            textureData.prepare();
-        }
-
-        // Create a Pixmap from the texture data
+        if (!textureData.isPrepared()) textureData.prepare();
         Pixmap image = textureData.consumePixmap();
 
-        // Get image dimensions
         int width = image.getWidth();
         int height = image.getHeight();
-
 
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
