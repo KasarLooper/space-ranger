@@ -280,16 +280,16 @@ public class PlanetGameScreen extends GameScreen {
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         super.touchDown(screenX, screenY, pointer, button);
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
-        screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
+        screenY = Math.round((float) (Gdx.graphics.getHeight() - screenY) * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
         if (screenX <= SCREEN_WIDTH / 2 && session.state == PLAYING) {
             if (joystick.getDegrees() % 360 > 0 && joystick.getDegrees() % 360 <= 180)
                 spaceman.stepLeft();
             else spaceman.stepRight();
         }
-        if (jumpButton.isHit(screenX, Gdx.graphics.getHeight() - screenY))
+        if (jumpButton.isHit(screenX, screenY))
             isJump = true;
 
-        if (fireButton.isHit(screenX, Gdx.graphics.getHeight() - screenY) && ((PlanetGameSession)session).shouldSpawnLighting()) {
+        if (fireButton.isHit(screenX, screenY) && ((PlanetGameSession)session).shouldSpawnLighting()) {
             isLighting = true;
             lightning = new LightningBulletObject(spaceman, myGdxGame.planet);
         }
@@ -300,9 +300,9 @@ public class PlanetGameScreen extends GameScreen {
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
         super.touchUp(screenX, screenY, pointer, button);
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
-        screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
+        screenY = Math.round((float) (Gdx.graphics.getHeight() - screenY) * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
         if (screenX <= SCREEN_WIDTH / 2 && session.state == PLAYING) spaceman.stop();
-        if (jumpButton.isHit(screenX, Gdx.graphics.getHeight() - screenY))
+        if (jumpButton.isHit(screenX, screenY))
             isJump = false;
         return true;
     }

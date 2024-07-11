@@ -76,12 +76,14 @@ public class SpacemanObject extends PhysicsObject {
     }
 
     public void stepLeft() {
+        body.setLinearVelocity(-speed, body.getLinearVelocity().y);
         isRightStep = false;
         isLeftStep = true;
         isRightDirection = false;
     }
 
     public void stepRight() {
+        body.setLinearVelocity(speed, body.getLinearVelocity().y);
         isRightStep = true;
         isLeftStep = false;
         isRightDirection = true;
@@ -109,17 +111,14 @@ public class SpacemanObject extends PhysicsObject {
                 body.setLinearVelocity(0, body.getLinearVelocity().y);
             }
         }
-        if ((isRightStep || isLeftStep) && !isJump) {
+        if (Math.abs(body.getLinearVelocity().x) != 0 && !isJump) {
+            if (!(this instanceof AlienObject)) System.out.println("Change i");
             i++;
             if (i >= right.length) i = 0;
         }
-        sprite.setTexture(isLeftStep ? left[i] : right[i]);
-        if (isRightStep) {
-            body.setLinearVelocity(speed, body.getLinearVelocity().y);
-        }
-        else if (isLeftStep) {
-            body.setLinearVelocity(-speed, body.getLinearVelocity().y);
-        }
+        sprite.setTexture(isRightDirection ? right[i] : left[i]);
+        if (isRightStep) body.setLinearVelocity(speed, body.getLinearVelocity().y);
+        else if (isLeftStep) body.setLinearVelocity(-speed, body.getLinearVelocity().y);
     }
 
     public void updateJump() {
@@ -131,8 +130,7 @@ public class SpacemanObject extends PhysicsObject {
 
     @Override
     public void hit(Type type) {
-        body.applyLinearImpulse(new Vector2(0, 2), body.getWorldCenter(), true);
-
+        body.applyLinearImpulse(new Vector2(0, 3), body.getWorldCenter(), true);
         if (type == Type.Enemy) {
             liveLeft -= 1;
         }
