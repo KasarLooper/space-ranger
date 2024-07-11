@@ -120,7 +120,6 @@ public class PlanetGameScreen extends GameScreen {
         if (isLighting) {
             if (lightning.destroy()) {
                 isLighting = false;
-                myGdxGame.planet.destroyBody(lightning.body);
             }
         }
 
