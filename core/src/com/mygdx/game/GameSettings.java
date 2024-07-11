@@ -18,7 +18,7 @@ public class GameSettings {
 
     //Spawn settings
     public static final int SPACE_SPAWN_COOL_DOWN = 2000;
-    public static final int PLANET_SPAWN_COOL_DOWN = 2000;
+    public static final int PLANET_SPAWN_COOL_DOWN = 2000 * 100;
     public static final int CHANCE_CORE_SPAWN = 25;
 
     // Object Setting
@@ -84,7 +84,7 @@ public class GameSettings {
     // Lightning settings
     public static final int LIGHTING_WIDTH = 140;
     public static final int LIGHTING_HEIGHT = 70;
-
+    public static final int LIGHTNING_COOL_DOWN = 1000;
 
 
     // Alien settings

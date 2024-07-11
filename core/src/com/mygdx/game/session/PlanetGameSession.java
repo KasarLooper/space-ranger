@@ -1,5 +1,6 @@
 package com.mygdx.game.session;
 
+import static com.mygdx.game.GameSettings.LIGHTNING_COOL_DOWN;
 import static com.mygdx.game.GameSettings.PLANET_SPAWN_COOL_DOWN;
 import static com.mygdx.game.GameSettings.SPACE_SPAWN_COOL_DOWN;
 
@@ -22,7 +23,7 @@ public class PlanetGameSession extends GameSession {
     }
 
     public boolean shouldSpawnLighting() {
-        if (TimeUtils.millis() - lastLightningSpawnTime > (coolDown)) {
+        if (TimeUtils.millis() - lastLightningSpawnTime > (LIGHTNING_COOL_DOWN)) {
             lastLightningSpawnTime = TimeUtils.millis();
             return true;
         }

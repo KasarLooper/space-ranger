@@ -97,9 +97,7 @@ public class MyGdxGame extends Game {
 
 		if (accumulator >= STEP_TIME) {
 			accumulator -= STEP_TIME;
-			System.out.println("World stepping...");
 			world.step(STEP_TIME, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-			System.out.println("World was stepped");
 		}
 	}
 

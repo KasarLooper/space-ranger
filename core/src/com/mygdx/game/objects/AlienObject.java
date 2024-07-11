@@ -3,11 +3,20 @@ package com.mygdx.game.objects;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.GameResources;
 
+import java.util.ArrayList;
+
 public class AlienObject extends SpacemanObject{
+    boolean isFindingPlatform;
+    long lastCheckTime;
+    float lastX;
+
     public AlienObject(int x, int y, int wight, int height, String texturePath, int defaultFrame, int speed, int jumpImpulse, World world) {
         super(x, y, wight, height, texturePath, defaultFrame, speed, jumpImpulse, world);
+        lastCheckTime = TimeUtils.millis();
+        lastX = getX();
     }
 
     @Override
@@ -32,9 +41,37 @@ public class AlienObject extends SpacemanObject{
         if (type == Type.Bullet) liveLeft--;
     }
 
-    public void move(int playerX, int playerY, Block[] blocks) {
-        if (playerX < getX()) stepLeft();
-        else if (playerX > getX()) stepRight();
+    public void move(int playerX, int playerY, ArrayList<PhysicsBlock> blocks) {
+        boolean isRight = playerX > getX();
+        if (isStuck()) {
+            isRight = !isRight;
+            isFindingPlatform = true;
+        }
+        if (hasToJump(blocks) && Math.abs(body.getLinearVelocity().y) < 0.5f) {
+            jump();
+            if (isFindingPlatform) {
+                isFindingPlatform = false;
+                isRight = !isRight;
+            }
+        }
+        if (isRight) stepRight();
+        else stepLeft();
+    }
+
+    private boolean isStuck() {
+        if (TimeUtils.millis() - lastCheckTime > 100) {
+            lastCheckTime = TimeUtils.millis();
+            if (lastX == getX()) return true;
+            else {
+                lastX = getX();
+                return false;
+            }
+        } else return false;
+    }
+
+    private boolean hasToJump(ArrayList<PhysicsBlock> blocks) {
+
+        return true;
     }
 
     @Override

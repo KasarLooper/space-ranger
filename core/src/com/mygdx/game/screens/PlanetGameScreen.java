@@ -112,8 +112,13 @@ public class PlanetGameScreen extends GameScreen {
             if (isJump)
                 spaceman.jump();
             spaceman.updateFrames();
+            for (AlienObject alien : aliens) {
+                alien.move(spaceman.getX(), spaceman.getY(), physics);
+                alien.updateFrames();
+            }
             myGdxGame.stepWorld(myGdxGame.planet);
             spaceman.updateJump();
+            for (AlienObject alien : aliens) alien.updateJump();
         }
         lives.setLeftLives(spaceman.liveLeft);
 
@@ -172,12 +177,10 @@ public class PlanetGameScreen extends GameScreen {
                 near.add(cords);
         }
         removeCollapsed(near);
-        System.out.println("Possible alien spawn: " + near.size());
         if (!near.isEmpty()) {
             int i = rd.nextInt(near.size());
             int x = near.get(i).x;
             int y = near.get(i).y;
-            System.out.printf("Spawn alien %d %d\n", x, y);
             aliens.add(new AlienObject(x, y, ALIEN_WIDTH, ALIEN_HEIGHT, ALIEN_ANIM_RIGHT_IMG_PATTERN,
                     5, ALIEN_SPEED, ALIEN_JUMP_FORCE, myGdxGame.planet));
         }
@@ -191,12 +194,10 @@ public class PlanetGameScreen extends GameScreen {
                 near.add(cords);
         }
         removeCollapsed(near);
-        System.out.println("Possible crystal spawn: " + near.size());
         if (!near.isEmpty()) {
             int i = rd.nextInt(near.size());
             int x = near.get(i).x;
             int y = near.get(i).y;
-            System.out.printf("Add crystal %d %d\n", x, y);
             crystals.add(new ResourceObject(x, y, BLOCK_SIZE, BLOCK_SIZE, CRYSTAL_IMG_PATH, myGdxGame.planet));
         }
     }
