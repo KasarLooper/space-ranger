@@ -29,6 +29,8 @@ public class SpacemanObject extends PhysicsObject {
     long jumpTime;
     public int liveLeft;
 
+    public int cristalCount, wreckCount;
+
     public SpacemanObject(int x, int y, int wight, int height, String texturePath, int defaultFrame, int speed, int jumpImpulse, World world) {
         super(String.format(texturePath, defaultFrame), x, y, wight, height, world);
         defaultY = y;
@@ -39,6 +41,9 @@ public class SpacemanObject extends PhysicsObject {
 
         initTextures(defaultFrame);
         isRightDirection = true;
+
+        cristalCount = 0;
+        wreckCount = 0;
     }
 
     protected void initTextures(int defaultFrame) {
@@ -127,6 +132,10 @@ public class SpacemanObject extends PhysicsObject {
     @Override
     public void hit(Type type) {
         body.applyLinearImpulse(new Vector2(0, 2), body.getWorldCenter(), true);
+
+        if (type == Type.Enemy) {
+            liveLeft -= 1;
+        }
     }
 
     public Type type() {
