@@ -96,7 +96,7 @@ public class PlanetGameScreen extends GameScreen {
         jumpButton = new ButtonView(1150, 25, 100, 100, GameResources.JUMP_BUTTON_IMG_PATH);
         lives = new LiveView(0, 675);
         purpose = new TextView(myGdxGame.averageWhiteFont, 300, 675,
-                String.format(GraphicsSettings.PLANET_AIM1_PATTERN, 0, 0));
+                String.format(GraphicsSettings.PLANET_AIM1_PATTERN, spaceman.cristalCount, spaceman.wreckCount));
         fireButton = new ButtonView(1000, 25, 100, 100, GameResources.FIRE_BUTTON_PLANET_IMG_PATH);
         isLighting = false;
         isJump = false;
@@ -137,6 +137,26 @@ public class PlanetGameScreen extends GameScreen {
             }
         }
         updateAlien();
+        updateCore();
+
+        if (spaceman.cristalCount >= 4 && spaceman.wreckCount >= 4) {
+            purpose.setText("Отнесите ресурсы к кораблю");
+        }
+
+//        for (ResourceObject wreck : wrecks) {
+//            if (wreck.destroy()) {
+//                spaceman.wreckCount += 1;
+//                purpose.setText(String.format(GraphicsSettings.PLANET_AIM1_PATTERN, spaceman.wreckCount, spaceman.cristalCount));
+//                myGdxGame.planet.destroyBody(wreck.body);
+//            }
+//        }
+//        for (ResourceObject cristal : crystals) {
+//            if (cristal.destroy()) {
+//                spaceman.cristalCount += 1;
+//                purpose.setText(String.format(GraphicsSettings.PLANET_AIM1_PATTERN, spaceman.wreckCount, spaceman.cristalCount));
+//                myGdxGame.planet.destroyBody(cristal.body);
+//            }
+//        }
     }
 
     @Override
@@ -253,7 +273,7 @@ public class PlanetGameScreen extends GameScreen {
                 COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4,
                 COSMONAUT_SPEED, COSMONAUT_JUMP_FORCE,
                 myGdxGame.planet);
-        purpose.setText(String.format(GraphicsSettings.PLANET_AIM1_PATTERN, 0, 0));
+        purpose.setText(String.format(GraphicsSettings.PLANET_AIM1_PATTERN, spaceman.wreckCount, spaceman.cristalCount));
     }
 
     @Override
@@ -345,7 +365,7 @@ public class PlanetGameScreen extends GameScreen {
         while (iterator.hasNext()) {
             AlienObject alien = iterator.next();
             if (!alien.isAlive()) {
-                if (rd.nextInt(100) < CHANCE_CRYSTAL_DROP) {
+                if (rd.nextInt(100) > CHANCE_CRYSTAL_DROP) {
                     ResourceObject crystal = new ResourceObject(
                             alien.x, alien.y,
                             BLOCK_SIZE,BLOCK_SIZE,
@@ -353,7 +373,7 @@ public class PlanetGameScreen extends GameScreen {
                             myGdxGame.planet
                     );
                     crystals.add(crystal);
-                } else if (rd.nextInt(100) < CHANCE_WRECK_DROP) {
+                } else if (rd.nextInt(100) > CHANCE_WRECK_DROP) {
                     ResourceObject wreck = new ResourceObject(
                             alien.x, alien.y,
                             BLOCK_SIZE, BLOCK_SIZE,
@@ -364,6 +384,30 @@ public class PlanetGameScreen extends GameScreen {
                 }
                 myGdxGame.planet.destroyBody(alien.body);
                 iterator.remove();
+            }
+        }
+    }
+
+    public void updateCore() {
+        Iterator<ResourceObject> iterator1 = wrecks.iterator();
+        while (iterator1.hasNext()) {
+            ResourceObject wreck = iterator1.next();
+            if (wreck.destroy()) {
+                spaceman.wreckCount += 1;
+                purpose.setText(String.format(GraphicsSettings.PLANET_AIM1_PATTERN, spaceman.wreckCount, spaceman.cristalCount));
+                myGdxGame.planet.destroyBody(wreck.body);
+                iterator1.remove();
+            }
+        }
+
+        Iterator<ResourceObject> iterator2 = crystals.iterator();
+        while (iterator2.hasNext()) {
+            ResourceObject crystal = iterator2.next();
+            if (crystal.destroy()) {
+                spaceman.cristalCount += 1;
+                purpose.setText(String.format(GraphicsSettings.PLANET_AIM1_PATTERN, spaceman.wreckCount, spaceman.cristalCount));
+                myGdxGame.planet.destroyBody(crystal.body);
+                iterator2.remove();
             }
         }
     }
