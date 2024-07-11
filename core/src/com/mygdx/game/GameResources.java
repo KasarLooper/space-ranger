@@ -64,9 +64,6 @@ public class GameResources {
     public static final String CRYSTAL_IMG_PATH = "crystal.png";
     public static final String WRECKAGE_IMG_PATH = "wreckage.png";
 
-    //платформы
-    public static final String LEVEL_PLATFORMS= "level_platforms.png";
-    //public static final String LEVEL_PLATFORM= "level_platform.png";
 
     //текстуры блоков для платформ
     public static final String TEXTURE_BOX_GREEN = "texture_box_1.png";
