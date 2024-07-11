@@ -46,10 +46,8 @@ public class AlienObject extends SpacemanObject{
 
     public void move(int playerX, int playerY, ArrayList<PhysicsBlock> blocks) {
         boolean isRight = playerX > getX();
-        if (isStuck() && !isReachPlayer(playerX)) {
-            isRight = !isRight;
-            isFindingPlatform = true;
-        }
+        if (isStuck() && !isReachPlayer(playerX)) isFindingPlatform = true;
+        if (isFindingPlatform) isRight = !isRight;
         if (hasToJump(blocks, isRight) && Math.abs(body.getLinearVelocity().y) < 0.5f) {
             jump();
             if (isFindingPlatform) {
