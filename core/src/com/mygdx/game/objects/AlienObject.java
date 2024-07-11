@@ -13,6 +13,7 @@ import java.util.Collections;
 
 public class AlienObject extends SpacemanObject{
     boolean isFindingPlatform;
+    boolean isJumpingToPlatform;
     long lastCheckTime;
     float lastX;
 
@@ -20,6 +21,7 @@ public class AlienObject extends SpacemanObject{
         super(x, y, wight, height, texturePath, defaultFrame, speed, jumpImpulse, world);
         lastCheckTime = TimeUtils.millis();
         lastX = getX();
+        isJumpingToPlatform = false;
     }
 
     @Override
@@ -49,15 +51,25 @@ public class AlienObject extends SpacemanObject{
         if (isStuck() && !isReachPlayer(playerX)) isFindingPlatform = true;
         if (isFindingPlatform) isRight = !isRight;
         if ((hasToJump(blocks, isRight) || (Math.abs(getX() - playerX) < BLOCK_SIZE * 3) && getY() <= playerY)
-                && Math.abs(body.getLinearVelocity().y) < 0.5f) {
+                && Math.abs(body.getLinearVelocity().y) < 0.5f || isInAir(blocks)) {
             jump();
-            if (isFindingPlatform) {
-                isFindingPlatform = false;
-                isRight = !isRight;
-            }
+            if (isFindingPlatform) isJumpingToPlatform = true;
+        }
+        if (isJumpingToPlatform && !isJump) {
+            isJumpingToPlatform = false;
+            isFindingPlatform = false;
+            isRight = !isRight;
         }
         if (isRight) stepRight();
         else stepLeft();
+    }
+
+    private boolean isInAir(ArrayList<PhysicsBlock> blocks) {
+        for (PhysicsBlock block : blocks) {
+            if (getY() - block.getY() == (COSMONAUT_HEIGHT + BLOCK_SIZE) / 2f &&
+                    Math.abs(getX() - block.getX()) <= BLOCK_SIZE / 2f) return false;
+        }
+        return true;
     }
 
     private boolean isReachPlayer(int playerX) {
