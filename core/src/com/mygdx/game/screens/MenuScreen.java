@@ -22,7 +22,7 @@ public class MenuScreen extends ScreenAdapter {
 
     public MenuScreen(MyGdxGame myGdxGame) {
         this.myGdxGame = myGdxGame;
-        backgroundView = new MovingBackgroundView(GameResources.BACKGROUND_IMG_PATH);
+        backgroundView = new MovingBackgroundView(GameResources.BACKGROUND_MENU_IMG_PATH);
         titleView = new TextView(myGdxGame.commonWhiteFont, 465, 550, "Space-ranger");
         startButtonView = new ButtonView(430, 396, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Начать");
         memoryButton = new ButtonView(430, 276, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Воспоминания");

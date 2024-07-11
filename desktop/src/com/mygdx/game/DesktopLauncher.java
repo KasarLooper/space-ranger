@@ -10,7 +10,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setWindowedMode(GameSettings.SCREEN_WIDTH, GameSettings.SCREEN_HEIGHT);
 		config.setForegroundFPS(60);
-		config.setTitle("My Gdx Game");
+		config.setTitle("Space-ranger");
 		new Lwjgl3Application(new MyGdxGame(), config);
 	}
 }
