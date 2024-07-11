@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.mygdx.game.objects.GameObject;
 import com.mygdx.game.objects.PhysicsObject;
+import com.mygdx.game.objects.SpacemanObject;
 
 public class ContactManager {
     World world;
@@ -30,7 +31,6 @@ public class ContactManager {
 
             @Override
             public void endContact(Contact contact) {
-
             }
 
             @Override
