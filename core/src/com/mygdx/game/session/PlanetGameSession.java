@@ -31,7 +31,7 @@ public class PlanetGameSession extends GameSession {
     }
 
     public boolean shouldSpawnCore() {
-        if (TimeUtils.millis() - lastAlienSpawnTime > (coolDown * 2L)) {
+        if (TimeUtils.millis() - lastAlienSpawnTime > (coolDown * 20L)) {
             lastAlienSpawnTime = TimeUtils.millis();
             return true;
         }
