@@ -112,8 +112,8 @@ public class SpacemanObject extends PhysicsObject {
         if ((isRightStep || isLeftStep) && !isJump) {
             i++;
             if (i >= right.length) i = 0;
-            sprite.setTexture(isLeftStep ? left[i] : right[i]);
         }
+        sprite.setTexture(isLeftStep ? left[i] : right[i]);
         if (isRightStep) {
             body.setLinearVelocity(speed, body.getLinearVelocity().y);
         }
