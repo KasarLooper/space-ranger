@@ -30,8 +30,7 @@ import com.mygdx.game.screens.SpaceGameScreen;
 public class MyGdxGame extends Game {
 	public World space;
 	public World planet;
-
-	public boolean canAccessPlanetLevel;
+	public boolean isFirstLevel;
 	private float accumulator;
 
 	public State state;
@@ -51,16 +50,12 @@ public class MyGdxGame extends Game {
 	public HistoryScreen planetHistory;
 	public HistoryScreen endHistory;
 	public boolean isContinue;
-	public boolean needToSpaceIntro;
-	public boolean needToPlanetIntro;
 
 	public AudioManager audioManager;
 	@Override
 	public void create () {
-		MemoryManager.clear();
-		needToSpaceIntro = !MemoryManager.lodeNeedToSpaceIntro();
-		needToPlanetIntro = !MemoryManager.loadNeedToPlanetIntro();
-		canAccessPlanetLevel = MemoryManager.loadIsNextLevel();
+		//MemoryManager.clear();
+		isFirstLevel = MemoryManager.loadIsFirstLevel();
 		isContinue = false;
 
 		Box2D.init();
@@ -84,10 +79,6 @@ public class MyGdxGame extends Game {
 		audioManager = new AudioManager();
 		state = State.ENDED;
 		setScreen(menuScreen);
-
-//		planetLevel();
-
-		//setScreen(planetHistory);
 
 		levelMapManager = new LevelMapManager();
 	}
@@ -124,23 +115,12 @@ public class MyGdxGame extends Game {
 		audioManager.planetMusic.stop();
 	}
 
-	public void showSpaceIntro() {
-		needToSpaceIntro = false;
-		MemoryManager.saveNeedToSpaceIntro(true);
-	}
-
-	public void showPlanetIntro() {
-		needToPlanetIntro = false;
-		MemoryManager.saveNeedToPlanetIntro(true);
-	}
-
 	public void passSpaceLevel() {
-		canAccessPlanetLevel = true;
-		MemoryManager.saveIsNextLevel(true);
+		MemoryManager.saveIsPassedSpace(true);
 	}
 
 	public void passPlanetLevel() {
-
+		MemoryManager.saveIsPassedPlanet(true);
 	}
 	
 	@Override

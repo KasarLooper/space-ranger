@@ -54,20 +54,13 @@ public class HistoryScreen extends ScreenAdapter {
             game.touch = game.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
             if (button.isHit(game.touch.x, game.touch.y)) {
                 i++;
-                if (i >= texts.length) {
-                    if (nextScreen instanceof SpaceGameScreen) {
-                        game.spaceLevel();
-                        game.showSpaceIntro();
-                    }
-                    else if (nextScreen instanceof PlanetGameScreen) {
-                        game.planetLevel();
-                        game.showPlanetIntro();
-                    } else if (i > texts.length) {
-                        game.mainMenuMusic();
-                        game.setScreen(game.menuScreen);
-                    }
+                if (i < texts.length) {
+                    text.setText(texts[i]);
+                } else if (i > texts.length || photo == null) {
+                    if (nextScreen instanceof SpaceGameScreen) game.spaceLevel();
+                    else if (nextScreen instanceof PlanetGameScreen) game.planetLevel();
+                    else game.setScreen(nextScreen);
                 }
-                else text.setText(texts[i]);
             }
         }
     }

@@ -23,7 +23,7 @@ public class MenuScreen extends ScreenAdapter {
     public MenuScreen(MyGdxGame myGdxGame) {
         this.myGdxGame = myGdxGame;
         backgroundView = new MovingBackgroundView(GameResources.BACKGROUND_MENU_IMG_PATH);
-        titleView = new TextView(myGdxGame.commonWhiteFont, 465, 550, "Space-ranger");
+        titleView = new TextView(myGdxGame.commonWhiteFont, 465, 550, "Space ranger");
         startButtonView = new ButtonView(430, 396, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Начать");
         memoryButton = new ButtonView(430, 276, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Воспоминания");
         exitButtonView = new ButtonView(430, 156, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Выход");
@@ -53,13 +53,9 @@ public class MenuScreen extends ScreenAdapter {
             myGdxGame.touch = myGdxGame.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 
             if (startButtonView.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
-                System.out.println(myGdxGame.canAccessPlanetLevel);
                 myGdxGame.isContinue = true;
-                if (myGdxGame.canAccessPlanetLevel) {
-                    myGdxGame.setScreen(new HistoryScreen(myGdxGame, GraphicsSettings.PLANET_HISTORY_ARRAY, myGdxGame.planetScreen, false));
-                } else {
-                    myGdxGame.setScreen(new HistoryScreen(myGdxGame, GraphicsSettings.SPACE_HISTORY_ARRAY, myGdxGame.spaceScreen, false));
-                }
+                if (myGdxGame.isFirstLevel) myGdxGame.setScreen(myGdxGame.spaceHistory);
+                else myGdxGame.setScreen(myGdxGame.planetHistory);
             }
             if (memoryButton.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
                 myGdxGame.isContinue = false;
