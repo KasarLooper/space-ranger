@@ -371,7 +371,7 @@ public class PlanetGameScreen extends GameScreen {
         while (iterator.hasNext()) {
             AlienObject alien = iterator.next();
             if (!alien.isAlive()) {
-                if (rd.nextInt(100) > CHANCE_CRYSTAL_DROP) {
+                if (rd.nextInt(100) < CHANCE_CRYSTAL_DROP) {
                     ResourceObject crystal = new ResourceObject(
                             alien.getX(), alien.getY(),
                             BLOCK_SIZE,BLOCK_SIZE,
@@ -379,7 +379,7 @@ public class PlanetGameScreen extends GameScreen {
                             myGdxGame.planet
                     );
                     crystals.add(crystal);
-                } else if (rd.nextInt(100) > CHANCE_WRECK_DROP) {
+                } else if (rd.nextInt(100) < CHANCE_WRECK_DROP) {
                     ResourceObject wreck = new ResourceObject(
                             alien.getX(), alien.getY(),
                             BLOCK_SIZE, BLOCK_SIZE,
