@@ -12,16 +12,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class AlienObject extends SpacemanObject{
-    boolean isFindingPlatform;
-    boolean isJumpingToPlatform;
-    long lastCheckTime;
-    float lastX;
+    long lastCheckTime1, lastCheckTime2;
+    float lastX, lastY;
+    boolean isChangingDirection;
 
     public AlienObject(int x, int y, int wight, int height, String texturePath, int defaultFrame, int speed, int jumpImpulse, World world) {
         super(x, y, wight, height, texturePath, defaultFrame, speed, jumpImpulse, world);
-        lastCheckTime = TimeUtils.millis();
+        lastCheckTime1 = TimeUtils.millis();
         lastX = getX();
-        isJumpingToPlatform = false;
+        isChangingDirection = false;
     }
 
     @Override
@@ -48,20 +47,37 @@ public class AlienObject extends SpacemanObject{
 
     public void move(int playerX, int playerY, ArrayList<PhysicsBlock> blocks) {
         boolean isRight = playerX > getX();
-        if (isStuck() && !isReachPlayer(playerX)) isFindingPlatform = true;
-        if (isFindingPlatform) isRight = !isRight;
-        if ((hasToJump(blocks, isRight) || (Math.abs(getX() - playerX) < BLOCK_SIZE * 3) && getY() <= playerY)
-                && Math.abs(body.getLinearVelocity().y) < 0.5f || isInAir(blocks)) {
-            jump();
-            if (isFindingPlatform) isJumpingToPlatform = true;
+        if (!isChangingDirection) jump();
+        if (isStuck()) {
+            isChangingDirection = true;
+            lastCheckTime2 = TimeUtils.millis();
+            lastY = getY();
         }
-        if (isJumpingToPlatform && !isJump) {
-            isJumpingToPlatform = false;
-            isFindingPlatform = false;
-            isRight = !isRight;
-        }
+        if (isChangingDirection) isRight = !isRight;
         if (isRight) stepRight();
         else stepLeft();
+    }
+
+    private boolean isStuck() {
+        if (TimeUtils.millis() - lastCheckTime1 > 3000) {
+            lastCheckTime1 = TimeUtils.millis();
+            if (lastX == getX()) return true;
+            else {
+                lastX = getX();
+                return false;
+            }
+        } else return false;
+    }
+
+    private boolean isChangedDirection() {
+        if (TimeUtils.millis() - lastCheckTime2 > 3000) {
+            lastCheckTime2 = TimeUtils.millis();
+            if (lastY != getY()) {
+                lastY = getY();
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean isInAir(ArrayList<PhysicsBlock> blocks) {
@@ -74,17 +90,6 @@ public class AlienObject extends SpacemanObject{
 
     private boolean isReachPlayer(int playerX) {
         return Math.abs(getX() - playerX) <= BLOCK_SIZE / 2f;
-    }
-
-    private boolean isStuck() {
-        if (TimeUtils.millis() - lastCheckTime > 1000) {
-            lastCheckTime = TimeUtils.millis();
-            if (lastX == getX()) return true;
-            else {
-                lastX = getX();
-                return false;
-            }
-        } else return false;
     }
 
     private boolean hasToJump(ArrayList<PhysicsBlock> blocks, boolean isRight) {
