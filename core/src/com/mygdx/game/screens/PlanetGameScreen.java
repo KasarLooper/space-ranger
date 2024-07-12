@@ -19,6 +19,7 @@ import static com.mygdx.game.GameSettings.COSMONAUT_WIDTH;
 import static com.mygdx.game.GameSettings.GROUND_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
+import static com.mygdx.game.State.ENDED;
 import static com.mygdx.game.State.PLAYING;
 
 import com.badlogic.gdx.Gdx;
@@ -69,8 +70,9 @@ public class PlanetGameScreen extends GameScreen {
     ButtonView fireButton;
     LightningBulletObject lightning;
     boolean isLighting;
-
     boolean isJump;
+    boolean isEnoughResources;
+    boolean isWinGame;
 
     public PlanetGameScreen(MyGdxGame game) {
         super(game);
@@ -100,6 +102,8 @@ public class PlanetGameScreen extends GameScreen {
         fireButton = new ButtonView(1000, 25, 100, 100, GameResources.FIRE_BUTTON_PLANET_IMG_PATH);
         isLighting = false;
         isJump = false;
+        isEnoughResources = false;
+        isWinGame = false;
 
         dx = 0;
         dy = 0;
@@ -112,42 +116,51 @@ public class PlanetGameScreen extends GameScreen {
         super.render(delta);
         myGdxGame.camera.position.x = spaceman.getX() + dx;
         myGdxGame.camera.position.y = spaceman.getY() + GROUND_HEIGHT - CAMERA_Y_FROM_CENTER + dy;
-        if (session.state == com.mygdx.game.State.PLAYING) {
-            backgroundView.move(spaceman.getX(), spaceman.getY());
-            if (isJump)
-                spaceman.jump();
-            spaceman.updateFrames();
-            for (AlienObject alien : aliens) {
-                alien.move(spaceman.getX(), spaceman.getY(), physics);
-                alien.updateFrames();
+        if (spaceman.isAlive()) {
+            if (session.state == com.mygdx.game.State.PLAYING) {
+                backgroundView.move(spaceman.getX(), spaceman.getY());
+                if (isJump)
+                    spaceman.jump();
+                spaceman.updateFrames();
+                for (AlienObject alien : aliens) {
+                    alien.move(spaceman.getX(), spaceman.getY(), physics);
+                    alien.updateFrames();
+                }
+                myGdxGame.stepWorld(myGdxGame.planet);
+                spaceman.updateJump();
+                for (AlienObject alien : aliens) alien.updateJump();
+                lives.setLeftLives(spaceman.liveLeft);
+
+                if (isLighting) {
+                    if (lightning.destroy()) {
+                        isLighting = false;
+                    }
+                }
+
+                if (((PlanetGameSession)session).shouldSpawnCore()) {
+                    Random random = new Random();
+                    if (random.nextInt(100) > CHANCE_CRYSTAL_SPAWN) {
+                        spawnAlien();
+                    } else {
+                        spawnCrystal();
+                    }
+                }
+                updateAlien();
+                updateCore();
+
+                if (spaceman.cristalCount >= 4 && spaceman.wreckCount >= 4) {
+                    purpose.setText("Отнесите ресурсы к кораблю");
+                    isEnoughResources = true;
+                }
+
+                if (capsule.isCollision(spaceman.getX(), spaceman.getY())) {
+                    session.state = ENDED;
+                    myGdxGame.passPlanetLevel();
+                }
             }
-            myGdxGame.stepWorld(myGdxGame.planet);
-            spaceman.updateJump();
-            for (AlienObject alien : aliens) alien.updateJump();
+        } else {
+            session.state = ENDED;
         }
-        lives.setLeftLives(spaceman.liveLeft);
-
-        if (isLighting) {
-            if (lightning.destroy()) {
-                isLighting = false;
-            }
-        }
-
-        if (((PlanetGameSession)session).shouldSpawnCore()) {
-            Random random = new Random();
-            if (random.nextInt(100) > CHANCE_CRYSTAL_SPAWN) {
-                spawnAlien();
-            } else {
-                spawnCrystal();
-            }
-        }
-        updateAlien();
-        updateCore();
-
-        if (spaceman.cristalCount >= 4 && spaceman.wreckCount >= 4) {
-            purpose.setText("Отнесите ресурсы к кораблю");
-        }
-
     }
 
     @Override

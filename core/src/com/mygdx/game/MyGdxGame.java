@@ -57,8 +57,8 @@ public class MyGdxGame extends Game {
 	@Override
 	public void create () {
 		//MemoryManager.clear();
-		needToSpaceIntro = !MemoryManager.lodeHasSeenSpaceIntro();
-		needToPlanetIntro = !MemoryManager.loadHasSeenPlanetIntro();
+		needToSpaceIntro = !MemoryManager.lodeNeedToSpaceIntro();
+		needToPlanetIntro = !MemoryManager.loadNeedToPlanetIntro();
 		canAccessPlanetLevel = MemoryManager.loadIsNextLevel();
 		isContinue = false;
 
@@ -125,12 +125,12 @@ public class MyGdxGame extends Game {
 
 	public void showSpaceIntro() {
 		needToSpaceIntro = false;
-		MemoryManager.saveHasSeenSpaceIntro(true);
+		MemoryManager.saveNeedToSpaceIntro(true);
 	}
 
 	public void showPlanetIntro() {
 		needToPlanetIntro = false;
-		MemoryManager.saveHasSeenPlanetIntro(true);
+		MemoryManager.saveNeedToPlanetIntro(true);
 	}
 
 	public void passSpaceLevel() {
@@ -139,6 +139,7 @@ public class MyGdxGame extends Game {
 	}
 
 	public void passPlanetLevel() {
+
 	}
 	
 	@Override

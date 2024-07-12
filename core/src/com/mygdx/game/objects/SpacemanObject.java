@@ -62,6 +62,10 @@ public class SpacemanObject extends PhysicsObject {
         liveLeft = 3;
     }
 
+    public boolean isAlive() {
+        return liveLeft >= 0;
+    }
+
     @Override
     protected Shape getShape(float x, float y, float width, float height) {
         PolygonShape shape = new PolygonShape();

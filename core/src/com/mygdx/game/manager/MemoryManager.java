@@ -15,27 +15,27 @@ public class MemoryManager {
         preferences.flush();
     }
 
-    public static boolean lodeHasSeenSpaceIntro() {
+    public static boolean lodeNeedToSpaceIntro() {
         return preferences.getBoolean("hasSeenSpaceIntro", false);
     }
 
-    public static void saveHasSeenSpaceIntro(boolean hasSeen) {
+    public static void saveNeedToSpaceIntro(boolean hasSeen) {
         preferences.putBoolean("hasSeenSpaceIntro", hasSeen);
         preferences.flush();
     }
 
-    public static boolean loadHasSeenPlanetIntro() {
+    public static boolean loadNeedToPlanetIntro() {
         return preferences.getBoolean("hasSeenPlanetIntro", false);
     }
 
-    public static void saveHasSeenPlanetIntro(boolean hasSeen) {
+    public static void saveNeedToPlanetIntro(boolean hasSeen) {
         preferences.putBoolean("hasSeenPlanetIntro", hasSeen);
         preferences.flush();
     }
 
     public static void clear() {
         saveIsNextLevel(false);
-        saveHasSeenSpaceIntro(false);
-        saveHasSeenPlanetIntro(false);
+        saveNeedToSpaceIntro(false);
+        saveNeedToPlanetIntro(false);
     }
 }
