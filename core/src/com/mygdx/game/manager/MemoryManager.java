@@ -15,6 +15,15 @@ public class MemoryManager {
         preferences.flush();
     }
 
+    public static void saveIsFinal(boolean isFinal) {
+        preferences.putBoolean("isFinal", isFinal);
+        preferences.flush();
+    }
+
+    public static boolean loadIsFinal() {
+        return preferences.getBoolean("isFinal", false);
+    }
+
     public static boolean lodeNeedToSpaceIntro() {
         return preferences.getBoolean("hasSeenSpaceIntro", false);
     }

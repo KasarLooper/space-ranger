@@ -11,6 +11,7 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.ButtonView;
 import com.mygdx.game.components.MovingBackgroundView;
 import com.mygdx.game.components.TextView;
+import com.mygdx.game.manager.MemoryManager;
 
 public class MemoriesScreen extends ScreenAdapter {
     MyGdxGame myGdxGame;
@@ -41,12 +42,10 @@ public class MemoriesScreen extends ScreenAdapter {
         if (myGdxGame.canAccessPlanetLevel) {
             Space.setText("Битва в космосе");
         }
-        /*
-        if (...) {
+
+        if (MemoryManager.loadIsFinal()) {
             Planet.setText("Крушение на планете");
         }
-         */
-
         myGdxGame.batch.begin();
 
         backgroundView.draw(myGdxGame.batch);
@@ -68,11 +67,11 @@ public class MemoriesScreen extends ScreenAdapter {
             if (Space.isHit(myGdxGame.touch.x, myGdxGame.touch.y) && myGdxGame.canAccessPlanetLevel) {
                 myGdxGame.spaceLevel();
             }
-            /*
-            if (Planet.isHit(myGdxGame.touch.x, myGdxGame.touch.y) || ...) {
+
+            if (Planet.isHit(myGdxGame.touch.x, myGdxGame.touch.y) && MemoryManager.loadIsFinal()) {
                 myGdxGame.setScreen(myGdxGame.planetScreen);
             }
-             */
+
 
             if (back.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
                 myGdxGame.setScreen(myGdxGame.menuScreen);

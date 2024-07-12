@@ -55,22 +55,15 @@ public class MenuScreen extends ScreenAdapter {
             if (startButtonView.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
                 System.out.println(myGdxGame.canAccessPlanetLevel);
                 myGdxGame.isContinue = true;
-                if (!myGdxGame.canAccessPlanetLevel) {
-                    if (myGdxGame.needToSpaceIntro)
-                        myGdxGame.setScreen(myGdxGame.spaceHistory);
-                    else myGdxGame.spaceLevel();
-                }
-                else {
-                    if (myGdxGame.needToPlanetIntro)
-                        myGdxGame.setScreen(myGdxGame.planetHistory);
-                    else myGdxGame.planetLevel();
+                if (myGdxGame.canAccessPlanetLevel) {
+                    myGdxGame.setScreen(new HistoryScreen(myGdxGame, GraphicsSettings.PLANET_HISTORY_ARRAY, myGdxGame.planetScreen, false));
+                } else {
+                    myGdxGame.setScreen(new HistoryScreen(myGdxGame, GraphicsSettings.SPACE_HISTORY_ARRAY, myGdxGame.spaceScreen, false));
                 }
             }
             if (memoryButton.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
                 myGdxGame.isContinue = false;
-                if (!myGdxGame.canAccessPlanetLevel)
-                    myGdxGame.spaceLevel();
-                else myGdxGame.planetLevel();
+                myGdxGame.setScreen(myGdxGame.memoriesScreen);
             }
 
             if (exitButtonView.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
