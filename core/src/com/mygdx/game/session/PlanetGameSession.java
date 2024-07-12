@@ -10,16 +10,22 @@ import com.mygdx.game.GameSettings;
 public class PlanetGameSession extends GameSession {
     private long lastLightningSpawnTime;
     private long lastAlienSpawnTime;
+    private boolean isVictory;
 
     @Override
     public void startGame() {
         super.startGame();
         coolDown = PLANET_SPAWN_COOL_DOWN;
+        isVictory = false;
+    }
+
+    public void setVictory() {
+        isVictory = true;
     }
 
     @Override
     public boolean victory() {
-        return true;
+        return isVictory;
     }
 
     public boolean shouldSpawnLighting() {

@@ -21,6 +21,7 @@ import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.ButtonView;
 import com.mygdx.game.components.JoystickView;
 import com.mygdx.game.components.MovingBackgroundView;
+import com.mygdx.game.session.PlanetGameSession;
 
 public abstract class GameScreen extends ScreenAdapter implements InputProcessor {
     protected GameSession session;
@@ -164,7 +165,10 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
                 MemoryManager.saveIsFirstLevel(myGdxGame.isFirstLevel);
                 myGdxGame.mainMenuMusic();
             } else {
-                myGdxGame.spaceLevel();
+                if (this instanceof SpaceGameScreen)
+                    myGdxGame.spaceLevel();
+                else if (this instanceof PlanetGameScreen)
+                    myGdxGame.planetLevel();
             }
             restartGame();
         }
