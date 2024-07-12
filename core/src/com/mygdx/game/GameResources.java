@@ -55,7 +55,7 @@ public class GameResources {
     //Второй уровень
     public static final String LIGHTNING_RIGHT_IMG_PATH = "lightning_right.png";
     public static final String LIGHTNING_LEFT_IMG_PATH = "lightning_left.png";
-    public static final String MUSIC_PLANET_PATH = "music/Extreme.mp3";
+    public static final String MUSIC_PLANET_PATH = "music/planet_music.mp3";
     public static final String EARTH_BACKGROUND_IMG_PATH = "earth_background.png";
     public static final String CAPSULE_IMG_PATH = "capsule.png";
 
