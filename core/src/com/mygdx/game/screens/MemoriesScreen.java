@@ -53,6 +53,14 @@ public class MemoriesScreen extends ScreenAdapter {
         myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
         ScreenUtils.clear(Color.CLEAR);
 
+        if (myGdxGame.canAccessPlanetLevel) {
+            Space.setText("Битва в космосе");
+        }
+
+        if (MemoryManager.loadIsFinal()) {
+            Planet.setText("Крушение на планете");
+        }
+        
         myGdxGame.batch.begin();
 
         backgroundView.draw(myGdxGame.batch);
@@ -74,6 +82,7 @@ public class MemoriesScreen extends ScreenAdapter {
             if (space.isHit(myGdxGame.touch.x, myGdxGame.touch.y) && isSpaceOpen) {
                 myGdxGame.setScreen(myGdxGame.spaceHistory);
             }
+
             if (planet.isHit(myGdxGame.touch.x, myGdxGame.touch.y) && isPlanetOpen) {
                 myGdxGame.setScreen(myGdxGame.planetHistory);
             }

@@ -34,6 +34,7 @@ import com.mygdx.game.components.MovingBackgroundView;
 import com.mygdx.game.components.TextView;
 import com.mygdx.game.manager.ContactManager;
 import com.mygdx.game.manager.LevelMapManager;
+import com.mygdx.game.manager.MemoryManager;
 import com.mygdx.game.objects.AlienObject;
 import com.mygdx.game.objects.CapsuleObject;
 import com.mygdx.game.objects.Earth;
@@ -148,7 +149,7 @@ public class PlanetGameScreen extends GameScreen {
                 updateAlien();
                 updateCore();
 
-                if (spaceman.cristalCount >= 0 && spaceman.wreckCount >= 0) {
+                if (spaceman.cristalCount >= 1 && spaceman.wreckCount >= 0) {
                     purpose.setText("Отнесите ресурсы к кораблю");
                     isEnoughResources = true;
                 }
@@ -156,6 +157,7 @@ public class PlanetGameScreen extends GameScreen {
                 if (capsule.isCollision(spaceman.getX(), spaceman.getY()) && isEnoughResources) {
                     session.state = ENDED;
                     myGdxGame.passPlanetLevel();
+                    MemoryManager.saveIsFinal(true);
                 }
             }
         } else {

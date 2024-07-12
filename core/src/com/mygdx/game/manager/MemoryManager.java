@@ -15,6 +15,7 @@ public class MemoryManager {
         preferences.flush();
     }
 
+
     public static boolean loadIsPassedSpace() {
         return preferences.getBoolean("isPassedSpace", false);
     }
