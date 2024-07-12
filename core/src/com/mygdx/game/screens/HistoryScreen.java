@@ -1,13 +1,14 @@
 package com.mygdx.game.screens;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.GameResources;
+import com.mygdx.game.GameSettings;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.MiddleButtonView;
 import com.mygdx.game.components.MiddleTextView;
@@ -18,15 +19,17 @@ public class HistoryScreen extends ScreenAdapter {
     private MiddleButtonView button;
     private MiddleTextView text;
     private String[] texts;
+    private Texture photo;
     int i;
 
-    public HistoryScreen(MyGdxGame game, String[] texts, Screen nextScreen) {
+    public HistoryScreen(MyGdxGame game, String[] texts, Screen nextScreen, boolean isEnd) {
         this.game = game;
         this.texts = texts;
         this.nextScreen = nextScreen;
         i = 0;
         button = new MiddleButtonView(50, 440, 70, game.commonWhiteFont, GameResources.BUTTON_IMG_PATH, "Дальше");
         text = new MiddleTextView(game.averageWhiteFont, texts[0]);
+        if (isEnd) photo = new Texture(GameResources.BACKGROUND_END_IMG_PATH);
     }
 
     @Override
@@ -39,8 +42,10 @@ public class HistoryScreen extends ScreenAdapter {
         ScreenUtils.clear(Color.CLEAR);
 
         game.batch.begin();
+        if (i < texts.length) text.draw(game.batch);
+        else if (photo != null)
+            game.batch.draw(photo, 0, 0, GameSettings.SCREEN_WIDTH, GameSettings.SCREEN_HEIGHT);
         button.draw(game.batch);
-        text.draw(game.batch);
         game.batch.end();
     }
 
@@ -57,6 +62,9 @@ public class HistoryScreen extends ScreenAdapter {
                     else if (nextScreen instanceof PlanetGameScreen) {
                         game.planetLevel();
                         game.showPlanetIntro();
+                    } else if (i > texts.length) {
+                        game.mainMenuMusic();
+                        game.setScreen(game.menuScreen);
                     }
                 }
                 else text.setText(texts[i]);

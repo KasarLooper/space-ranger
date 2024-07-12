@@ -19,7 +19,7 @@ public class PlanetGameSession extends GameSession {
 
     @Override
     public boolean victory() {
-        return false;
+        return true;
     }
 
     public boolean shouldSpawnLighting() {

@@ -148,7 +148,7 @@ public class PlanetGameScreen extends GameScreen {
                 updateAlien();
                 updateCore();
 
-                if (spaceman.cristalCount >= 4 && spaceman.wreckCount >= 4) {
+                if (spaceman.cristalCount >= 0 && spaceman.wreckCount >= 0) {
                     purpose.setText("Отнесите ресурсы к кораблю");
                     isEnoughResources = true;
                 }
@@ -275,12 +275,22 @@ public class PlanetGameScreen extends GameScreen {
     public void restartGame() {
         super.restartGame();
         myGdxGame.planet.destroyBody(spaceman.body);
+        for (AlienObject alien : aliens)
+            myGdxGame.planet.destroyBody(alien.body);
+        for (ResourceObject res : wrecks)
+            myGdxGame.planet.destroyBody(res.body);
+        for (ResourceObject res : crystals)
+            myGdxGame.planet.destroyBody(res.body);
         spaceman = new SpacemanObject(
                 loader.getPlayerX(), loader.getPlayerY(),
                 COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
                 COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4,
                 COSMONAUT_SPEED, COSMONAUT_JUMP_FORCE,
                 myGdxGame.planet);
+        aliens = new ArrayList<>();
+        wrecks = new ArrayList<>();
+        crystals = new ArrayList<>();
+        lives.setLeftLives(3);
         purpose.setText(String.format(GraphicsSettings.PLANET_AIM1_PATTERN, spaceman.wreckCount, spaceman.cristalCount));
     }
 

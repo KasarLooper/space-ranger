@@ -23,6 +23,6 @@ public class SpaceGameSession extends GameSession {
 
     @Override
     public boolean victory() {
-        return core_collected >= 3;
+        return core_collected >= 0;
     }
 }

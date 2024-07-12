@@ -57,7 +57,7 @@ public class MyGdxGame extends Game {
 	public AudioManager audioManager;
 	@Override
 	public void create () {
-		//MemoryManager.clear();
+		MemoryManager.clear();
 		needToSpaceIntro = !MemoryManager.lodeNeedToSpaceIntro();
 		needToPlanetIntro = !MemoryManager.loadNeedToPlanetIntro();
 		canAccessPlanetLevel = MemoryManager.loadIsNextLevel();
@@ -78,11 +78,11 @@ public class MyGdxGame extends Game {
 		planetScreen = new PlanetGameScreen(this);
 		menuScreen = new MenuScreen(this);
 		memoriesScreen = new MemoriesScreen(this);
-		spaceHistory = new HistoryScreen(this, SPACE_HISTORY_ARRAY, spaceScreen);
-		planetHistory = new HistoryScreen(this, PLANET_HISTORY_ARRAY, planetScreen);
-		endHistory = new HistoryScreen(this, END_HISTORY_ARRAY, menuScreen);
+		spaceHistory = new HistoryScreen(this, SPACE_HISTORY_ARRAY, spaceScreen, false);
+		planetHistory = new HistoryScreen(this, PLANET_HISTORY_ARRAY, planetScreen, false);
+		endHistory = new HistoryScreen(this, END_HISTORY_ARRAY, menuScreen, true);
 		audioManager = new AudioManager();
-		//state = State.ENDED;
+		state = State.ENDED;
 		setScreen(menuScreen);
 
 //		planetLevel();
