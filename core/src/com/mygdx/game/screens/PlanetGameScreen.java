@@ -157,7 +157,6 @@ public class PlanetGameScreen extends GameScreen {
                 if (capsule.isCollision(spaceman.getX(), spaceman.getY()) && isEnoughResources) {
                     session.state = ENDED;
                     myGdxGame.passPlanetLevel();
-                    MemoryManager.saveIsFinal(true);
                 }
             }
         } else {

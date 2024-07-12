@@ -53,12 +53,12 @@ public class MemoriesScreen extends ScreenAdapter {
         myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
         ScreenUtils.clear(Color.CLEAR);
 
-        if (myGdxGame.canAccessPlanetLevel) {
-            Space.setText("Битва в космосе");
+        if (MemoryManager.loadIsPassedSpace()) {
+            space.setText("Битва в космосе");
         }
 
-        if (MemoryManager.loadIsFinal()) {
-            Planet.setText("Крушение на планете");
+        if (MemoryManager.loadIsPassedPlanet()) {
+            planet.setText("Крушение на планете");
         }
         
         myGdxGame.batch.begin();
