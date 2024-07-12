@@ -6,36 +6,34 @@ import com.badlogic.gdx.Preferences;
 public class MemoryManager {
     private static final Preferences preferences = Gdx.app.getPreferences("User saves");
 
-    public static boolean loadIsNextLevel() {
-        return preferences.getBoolean("isNextLevel", false);
+    public static boolean loadIsFirstLevel() {
+        return preferences.getBoolean("isFistLevel", true);
     }
 
-    public static void saveIsNextLevel(boolean isNextLevel) {
-        preferences.putBoolean("isNextLevel", isNextLevel);
+    public static void saveIsFirstLevel(boolean isNextLevel) {
+        preferences.putBoolean("isFirstLevel", isNextLevel);
         preferences.flush();
     }
 
-    public static boolean lodeNeedToSpaceIntro() {
-        return preferences.getBoolean("hasSeenSpaceIntro", false);
+    public static boolean loadIsPassedSpace() {
+        return preferences.getBoolean("isPassedSpace", false);
     }
 
-    public static void saveNeedToSpaceIntro(boolean hasSeen) {
-        preferences.putBoolean("hasSeenSpaceIntro", hasSeen);
+    public static void saveIsPassedSpace(boolean isPassedSpace) {
+        preferences.putBoolean("isPassedSpace", isPassedSpace);
         preferences.flush();
     }
 
-    public static boolean loadNeedToPlanetIntro() {
-        return preferences.getBoolean("hasSeenPlanetIntro", false);
+    public static boolean loadIsPassedPlanet() {
+        return preferences.getBoolean("isPassedPlanet", false);
     }
 
-    public static void saveNeedToPlanetIntro(boolean hasSeen) {
-        preferences.putBoolean("hasSeenPlanetIntro", hasSeen);
+    public static void saveIsPassedPlanet(boolean isPassedPlanet) {
+        preferences.putBoolean("isPassedPlanet", isPassedPlanet);
         preferences.flush();
     }
 
     public static void clear() {
-        saveIsNextLevel(false);
-        saveNeedToSpaceIntro(false);
-        saveNeedToPlanetIntro(false);
+        Gdx.app.getPreferences("User saves").clear();
     }
 }

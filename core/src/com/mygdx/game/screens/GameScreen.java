@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.GameResources;
+import com.mygdx.game.manager.MemoryManager;
 import com.mygdx.game.session.GameSession;
 import com.mygdx.game.GameSettings;
 import com.mygdx.game.MyGdxGame;
@@ -154,10 +155,13 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
             myGdxGame.camera.position.y = myGdxGame.camera.viewportHeight / 2;
             if (myGdxGame.isContinue && session.victory()) {
                 if (this instanceof SpaceGameScreen) {
+                    myGdxGame.isFirstLevel = false;
                     myGdxGame.setScreen(myGdxGame.planetHistory);
                 } else {
+                    myGdxGame.isFirstLevel = true;
                     myGdxGame.setScreen(myGdxGame.endHistory);
                 }
+                MemoryManager.saveIsFirstLevel(myGdxGame.isFirstLevel);
                 myGdxGame.mainMenuMusic();
             } else {
                 myGdxGame.spaceLevel();
