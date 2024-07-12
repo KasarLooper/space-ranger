@@ -17,12 +17,12 @@ public class CapsuleObject extends GameObject implements Drawable {
     }
 
     public boolean isCollision(int x, int y) {
-        return x >= this.x && x <= this.x + width && y >= this.y && y <= this.y + height;
+        return x >= this.x && x <= this.x + width && y <= this.y && y >= this.y - height;
     }
 
     @Override
     public void draw(SpriteBatch batch) {
-        batch.draw(texture, x, y, width, height);
+        batch.draw(texture, x, y - height, width, height);
     }
 
     public void dispose() {

@@ -125,7 +125,7 @@ public class LevelMapManager {
     }
 
     public int getCapsuleHeight() {
-        return getY(capsuleEndY) - getY(capsuleStartY);
+        return getY(capsuleStartY) - getY(capsuleEndY);
     }
 
     private void initPlayer(int red, int green, int blue, int x, int y, World world) {
