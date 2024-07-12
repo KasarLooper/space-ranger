@@ -63,7 +63,7 @@ public class SpacemanObject extends PhysicsObject {
     }
 
     public boolean isAlive() {
-        return liveLeft >= 0;
+        return liveLeft > 0;
     }
 
     @Override

@@ -148,12 +148,12 @@ public class PlanetGameScreen extends GameScreen {
                 updateAlien();
                 updateCore();
 
-                if (spaceman.cristalCount >= 0 && spaceman.wreckCount >= 0) {
+                if (spaceman.cristalCount >= 4 && spaceman.wreckCount >= 4) {
                     purpose.setText("Отнесите ресурсы к кораблю");
                     isEnoughResources = true;
                 }
 
-                if (capsule.isCollision(spaceman.getX(), spaceman.getY())) {
+                if (capsule.isCollision(spaceman.getX(), spaceman.getY()) && isEnoughResources) {
                     session.state = ENDED;
                     myGdxGame.passPlanetLevel();
                 }
