@@ -95,11 +95,11 @@ public class PlanetGameScreen extends GameScreen {
         wrecks = new ArrayList<>();
         crystals = new ArrayList<>();
         capsule = new CapsuleObject(loader.getCapsuleX(), loader.getCapsuleY(), loader.getCapsuleWidth(), loader.getCapsuleHeight());
-        jumpButton = new ButtonView(1150, 25, 100, 100, GameResources.JUMP_BUTTON_IMG_PATH);
+        jumpButton = new ButtonView(1150, 50, 100, 100, GameResources.JUMP_BUTTON_IMG_PATH);
         lives = new LiveView(0, 675);
         purpose = new TextView(myGdxGame.averageWhiteFont, 300, 675,
                 String.format(GraphicsSettings.PLANET_AIM1_PATTERN, spaceman.cristalCount, spaceman.wreckCount));
-        fireButton = new ButtonView(1000, 25, 100, 100, GameResources.FIRE_BUTTON_PLANET_IMG_PATH);
+        fireButton = new ButtonView(1000, 50, 100, 100, GameResources.FIRE_BUTTON_PLANET_IMG_PATH);
         isLighting = false;
         isJump = false;
         isEnoughResources = false;
@@ -173,7 +173,11 @@ public class PlanetGameScreen extends GameScreen {
         backgroundView.draw(myGdxGame.batch);
         capsule.draw(myGdxGame.batch);
         earth.draw(myGdxGame.batch, spaceman.getX());
-        for (PhysicsBlock block : physics) block.draw(myGdxGame.batch);
+        for (PhysicsBlock block : physics) {
+            if (myGdxGame.camera.frustum.sphereInFrustum(block.getX(), block.getY(), 0, Math.max(block.height, block.width))) {
+                block.draw(myGdxGame.batch);
+            }
+        }
         spaceman.draw(myGdxGame.batch);
         super.drawDynamic();
         if (isLighting) lightning.draw(myGdxGame.batch);

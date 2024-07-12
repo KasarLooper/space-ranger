@@ -17,6 +17,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.manager.AudioManager;
 import com.mygdx.game.manager.LevelMapManager;
 import com.mygdx.game.manager.MemoryManager;
@@ -84,7 +85,7 @@ public class MyGdxGame extends Game {
 		//state = State.ENDED;
 		setScreen(menuScreen);
 
-		planetLevel();
+//		planetLevel();
 
 		//setScreen(planetHistory);
 
