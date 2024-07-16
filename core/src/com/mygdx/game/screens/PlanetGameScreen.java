@@ -20,6 +20,7 @@ import static com.mygdx.game.GameSettings.GROUND_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
 import static com.mygdx.game.State.ENDED;
+import static com.mygdx.game.State.PAUSED;
 import static com.mygdx.game.State.PLAYING;
 
 import com.badlogic.gdx.Gdx;
@@ -115,6 +116,11 @@ public class PlanetGameScreen extends GameScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
+        if (session.state == PAUSED) {
+            isJump = false;
+            isLighting = false;
+            joystick.toDefault();
+        }
         myGdxGame.camera.position.x = spaceman.getX() + dx;
         myGdxGame.camera.position.y = spaceman.getY() + GROUND_HEIGHT - CAMERA_Y_FROM_CENTER + dy;
         if (spaceman.isAlive()) {

@@ -12,6 +12,7 @@ import static com.mygdx.game.GameSettings.ENEMY_WIDTH;
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
 import static com.mygdx.game.State.ENDED;
+import static com.mygdx.game.State.PAUSED;
 import static com.mygdx.game.State.PLAYING;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -101,6 +102,10 @@ public class SpaceGameScreen extends GameScreen {
     @Override
     public void render(float delta) {
         super.render(delta);
+        if (session.state == PAUSED) {
+            isTouchedShoot = false;
+            joystick.toDefault();
+        }
         if (shipObject.isAlive()) {
             myGdxGame.camera.position.x = shipObject.getX();
             myGdxGame.camera.position.y = shipObject.getY();
