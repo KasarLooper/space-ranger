@@ -27,13 +27,13 @@ public class GameSettings {
     public static final int SHOOTING_COOL_DOWN = 1000; // in ms
     public static final int SHIP_WIDTH = 100;
     public static final int SHIP_HEIGHT = 100;
-    public static final int SPEED_SHIP = 3;
+    public static final int SPEED_SHIP = 15;
     public static final int COUNT_FRAMES_ONE_IMG = 5;
 
     // Enemy Settings
     public static final int ENEMY_WIDTH = 100;
     public static final int ENEMY_HEIGHT = 100;
-    public static final int SPEED_ENEMY = 3;
+    public static final int SPEED_ENEMY = 8;
     public static final int ENEMY_SHOOT_COOL_DOWN = 2000;
 
 

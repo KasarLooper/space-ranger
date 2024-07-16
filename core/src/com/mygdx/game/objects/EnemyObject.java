@@ -93,10 +93,9 @@ public class EnemyObject extends PhysicsObject {
             hasAim = false;
         }
         sprite.setBounds(getX(), getY(), width, height);
-        int dx = (int) (cos(toRadians(getRotation())) * SPEED_ENEMY);
-        int dy = (int) (sin(toRadians(getRotation())) * SPEED_ENEMY);
-        setX(getX() + dx);
-        setY(getY() + dy);
+        int dx = (int) (cos(toRadians(getRotation() % 360)) * SPEED_ENEMY);
+        int dy = (int) (sin(toRadians(getRotation() % 360)) * SPEED_ENEMY);
+        body.setLinearVelocity(dx, dy);
         if (playerDistance < GameSettings.ENEMY_SHOOT_DISTANCE) return tryShoot();
         else return null;
     }

@@ -24,9 +24,11 @@ public class ShipObject extends PhysicsObject {
     public float shot_cool_down;
     private float degrees;
     int i = 0;
+    private boolean isStop = false;
 
     public ShipObject(int x, int y, int wight, int height, String texturePath, World world) {
         super(texturePath, x, y, wight, height, world);
+        body.setLinearDamping(10f);
         livesLeft = 3;
         body.setLinearDamping(10);
         sprite = new Sprite(texture);
@@ -34,12 +36,14 @@ public class ShipObject extends PhysicsObject {
         shot_cool_down = GameSettings.SHOOTING_COOL_DOWN;
     }
 
-    public Vector2 move() {
+    public void move() {
+        if (isStop) {
+            return;
+        }
         int dx = (int) (cos(toRadians(degrees + 90)) * SPEED_SHIP);
         int dy = (int) (sin(toRadians(degrees + 90)) * SPEED_SHIP);
-        setX(getX() + dx);
-        setY(getY() + dy);
-        return new Vector2(dx, dy);
+        //System.out.printf("Set linear velocity to %d %d\n", dx, dy);
+        body.setLinearVelocity(dx, dy);
     }
 
     public void moleHoleAnim() {
@@ -52,6 +56,8 @@ public class ShipObject extends PhysicsObject {
 
     @Override
     public void draw(SpriteBatch batch) {
+        //System.out.printf("Velosity %f %f\n", body.getLinearVelocity().x, body.getLinearVelocity().y);
+        if (isStop) System.out.printf("%f %f\n", body.getLinearVelocity().x, body.getLinearVelocity().y);
         sprite.setBounds(getX() - width / 2f, getY() - height / 2f, width, height);
         if (i > 0 && i < 19 * COUNT_FRAMES_ONE_IMG) sprite.setTexture(new Texture(String.format(GameResources.ANIM_SHIP_PORTAL_IMG_PATH_PATTERN,
                 i / COUNT_FRAMES_ONE_IMG + 1)));
@@ -83,6 +89,11 @@ public class ShipObject extends PhysicsObject {
     public void setRotation(float degrees) {
         this.degrees = degrees;
         sprite.setRotation(degrees);
+        isStop = false;
+    }
+
+    public void stop() {
+        isStop = true;
     }
 
     public Type type() {

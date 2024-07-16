@@ -140,7 +140,7 @@ public class SpaceGameScreen extends GameScreen {
                     if (joystick.isTouched()) {
                         shipObject.setRotation(joystick.getDegrees());
                         shipObject.move();
-                    }
+                    } else shipObject.stop();
                     for (BoomObject boomObject : boomArray) boomObject.Boom_action();
                 }
             } else {
