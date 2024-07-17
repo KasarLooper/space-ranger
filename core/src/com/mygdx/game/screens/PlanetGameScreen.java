@@ -1,6 +1,7 @@
 package com.mygdx.game.screens;
 
 import static com.mygdx.game.GameResources.ALIEN_ANIM_RIGHT_IMG_PATTERN;
+import static com.mygdx.game.GameResources.BUTTON_IMG_PATH;
 import static com.mygdx.game.GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN;
 import static com.mygdx.game.GameResources.CRYSTAL_IMG_PATH;
 import static com.mygdx.game.GameSettings.ALIEN_HEIGHT;
@@ -19,6 +20,7 @@ import static com.mygdx.game.GameSettings.COSMONAUT_WIDTH;
 import static com.mygdx.game.GameSettings.GROUND_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_HEIGHT;
 import static com.mygdx.game.GameSettings.SCREEN_WIDTH;
+import static com.mygdx.game.GraphicsSettings.PLANET_AIM2_PATTERN;
 import static com.mygdx.game.State.ENDED;
 import static com.mygdx.game.State.PLAYING;
 
@@ -28,13 +30,14 @@ import com.mygdx.game.GameResources;
 import com.mygdx.game.GraphicsSettings;
 import com.mygdx.game.MyGdxGame;
 import com.mygdx.game.components.ButtonView;
+import com.mygdx.game.components.ImageView;
 import com.mygdx.game.components.LiveView;
 import com.mygdx.game.components.MovingBackgroundLeftRightView;
 import com.mygdx.game.components.MovingBackgroundView;
 import com.mygdx.game.components.TextView;
+import com.mygdx.game.components.View;
 import com.mygdx.game.manager.ContactManager;
 import com.mygdx.game.manager.LevelMapManager;
-import com.mygdx.game.manager.MemoryManager;
 import com.mygdx.game.objects.AlienObject;
 import com.mygdx.game.objects.CapsuleObject;
 import com.mygdx.game.objects.Earth;
@@ -67,6 +70,8 @@ public class PlanetGameScreen extends GameScreen {
 
     LiveView lives;
     ButtonView jumpButton;
+    View view;
+    ImageView strip;
     TextView purpose;
     ButtonView fireButton;
     LightningBulletObject lightning;
@@ -74,6 +79,8 @@ public class PlanetGameScreen extends GameScreen {
     boolean isJump;
     boolean isEnoughResources;
     boolean isWinGame;
+
+
 
     public PlanetGameScreen(MyGdxGame game) {
         super(game);
@@ -85,6 +92,7 @@ public class PlanetGameScreen extends GameScreen {
         mobSpawns = loader.getMobSpawns();
         resSpawns = loader.getResSpawns();
         backgroundView = new MovingBackgroundLeftRightView(GameResources.BACKGROUND_2_IMG_PATH);
+
         spaceman = new SpacemanObject(
                 loader.getPlayerX(), loader.getPlayerY(),
                 COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
@@ -100,7 +108,11 @@ public class PlanetGameScreen extends GameScreen {
         lives = new LiveView(0, 675);
         purpose = new TextView(myGdxGame.averageWhiteFont, 300, 675,
                 String.format(GraphicsSettings.PLANET_AIM1_PATTERN, spaceman.cristalCount, spaceman.wreckCount));
+
+
+
         fireButton = new ButtonView(1000, 50, 100, 100, GameResources.FIRE_BUTTON_PLANET_IMG_PATH);
+        strip = new ImageView(70, 800, 220,650, BUTTON_IMG_PATH);
         isLighting = false;
         isJump = false;
         isEnoughResources = false;
@@ -150,7 +162,8 @@ public class PlanetGameScreen extends GameScreen {
                 updateCore();
 
                 if (spaceman.cristalCount >= 4 && spaceman.wreckCount >= 4) {
-                    purpose.setText("Отнесите ресурсы к кораблю");
+                    purpose.setText(PLANET_AIM2_PATTERN);
+                    view.TextPosition();
                     isEnoughResources = true;
                 }
 
@@ -193,9 +206,11 @@ public class PlanetGameScreen extends GameScreen {
         super.drawStatic();
         jumpButton.draw(myGdxGame.batch);
         lives.draw(myGdxGame.batch);
+        strip.draw(myGdxGame.batch);
         purpose.draw(myGdxGame.batch);
         fireButton.draw(myGdxGame.batch);
     }
+
 
     Random rd = new Random();
 
@@ -302,6 +317,7 @@ public class PlanetGameScreen extends GameScreen {
         spaceman.dispose();
         capsule.dispose();
         jumpButton.dispose();
+        strip.dispose();
     }
 
 
