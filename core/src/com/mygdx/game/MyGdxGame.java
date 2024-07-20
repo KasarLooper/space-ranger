@@ -55,6 +55,7 @@ public class MyGdxGame extends Game {
 	@Override
 	public void create () {
 		//MemoryManager.clear();
+		MemoryManager.saveIsPassedPlanet(true);
 		isFirstLevel = MemoryManager.loadIsFirstLevel();
 		isContinue = false;
 

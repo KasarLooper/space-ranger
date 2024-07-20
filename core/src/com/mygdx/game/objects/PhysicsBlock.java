@@ -12,6 +12,8 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 
+import java.util.HashSet;
+
 public class PhysicsBlock extends Block implements Drawable {
     public int width;
     public int height;
@@ -19,6 +21,7 @@ public class PhysicsBlock extends Block implements Drawable {
     public Body body;
     public Texture texture;
     World world;
+    HashSet<GameObject> contactEntities;
 
 
     public PhysicsBlock(int x, int y, int wight, int height, String texturePath, World world) {
@@ -31,6 +34,7 @@ public class PhysicsBlock extends Block implements Drawable {
         texture = new Texture(texturePath);
         body = createBody(x, y, world);
         this.world = world;
+        contactEntities = new HashSet<>();
     }
 
     @Override
@@ -91,6 +95,18 @@ public class PhysicsBlock extends Block implements Drawable {
     @Override
     public Type type() {
         return Type.Block;
+    }
+
+    public void contactEntity(GameObject object) {
+        contactEntities.add(object);
+    }
+
+    public boolean isContact(GameObject object) {
+        if (contactEntities.contains(object)) {
+            contactEntities.remove(object);
+            return true;
+        }
+        return false;
     }
 
     protected Shape getShape(float x, float y, float width, float height) {

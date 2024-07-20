@@ -300,6 +300,10 @@ public class PlanetGameScreen extends GameScreen {
         crystals = new ArrayList<>();
         lives.setLeftLives(3);
         purpose.setText(String.format(GraphicsSettings.PLANET_AIM1_PATTERN, spaceman.wreckCount, spaceman.cristalCount));
+        isJump = false;
+        isLighting = false;
+        joystick.toDefault();
+        session.startGame();
     }
 
     @Override

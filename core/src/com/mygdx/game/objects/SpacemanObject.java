@@ -22,7 +22,7 @@ public class SpacemanObject extends PhysicsObject {
     public boolean isRightDirection;
     public boolean isRightStep;
     public boolean isLeftStep;
-    boolean isStop;
+    boolean isStopping;
     boolean isJump;
     Texture[] left;
     Texture[] right;
@@ -30,9 +30,11 @@ public class SpacemanObject extends PhysicsObject {
     public int liveLeft;
 
     public int cristalCount, wreckCount;
+    private boolean isRightContact;
+    private boolean isLeftContact;
 
-    public SpacemanObject(int x, int y, int wight, int height, String texturePath, int defaultFrame, int speed, int jumpImpulse, World world) {
-        super(String.format(texturePath, defaultFrame), x, y, wight, height, world);
+    public SpacemanObject(int x, int y, int width, int height, String texturePath, int defaultFrame, int speed, int jumpImpulse, World world) {
+        super(String.format(texturePath, defaultFrame), x, y, width, height, world);
         defaultY = y;
         this.defaultFrame = defaultFrame;
         this.speed = speed;
@@ -94,8 +96,8 @@ public class SpacemanObject extends PhysicsObject {
     }
 
     public void jump() {
-        if (!isJump) {
-            isJump = true;
+        if (!isJump && TimeUtils.millis() - jumpTime > 50) {
+            if (!(this instanceof AlienObject)) System.out.println("Jump");
             jumpTime = TimeUtils.millis();
             body.applyLinearImpulse(new Vector2(0, jumpImpulse), body.getWorldCenter(), false);
         }
@@ -103,38 +105,35 @@ public class SpacemanObject extends PhysicsObject {
 
     public void stop() {
         body.setLinearVelocity(0, body.getLinearVelocity().y);
-        isStop = true;
+        isStopping = true;
     }
 
     public void updateFrames() {
-        if (isStop) {
+        body.setAwake(true);
+        if (isStopping) {
             if (i == 0) {
-                isStop = false;
+                isStopping = false;
                 isLeftStep = false;
                 isRightStep = false;
                 body.setLinearVelocity(0, body.getLinearVelocity().y);
             }
         }
-        if (Math.abs(body.getLinearVelocity().x) != 0 && !isJump) {
-            if (!(this instanceof AlienObject)) System.out.println("Change i");
+        if (!isJump && Math.abs(body.getLinearVelocity().x) > 0.1) {
             i++;
             if (i >= right.length) i = 0;
         }
         sprite.setTexture(isRightDirection ? right[i] : left[i]);
-        if (isRightStep) body.setLinearVelocity(speed, body.getLinearVelocity().y);
-        else if (isLeftStep) body.setLinearVelocity(-speed, body.getLinearVelocity().y);
+        if (isRightStep && !isJump) body.setLinearVelocity(speed, body.getLinearVelocity().y);
+        else if (isLeftStep && !isJump) body.setLinearVelocity(-speed, body.getLinearVelocity().y);
     }
 
     public void updateJump() {
-        if (Math.abs(body.getLinearVelocity().y) == 0 && TimeUtils.millis() - jumpTime > 50) {
-            body.setAwake(true);
-            isJump = false;
-        }
+        if (isJump) body.setAwake(true);
     }
 
     @Override
     public void hit(Type type) {
-        body.applyLinearImpulse(new Vector2(0, 3), body.getWorldCenter(), true);
+        //body.applyLinearImpulse(new Vector2(0, 3), body.getWorldCenter(), true);
         if (type == Type.Enemy) {
             liveLeft -= 1;
         }
@@ -147,5 +146,22 @@ public class SpacemanObject extends PhysicsObject {
     @Override
     protected float getFriction() {
         return 0;
+    }
+
+    private int blockContactCount = 0;
+
+    public void setJump(boolean isJump) {
+        blockContactCount += isJump ? -1 : 1;
+        if (blockContactCount < 0) blockContactCount = 0;
+        this.isJump = blockContactCount == 0;
+        if (!(this instanceof AlienObject)) System.out.println(blockContactCount);
+    }
+
+    public void setRightContact(boolean isRightContact) {
+        this.isRightContact = isRightContact;
+    }
+
+    public void setLeftContact(boolean isLeftContact) {
+        this.isLeftContact = isLeftContact;
     }
 }

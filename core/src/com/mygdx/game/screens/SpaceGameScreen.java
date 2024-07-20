@@ -257,6 +257,8 @@ public class SpaceGameScreen extends GameScreen {
         live.setLeftLives(3);
         bulletArray.clear();
         boomArray.clear();
+        isTouchedShoot = false;
+        joystick.toDefault();
         session.startGame();
     }
 
