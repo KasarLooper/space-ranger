@@ -25,6 +25,7 @@ import static com.mygdx.game.State.PLAYING;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.mygdx.game.BlockMap;
 import com.mygdx.game.GameResources;
 import com.mygdx.game.GraphicsSettings;
 import com.mygdx.game.MyGdxGame;
@@ -53,6 +54,7 @@ import java.util.Random;
 
 public class PlanetGameScreen extends GameScreen {
     LevelMapManager loader;
+    BlockMap blockMap;
     ContactManager contactManager;
     MovingBackgroundView backgroundView;
 
@@ -83,6 +85,7 @@ public class PlanetGameScreen extends GameScreen {
         contactManager = new ContactManager(myGdxGame.planet);
         loader.loadMap(myGdxGame.planet);
         physics = loader.getPhysics();
+        blockMap = new BlockMap(physics, 200, 16);
         mobSpawns = loader.getMobSpawns();
         resSpawns = loader.getResSpawns();
         backgroundView = new MovingBackgroundLeftRightView(GameResources.BACKGROUND_2_IMG_PATH);
@@ -91,7 +94,7 @@ public class PlanetGameScreen extends GameScreen {
                 COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
                 COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4,
                 COSMONAUT_SPEED, COSMONAUT_JUMP_FORCE,
-                myGdxGame.planet);
+                myGdxGame.planet, blockMap);
         earth = new Earth(GROUND_HEIGHT, myGdxGame.planet);
         aliens = new ArrayList<>();
         wrecks = new ArrayList<>();
@@ -218,7 +221,7 @@ public class PlanetGameScreen extends GameScreen {
             int x = near.get(i).x;
             int y = near.get(i).y;
             aliens.add(new AlienObject(x, y, ALIEN_WIDTH, ALIEN_HEIGHT, ALIEN_ANIM_RIGHT_IMG_PATTERN,
-                    5, ALIEN_SPEED, ALIEN_JUMP_FORCE, myGdxGame.planet));
+                    5, ALIEN_SPEED, ALIEN_JUMP_FORCE, myGdxGame.planet, blockMap));
         }
     }
 
@@ -294,7 +297,7 @@ public class PlanetGameScreen extends GameScreen {
                 COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
                 COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4,
                 COSMONAUT_SPEED, COSMONAUT_JUMP_FORCE,
-                myGdxGame.planet);
+                myGdxGame.planet, blockMap);
         aliens = new ArrayList<>();
         wrecks = new ArrayList<>();
         crystals = new ArrayList<>();

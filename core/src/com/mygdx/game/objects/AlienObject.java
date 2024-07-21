@@ -6,6 +6,7 @@ import static com.mygdx.game.GameSettings.COSMONAUT_HEIGHT;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.mygdx.game.BlockMap;
 import com.mygdx.game.GameResources;
 
 import java.util.ArrayList;
@@ -16,8 +17,8 @@ public class AlienObject extends SpacemanObject{
     float lastX, lastY;
     boolean isChangingDirection;
 
-    public AlienObject(int x, int y, int wight, int height, String texturePath, int defaultFrame, int speed, int jumpImpulse, World world) {
-        super(x, y, wight, height, texturePath, defaultFrame, speed, jumpImpulse, world);
+    public AlienObject(int x, int y, int wight, int height, String texturePath, int defaultFrame, int speed, int jumpImpulse, World world, BlockMap blockMap) {
+        super(x, y, wight, height, texturePath, defaultFrame, speed, jumpImpulse, world, blockMap);
         lastCheckTime1 = TimeUtils.millis();
         lastX = getX();
         isChangingDirection = false;

@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
+import com.mygdx.game.BlockMap;
 import com.mygdx.game.GameResources;
 
 public class SpacemanObject extends PhysicsObject {
@@ -31,7 +32,7 @@ public class SpacemanObject extends PhysicsObject {
 
     public int cristalCount, wreckCount;
 
-    public SpacemanObject(int x, int y, int wight, int height, String texturePath, int defaultFrame, int speed, int jumpImpulse, World world) {
+    public SpacemanObject(int x, int y, int wight, int height, String texturePath, int defaultFrame, int speed, int jumpImpulse, World world, BlockMap blockMap) {
         super(String.format(texturePath, defaultFrame), x, y, wight, height, world);
         defaultY = y;
         this.defaultFrame = defaultFrame;
