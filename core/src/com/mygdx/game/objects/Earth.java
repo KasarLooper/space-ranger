@@ -33,7 +33,7 @@ public class Earth extends GameObject{
         Body body = world.createBody(def);
 
         EdgeShape shape = new EdgeShape();
-        shape.set(new Vector2(-1000, y * SCALE), new Vector2(1000, y * SCALE));
+        shape.set(new Vector2(-1000, y * SCALE + EARTH_HEIGHT * SCALE / 2f - 1), new Vector2(1000, y * SCALE + EARTH_HEIGHT * SCALE / 2f - 1));
 
         FixtureDef fixture = new FixtureDef();
         fixture.shape = shape;
@@ -64,6 +64,6 @@ public class Earth extends GameObject{
 
 
         for (float x : earthXs)
-            batch.draw(texture, x, GROUND_HEIGHT - EARTH_HEIGHT, EARTH_WIDTH, EARTH_HEIGHT);
+            batch.draw(texture, x, GROUND_HEIGHT - EARTH_HEIGHT / 2f, EARTH_WIDTH, EARTH_HEIGHT);
     }
 }

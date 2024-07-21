@@ -77,6 +77,7 @@ public class SpacemanObject extends PhysicsObject {
     public void draw(SpriteBatch batch) {
         sprite.setBounds(getX() - (width / 2f), getY() - (height / 2f), width, height);
         sprite.draw(batch);
+        if (!(this instanceof AlienObject)) System.out.printf("%d %d\n", getX(), getY());
     }
 
     public void stepLeft() {
@@ -116,7 +117,6 @@ public class SpacemanObject extends PhysicsObject {
             }
         }
         if (Math.abs(body.getLinearVelocity().x) != 0 && !isJump) {
-            if (!(this instanceof AlienObject)) System.out.println("Change i");
             i++;
             if (i >= right.length) i = 0;
         }
