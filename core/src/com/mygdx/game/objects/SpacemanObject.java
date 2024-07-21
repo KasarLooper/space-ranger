@@ -14,6 +14,7 @@ import com.mygdx.game.BlockMap;
 import com.mygdx.game.GameResources;
 
 public class SpacemanObject extends PhysicsObject {
+    private BlockMap blockMap;
     int defaultY;
     int defaultFrame;
     int speed;
@@ -25,9 +26,10 @@ public class SpacemanObject extends PhysicsObject {
     public boolean isLeftStep;
     boolean isStop;
     boolean isJump;
+    boolean isWalk;
     Texture[] left;
     Texture[] right;
-    long jumpTime;
+    long lastChangeIsWalkTime;
     public int liveLeft;
 
     public int cristalCount, wreckCount;
@@ -42,6 +44,7 @@ public class SpacemanObject extends PhysicsObject {
 
         initTextures(defaultFrame);
         isRightDirection = true;
+        this.blockMap = blockMap;
 
         cristalCount = 0;
         wreckCount = 0;
@@ -60,7 +63,9 @@ public class SpacemanObject extends PhysicsObject {
         }
         i = 0;
         isJump = false;
+        isWalk = true;
         liveLeft = 3;
+        lastChangeIsWalkTime = TimeUtils.millis();
     }
 
     public boolean isAlive() {
@@ -78,7 +83,7 @@ public class SpacemanObject extends PhysicsObject {
     public void draw(SpriteBatch batch) {
         sprite.setBounds(getX() - (width / 2f), getY() - (height / 2f), width, height);
         sprite.draw(batch);
-        if (!(this instanceof AlienObject)) System.out.printf("%d %d\n", getX(), getY());
+        System.out.println(getX() + " " + getY());
     }
 
     public void stepLeft() {
@@ -98,7 +103,6 @@ public class SpacemanObject extends PhysicsObject {
     public void jump() {
         if (!isJump) {
             isJump = true;
-            jumpTime = TimeUtils.millis();
             body.applyLinearImpulse(new Vector2(0, jumpImpulse), body.getWorldCenter(), false);
         }
     }
@@ -117,7 +121,8 @@ public class SpacemanObject extends PhysicsObject {
                 body.setLinearVelocity(0, body.getLinearVelocity().y);
             }
         }
-        if (Math.abs(body.getLinearVelocity().x) != 0 && !isJump) {
+        System.out.println();
+        if (i != 0 || (isWalk && body.getLinearVelocity().x != 0)) {
             i++;
             if (i >= right.length) i = 0;
         }
@@ -127,9 +132,12 @@ public class SpacemanObject extends PhysicsObject {
     }
 
     public void updateJump() {
-        if (Math.abs(body.getLinearVelocity().y) == 0 && TimeUtils.millis() - jumpTime > 50) {
-            body.setAwake(true);
-            isJump = false;
+        body.setAwake(true);
+        isJump = !blockMap.isContact(getX(), getY(), width, height);
+        if (!isJump) isWalk = true;
+        else if (TimeUtils.millis() - lastChangeIsWalkTime > 500) {
+            isWalk = false;
+            lastChangeIsWalkTime = TimeUtils.millis();
         }
     }
 

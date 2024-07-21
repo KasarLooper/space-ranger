@@ -150,7 +150,7 @@ public class PlanetGameScreen extends GameScreen {
                 if (((PlanetGameSession)session).shouldSpawnCore()) {
                     Random random = new Random();
                     if (random.nextInt(100) > CHANCE_CRYSTAL_SPAWN) {
-                        spawnAlien();
+                        //spawnAlien();
                     } else {
                         spawnCrystal();
                     }
