@@ -73,7 +73,6 @@ public class PlanetGameScreen extends GameScreen {
 
     LiveView lives;
     ButtonView jumpButton;
-    View view;
     ImageView strip;
     TextView purpose;
     ButtonView fireButton;
@@ -172,7 +171,7 @@ public class PlanetGameScreen extends GameScreen {
 
                 if (spaceman.cristalCount >= 4 && spaceman.wreckCount >= 4) {
                     purpose.setText(PLANET_AIM2_PATTERN);
-                    view.TextPosition();
+                    purpose.TextPosition();
                     isEnoughResources = true;
                 }
 

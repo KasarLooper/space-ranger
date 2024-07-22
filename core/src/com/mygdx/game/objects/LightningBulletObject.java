@@ -24,7 +24,7 @@ public class LightningBulletObject extends PhysicsObject{
 
     Sprite sprite;
     public LightningBulletObject(SpacemanObject spaceman, World world) {
-        super(spaceman.isRightStep ? GameResources.LIGHTNING_RIGHT_IMG_PATH : GameResources.LIGHTNING_LEFT_IMG_PATH,
+        super(spaceman.isRightDirection ? GameResources.LIGHTNING_RIGHT_IMG_PATH : GameResources.LIGHTNING_LEFT_IMG_PATH,
                 spaceman.isRightDirection ? spaceman.getX() + (LIGHTING_WIDTH) / 2 + COSMONAUT_WIDTH : spaceman.getX() - (LIGHTING_WIDTH) / 2 - COSMONAUT_WIDTH,
                 spaceman.getY(), LIGHTING_WIDTH, GameSettings.LIGHTING_HEIGHT, world);
         body.setBullet(true);
