@@ -30,6 +30,7 @@ public class SpacemanObject extends PhysicsObject {
     Texture[] left;
     Texture[] right;
     long lastChangeIsWalkTime;
+    long lastJumpTime;
     public int liveLeft;
 
     public int cristalCount, wreckCount;
@@ -66,6 +67,7 @@ public class SpacemanObject extends PhysicsObject {
         isWalk = true;
         liveLeft = 3;
         lastChangeIsWalkTime = TimeUtils.millis();
+        lastJumpTime = TimeUtils.millis();
     }
 
     public boolean isAlive() {
@@ -101,8 +103,9 @@ public class SpacemanObject extends PhysicsObject {
     }
 
     public void jump() {
-        if (!isJump) {
+        if (!isJump && TimeUtils.millis() - lastJumpTime > 100) {
             isJump = true;
+            lastJumpTime = TimeUtils.millis();
             body.applyLinearImpulse(new Vector2(0, jumpImpulse), body.getWorldCenter(), false);
         }
     }
@@ -133,7 +136,7 @@ public class SpacemanObject extends PhysicsObject {
 
     public void updateJump() {
         body.setAwake(true);
-        isJump = !blockMap.isContact(getX(), getY(), width, height);
+        isJump = !blockMap.isContact(getX(), getY(), width, height) && body.getLinearVelocity().y != 0;
         if (!isJump) isWalk = true;
         else if (TimeUtils.millis() - lastChangeIsWalkTime > 500) {
             isWalk = false;
