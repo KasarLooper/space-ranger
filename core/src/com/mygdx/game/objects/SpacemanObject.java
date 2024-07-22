@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.BlockMap;
 import com.mygdx.game.GameResources;
+import com.mygdx.game.GameSettings;
 
 public class SpacemanObject extends PhysicsObject {
     private BlockMap blockMap;
@@ -32,6 +33,8 @@ public class SpacemanObject extends PhysicsObject {
     long lastChangeIsWalkTime;
     long lastJumpTime;
     public int liveLeft;
+    long accumulator;
+    long lastUpdateTime;
 
     public int cristalCount, wreckCount;
 
@@ -49,6 +52,7 @@ public class SpacemanObject extends PhysicsObject {
 
         cristalCount = 0;
         wreckCount = 0;
+        accumulator = 0;
     }
 
     protected void initTextures(int defaultFrame) {
@@ -68,6 +72,7 @@ public class SpacemanObject extends PhysicsObject {
         liveLeft = 3;
         lastChangeIsWalkTime = TimeUtils.millis();
         lastJumpTime = TimeUtils.millis();
+        lastUpdateTime = TimeUtils.millis();
     }
 
     public boolean isAlive() {
@@ -126,8 +131,7 @@ public class SpacemanObject extends PhysicsObject {
         }
         System.out.println();
         if (i != 0 || (isWalk && body.getLinearVelocity().x != 0)) {
-            i++;
-            if (i >= right.length) i = 0;
+            updateCurrentFrame();
         }
         sprite.setTexture(isRightDirection ? right[i] : left[i]);
         if (isRightStep) body.setLinearVelocity(speed, body.getLinearVelocity().y);
@@ -141,6 +145,17 @@ public class SpacemanObject extends PhysicsObject {
         else if (TimeUtils.millis() - lastChangeIsWalkTime > 500) {
             isWalk = false;
             lastChangeIsWalkTime = TimeUtils.millis();
+        }
+    }
+
+    private void updateCurrentFrame() {
+        accumulator += TimeUtils.millis() - lastUpdateTime;
+        lastUpdateTime = TimeUtils.millis();
+        while (accumulator >= GameSettings.FRAME_DURATION) {
+            accumulator -= GameSettings.FRAME_DURATION;
+            i++;
+            if (i >= right.length) i = 0;
+            System.out.println(accumulator);
         }
     }
 
