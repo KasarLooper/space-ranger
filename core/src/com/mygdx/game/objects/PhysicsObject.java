@@ -74,7 +74,7 @@ public abstract class PhysicsObject extends GameObject implements Drawable {
     }
 
 
-    private Body createBody(float x, float y, World world) {
+    protected Body createBody(float x, float y, World world) {
         BodyDef def = new BodyDef();
 
         def.type = getBodyType();

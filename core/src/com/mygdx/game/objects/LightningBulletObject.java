@@ -3,10 +3,15 @@ package com.mygdx.game.objects;
 import static com.mygdx.game.GameSettings.COSMONAUT_WIDTH;
 import static com.mygdx.game.GameSettings.GRAVITY_PLANET_Y;
 import static com.mygdx.game.GameSettings.LIGHTING_WIDTH;
+import static com.mygdx.game.GameSettings.SCALE;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.GameResources;
@@ -28,6 +33,33 @@ public class LightningBulletObject extends PhysicsObject{
         body.setType(BodyDef.BodyType.DynamicBody);
         lastLightningSpawnTime = TimeUtils.millis();
         hasToBeDestroyed = false;
+    }
+
+    @Override
+    protected Body createBody(float x, float y, World world) {
+        BodyDef def = new BodyDef();
+
+        def.type = getBodyType();
+        def.fixedRotation = true; // запрет на вращение
+        Body body = world.createBody(def);
+
+        Shape shape = getShape(x, y, (float) width,  (float) height);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        //fixtureDef.filter.categoryBits = cBits; // биты
+
+        fixtureDef.shape = shape;
+        fixtureDef.density = getDensity();
+        fixtureDef.friction = getFriction();
+        fixtureDef.restitution = getRestitution();
+        fixtureDef.isSensor = true;
+
+        Fixture fixture = body.createFixture(fixtureDef);
+        fixture.setUserData(this);
+        shape.dispose();
+
+        body.setTransform(x * SCALE, y * SCALE, 0);
+        return body;
     }
 
     @Override

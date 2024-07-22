@@ -53,6 +53,13 @@ public class SpacemanObject extends PhysicsObject {
         cristalCount = 0;
         wreckCount = 0;
         accumulator = 0;
+
+        isJump = false;
+        isWalk = true;
+
+        lastChangeIsWalkTime = TimeUtils.millis();
+        lastJumpTime = TimeUtils.millis();
+        lastUpdateTime = TimeUtils.millis();
     }
 
     protected void initTextures(int defaultFrame) {
@@ -67,12 +74,7 @@ public class SpacemanObject extends PhysicsObject {
             right[i - 1] = new Texture(String.format(GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN, j));
         }
         i = 0;
-        isJump = false;
-        isWalk = true;
         liveLeft = 3;
-        lastChangeIsWalkTime = TimeUtils.millis();
-        lastJumpTime = TimeUtils.millis();
-        lastUpdateTime = TimeUtils.millis();
     }
 
     public boolean isAlive() {
@@ -90,7 +92,6 @@ public class SpacemanObject extends PhysicsObject {
     public void draw(SpriteBatch batch) {
         sprite.setBounds(getX() - (width / 2f), getY() - (height / 2f), width, height);
         sprite.draw(batch);
-        System.out.println(getX() + " " + getY());
     }
 
     public void stepLeft() {
@@ -121,6 +122,8 @@ public class SpacemanObject extends PhysicsObject {
     }
 
     public void updateFrames() {
+        if (this instanceof AlienObject)
+            System.out.println();
         if (isStop) {
             if (i == 0) {
                 isStop = false;
@@ -129,7 +132,6 @@ public class SpacemanObject extends PhysicsObject {
                 body.setLinearVelocity(0, body.getLinearVelocity().y);
             }
         }
-        System.out.println();
         if (i != 0 || (isWalk && body.getLinearVelocity().x != 0)) {
             updateCurrentFrame();
         }
@@ -151,11 +153,13 @@ public class SpacemanObject extends PhysicsObject {
     private void updateCurrentFrame() {
         accumulator += TimeUtils.millis() - lastUpdateTime;
         lastUpdateTime = TimeUtils.millis();
+        if (this instanceof AlienObject)
+            System.out.println();
         while (accumulator >= GameSettings.FRAME_DURATION) {
             accumulator -= GameSettings.FRAME_DURATION;
             i++;
             if (i >= right.length) i = 0;
-            System.out.println(accumulator);
+            //System.out.println(accumulator);
         }
     }
 

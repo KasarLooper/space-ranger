@@ -22,6 +22,8 @@ public class AlienObject extends SpacemanObject{
         lastCheckTime1 = TimeUtils.millis();
         lastX = getX();
         isChangingDirection = false;
+        System.out.println("Alien spawn");
+        System.out.println(x + " " + y);
     }
 
     @Override
