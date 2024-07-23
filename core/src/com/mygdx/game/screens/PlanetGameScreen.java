@@ -115,7 +115,7 @@ public class PlanetGameScreen extends GameScreen {
 
 
         fireButton = new ButtonView(1000, 50, 100, 100, GameResources.FIRE_BUTTON_PLANET_IMG_PATH);
-        strip = new ImageView(70, 800, 220,650, BUTTON_IMG_PATH);
+        strip = new ImageView(70, 800, 220,650, GameResources.STRIP_IMG_PATH);
         isLighting = false;
         isJump = false;
         isEnoughResources = false;

@@ -17,6 +17,7 @@ public class GameResources {
     public static final String MIDDLE_BLACKOUT_IMG_PATH = "button_background_long.png";
     public static final String FONT_PATH = "fonts/ofont.ru_Montserrat.ttf";
     public static final String BUTTON_IMG_PATH = "button.png";
+    public static final String STRIP_IMG_PATH = "strip.png";
 
     public static final String CORE_IMG_PATH = "core.png";
     public static final String ENEMY_SHIP_IMG_PATH = "Enemy_ship.png";
