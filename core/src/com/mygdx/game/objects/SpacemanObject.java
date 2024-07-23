@@ -153,8 +153,6 @@ public class SpacemanObject extends PhysicsObject {
     private void updateCurrentFrame() {
         accumulator += TimeUtils.millis() - lastUpdateTime;
         lastUpdateTime = TimeUtils.millis();
-        if (this instanceof AlienObject)
-            System.out.println();
         while (accumulator >= GameSettings.FRAME_DURATION) {
             accumulator -= GameSettings.FRAME_DURATION;
             i++;

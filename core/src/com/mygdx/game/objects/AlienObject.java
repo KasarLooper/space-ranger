@@ -4,10 +4,12 @@ import static com.mygdx.game.GameSettings.BLOCK_SIZE;
 import static com.mygdx.game.GameSettings.COSMONAUT_HEIGHT;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.BlockMap;
 import com.mygdx.game.GameResources;
+import com.mygdx.game.GameSettings;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,14 +18,14 @@ public class AlienObject extends SpacemanObject{
     long lastCheckTime1, lastCheckTime2;
     float lastX, lastY;
     boolean isChangingDirection;
+    private long stopTime;
 
     public AlienObject(int x, int y, int wight, int height, String texturePath, int defaultFrame, int speed, int jumpImpulse, World world, BlockMap blockMap) {
         super(x, y, wight, height, texturePath, defaultFrame, speed, jumpImpulse, world, blockMap);
         lastCheckTime1 = TimeUtils.millis();
         lastX = getX();
         isChangingDirection = false;
-        System.out.println("Alien spawn");
-        System.out.println(x + " " + y);
+        stopTime = 0;
     }
 
     @Override
@@ -45,10 +47,23 @@ public class AlienObject extends SpacemanObject{
 
     @Override
     public void hit(Type type) {
-        if (type == Type.Bullet) liveLeft--;
+        if (type == Type.Bullet) {
+            liveLeft--;
+            stop();
+            body.applyLinearImpulse(new Vector2(
+                    GameSettings.ALIEN_DAMAGE_IMPULSE * (isRightDirection ? -1 : 1), 0),
+                    body.getWorldCenter(), false);
+            stopTime = TimeUtils.millis();
+        }
+    }
+
+    @Override
+    public void stop() {
+        super.stop();
     }
 
     public void move(int playerX, int playerY, ArrayList<PhysicsBlock> blocks) {
+        if (TimeUtils.millis() - stopTime < 300) return;
         boolean isRight = playerX > getX();
         if (!isChangingDirection) jump();
         if (isStuck()) {
@@ -62,7 +77,7 @@ public class AlienObject extends SpacemanObject{
     }
 
     private boolean isStuck() {
-        if (TimeUtils.millis() - lastCheckTime1 > 3000) {
+        if (TimeUtils.millis() - lastCheckTime1 > 2000) {
             lastCheckTime1 = TimeUtils.millis();
             if (lastX == getX()) return true;
             else {
