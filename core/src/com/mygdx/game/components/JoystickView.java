@@ -20,15 +20,26 @@ public class JoystickView extends View {
         circle = new Texture(GameResources.JOYSTICK_CIRCLE_IMG_PATH);
         zone = new Texture(GameResources.JOYSTICK_BACK_IMG_PATH);
 
-        centreX = x + zone.getWidth() / 2f;
-        centreY = y + zone.getHeight() / 2f;
-        circleX = centreX;
-        circleY = centreY;
         radius = Math.max(zone.getWidth(), zone.getHeight()) / 2f;
         isTouched = false;
     }
 
     public void onTouch(int touchX, int touchY) {
+        System.out.println("Touch");
+
+        x = touchX - zone.getWidth() / 2f;
+        y = touchY - zone.getHeight() / 2f;
+
+        centreX = touchX;
+        centreY = touchY;
+        circleX = centreX;
+        circleY = centreY;
+
+        isTouched = true;
+    }
+
+    public void onDrag(int touchX, int touchY) {
+        System.out.println("Drag");
         if (getDistanceFromCenter(touchX, touchY) <= radius) {
             circleX = touchX;
             circleY = touchY;
@@ -37,7 +48,6 @@ public class JoystickView extends View {
             circleX = centreX + radius * (touchX - centreX) / ratio;
             circleY = centreY + radius * (touchY - centreY) / ratio;
         }
-        isTouched = true;
     }
 
     public void toDefault() {
@@ -57,11 +67,15 @@ public class JoystickView extends View {
     }
 
     public float getX() {
-        return (circleX - centreX) / radius;
+        float result = (circleX - centreX) / radius;
+        if (Math.abs(result) < 0.2f) result = 0;
+        return result;
     }
 
     public float getY() {
-        return (circleY - centreY) / radius;
+        float result = (circleY - centreY) / radius;
+        if (Math.abs(result) < 0.2f) result = 0;
+        return result;
     }
 
     public float getDegrees() {
@@ -73,6 +87,8 @@ public class JoystickView extends View {
 
     @Override
     public void draw(SpriteBatch batch) {
+        if (!isTouched) return;
+        //System.out.println((circleX - (float) circle.getWidth() / 2f) + " " + (circleY - (float) circle.getHeight() / 2f) + " " + x + " " + y);
         batch.draw(circle, circleX - (float) circle.getWidth() / 2f, circleY - (float) circle.getHeight() / 2f);
         batch.draw(zone, x, y);
     }

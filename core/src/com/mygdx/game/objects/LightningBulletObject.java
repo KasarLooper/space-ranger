@@ -19,8 +19,8 @@ import com.mygdx.game.GameSettings;
 
 public class LightningBulletObject extends PhysicsObject{
     private final Type type;
-    private long lastLightningSpawnTime;
     private boolean hasToBeDestroyed;
+    private static long lastShootTime;
 
     Sprite sprite;
     public LightningBulletObject(SpacemanObject spaceman, World world) {
@@ -31,8 +31,12 @@ public class LightningBulletObject extends PhysicsObject{
         sprite = new Sprite(texture);
         type = Type.Bullet;
         body.setType(BodyDef.BodyType.DynamicBody);
-        lastLightningSpawnTime = TimeUtils.millis();
         hasToBeDestroyed = false;
+        lastShootTime = TimeUtils.millis();
+    }
+
+    public static boolean isShootTime() {
+        return TimeUtils.millis() - lastShootTime > 1000;
     }
 
     @Override
@@ -70,13 +74,16 @@ public class LightningBulletObject extends PhysicsObject{
     }
 
 
-    public boolean destroy() {
-        if (TimeUtils.millis() - lastLightningSpawnTime > 1000 || hasToBeDestroyed) {
-            lastLightningSpawnTime = TimeUtils.millis();
+    public boolean destroyIfNeed() {
+        if (hasToBeDestroyed || TimeUtils.millis() - lastShootTime > 1000) {
             world.destroyBody(body);
             return true;
         }
         return false;
+    }
+
+    public boolean isHasToBeDestroyed() {
+        return hasToBeDestroyed;
     }
 
     @Override

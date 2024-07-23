@@ -27,6 +27,7 @@ import static com.mygdx.game.State.PLAYING;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.BlockMap;
 import com.mygdx.game.GameResources;
 import com.mygdx.game.GraphicsSettings;
@@ -49,6 +50,7 @@ import com.mygdx.game.objects.PhysicsBlock;
 import com.mygdx.game.objects.PhysicsObject;
 import com.mygdx.game.objects.ResourceObject;
 import com.mygdx.game.objects.SpacemanObject;
+import com.mygdx.game.session.GameSession;
 import com.mygdx.game.session.PlanetGameSession;
 
 import java.util.ArrayList;
@@ -152,11 +154,9 @@ public class PlanetGameScreen extends GameScreen {
                 for (AlienObject alien : aliens) alien.updateJump();
                 lives.setLeftLives(spaceman.liveLeft);
 
-                if (isLighting) {
-                    if (lightning.destroy()) {
-                        isLighting = false;
-                    }
-                }
+                if (lightning != null && lightning.destroyIfNeed()) lightning = null;
+                if (lightning == null && isLighting && LightningBulletObject.isShootTime())
+                    lightning = new LightningBulletObject(spaceman, myGdxGame.planet);
 
                 if (((PlanetGameSession)session).shouldSpawnCore()) {
                     Random random = new Random();
@@ -203,7 +203,7 @@ public class PlanetGameScreen extends GameScreen {
         }
         spaceman.draw(myGdxGame.batch);
         super.drawDynamic();
-        if (isLighting) lightning.draw(myGdxGame.batch);
+        if (lightning != null) lightning.draw(myGdxGame.batch);
         for (ResourceObject wreck : wrecks) wreck.draw(myGdxGame.batch);
         for (ResourceObject crystal : crystals) crystal.draw(myGdxGame.batch);
         for (AlienObject alien : aliens) alien.draw(myGdxGame.batch);
@@ -332,48 +332,51 @@ public class PlanetGameScreen extends GameScreen {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
         super.touchDown(screenX, screenY, pointer, button);
+        if (session.state != PLAYING) return true;
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
         screenY = Math.round((float) (Gdx.graphics.getHeight() - screenY) * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
-        if (screenX <= SCREEN_WIDTH / 2 && session.state == PLAYING) {
+        if (screenX > SCREEN_WIDTH / 2) {
+            if (jumpButton.isHit(screenX, screenY)) isJump = true;
+            if (fireButton.isHit(screenX, screenY)) isLighting = true;
+        } else {
+            if (joystick.isTouched()) joystick.onDrag(screenX, screenY);
+            else joystick.onTouch(screenX, screenY);
             if (joystick.getDegrees() % 360 > 0 && joystick.getDegrees() % 360 <= 180)
                 spaceman.stepLeft();
             else spaceman.stepRight();
-        }
-        if (jumpButton.isHit(screenX, screenY))
-            isJump = true;
-
-        if (fireButton.isHit(screenX, screenY) && ((PlanetGameSession)session).shouldSpawnLighting()) {
-            isLighting = true;
-            lightning = new LightningBulletObject(spaceman, myGdxGame.planet);
         }
         return true;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        super.touchUp(screenX, screenY, pointer, button);
+        if (session.state != PLAYING) return true;
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
         screenY = Math.round((float) (Gdx.graphics.getHeight() - screenY) * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
-        if (screenX <= SCREEN_WIDTH / 2 && session.state == PLAYING) spaceman.stop();
-        if (jumpButton.isHit(screenX, screenY))
-            isJump = false;
+        if (jumpButton.isHit(screenX, screenY)) isJump = false;
+        else if (fireButton.isHit(screenX, screenY)) isLighting = false;
+        else {
+            joystick.toDefault();
+            spaceman.stop();
+        }
+
         return true;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        super.touchDragged(screenX, screenY, pointer);
+        if (session.state != PLAYING) return true;
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
-        screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
-        if (screenX <= SCREEN_WIDTH / 2 && session.state == PLAYING) {
+        screenY = Math.round((float) (Gdx.graphics.getHeight() - screenY) * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
+        if (screenX > SCREEN_WIDTH / 2) {
+            if (!jumpButton.isHit(screenX, screenY)) isJump = false;
+            if (!fireButton.isHit(screenX, screenY)) isLighting = false;
+        }
+        if (!jumpButton.isHit(screenX, screenY) && !fireButton.isHit(screenX, screenY)) {
+            joystick.onDrag(screenX, screenY);
             if (joystick.getDegrees() % 360 > 0 && joystick.getDegrees() % 360 <= 180)
                 spaceman.stepLeft();
             else spaceman.stepRight();
-        }
-        if (screenX > SCREEN_WIDTH / 2 && session.state == PLAYING) {
-            if (!pauseButton.isHit(screenX, Gdx.graphics.getHeight() - screenY) && !jumpButton.isHit(screenX, Gdx.graphics.getHeight() - screenY)) {
-                isJump = false;
-            }
         }
         return true;
     }

@@ -122,8 +122,6 @@ public class SpacemanObject extends PhysicsObject {
     }
 
     public void updateFrames() {
-        if (this instanceof AlienObject)
-            System.out.println();
         if (isStop) {
             if (i == 0) {
                 isStop = false;
