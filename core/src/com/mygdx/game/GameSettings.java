@@ -19,7 +19,7 @@ public class GameSettings {
     //Spawn settings
     public static final int SPACE_SPAWN_COOL_DOWN = 2000;
     public static final int PLANET_SPAWN_COOL_DOWN = 10_000;
-    public static final int CHANCE_CORE_SPAWN = 25;
+    public static final int CHANCE_CORE_SPAWN = 25 + 75;
 
     // Object Setting
   
@@ -38,8 +38,8 @@ public class GameSettings {
 
 
     // Core Settings
-    public static final int CORE_WIDTH = 130;
-    public static final int CORE_HEIGHT = 110;
+    public static final int CORE_WIDTH = 50;
+    public static final int CORE_HEIGHT = 50;
 
     // Bullet Setting
     public static final int BULLET_WIDTH = 15;
