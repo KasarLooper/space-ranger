@@ -377,10 +377,15 @@ public class PlanetGameScreen extends GameScreen {
             if (!fireButton.isHit(screenX, screenY)) isLighting = false;
         }
         if (!jumpButton.isHit(screenX, screenY) && !fireButton.isHit(screenX, screenY)) {
-            joystick.onDrag(screenX, screenY);
-            if (joystick.getDegrees() % 360 > 0 && joystick.getDegrees() % 360 <= 180)
-                spaceman.stepLeft();
-            else spaceman.stepRight();
+            if (screenX <= SCREEN_WIDTH / 2) {
+                joystick.onDrag(screenX, screenY);
+                if (joystick.getDegrees() % 360 > 0 && joystick.getDegrees() % 360 <= 180)
+                    spaceman.stepLeft();
+                else spaceman.stepRight();
+            } else {
+                joystick.toDefault();
+                spaceman.stop();
+            }
         }
         return true;
     }

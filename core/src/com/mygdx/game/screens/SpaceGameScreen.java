@@ -288,8 +288,10 @@ public class SpaceGameScreen extends GameScreen {
         screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
         if (backgroundFireButton.isHit(screenX, SCREEN_HEIGHT - screenY)) isTouchedShoot = true;
         else if (session.state == PLAYING) {
-            if (joystick.isTouched()) joystick.onDrag(screenX, SCREEN_HEIGHT - screenY);
-            else joystick.onTouch(screenX, SCREEN_HEIGHT - screenY);
+            if (screenX <= SCREEN_WIDTH / 2) {
+                if (joystick.isTouched()) joystick.onDrag(screenX, SCREEN_HEIGHT - screenY);
+                else joystick.onTouch(screenX, SCREEN_HEIGHT - screenY);
+            }
         }
         return true;
     }
@@ -301,7 +303,8 @@ public class SpaceGameScreen extends GameScreen {
         screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
         if (backgroundFireButton.isHit(screenX, SCREEN_HEIGHT - screenY) && session.state == PLAYING) isTouchedShoot = false;
         else if (session.state == PLAYING) {
-            joystick.toDefault();
+            if (screenX < SCREEN_WIDTH / 2)
+                joystick.toDefault();
         }
         return true;
     }
@@ -313,7 +316,11 @@ public class SpaceGameScreen extends GameScreen {
         if (screenX <= SCREEN_WIDTH / 2 && session.state == PLAYING) joystick.onDrag(screenX, SCREEN_HEIGHT - screenY);
         else if (backgroundFireButton.isHit(screenX, SCREEN_HEIGHT - screenY) && session.state == PLAYING)
             isTouchedShoot = true;
-        else isTouchedShoot = false;
+        else {
+            isTouchedShoot = false;
+            joystick.toDefault();
+            shipObject.stop();
+        }
         return true;
     }
 }
