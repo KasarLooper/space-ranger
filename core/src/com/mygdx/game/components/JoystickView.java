@@ -25,8 +25,6 @@ public class JoystickView extends View {
     }
 
     public void onTouch(int touchX, int touchY) {
-        System.out.println("Touch");
-
         x = touchX - zone.getWidth() / 2f;
         y = touchY - zone.getHeight() / 2f;
 
@@ -39,7 +37,6 @@ public class JoystickView extends View {
     }
 
     public void onDrag(int touchX, int touchY) {
-        System.out.println("Drag");
         if (getDistanceFromCenter(touchX, touchY) <= radius) {
             circleX = touchX;
             circleY = touchY;

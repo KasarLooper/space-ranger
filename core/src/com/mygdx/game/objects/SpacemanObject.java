@@ -92,6 +92,7 @@ public class SpacemanObject extends PhysicsObject {
     public void draw(SpriteBatch batch) {
         sprite.setBounds(getX() - (width / 2f), getY() - (height / 2f), width, height);
         sprite.draw(batch);
+        if (!(this instanceof AlienObject    )) System.out.println(getY() - height / 2f);
     }
 
     public void stepLeft() {

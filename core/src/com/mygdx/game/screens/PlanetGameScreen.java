@@ -137,6 +137,10 @@ public class PlanetGameScreen extends GameScreen {
             isLighting = false;
             joystick.toDefault();
         }
+
+        //System.out.println("Frames: " + Gdx.graphics.getFramesPerSecond());
+        //System.out.printf("Spaceman pos: %d %d\n", spaceman.getX(), spaceman.getY());
+
         myGdxGame.camera.position.x = spaceman.getX() + dx;
         myGdxGame.camera.position.y = spaceman.getY() + GROUND_HEIGHT - CAMERA_Y_FROM_CENTER + dy;
         if (spaceman.isAlive()) {
