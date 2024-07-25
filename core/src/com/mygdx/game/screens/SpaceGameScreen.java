@@ -287,6 +287,10 @@ public class SpaceGameScreen extends GameScreen {
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
         screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
         if (backgroundFireButton.isHit(screenX, SCREEN_HEIGHT - screenY)) isTouchedShoot = true;
+        else if (session.state == PLAYING) {
+            if (joystick.isTouched()) joystick.onDrag(screenX, SCREEN_HEIGHT - screenY);
+            else joystick.onTouch(screenX, SCREEN_HEIGHT - screenY);
+        }
         return true;
     }
 
@@ -296,6 +300,9 @@ public class SpaceGameScreen extends GameScreen {
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
         screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
         if (backgroundFireButton.isHit(screenX, SCREEN_HEIGHT - screenY) && session.state == PLAYING) isTouchedShoot = false;
+        else if (session.state == PLAYING) {
+            joystick.toDefault();
+        }
         return true;
     }
 
@@ -303,11 +310,10 @@ public class SpaceGameScreen extends GameScreen {
     public boolean touchDragged(int screenX, int screenY, int pointer) {
         screenX = Math.round((float) screenX * (float) SCREEN_WIDTH / (float) Gdx.graphics.getWidth());
         screenY = Math.round((float) screenY * (float) SCREEN_HEIGHT / (float) Gdx.graphics.getHeight());
-        if (screenX <= SCREEN_WIDTH / 2 && session.state == PLAYING) joystick.onTouch(screenX, SCREEN_HEIGHT - screenY);
+        if (screenX <= SCREEN_WIDTH / 2 && session.state == PLAYING) joystick.onDrag(screenX, SCREEN_HEIGHT - screenY);
         else if (backgroundFireButton.isHit(screenX, SCREEN_HEIGHT - screenY) && session.state == PLAYING)
             isTouchedShoot = true;
-        else if (session.state == PLAYING)
-            joystick.toDefault();
+        else isTouchedShoot = false;
         return true;
     }
 }
