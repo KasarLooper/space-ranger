@@ -57,6 +57,7 @@ public class HistoryScreen extends ScreenAdapter {
                 if (i < texts.length) {
                     text.setText(texts[i]);
                 } else if (i > texts.length || photo == null) {
+                    i = 0;
                     if (nextScreen instanceof SpaceGameScreen) game.spaceLevel();
                     else if (nextScreen instanceof PlanetGameScreen) game.planetLevel();
                     else game.setScreen(nextScreen);
