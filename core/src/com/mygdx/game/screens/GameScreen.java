@@ -140,7 +140,6 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
             session.state = ENDED;
             myGdxGame.setScreen(myGdxGame.menuScreen);
             myGdxGame.audioManager.spaceMusic.stop();
-            myGdxGame.audioManager.menuMusic.play();
             isReload = true;
             camX = myGdxGame.camera.position.x;
             camY = myGdxGame.camera.position.y;

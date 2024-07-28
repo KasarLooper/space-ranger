@@ -96,7 +96,6 @@ public class MyGdxGame extends Game {
 	public void spaceLevel() {
 		setScreen(spaceScreen);
 		Gdx.input.setInputProcessor(spaceScreen);
-		audioManager.menuMusic.stop();
 		audioManager.spaceMusic.play();
 		audioManager.planetMusic.stop();
 	}
@@ -104,13 +103,11 @@ public class MyGdxGame extends Game {
 	public void planetLevel() {
 		setScreen(planetScreen);
 		Gdx.input.setInputProcessor(planetScreen);
-		audioManager.menuMusic.stop();
 		audioManager.spaceMusic.stop();
 		audioManager.planetMusic.play();
 	}
 
 	public void mainMenuMusic() {
-		audioManager.menuMusic.play();
 		audioManager.spaceMusic.stop();
 		audioManager.planetMusic.stop();
 	}
