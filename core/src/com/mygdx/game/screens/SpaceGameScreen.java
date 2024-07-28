@@ -253,7 +253,7 @@ public class SpaceGameScreen extends GameScreen {
                 String.format(GameResources.SHIP_IMG_PATH, 3),
                 myGdxGame.space
         );
-        purpose.setText("цель - энергия: 0/3");
+        purpose.setText("Цель - энергия: 0/3");
         live.setLeftLives(3);
         bulletArray.clear();
         boomArray.clear();

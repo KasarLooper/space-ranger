@@ -64,15 +64,11 @@ public class JoystickView extends View {
     }
 
     public float getX() {
-        float result = (circleX - centreX) / radius;
-        if (Math.abs(result) < 0.2f) result = 0;
-        return result;
+        return (circleX - centreX) / radius;
     }
 
     public float getY() {
-        float result = (circleY - centreY) / radius;
-        if (Math.abs(result) < 0.2f) result = 0;
-        return result;
+        return (circleY - centreY) / radius;
     }
 
     public float getDegrees() {

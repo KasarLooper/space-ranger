@@ -109,14 +109,14 @@ public class PlanetGameScreen extends GameScreen {
         wrecks = new ArrayList<>();
         crystals = new ArrayList<>();
         capsule = new CapsuleObject(loader.getCapsuleX(), loader.getCapsuleY(), loader.getCapsuleWidth(), loader.getCapsuleHeight());
-        jumpButton = new ButtonView(1150, 50, 100, 100, GameResources.JUMP_BUTTON_IMG_PATH);
+        jumpButton = new ButtonView(1130, 10, 150, 150, GameResources.JUMP_BUTTON_IMG_PATH);
         lives = new LiveView(0, 675);
         purpose = new TextView(myGdxGame.averageWhiteFont, 300, 675,
                 String.format(GraphicsSettings.PLANET_AIM1_PATTERN, spaceman.cristalCount, spaceman.wreckCount));
 
 
 
-        fireButton = new ButtonView(1000, 50, 100, 100, GameResources.FIRE_BUTTON_PLANET_IMG_PATH);
+        fireButton = new ButtonView(970, 10, 150, 150, GameResources.FIRE_BUTTON_PLANET_IMG_PATH);
         strip = new ImageView(70, 800, 220,650, GameResources.STRIP_IMG_PATH);
         isLighting = false;
         isJump = false;
@@ -321,6 +321,7 @@ public class PlanetGameScreen extends GameScreen {
         crystals = new ArrayList<>();
         lives.setLeftLives(3);
         purpose.setText(String.format(GraphicsSettings.PLANET_AIM1_PATTERN, spaceman.wreckCount, spaceman.cristalCount));
+        purpose.TextPosition();
     }
 
     @Override
@@ -345,9 +346,6 @@ public class PlanetGameScreen extends GameScreen {
         } else {
             if (joystick.isTouched()) joystick.onDrag(screenX, screenY);
             else joystick.onTouch(screenX, screenY);
-            if (joystick.getDegrees() % 360 > 0 && joystick.getDegrees() % 360 <= 180)
-                spaceman.stepLeft();
-            else spaceman.stepRight();
         }
         return true;
     }
