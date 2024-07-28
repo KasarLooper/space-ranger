@@ -138,9 +138,6 @@ public class PlanetGameScreen extends GameScreen {
             joystick.toDefault();
         }
 
-        //System.out.println("Frames: " + Gdx.graphics.getFramesPerSecond());
-        //System.out.printf("Spaceman pos: %d %d\n", spaceman.getX(), spaceman.getY());
-
         myGdxGame.camera.position.x = spaceman.getX() + dx;
         myGdxGame.camera.position.y = spaceman.getY() + GROUND_HEIGHT - CAMERA_Y_FROM_CENTER + dy;
         if (spaceman.isAlive()) {
@@ -322,6 +319,9 @@ public class PlanetGameScreen extends GameScreen {
         lives.setLeftLives(3);
         purpose.setText(String.format(GraphicsSettings.PLANET_AIM1_PATTERN, spaceman.wreckCount, spaceman.cristalCount));
         purpose.TextPosition();
+        spaceman.cristalCount = 0;
+        spaceman.wreckCount = 0;
+        isEnoughResources = false;
     }
 
     @Override
