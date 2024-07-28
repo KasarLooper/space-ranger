@@ -17,7 +17,7 @@ public class EntitySpawner {
         rd = new Random();
     }
 
-    public Pair newPair(float playerX, float playerY, int width, int height) {
+    public Pair newPair(float playerX, float playerY, int width, int height, float degrees) {
         while (true) {
             float x, y;
             float randomDX = rd.nextInt(SCREEN_WIDTH / 2 - width / 2);

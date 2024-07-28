@@ -142,7 +142,7 @@ public class SpaceGameScreen extends GameScreen {
                         myGdxGame.passSpaceLevel();
                         shipObject.moleHoleAnim();
                     }
-                    if (joystick.isTouched()) {
+                    if (joystick.isTouched() && (joystick.getX() != 0 || joystick.getY() != 0)) {
                         shipObject.setRotation(joystick.getDegrees());
                         shipObject.move();
                     } else shipObject.stop();
@@ -262,7 +262,7 @@ public class SpaceGameScreen extends GameScreen {
 
     // Генераторы
     private void generateCore() {
-        EntitySpawner.Pair pair = spawner.newPair(shipObject.getX(), shipObject.getY(), CORE_WIDTH / 2, CORE_HEIGHT / 2);
+        EntitySpawner.Pair pair = spawner.newPair(shipObject.getX(), shipObject.getY(), CORE_WIDTH / 2, CORE_HEIGHT / 2, shipObject.getRotation());
         CoreObject coreObject = new CoreObject(
                 (int) pair.x, (int) pair.y,
                 CORE_WIDTH, CORE_HEIGHT, myGdxGame.space,
@@ -272,7 +272,7 @@ public class SpaceGameScreen extends GameScreen {
     }
 
     private void generateEnemy() {
-        EntitySpawner.Pair pair = spawner.newPair(shipObject.getX(), shipObject.getY(), ENEMY_WIDTH / 2, ENEMY_HEIGHT / 2);
+        EntitySpawner.Pair pair = spawner.newPair(shipObject.getX(), shipObject.getY(), ENEMY_WIDTH / 2, ENEMY_HEIGHT / 2, shipObject.getRotation());
         EnemyObject enemy = new EnemyObject(
                 (int) pair.x, (int) pair.y,
                 ENEMY_WIDTH, ENEMY_HEIGHT, myGdxGame.space,

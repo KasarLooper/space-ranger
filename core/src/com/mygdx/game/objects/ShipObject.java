@@ -42,7 +42,6 @@ public class ShipObject extends PhysicsObject {
         }
         int dx = (int) (cos(toRadians(degrees + 90)) * SPEED_SHIP);
         int dy = (int) (sin(toRadians(degrees + 90)) * SPEED_SHIP);
-        //System.out.printf("Set linear velocity to %d %d\n", dx, dy);
         body.setLinearVelocity(dx, dy);
     }
 
@@ -56,8 +55,6 @@ public class ShipObject extends PhysicsObject {
 
     @Override
     public void draw(SpriteBatch batch) {
-        //System.out.printf("Velosity %f %f\n", body.getLinearVelocity().x, body.getLinearVelocity().y);
-        if (isStop) System.out.printf("%f %f\n", body.getLinearVelocity().x, body.getLinearVelocity().y);
         sprite.setBounds(getX() - width / 2f, getY() - height / 2f, width, height);
         if (i > 0 && i < 19 * COUNT_FRAMES_ONE_IMG) sprite.setTexture(new Texture(String.format(GameResources.ANIM_SHIP_PORTAL_IMG_PATH_PATTERN,
                 i / COUNT_FRAMES_ONE_IMG + 1)));
