@@ -107,6 +107,7 @@ public class SpaceGameScreen extends GameScreen {
             joystick.toDefault();
         }
         if (shipObject.isAlive()) {
+            System.out.println(shipObject.getRotation() % 360);
             myGdxGame.camera.position.x = shipObject.getX();
             myGdxGame.camera.position.y = shipObject.getY();
             backgroundView.move(shipObject.getX(), shipObject.getY());

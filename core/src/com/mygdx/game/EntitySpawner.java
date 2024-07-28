@@ -18,15 +18,16 @@ public class EntitySpawner {
     }
 
     public Pair newPair(float playerX, float playerY, int width, int height, float degrees) {
+        degrees %= 360;
         while (true) {
             float x, y;
             float randomDX = rd.nextInt(SCREEN_WIDTH / 2 - width / 2);
             float randomDY = rd.nextInt(SCREEN_HEIGHT / 2 - height / 2);
 
-            if (rd.nextBoolean()) x = playerX - (SCREEN_WIDTH + width) / 2f - randomDX;
+            if (degrees >= 90 && degrees < 270) x = playerX - (SCREEN_WIDTH + width) / 2f - randomDX;
             else x = playerX + (SCREEN_WIDTH + width) / 2f + randomDX;
 
-            if (rd.nextBoolean()) y = playerY - (SCREEN_HEIGHT + height) / 2f - randomDY;
+            if (degrees >= 180 && degrees < 360) y = playerY - (SCREEN_HEIGHT + height) / 2f - randomDY;
             else y = playerY + (SCREEN_HEIGHT + height) / 2f + randomDY;
 
             if (isFarEnough(x, y)) {
