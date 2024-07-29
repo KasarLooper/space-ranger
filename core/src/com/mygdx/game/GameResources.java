@@ -55,12 +55,13 @@ public class GameResources {
     public static final String SOUND_WALKING_PATH = "music/sound_walking.mp3";
     public static final String SOUND_SHOT_PATH = "music/sound_shot.mp3";
     public static final String SOUND_ENERGY_PATH = "music/f7b30b479a2a752.mp3";
+//  public static final String MUSIC_PLANET_PATH = "music/Extreme.mp3";
+    public static final String MUSIC_PLANET_PATH = "music/planet_music.mp3";
 
 
     //Второй уровень
     public static final String LIGHTNING_RIGHT_IMG_PATH = "lightning_right.png";
     public static final String LIGHTNING_LEFT_IMG_PATH = "lightning_left.png";
-    public static final String MUSIC_PLANET_PATH = "music/Extreme.mp3";
     public static final String EARTH_BACKGROUND_IMG_PATH = "earth_background.png";
     public static final String CAPSULE_IMG_PATH = "capsule.png";
 
