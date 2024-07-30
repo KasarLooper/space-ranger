@@ -66,4 +66,7 @@ public class Earth extends GameObject{
         for (float x : earthXs)
             batch.draw(texture, x, GROUND_HEIGHT - EARTH_HEIGHT / 2f, EARTH_WIDTH, EARTH_HEIGHT);
     }
+
+    public void dispose() {
+    }
 }

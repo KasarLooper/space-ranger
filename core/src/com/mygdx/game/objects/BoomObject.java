@@ -34,4 +34,7 @@ public class BoomObject{
     public boolean isNotAlive() {
         return width <= 0 || height <= 0;
     }
+
+    public void dispose() {
+    }
 }

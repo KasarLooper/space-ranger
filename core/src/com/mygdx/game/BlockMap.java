@@ -18,12 +18,14 @@ public class BlockMap {
             blocks[y][x] = block;
         }
 
+        /*
         for (int y = 0; y < worldHeight; y++) {
             for (int x = 0; x < worldWidth; x++) {
                 System.out.print(blocks[y][x] != null ? "*" : " ");
             }
             System.out.println();
         }
+         */
 
     }
 

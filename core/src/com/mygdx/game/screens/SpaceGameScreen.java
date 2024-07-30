@@ -107,7 +107,6 @@ public class SpaceGameScreen extends GameScreen {
             joystick.toDefault();
         }
         if (shipObject.isAlive()) {
-            System.out.println(shipObject.getRotation() % 360);
             myGdxGame.camera.position.x = shipObject.getX();
             myGdxGame.camera.position.y = shipObject.getY();
             backgroundView.move(shipObject.getX(), shipObject.getY());
@@ -323,6 +322,37 @@ public class SpaceGameScreen extends GameScreen {
             shipObject.stop();
         }
         return true;
+    }
+
+    @Override
+    public void dispose() {
+        super.dispose();
+        if (shipObject != null) shipObject.dispose();
+        if (bulletArray != null) {
+            for (BulletObject bullet : bulletArray) {
+                bullet.dispose();
+            }
+        }
+        if (coreArray != null) {
+            for (CoreObject core : coreArray) {
+                core.dispose();
+            }
+        }
+        if (boomArray != null) {
+            for (BoomObject boom : boomArray) {
+                boom.dispose();
+            }
+        }
+        if (enemyArray != null) {
+            for (EnemyObject enemy : enemyArray) {
+                enemy.dispose();
+            }
+        }
+        if (backgroundView != null) backgroundView.dispose();
+        if (fireButton != null) fireButton.dispose();
+        if (backgroundFireButton != null) backgroundFireButton.dispose();
+        if (purpose != null) purpose.dispose();
+        if (live != null) live.dispose();
     }
 }
 

@@ -28,14 +28,12 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     MyGdxGame myGdxGame;
     JoystickView joystick;
     long showTime;
-    State state;
     ButtonView pauseButton, endButton, continueButton, restartButton;
     MovingBackgroundView black_out_on_pause;
 
     private boolean isReload = false;
     private float camX;
     private float camY;
-    Box2DDebugRenderer debugRenderer = new Box2DDebugRenderer();
 
 
     public GameScreen(MyGdxGame game) {
@@ -120,8 +118,12 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     @Override
     public void dispose() {
         super.dispose();
-        joystick.dispose();
-        pauseButton.dispose();
+        if (joystick != null) joystick.dispose();
+        if (pauseButton != null) pauseButton.dispose();
+        if (endButton != null) endButton.dispose();
+        if (continueButton != null) continueButton.dispose();
+        if (restartButton != null) restartButton.dispose();
+        if (black_out_on_pause != null) black_out_on_pause.dispose();
     }
 
 

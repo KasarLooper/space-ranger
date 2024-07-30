@@ -329,10 +329,36 @@ public class PlanetGameScreen extends GameScreen {
     @Override
     public void dispose() {
         super.dispose();
-        spaceman.dispose();
-        capsule.dispose();
-        jumpButton.dispose();
-        strip.dispose();
+        if (backgroundView != null) backgroundView.dispose();
+        if (spaceman != null) spaceman.dispose();
+        if (earth != null) earth.dispose();
+        if (physics != null) {
+            for (PhysicsBlock block : physics) {
+                block.dispose();
+            }
+        }
+        if (aliens != null) {
+            for (AlienObject alien : aliens) {
+                alien.dispose();
+            }
+        }
+        if (wrecks != null) {
+            for (ResourceObject wreck : wrecks) {
+                wreck.dispose();
+            }
+        }
+        if (crystals != null) {
+            for (ResourceObject crystal : crystals) {
+                crystal.dispose();
+            }
+        }
+        if (capsule != null) capsule.dispose();
+        if (lives != null) lives.dispose();
+        if (jumpButton != null) jumpButton.dispose();
+        if (strip != null) strip.dispose();
+        if (purpose != null) purpose.dispose();
+        if (fireButton != null) fireButton.dispose();
+        if (lightning != null) lightning.dispose();
     }
 
 
