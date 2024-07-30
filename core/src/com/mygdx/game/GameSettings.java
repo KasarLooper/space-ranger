@@ -81,6 +81,7 @@ public class GameSettings {
     public static final int COSMONAUT_SPEED = 10;
     public static final int COSMONAUT_JUMP_FORCE = 75;
     public static final int FRAME_DURATION = 20;
+    public static final int LIGHTNING_DAMAGE_MILLIS = 300;
 
     // Lightning settings
     public static final int LIGHTING_WIDTH = 240;

@@ -35,6 +35,7 @@ public class SpacemanObject extends PhysicsObject {
     public int liveLeft;
     long accumulator;
     long lastUpdateTime;
+    long damageTime;
 
     public int cristalCount, wreckCount;
 
@@ -60,6 +61,7 @@ public class SpacemanObject extends PhysicsObject {
         lastChangeIsWalkTime = TimeUtils.millis();
         lastJumpTime = TimeUtils.millis();
         lastUpdateTime = TimeUtils.millis();
+        damageTime = 0;
     }
 
     protected void initTextures(int defaultFrame) {
@@ -91,8 +93,10 @@ public class SpacemanObject extends PhysicsObject {
     @Override
     public void draw(SpriteBatch batch) {
         sprite.setBounds(getX() - (width / 2f), getY() - (height / 2f), width, height);
+        boolean isRed = TimeUtils.millis() - damageTime <= GameSettings.LIGHTNING_DAMAGE_MILLIS;
+        if (isRed) batch.setShader(GameResources.RED_SHADER);
         sprite.draw(batch);
-        if (!(this instanceof AlienObject    )) System.out.println(getY() - height / 2f);
+        if (isRed) batch.setShader(null);
     }
 
     public void stepLeft() {
@@ -165,6 +169,7 @@ public class SpacemanObject extends PhysicsObject {
         body.applyLinearImpulse(new Vector2(0, 3), body.getWorldCenter(), true);
         if (type == Type.Enemy) {
             liveLeft -= 1;
+            damageTime = TimeUtils.millis();
         }
     }
 

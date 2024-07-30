@@ -1,5 +1,8 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+
 public class GameResources {
     public static final String SHIP_IMG_PATH = "ship_%d.png";
     public static final String JOYSTICK_BACK_IMG_PATH = "joystick-zone.png";
@@ -63,4 +66,8 @@ public class GameResources {
     //Заставка для конца игры
     public static final String BACKGROUND_END_IMG_PATH = "background_end.jpg";
     public static final String FIRE_BUTTON_PLANET_IMG_PATH = "fireButtonPlanet.png";
+
+    public static final ShaderProgram RED_SHADER = new ShaderProgram(
+            Gdx.files.internal("shaders/vertex_shader.glsl").readString(),
+            Gdx.files.internal("shaders/fragment_shader.glsl").readString());
 }

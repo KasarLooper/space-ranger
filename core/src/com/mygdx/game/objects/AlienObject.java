@@ -54,6 +54,7 @@ public class AlienObject extends SpacemanObject{
                     GameSettings.ALIEN_DAMAGE_IMPULSE * (isRightDirection ? -1 : 1), 0),
                     body.getWorldCenter(), false);
             stopTime = TimeUtils.millis();
+            damageTime = TimeUtils.millis();
         }
     }
 
