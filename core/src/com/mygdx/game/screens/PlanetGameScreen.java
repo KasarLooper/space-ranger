@@ -214,12 +214,12 @@ public class PlanetGameScreen extends GameScreen {
 
     @Override
     public void drawStatic() {
-        super.drawStatic();
         jumpButton.draw(myGdxGame.batch);
         lives.draw(myGdxGame.batch);
         strip.draw(myGdxGame.batch);
         purpose.draw(myGdxGame.batch);
         fireButton.draw(myGdxGame.batch);
+        super.drawStatic();
     }
 
 
