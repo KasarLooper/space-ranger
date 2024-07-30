@@ -42,6 +42,7 @@ public class GameResources {
     public static final String LIGHTNING_LEFT_IMG_PATH = "lightning_left.png";
     public static final String EARTH_BACKGROUND_IMG_PATH = "earth_background.png";
     public static final String CAPSULE_IMG_PATH = "capsule.png";
+    public static final String ASTEROID_IMG_PATH = "asteroid.png";
 
     //ресурсы
     public static final String CRYSTAL_IMG_PATH = "crystal.png";
