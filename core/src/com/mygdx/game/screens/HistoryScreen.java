@@ -69,5 +69,6 @@ public class HistoryScreen extends ScreenAdapter {
     public void dispose() {
         button.dispose();
         text.dispose();
+        photo.dispose();
     }
 }

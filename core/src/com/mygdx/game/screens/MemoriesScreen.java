@@ -92,4 +92,13 @@ public class MemoriesScreen extends ScreenAdapter {
             }
         }
     }
+
+    @Override
+    public void dispose() {
+        title.dispose();
+        space.dispose();
+        planet.dispose();
+        back.dispose();
+        backgroundView.dispose();
+    }
 }

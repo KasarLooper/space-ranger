@@ -72,6 +72,7 @@ public class MenuScreen extends ScreenAdapter {
         backgroundView.dispose();
         titleView.dispose();
         startButtonView.dispose();
+        memoryButton.dispose();
         exitButtonView.dispose();
     }
 }
