@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 public class GameResources {
-    public static final String EARTH_IMG_PATH = "earth.png";
     public static final String SHIP_IMG_PATH = "ship_%d.png";
     public static final String JOYSTICK_BACK_IMG_PATH = "joystick-zone.png";
     public static final String JOYSTICK_CIRCLE_IMG_PATH = "joystick-circle.png";
@@ -12,9 +11,6 @@ public class GameResources {
     public static final String BACKGROUND_2_IMG_PATH = "back_2.png";
     public static final String BLACKOUT_IMG_PATH = "blackout_full.png";
 
-    public static final String SWORDS_IMG_PATH = "swords.png";
-
-    public static final String MIDDLE_BLACKOUT_IMG_PATH = "button_background_long.png";
     public static final String FONT_PATH = "fonts/ofont.ru_Montserrat.ttf";
     public static final String BUTTON_IMG_PATH = "button.png";
     public static final String STRIP_IMG_PATH = "strip.png";
@@ -35,7 +31,6 @@ public class GameResources {
     public static final String SOUND_WALKING_PATH = "music/sound_walking.mp3";
     public static final String SOUND_SHOT_PATH = "music/sound_shot.mp3";
     public static final String SOUND_ENERGY_PATH = "music/f7b30b479a2a752.mp3";
-//  public static final String MUSIC_PLANET_PATH = "music/Extreme.mp3";
     public static final String MUSIC_PLANET_PATH = "music/planet_music.mp3";
 
 
