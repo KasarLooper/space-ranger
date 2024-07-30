@@ -36,5 +36,6 @@ public class BoomObject{
     }
 
     public void dispose() {
+        texture.dispose();
     }
 }

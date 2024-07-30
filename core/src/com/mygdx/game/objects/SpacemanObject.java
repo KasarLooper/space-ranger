@@ -173,6 +173,17 @@ public class SpacemanObject extends PhysicsObject {
         }
     }
 
+    @Override
+    public void dispose() {
+        super.dispose();
+        if (left != null)
+            for (Texture tex : left)
+                tex.dispose();
+        if (right != null)
+            for (Texture tex : right)
+                tex.dispose();
+    }
+
     public Type type() {
         return Type.Player;
     }

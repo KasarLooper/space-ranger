@@ -68,5 +68,6 @@ public class Earth extends GameObject{
     }
 
     public void dispose() {
+        texture.dispose();
     }
 }
