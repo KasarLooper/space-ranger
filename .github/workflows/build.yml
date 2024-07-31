@@ -31,6 +31,7 @@ jobs:
         run: |
           echo $STORE_BASE64 > keystore.txt
           base64 -d keystore.txt > $STORE_NAME
+          
       - name: Grant permission
         run: chmod -R 777 ./gradlew
 
