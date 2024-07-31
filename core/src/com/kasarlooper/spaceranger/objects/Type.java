@@ -8,6 +8,7 @@ public enum Type {
     EnemyBullet,
     Earth,
     Block,
-    Resource
+    Resource,
+    Asteroid
 }
 

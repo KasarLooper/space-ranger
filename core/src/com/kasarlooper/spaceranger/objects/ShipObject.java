@@ -75,6 +75,7 @@ public class ShipObject extends PhysicsObject {
         if (type == Type.Enemy || type == Type.EnemyBullet || type == Type.Bullet) {
             livesLeft -= 1;
         }
+        if (type == Type.Asteroid) livesLeft = 0;
         if (livesLeft > 0) sprite.setTexture(new Texture(String.format(GameResources.SHIP_IMG_PATH, livesLeft)));
     }
 

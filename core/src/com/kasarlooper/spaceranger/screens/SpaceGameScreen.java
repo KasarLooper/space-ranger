@@ -1,9 +1,13 @@
 package com.kasarlooper.spaceranger.screens;
 
+import static com.kasarlooper.spaceranger.GameResources.ASTEROID_IMG_PATH;
 import static com.kasarlooper.spaceranger.GameResources.CORE_IMG_PATH;
 import static com.kasarlooper.spaceranger.GameResources.ENEMY_SHIP_IMG_PATH;
+import static com.kasarlooper.spaceranger.GameSettings.ASTEROID_WIDTH_MAX;
+import static com.kasarlooper.spaceranger.GameSettings.ASTEROID_WIDTH_MIN;
 import static com.kasarlooper.spaceranger.GameSettings.BULLET_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.Bullet_Speed;
+import static com.kasarlooper.spaceranger.GameSettings.CHANCE_ASTEROID_SPAWN;
 import static com.kasarlooper.spaceranger.GameSettings.CHANCE_CORE_SPAWN;
 import static com.kasarlooper.spaceranger.GameSettings.CORE_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.CORE_WIDTH;
@@ -31,6 +35,7 @@ import com.kasarlooper.spaceranger.components.LiveView;
 import com.kasarlooper.spaceranger.components.MovingBackgroundView;
 import com.kasarlooper.spaceranger.components.TextView;
 import com.kasarlooper.spaceranger.manager.ContactManager;
+import com.kasarlooper.spaceranger.objects.AsteroidObject;
 import com.kasarlooper.spaceranger.objects.BoomObject;
 import com.kasarlooper.spaceranger.objects.BulletObject;
 import com.kasarlooper.spaceranger.objects.CoreObject;
@@ -53,8 +58,8 @@ public class SpaceGameScreen extends GameScreen {
     ArrayList<BulletObject> bulletArray;
     ArrayList<CoreObject> coreArray;
     ArrayList<BoomObject> boomArray;
-
     ArrayList<EnemyObject> enemyArray;
+    ArrayList<AsteroidObject> asteroidArray;
     ContactManager contactManager;
     MovingBackgroundView backgroundView;
     ButtonView fireButton;
@@ -83,6 +88,7 @@ public class SpaceGameScreen extends GameScreen {
         bulletArray = new ArrayList<>();
         coreArray = new ArrayList<>();
         enemyArray = new ArrayList<>();
+        asteroidArray = new ArrayList<>();
         random = new Random();
         purpose = new TextView(myGdxGame.averageWhiteFont, 500, 675, "Цель - энергия: 0/3");
         live = new LiveView(0, 675);
@@ -125,6 +131,7 @@ public class SpaceGameScreen extends GameScreen {
                     }
                     if (session.shouldSpawn()) {
                         if (rd.nextInt(100) < CHANCE_CORE_SPAWN) generateCore();
+                        else if (rd.nextInt(100) < CHANCE_ASTEROID_SPAWN) generateAsteroid();
                         else generateEnemy();
                     }
                     for (EnemyObject enemy : enemyArray) {
@@ -173,6 +180,7 @@ public class SpaceGameScreen extends GameScreen {
         for (BulletObject bullet : bulletArray) bullet.draw(myGdxGame.batch);
         for (CoreObject core: coreArray) core.draw(myGdxGame.batch);
         for (EnemyObject enemy: enemyArray) enemy.draw(myGdxGame.batch);
+        for (AsteroidObject asteroid : asteroidArray) asteroid.draw(myGdxGame.batch);
         super.drawDynamic();
     }
 
@@ -245,6 +253,11 @@ public class SpaceGameScreen extends GameScreen {
             myGdxGame.space.destroyBody(iterator_enemy.next().body);
             iterator_enemy.remove();
         }
+        Iterator<AsteroidObject> iteratorAsteroid = asteroidArray.iterator();
+        while (iteratorAsteroid.hasNext()) {
+            myGdxGame.space.destroyBody(iteratorAsteroid.next().body);
+            iteratorAsteroid.remove();
+        }
         if (shipObject != null) myGdxGame.space.destroyBody(shipObject.body);
         shipObject = new ShipObject(
                 GameSettings.SCREEN_WIDTH / 2, GameSettings.SCREEN_HEIGHT / 2,
@@ -278,6 +291,17 @@ public class SpaceGameScreen extends GameScreen {
                 ENEMY_SHIP_IMG_PATH
         );
         enemyArray.add(enemy);
+    }
+
+    private void generateAsteroid() {
+        int size = ASTEROID_WIDTH_MIN + rd.nextInt(ASTEROID_WIDTH_MAX - ASTEROID_WIDTH_MIN);
+        EntitySpawner.Pair pair = spawner.newPair(shipObject.getX(), shipObject.getY(), size / 2, size / 2, shipObject.getRotation());
+        AsteroidObject asteroid = new AsteroidObject(
+                ASTEROID_IMG_PATH,
+                (int) pair.x, (int) pair.y,
+                size, size, myGdxGame.space,
+                shipObject.getX(), shipObject.getY());
+        asteroidArray.add(asteroid);
     }
 
     @Override
@@ -345,6 +369,11 @@ public class SpaceGameScreen extends GameScreen {
         if (enemyArray != null) {
             for (EnemyObject enemy : enemyArray) {
                 enemy.dispose();
+            }
+        }
+        if (asteroidArray != null) {
+            for (AsteroidObject asteroid : asteroidArray) {
+                asteroid.dispose();
             }
         }
         if (backgroundView != null) backgroundView.dispose();
