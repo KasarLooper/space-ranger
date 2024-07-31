@@ -36,5 +36,6 @@ public class MemoryManager {
 
     public static void clear() {
         Gdx.app.getPreferences("User saves").clear();
+        preferences.flush();
     }
 }

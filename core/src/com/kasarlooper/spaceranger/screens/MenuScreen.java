@@ -62,7 +62,7 @@ public class MenuScreen extends ScreenAdapter {
             }
 
             if (exitButtonView.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
-                Gdx.app.exit();
+                myGdxGame.exit();
             }
         }
     }

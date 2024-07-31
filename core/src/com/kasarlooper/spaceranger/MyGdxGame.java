@@ -130,14 +130,20 @@ public class MyGdxGame extends Game {
 
 	public void passSpaceLevel() {
 		MemoryManager.saveIsPassedSpace(true);
+		MemoryManager.saveIsFirstLevel(false);
 	}
 
 	public void passPlanetLevel() {
 		MemoryManager.saveIsPassedPlanet(true);
+		MemoryManager.saveIsFirstLevel(true);
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
+	}
+
+	public void exit() {
+		Gdx.app.exit();
 	}
 }

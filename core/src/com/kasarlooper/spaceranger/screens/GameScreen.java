@@ -155,10 +155,8 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
             myGdxGame.camera.position.y = myGdxGame.camera.viewportHeight / 2;
             if (myGdxGame.isContinue && session.victory()) {
                 if (this instanceof SpaceGameScreen) {
-                    myGdxGame.isFirstLevel = false;
                     myGdxGame.setScreen(myGdxGame.planetHistory);
                 } else {
-                    myGdxGame.isFirstLevel = true;
                     myGdxGame.setScreen(myGdxGame.endHistory);
                 }
                 MemoryManager.saveIsFirstLevel(myGdxGame.isFirstLevel);
