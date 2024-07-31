@@ -10,6 +10,7 @@ import com.kasarlooper.spaceranger.MyGdxGame;
 import com.kasarlooper.spaceranger.components.ButtonView;
 import com.kasarlooper.spaceranger.components.MovingBackgroundView;
 import com.kasarlooper.spaceranger.components.TextView;
+import com.kasarlooper.spaceranger.manager.MemoryManager;
 
 public class MenuScreen extends ScreenAdapter {
     MyGdxGame myGdxGame;
@@ -52,12 +53,12 @@ public class MenuScreen extends ScreenAdapter {
             myGdxGame.touch = myGdxGame.camera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
 
             if (startButtonView.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
-                myGdxGame.isContinue = true;
-                if (myGdxGame.isFirstLevel) myGdxGame.setScreen(myGdxGame.spaceHistory);
+                myGdxGame.isInPlot = true;
+                if (MemoryManager.loadIsFirstLevel()) myGdxGame.setScreen(myGdxGame.spaceHistory);
                 else myGdxGame.setScreen(myGdxGame.planetHistory);
             }
             if (memoryButton.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
-                myGdxGame.isContinue = false;
+                myGdxGame.isInPlot = false;
                 myGdxGame.setScreen(myGdxGame.memoriesScreen);
             }
 

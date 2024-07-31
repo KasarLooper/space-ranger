@@ -30,7 +30,6 @@ import com.kasarlooper.spaceranger.screens.SpaceGameScreen;
 public class MyGdxGame extends Game {
 	public World space;
 	public World planet;
-	public boolean isFirstLevel;
 	private float accumulator;
 
 	public State state;
@@ -49,14 +48,13 @@ public class MyGdxGame extends Game {
 	public HistoryScreen spaceHistory;
 	public HistoryScreen planetHistory;
 	public HistoryScreen endHistory;
-	public boolean isContinue;
+	public boolean isInPlot;
 
 	public AudioManager audioManager;
 	@Override
 	public void create () {
+		System.out.println(MemoryManager.loadIsFirstLevel());
 		//MemoryManager.clear();
-		isFirstLevel = MemoryManager.loadIsFirstLevel();
-		isContinue = false;
 
 		Box2D.init();
 		space = new World(new Vector2(0, 0), true);

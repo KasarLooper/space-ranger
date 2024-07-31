@@ -80,8 +80,6 @@ public class PlanetGameScreen extends GameScreen {
     boolean isEnoughResources;
     boolean isWinGame;
 
-
-
     public PlanetGameScreen(MyGdxGame game) {
         super(game);
         session = new PlanetGameSession();

@@ -26,7 +26,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     MyGdxGame myGdxGame;
     JoystickView joystick;
     long showTime;
-    ButtonView pauseButton, endButton, continueButton, restartButton;
+    ButtonView pauseButton, endButton, continueButton, restartButton, nextButton;
     MovingBackgroundView black_out_on_pause;
 
     private boolean isReload = false;
@@ -40,6 +40,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
         endButton = new ButtonView(430, 516, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Меню");
         continueButton = new ButtonView(430, 406, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Продолжить");
         restartButton = new ButtonView(430, 416, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Заново");
+        nextButton = new ButtonView(430, 416, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Далее");
         black_out_on_pause = new MovingBackgroundView(GameResources.BLACKOUT_IMG_PATH);
     }
 
@@ -59,10 +60,6 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     public void render(float delta) {
         myGdxGame.camera.update();
         ScreenUtils.clear(108f / 255f, 123f / 255f, 188f / 255f, 0);
-
-        if (session.victory()) {
-            restartButton = new ButtonView(430, 416, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Далее");
-        }
 
         myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
         myGdxGame.batch.begin();
@@ -103,8 +100,9 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
                 break;
             case ENDED:
                 black_out_on_pause.draw(myGdxGame.batch);
-                restartButton.draw(myGdxGame.batch);
                 endButton.draw(myGdxGame.batch);
+                if (session.victory() && myGdxGame.isInPlot) nextButton.draw(myGdxGame.batch);
+                else restartButton.draw(myGdxGame.batch);
                 break;
         }
     }
@@ -147,26 +145,27 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
             myGdxGame.camera.position.y = myGdxGame.camera.viewportHeight / 2;
             myGdxGame.mainMenuMusic();
         }
-        if (session.state == ENDED && restartButton.isHit(screenX, SCREEN_HEIGHT - screenY)) {
+        if (session.state == ENDED && session.victory() && myGdxGame.isInPlot && nextButton.isHit(screenX, SCREEN_HEIGHT - screenY)) {
             isReload = true;
             camX = myGdxGame.camera.position.x;
             camY = myGdxGame.camera.position.y;
             myGdxGame.camera.position.x = myGdxGame.camera.viewportWidth / 2;
             myGdxGame.camera.position.y = myGdxGame.camera.viewportHeight / 2;
-            if (myGdxGame.isContinue && session.victory()) {
-                if (this instanceof SpaceGameScreen) {
-                    myGdxGame.setScreen(myGdxGame.planetHistory);
-                } else {
-                    myGdxGame.setScreen(myGdxGame.endHistory);
-                }
-                MemoryManager.saveIsFirstLevel(myGdxGame.isFirstLevel);
-                myGdxGame.mainMenuMusic();
+
+            if (this instanceof SpaceGameScreen) {
+                myGdxGame.planetLevel();
             } else {
-                if (this instanceof SpaceGameScreen)
-                    myGdxGame.spaceLevel();
-                else if (this instanceof PlanetGameScreen)
-                    myGdxGame.planetLevel();
+                myGdxGame.mainMenuMusic();
+                myGdxGame.setScreen(myGdxGame.endHistory);
             }
+        }
+        if (session.state == ENDED && !(session.victory() && myGdxGame.isInPlot) && restartButton.isHit(screenX, SCREEN_HEIGHT - screenY)) {
+            isReload = true;
+            camX = myGdxGame.camera.position.x;
+            camY = myGdxGame.camera.position.y;
+            myGdxGame.camera.position.x = myGdxGame.camera.viewportWidth / 2;
+            myGdxGame.camera.position.y = myGdxGame.camera.viewportHeight / 2;
+
             restartGame();
         }
         if ((session.state == PAUSED) && continueButton.isHit(screenX, SCREEN_HEIGHT - screenY)) {

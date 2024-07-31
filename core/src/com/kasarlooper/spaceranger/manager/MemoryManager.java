@@ -7,7 +7,7 @@ public class MemoryManager {
     private static final Preferences preferences = Gdx.app.getPreferences("User saves");
 
     public static boolean loadIsFirstLevel() {
-        return preferences.getBoolean("isFistLevel", true);
+        return preferences.getBoolean("isFirstLevel", true);
     }
 
     public static void saveIsFirstLevel(boolean isNextLevel) {
