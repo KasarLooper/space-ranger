@@ -2,6 +2,8 @@ package com.kasarlooper.spaceranger;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.kasarlooper.spaceranger.manager.MemoryManager;
+
 import java.util.Scanner;
 
 public class DesktopLauncher {
@@ -24,6 +26,9 @@ public class DesktopLauncher {
 						break;
 					case "lose":
 						if (!game.lose()) System.err.println("Not playing a level");
+						break;
+					case "clear":
+						MemoryManager.clear();
 						break;
 					case "exit":
 						break label;
