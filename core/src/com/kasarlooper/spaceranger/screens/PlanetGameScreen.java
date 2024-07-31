@@ -504,4 +504,15 @@ public class PlanetGameScreen extends GameScreen {
             }
         }
     }
+
+    @Override
+    public void win() {
+        spaceman.wreckCount = 4;
+        spaceman.cristalCount = 4;
+    }
+
+    @Override
+    public void lose() {
+        spaceman.liveLeft = 0;
+    }
 }

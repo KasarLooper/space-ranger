@@ -382,5 +382,14 @@ public class SpaceGameScreen extends GameScreen {
         if (purpose != null) purpose.dispose();
         if (live != null) live.dispose();
     }
+
+    @Override
+    public void win() {
+        while (((SpaceGameSession)session).getCoreCollected() < 3) ((SpaceGameSession)session).core_was_collected();
+    }
+
+    public void lose() {
+        shipObject.livesLeft = 0;
+    }
 }
 

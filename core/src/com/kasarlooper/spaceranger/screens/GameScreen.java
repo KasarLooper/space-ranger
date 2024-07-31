@@ -226,6 +226,10 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
         return false;
     }
 
+    public abstract void win();
+
+    public abstract void lose();
+
     enum State {
     }
 }

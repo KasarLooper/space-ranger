@@ -20,6 +20,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.manager.AudioManager;
 import com.kasarlooper.spaceranger.manager.LevelMapManager;
 import com.kasarlooper.spaceranger.manager.MemoryManager;
+import com.kasarlooper.spaceranger.screens.GameScreen;
 import com.kasarlooper.spaceranger.screens.HistoryScreen;
 import com.kasarlooper.spaceranger.screens.MemoriesScreen;
 import com.kasarlooper.spaceranger.screens.MenuScreen;
@@ -80,6 +81,22 @@ public class MyGdxGame extends Game {
 		setScreen(menuScreen);
 
 		levelMapManager = new LevelMapManager();
+	}
+
+	public boolean win() {
+		if (getScreen() instanceof GameScreen) {
+			((GameScreen) getScreen()).win();
+			return true;
+		}
+		return false;
+	}
+
+	public boolean lose() {
+		if (getScreen() instanceof GameScreen) {
+			((GameScreen) getScreen()).lose();
+			return true;
+		}
+		return false;
 	}
 
 	public void stepWorld(World world) {
