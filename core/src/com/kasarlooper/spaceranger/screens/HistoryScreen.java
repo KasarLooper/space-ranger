@@ -12,6 +12,7 @@ import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
 import com.kasarlooper.spaceranger.components.MiddleButtonView;
 import com.kasarlooper.spaceranger.components.MiddleTextView;
+import com.kasarlooper.spaceranger.manager.MemoryManager;
 
 public class HistoryScreen extends ScreenAdapter {
     private Screen nextScreen;
@@ -26,10 +27,15 @@ public class HistoryScreen extends ScreenAdapter {
         this.game = game;
         this.texts = texts;
         this.nextScreen = nextScreen;
-        i = 0;
         button = new MiddleButtonView(50, 440, 70, game.commonWhiteFont, GameResources.BUTTON_IMG_PATH, "Дальше");
         text = new MiddleTextView(game.averageWhiteFont, texts[0]);
         if (isEnd) photo = new Texture(GameResources.BACKGROUND_END_IMG_PATH);
+    }
+
+    @Override
+    public void show() {
+        i = 0;
+        text.setText(texts[i]);
     }
 
     @Override
@@ -57,10 +63,12 @@ public class HistoryScreen extends ScreenAdapter {
                 if (i < texts.length) {
                     text.setText(texts[i]);
                 } else if (i > texts.length || photo == null) {
-                    i = 0;
                     if (nextScreen instanceof SpaceGameScreen) game.spaceLevel();
                     else if (nextScreen instanceof PlanetGameScreen) game.planetLevel();
-                    else game.setScreen(nextScreen);
+                    else {
+                        game.setScreen(nextScreen);
+                        MemoryManager.saveLevel(1);
+                    }
                 }
             }
         }

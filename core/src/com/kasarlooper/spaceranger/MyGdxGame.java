@@ -53,9 +53,7 @@ public class MyGdxGame extends Game {
 	public AudioManager audioManager;
 	@Override
 	public void create () {
-		System.out.println(MemoryManager.loadIsFirstLevel());
-		//MemoryManager.clear();
-
+		System.out.println(MemoryManager.loadLevel());
 		Box2D.init();
 		space = new World(new Vector2(0, 0), true);
 		planet = new World(new Vector2((float) GameSettings.GRAVITY_PLANET_X, (float) GameSettings.GRAVITY_PLANET_Y), true);
@@ -128,12 +126,12 @@ public class MyGdxGame extends Game {
 
 	public void passSpaceLevel() {
 		MemoryManager.saveIsPassedSpace(true);
-		MemoryManager.saveIsFirstLevel(false);
+		MemoryManager.saveLevel(2);
 	}
 
 	public void passPlanetLevel() {
 		MemoryManager.saveIsPassedPlanet(true);
-		MemoryManager.saveIsFirstLevel(true);
+		MemoryManager.saveLevel(3);
 	}
 	
 	@Override

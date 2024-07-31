@@ -54,8 +54,17 @@ public class MenuScreen extends ScreenAdapter {
 
             if (startButtonView.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
                 myGdxGame.isInPlot = true;
-                if (MemoryManager.loadIsFirstLevel()) myGdxGame.setScreen(myGdxGame.spaceHistory);
-                else myGdxGame.setScreen(myGdxGame.planetHistory);
+                switch (MemoryManager.loadLevel()) {
+                    case 1:
+                        myGdxGame.setScreen(myGdxGame.spaceHistory);
+                        break;
+                    case 2:
+                        myGdxGame.setScreen(myGdxGame.planetHistory);
+                        break;
+                    case 3:
+                        myGdxGame.setScreen(myGdxGame.endHistory);
+                        break;
+                }
             }
             if (memoryButton.isHit(myGdxGame.touch.x, myGdxGame.touch.y)) {
                 myGdxGame.isInPlot = false;

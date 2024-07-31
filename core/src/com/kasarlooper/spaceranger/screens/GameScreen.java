@@ -152,12 +152,9 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
             myGdxGame.camera.position.x = myGdxGame.camera.viewportWidth / 2;
             myGdxGame.camera.position.y = myGdxGame.camera.viewportHeight / 2;
 
-            if (this instanceof SpaceGameScreen) {
-                myGdxGame.planetLevel();
-            } else {
-                myGdxGame.mainMenuMusic();
-                myGdxGame.setScreen(myGdxGame.endHistory);
-            }
+            myGdxGame.mainMenuMusic();
+            if (this instanceof SpaceGameScreen) myGdxGame.setScreen(myGdxGame.planetHistory);
+            else myGdxGame.setScreen(myGdxGame.endHistory);
         }
         if (session.state == ENDED && !(session.victory() && myGdxGame.isInPlot) && restartButton.isHit(screenX, SCREEN_HEIGHT - screenY)) {
             isReload = true;
@@ -172,6 +169,11 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
             session.state = PLAYING;
         }
         return true;
+    }
+
+    @Override
+    public void hide() {
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override

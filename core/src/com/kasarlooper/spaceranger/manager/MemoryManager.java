@@ -6,15 +6,14 @@ import com.badlogic.gdx.Preferences;
 public class MemoryManager {
     private static final Preferences preferences = Gdx.app.getPreferences("User saves");
 
-    public static boolean loadIsFirstLevel() {
-        return preferences.getBoolean("isFirstLevel", true);
+    public static int loadLevel() {
+        return preferences.getInteger("i", 1);
     }
 
-    public static void saveIsFirstLevel(boolean isNextLevel) {
-        preferences.putBoolean("isFirstLevel", isNextLevel);
+    public static void saveLevel(int i) {
+        preferences.putInteger("i", i);
         preferences.flush();
     }
-
 
     public static boolean loadIsPassedSpace() {
         return preferences.getBoolean("isPassedSpace", false);
