@@ -13,6 +13,8 @@ public class AudioManager {
     public Sound soundShot;
     public Sound soundWalking;
     public Music planetMusic;
+    public Sound soundDamageEnemy;
+    public Sound soundDamageCosmonaut;
 
 
     public AudioManager() {
@@ -23,6 +25,8 @@ public class AudioManager {
         planetMusic = Gdx.audio.newMusic(Gdx.files.internal(GameResources.MUSIC_PLANET_PATH));
         soundShot = Gdx.audio.newSound(Gdx.files.internal(GameResources.SOUND_SHOT_PATH));
         soundWalking = Gdx.audio.newSound(Gdx.files.internal(GameResources.SOUND_WALKING_PATH));
+        soundDamageEnemy = Gdx.audio.newSound(Gdx.files.internal(GameResources.SOUND_DAMAGE_ENEMY));
+        soundDamageCosmonaut = Gdx.audio.newSound(Gdx.files.internal(GameResources.SOUND_DAMAGE_COSMONAUT));
 
         spaceMusic.setVolume(0.2f);
         planetMusic.setVolume(0.2f);
