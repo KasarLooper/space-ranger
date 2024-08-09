@@ -125,6 +125,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
 
     public void restartGame() {
         session.startGame();
+        joystick.toDefault();
     }
 
     @Override
