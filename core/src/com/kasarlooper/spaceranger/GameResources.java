@@ -35,6 +35,8 @@ public class GameResources {
     public static final String SOUND_SHOT_PATH = "music/sound_shot.mp3";
     public static final String SOUND_ENERGY_PATH = "music/f7b30b479a2a752.mp3";
     public static final String MUSIC_PLANET_PATH = "music/planet_music.mp3";
+    public static final String SOUND_DAMAGE_COSMONAUT = "music/damage_cosmonaut.mp3";
+    public static final String SOUND_DAMAGE_ENEMY = "music/damage_enemy.mp3";
 
 
     //Второй уровень
