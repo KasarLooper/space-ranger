@@ -1,5 +1,6 @@
 package com.kasarlooper.spaceranger.screens;
 
+import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_WIDTH;
 import static com.kasarlooper.spaceranger.State.ENDED;
@@ -7,13 +8,15 @@ import static com.kasarlooper.spaceranger.State.PAUSED;
 import static com.kasarlooper.spaceranger.State.PLAYING;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Matrix4;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.GameResources;
-import com.kasarlooper.spaceranger.manager.MemoryManager;
 import com.kasarlooper.spaceranger.session.GameSession;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
@@ -33,6 +36,9 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     private float camX;
     private float camY;
 
+    Box2DDebugRenderer colliders;
+    private boolean isCollidersShown;
+
 
     public GameScreen(MyGdxGame game) {
         this.myGdxGame = game;
@@ -42,6 +48,9 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
         restartButton = new ButtonView(430, 416, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Заново");
         nextButton = new ButtonView(430, 416, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Далее");
         black_out_on_pause = new MovingBackgroundView(GameResources.BLACKOUT_IMG_PATH);
+
+        colliders = new Box2DDebugRenderer(true, false, false, false, false, false);
+        isCollidersShown = true;
     }
 
     @Override
@@ -66,10 +75,34 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
         drawDynamic();
         myGdxGame.batch.end();
 
+        if (isCollidersShown) {
+            myGdxGame.camera.position.x -= SCREEN_WIDTH / 2f;
+            myGdxGame.camera.position.y -= SCREEN_HEIGHT / 2f;
+            myGdxGame.camera.zoom = SCALE;
+            myGdxGame.camera.update();
+            colliders.render(getWorld(), new Matrix4().setToOrtho2D(getCameraX(), getCameraY(), GameSettings.SCREEN_WIDTH * SCALE, SCREEN_HEIGHT * SCALE));
+            myGdxGame.camera.position.x += SCREEN_WIDTH / 2f;
+            myGdxGame.camera.position.y += SCREEN_HEIGHT / 2f;
+            myGdxGame.camera.zoom = 1;
+            myGdxGame.camera.update();
+        }
+
         myGdxGame.batch.setProjectionMatrix(new Matrix4().setToOrtho2D(0, 0, GameSettings.SCREEN_WIDTH, SCREEN_HEIGHT));
         myGdxGame.batch.begin();
         drawStatic();
         myGdxGame.batch.end();
+    }
+
+    protected World getWorld() {
+        return null;
+    }
+
+    protected float getCameraX() {
+        return 0;
+    }
+
+    protected float getCameraY() {
+        return 0;
     }
 
     public void onPause() {
@@ -108,7 +141,6 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     }
 
     protected void drawDynamic() {
-        //debugRenderer.render(myGdxGame.planet, myGdxGame.camera.combined);
     }
 
     @Override
@@ -198,7 +230,9 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
 
     @Override
     public boolean keyDown(int keycode) {
-        return false;
+        if (keycode == Input.Keys.E)
+            isCollidersShown = !isCollidersShown;
+        return true;
     }
 
     @Override

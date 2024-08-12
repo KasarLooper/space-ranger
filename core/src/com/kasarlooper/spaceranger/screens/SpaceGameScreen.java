@@ -13,6 +13,7 @@ import static com.kasarlooper.spaceranger.GameSettings.CORE_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.CORE_WIDTH;
 import static com.kasarlooper.spaceranger.GameSettings.ENEMY_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.ENEMY_WIDTH;
+import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_WIDTH;
 import static com.kasarlooper.spaceranger.State.ENDED;
@@ -23,6 +24,8 @@ import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.EntitySpawner;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
@@ -96,6 +99,20 @@ public class SpaceGameScreen extends GameScreen {
         rd = new Random();
         spawner = new EntitySpawner();
         boomArray = new ArrayList<>();
+    }
+
+    @Override
+    protected World getWorld() {
+        return myGdxGame.space;
+    }
+
+    protected float getCameraX() {
+        return -(-shipObject.getX() + SCREEN_WIDTH / 2f) * SCALE;
+    }
+
+    @Override
+    protected float getCameraY() {
+        return -(-shipObject.getY() + SCREEN_HEIGHT / 2f) * SCALE;
     }
 
     @Override
@@ -184,13 +201,13 @@ public class SpaceGameScreen extends GameScreen {
         super.drawDynamic();
     }
 
-    // "Чистилки" объектов
     private void updateBullets() {
         // For Ship
         Iterator<BulletObject> iterator = bulletArray.iterator();
         while(iterator.hasNext()) {
             BulletObject bulletObject_now = iterator.next();
             if (bulletObject_now.destroy(shipObject.getX(), shipObject.getY())) {
+                System.out.println("bulletObject_now");
                 myGdxGame.space.destroyBody(bulletObject_now.body);
                 iterator.remove();
             }
@@ -210,6 +227,7 @@ public class SpaceGameScreen extends GameScreen {
                     boomArray.add(new BoomObject(core.x, core.y));
                     myGdxGame.audioManager.soundBoom.play(0.2f);
                 }
+                System.out.println("core");
                 myGdxGame.space.destroyBody(core.body);
                 iterator.remove();
             }
@@ -221,6 +239,7 @@ public class SpaceGameScreen extends GameScreen {
         while(iterator.hasNext()) {
             EnemyObject enemy = iterator.next();
             if (enemy.destroy()) {
+                System.out.println("enemy");
                 myGdxGame.space.destroyBody(enemy.body);
                 BoomObject boom = new BoomObject(enemy.getX(), enemy.getY());
                 boomArray.add(boom);
@@ -235,6 +254,7 @@ public class SpaceGameScreen extends GameScreen {
         while (iterator.hasNext()) {
             BoomObject boom = iterator.next();
             if (boom.isNotAlive()) {
+                System.out.println("boom");
                 iterator.remove();
             }
         }
@@ -245,20 +265,29 @@ public class SpaceGameScreen extends GameScreen {
         super.restartGame();
         Iterator<CoreObject> iterator_core = coreArray.iterator();
         while (iterator_core.hasNext()) {
-            myGdxGame.space.destroyBody(iterator_core.next().body);
+            CoreObject core = iterator_core.next();
+            System.out.println("core");
+            myGdxGame.space.destroyBody(core.body);
             iterator_core.remove();
         }
         Iterator<EnemyObject> iterator_enemy = enemyArray.iterator();
         while (iterator_enemy.hasNext()) {
-            myGdxGame.space.destroyBody(iterator_enemy.next().body);
+            EnemyObject enemy = iterator_enemy.next();
+            System.out.println("enemy");
+            myGdxGame.space.destroyBody(enemy.body);
             iterator_enemy.remove();
         }
         Iterator<AsteroidObject> iteratorAsteroid = asteroidArray.iterator();
         while (iteratorAsteroid.hasNext()) {
-            myGdxGame.space.destroyBody(iteratorAsteroid.next().body);
+            AsteroidObject asteroid = iteratorAsteroid.next();
+            System.out.println("asteroid");
+            myGdxGame.space.destroyBody(asteroid.body);
             iteratorAsteroid.remove();
         }
-        if (shipObject != null) myGdxGame.space.destroyBody(shipObject.body);
+        if (shipObject != null) {
+            System.out.println("shipObject");
+            myGdxGame.space.destroyBody(shipObject.body);
+        }
         shipObject = new ShipObject(
                 GameSettings.SCREEN_WIDTH / 2, GameSettings.SCREEN_HEIGHT / 2,
                 GameSettings.SHIP_WIDTH, GameSettings.SHIP_HEIGHT,

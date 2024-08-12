@@ -17,6 +17,7 @@ import static com.kasarlooper.spaceranger.GameSettings.COSMONAUT_JUMP_FORCE;
 import static com.kasarlooper.spaceranger.GameSettings.COSMONAUT_SPEED;
 import static com.kasarlooper.spaceranger.GameSettings.COSMONAUT_WIDTH;
 import static com.kasarlooper.spaceranger.GameSettings.GROUND_HEIGHT;
+import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_WIDTH;
 import static com.kasarlooper.spaceranger.GraphicsSettings.PLANET_AIM2_PATTERN;
@@ -26,6 +27,7 @@ import static com.kasarlooper.spaceranger.State.PLAYING;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.BlockMap;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GraphicsSettings;
@@ -119,6 +121,20 @@ public class PlanetGameScreen extends GameScreen {
 
         dx = 0;
         dy = 0;
+    }
+
+    @Override
+    protected World getWorld() {
+        return myGdxGame.planet;
+    }
+
+    protected float getCameraX() {
+        return -(-spaceman.getX() + SCREEN_WIDTH / 2f) * SCALE;
+    }
+
+    @Override
+    protected float getCameraY() {
+        return -(-spaceman.getY() + SCREEN_HEIGHT / 2f) * SCALE;
     }
 
     float dx, dy;

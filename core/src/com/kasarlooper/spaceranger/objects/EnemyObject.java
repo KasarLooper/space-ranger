@@ -59,8 +59,8 @@ public class EnemyObject extends PhysicsObject {
         final int padding = 50;
         if (TimeUtils.millis() - lastShootTime > GameSettings.ENEMY_SHOOT_COOL_DOWN) {
             lastShootTime = TimeUtils.millis();
-            return new BulletObject((int) (getX() + width / 2 + cos(toRadians(getRotation())) * (getRadius() / 2 + BULLET_HEIGHT + padding)),
-                    (int) (getY() + height / 2 + sin(toRadians(getRotation())) * (getRadius() / 2 + BULLET_HEIGHT + padding)),
+            return new BulletObject((int) (getX() + cos(toRadians(getRotation())) * (getRadius() / 2 + BULLET_HEIGHT + padding)),
+                    (int) (getY() + sin(toRadians(getRotation())) * (getRadius() / 2 + BULLET_HEIGHT + padding)),
                     GameSettings.BULLET_WIDTH, BULLET_HEIGHT,
                     GameResources.ENEMY_BULLET_IMG_PATH, world,
                     getRotation(), GameSettings.Bullet_Speed, true);
@@ -92,7 +92,7 @@ public class EnemyObject extends PhysicsObject {
             sprite.setRotation(sprite.getRotation() + ENEMY_USUAL_ROTATION_SPEED);
             hasAim = false;
         }
-        sprite.setBounds(getX(), getY(), width, height);
+        sprite.setBounds(getX() - width / 2f, getY() - height / 2f, width, height);
         int dx = (int) (cos(toRadians(getRotation() % 360)) * SPEED_ENEMY);
         int dy = (int) (sin(toRadians(getRotation() % 360)) * SPEED_ENEMY);
         body.setLinearVelocity(dx, dy);
