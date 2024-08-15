@@ -3,6 +3,7 @@ package com.kasarlooper.spaceranger.objects;
 import static com.kasarlooper.spaceranger.GameSettings.ASTEROID_SPEED;
 
 import com.badlogic.gdx.physics.box2d.World;
+import com.kasarlooper.spaceranger.MyGdxGame;
 
 public class AsteroidObject extends PhysicsObject {
     public AsteroidObject(String texturePath, int x, int y, int wight, int height, World world, int playerX, int playerY) {
@@ -16,8 +17,8 @@ public class AsteroidObject extends PhysicsObject {
     }
 
     @Override
-    public void hit(Type type) {
-        super.hit(type);
+    public void hit(Type type, MyGdxGame myGdxGame) {
+        super.hit(type, myGdxGame);
     }
 
     @Override

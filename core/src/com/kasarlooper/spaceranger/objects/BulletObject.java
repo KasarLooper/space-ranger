@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.kasarlooper.spaceranger.MyGdxGame;
 
 public class BulletObject extends PhysicsObject {
     private Type type;
@@ -35,7 +36,7 @@ public class BulletObject extends PhysicsObject {
 
 
     @Override
-    public void hit(Type type) {
+    public void hit(Type type, MyGdxGame myGdxGame) {
         wasHit = true;
     }
 

@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
+import com.kasarlooper.spaceranger.MyGdxGame;
 
 public class ShipObject extends PhysicsObject {
     public int livesLeft;
@@ -69,7 +70,7 @@ public class ShipObject extends PhysicsObject {
     }
 
     @Override
-    public void hit(Type type) {
+    public void hit(Type type, MyGdxGame myGdxGame) {
         body.setLinearVelocity(0, 0);
         body.setAngularVelocity(0);
         if (type == Type.Enemy || type == Type.EnemyBullet || type == Type.Bullet) {

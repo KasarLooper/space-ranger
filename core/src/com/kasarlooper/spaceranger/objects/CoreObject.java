@@ -2,6 +2,7 @@ package com.kasarlooper.spaceranger.objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
+import com.kasarlooper.spaceranger.MyGdxGame;
 
 public class CoreObject extends PhysicsObject {
 
@@ -23,7 +24,7 @@ public class CoreObject extends PhysicsObject {
     }
 
     @Override
-    public void hit(Type type) {
+    public void hit(Type type, MyGdxGame myGdxGame) {
         wasHit = true;
         if (type == Type.Player) {
             wasCollected = true;

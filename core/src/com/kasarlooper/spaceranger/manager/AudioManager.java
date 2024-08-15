@@ -28,8 +28,8 @@ public class AudioManager {
         soundDamageEnemy = Gdx.audio.newSound(Gdx.files.internal(GameResources.SOUND_DAMAGE_ENEMY));
         soundDamageCosmonaut = Gdx.audio.newSound(Gdx.files.internal(GameResources.SOUND_DAMAGE_COSMONAUT));
 
-        spaceMusic.setVolume(0.4f);
-        planetMusic.setVolume(0.4f);
+        spaceMusic.setVolume(0.2f);
+        planetMusic.setVolume(0.2f);
 
         spaceMusic.setLooping(true);
         planetMusic.setLooping(true);

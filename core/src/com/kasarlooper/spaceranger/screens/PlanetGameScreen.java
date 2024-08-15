@@ -86,7 +86,7 @@ public class PlanetGameScreen extends GameScreen {
         super(game);
         session = new PlanetGameSession();
         loader = new LevelMapManager();
-        contactManager = new ContactManager(myGdxGame.planet);
+        contactManager = new ContactManager(myGdxGame.planet, myGdxGame);
         loader.loadMap(myGdxGame.planet);
         physics = loader.getPhysics();
         blockMap = new BlockMap(physics, 200, 16);
