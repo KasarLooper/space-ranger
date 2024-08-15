@@ -168,7 +168,7 @@ public class PlanetGameScreen extends GameScreen {
                 if (lightning != null && lightning.destroyIfNeed()) lightning = null;
                 if (lightning == null && isLighting && LightningBulletObject.isShootTime()) {
                     lightning = new LightningBulletObject(spaceman, myGdxGame.planet);
-                    myGdxGame.audioManager.soundShot.play();
+                    myGdxGame.audioManager.soundShot.play(0.2f);
                 }
 
                 if (((PlanetGameSession)session).shouldSpawnCore()) {
