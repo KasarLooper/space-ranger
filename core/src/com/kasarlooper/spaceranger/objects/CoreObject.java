@@ -19,7 +19,7 @@ public class CoreObject extends PhysicsObject {
 
     @Override
     public void draw(SpriteBatch batch) {
-        batch.draw(texture, x, y, width, height);
+        batch.draw(texture, x - width / 2f, y - height / 2f, width, height);
     }
 
     @Override
