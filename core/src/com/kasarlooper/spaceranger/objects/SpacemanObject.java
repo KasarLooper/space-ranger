@@ -32,7 +32,7 @@ public class SpacemanObject extends PhysicsObject {
     boolean isJump;
     boolean isWalk;
     Texture[] left;
-    Texture[] right;
+    //Texture[] right;
     long lastChangeIsWalkTime;
     long lastJumpTime;
     public int liveLeft;
@@ -69,14 +69,14 @@ public class SpacemanObject extends PhysicsObject {
 
     protected void initTextures(int defaultFrame) {
         left = new Texture[14];
-        right = new Texture[14];
+        //right = new Texture[14];
         for (int i = 2; i <= 14; i+=2) {
             int j = i / 2 + 3;
             if (j > 7) j -= 7;
             left[i - 2] = new Texture(String.format(GameResources.COSMONAUT_ANIM_LEFT_IMG_PATTERN, j));
             left[i - 1] = new Texture(String.format(GameResources.COSMONAUT_ANIM_LEFT_IMG_PATTERN, j));
-            right[i - 2] = new Texture(String.format(GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN, j));
-            right[i - 1] = new Texture(String.format(GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN, j));
+            //right[i - 2] = new Texture(String.format(GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN, j));
+            //right[i - 1] = new Texture(String.format(GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN, j));
         }
         i = 0;
         liveLeft = 3;
@@ -146,7 +146,8 @@ public class SpacemanObject extends PhysicsObject {
         if (i != 0 || (isWalk && body.getLinearVelocity().x != 0)) {
             updateCurrentFrame();
         }
-        sprite.setTexture(isRightDirection ? right[i] : left[i]);
+        sprite.setTexture(left[i]);
+        sprite.setFlip(isRightDirection, false);
         if (isRightStep) body.setLinearVelocity(speed, body.getLinearVelocity().y);
         else if (isLeftStep) body.setLinearVelocity(-speed, body.getLinearVelocity().y);
     }
@@ -167,7 +168,7 @@ public class SpacemanObject extends PhysicsObject {
         while (accumulator >= GameSettings.FRAME_DURATION) {
             accumulator -= GameSettings.FRAME_DURATION;
             i++;
-            if (i >= right.length) i = 0;
+            if (i >= left.length) i = 0;
             //System.out.println(accumulator);
         }
     }
@@ -188,9 +189,11 @@ public class SpacemanObject extends PhysicsObject {
         if (left != null)
             for (Texture tex : left)
                 tex.dispose();
+        /*
         if (right != null)
             for (Texture tex : right)
                 tex.dispose();
+         */
     }
 
     public Type type() {

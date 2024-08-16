@@ -57,13 +57,11 @@ public class GameResources {
     public static final String TEXTURE_BOX_GREEN = "texture_box_1.png";
     public static final String TEXTURE_BOX_BLACK = "texture_box_2.png";
 
-    public static final String COSMONAUT_ANIM_RIGHT_IMG_PATTERN = "cosmonaut_anim_right/cosmonaut_anim_right_%d.png";
     public static final String COSMONAUT_ANIM_LEFT_IMG_PATTERN = "cosmonaut_anim_left/cosmonaut_anim_left_%d.png";
 
     public static final String JUMP_BUTTON_IMG_PATH = "upbutton.png";
 
     //Alien
-    public static final String ALIEN_ANIM_RIGHT_IMG_PATTERN = "Alien_anim_right/alien_anim_right_%d.png";
     public static final String ALIEN_ANIM_LEFT_IMG_PATTERN = "Alien_anim_left/alien_anim_left_%d.png";
 
     //Заставка для конца игры

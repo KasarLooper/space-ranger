@@ -1,7 +1,7 @@
 package com.kasarlooper.spaceranger.screens;
 
-import static com.kasarlooper.spaceranger.GameResources.ALIEN_ANIM_RIGHT_IMG_PATTERN;
-import static com.kasarlooper.spaceranger.GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN;
+import static com.kasarlooper.spaceranger.GameResources.ALIEN_ANIM_LEFT_IMG_PATTERN;
+import static com.kasarlooper.spaceranger.GameResources.COSMONAUT_ANIM_LEFT_IMG_PATTERN;
 import static com.kasarlooper.spaceranger.GameResources.CRYSTAL_IMG_PATH;
 import static com.kasarlooper.spaceranger.GameSettings.ALIEN_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.ALIEN_JUMP_FORCE;
@@ -99,7 +99,7 @@ public class PlanetGameScreen extends GameScreen {
         spaceman = new SpacemanObject(
                 loader.getPlayerX(), loader.getPlayerY(),
                 COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
-                COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4,
+                COSMONAUT_ANIM_LEFT_IMG_PATTERN, 4,
                 COSMONAUT_SPEED, COSMONAUT_JUMP_FORCE,
                 myGdxGame.planet, blockMap);
         earth = new Earth(GROUND_HEIGHT, myGdxGame.planet);
@@ -248,7 +248,7 @@ public class PlanetGameScreen extends GameScreen {
             int i = rd.nextInt(near.size());
             int x = near.get(i).x;
             int y = near.get(i).y;
-            aliens.add(new AlienObject(x, y, ALIEN_WIDTH, ALIEN_HEIGHT, ALIEN_ANIM_RIGHT_IMG_PATTERN,
+            aliens.add(new AlienObject(x, y, ALIEN_WIDTH, ALIEN_HEIGHT, ALIEN_ANIM_LEFT_IMG_PATTERN,
                     5, ALIEN_SPEED, ALIEN_JUMP_FORCE, myGdxGame.planet, blockMap));
         }
     }
@@ -323,7 +323,7 @@ public class PlanetGameScreen extends GameScreen {
         spaceman = new SpacemanObject(
                 loader.getPlayerX(), loader.getPlayerY(),
                 COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
-                COSMONAUT_ANIM_RIGHT_IMG_PATTERN, 4,
+                COSMONAUT_ANIM_LEFT_IMG_PATTERN, 4,
                 COSMONAUT_SPEED, COSMONAUT_JUMP_FORCE,
                 myGdxGame.planet, blockMap);
         aliens = new ArrayList<>();

@@ -32,14 +32,14 @@ public class AlienObject extends SpacemanObject{
     @Override
     protected void initTextures(int defaultFrame) {
         left = new Texture[18];
-        right = new Texture[18];
+        //right = new Texture[18];
         for (int i = 2; i <= 18; i+=2) {
             int j = i / 2 + 4;
             if (j > 9) j -= 9;
             left[i - 2] = new Texture(String.format(GameResources.ALIEN_ANIM_LEFT_IMG_PATTERN, j));
             left[i - 1] = new Texture(String.format(GameResources.ALIEN_ANIM_LEFT_IMG_PATTERN, j));
-            right[i - 2] = new Texture(String.format(GameResources.ALIEN_ANIM_RIGHT_IMG_PATTERN, j));
-            right[i - 1] = new Texture(String.format(GameResources.ALIEN_ANIM_RIGHT_IMG_PATTERN, j));
+            //right[i - 2] = new Texture(String.format(GameResources.ALIEN_ANIM_RIGHT_IMG_PATTERN, j));
+            //right[i - 1] = new Texture(String.format(GameResources.ALIEN_ANIM_RIGHT_IMG_PATTERN, j));
         }
         i = 0;
         isJump = false;
