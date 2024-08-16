@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.BlockMap;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
+import com.kasarlooper.spaceranger.MyGdxGame;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,9 +47,10 @@ public class AlienObject extends SpacemanObject{
     }
 
     @Override
-    public void hit(Type type) {
+    public void hit(Type type, MyGdxGame myGdxGame) {
         if (type == Type.Bullet) {
             liveLeft--;
+            myGdxGame.audioManager.soundDamageEnemy.play(0.2f);
             stop();
             body.applyLinearImpulse(new Vector2(
                     GameSettings.ALIEN_DAMAGE_IMPULSE * (isRightDirection ? -1 : 1), 0),

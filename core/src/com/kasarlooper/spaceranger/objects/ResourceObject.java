@@ -1,6 +1,7 @@
 package com.kasarlooper.spaceranger.objects;
 
 import com.badlogic.gdx.physics.box2d.World;
+import com.kasarlooper.spaceranger.MyGdxGame;
 
 public class ResourceObject extends PhysicsObject {
     Type type;
@@ -18,7 +19,7 @@ public class ResourceObject extends PhysicsObject {
     }
 
     @Override
-    public void hit(Type type) {
+    public void hit(Type type, MyGdxGame myGdxGame) {
         if (type == Type.Player) {
             wasHit = true;
         }

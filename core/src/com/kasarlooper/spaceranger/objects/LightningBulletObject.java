@@ -16,6 +16,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
+import com.kasarlooper.spaceranger.MyGdxGame;
 
 public class LightningBulletObject extends PhysicsObject{
     private final Type type;
@@ -87,7 +88,7 @@ public class LightningBulletObject extends PhysicsObject{
     }
 
     @Override
-    public void hit(Type type) {
+    public void hit(Type type, MyGdxGame myGdxGame) {
         hasToBeDestroyed = true;
     }
 

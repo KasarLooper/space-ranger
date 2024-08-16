@@ -78,7 +78,7 @@ public class SpaceGameScreen extends GameScreen {
         this.myGdxGame = myGdxGame;
         session = new SpaceGameSession();
         backgroundView = new MovingBackgroundView(GameResources.BACKGROUND_IMG_PATH, GraphicsSettings.DEPTH_SPACE_BACKGROUND_SPEED_RATIO);
-        contactManager = new ContactManager(myGdxGame.space);
+        contactManager = new ContactManager(myGdxGame.space, myGdxGame);
         shipObject = new ShipObject(
                 GameSettings.SCREEN_WIDTH / 2, GameSettings.SCREEN_HEIGHT / 2,
                 GameSettings.SHIP_WIDTH, GameSettings.SHIP_HEIGHT,
@@ -227,7 +227,9 @@ public class SpaceGameScreen extends GameScreen {
                     myGdxGame.audioManager.soundEnergyGive.play(0.2f);
                 } else {
                     boomArray.add(new BoomObject(core.x, core.y));
-                    myGdxGame.audioManager.soundBoom.play(0.2f);
+                    if (myGdxGame.camera.frustum.sphereInFrustum(core.getX(), core.getY(), 0, Math.max(core.height, core.width))) {
+                        myGdxGame.audioManager.soundBoom.play(0.2f);
+                    }
                 }
                 System.out.println("core");
                 myGdxGame.space.destroyBody(core.body);
@@ -245,7 +247,9 @@ public class SpaceGameScreen extends GameScreen {
                 myGdxGame.space.destroyBody(enemy.body);
                 BoomObject boom = new BoomObject(enemy.getX(), enemy.getY());
                 boomArray.add(boom);
-                myGdxGame.audioManager.soundBoom.play(0.2f);
+                if (myGdxGame.camera.frustum.sphereInFrustum(enemy.getX(), enemy.getY(), 0, Math.max(enemy.height, enemy.width))) {
+                    myGdxGame.audioManager.soundBoom.play(0.2f);
+                }
                 iterator.remove();
             }
         }

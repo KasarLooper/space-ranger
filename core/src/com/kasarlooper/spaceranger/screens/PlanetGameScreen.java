@@ -88,7 +88,7 @@ public class PlanetGameScreen extends GameScreen {
         super(game);
         session = new PlanetGameSession();
         loader = new LevelMapManager();
-        contactManager = new ContactManager(myGdxGame.planet);
+        contactManager = new ContactManager(myGdxGame.planet, myGdxGame);
         loader.loadMap(myGdxGame.planet);
         physics = loader.getPhysics();
         blockMap = new BlockMap(physics, 200, 16);
@@ -167,7 +167,7 @@ public class PlanetGameScreen extends GameScreen {
                 if (lightning != null && lightning.destroyIfNeed()) lightning = null;
                 if (lightning == null && isLighting && LightningBulletObject.isShootTime()) {
                     lightning = new LightningBulletObject(spaceman, myGdxGame.planet);
-                    myGdxGame.audioManager.soundShot.play();
+                    myGdxGame.audioManager.soundShot.play(0.2f);
                 }
 
                 if (((PlanetGameSession)session).shouldSpawnCore()) {

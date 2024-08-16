@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.BlockMap;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
+import com.kasarlooper.spaceranger.MyGdxGame;
 
 public class SpacemanObject extends PhysicsObject {
     private BlockMap blockMap;
@@ -172,10 +173,11 @@ public class SpacemanObject extends PhysicsObject {
     }
 
     @Override
-    public void hit(Type type) {
+    public void hit(Type type, MyGdxGame myGdxGame) {
         body.applyLinearImpulse(new Vector2(0, 3), body.getWorldCenter(), true);
         if (type == Type.Enemy) {
             liveLeft -= 1;
+            myGdxGame.audioManager.soundDamageCosmonaut.play(0.2f);
             damageTime = TimeUtils.millis();
         }
     }

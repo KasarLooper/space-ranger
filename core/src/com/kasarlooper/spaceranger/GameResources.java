@@ -28,13 +28,13 @@ public class GameResources {
     public static final String PAUSE_ICON_IMG_PATH = "pause_icon.png";
 
     //music
-    public static final String MUSIC_SPACE_PATH = "music/Electric_Dark_Souls-Next_Level.mp3";
+    public static final String MUSIC_SPACE_PATH = "music/17237337355896yrd3mbm.mp3";
     public static final String SOUND_BULLET_PATH = "music/burst_fire.mp3";
     public static final String SOUND_BOOM_PATH = "music/Boom.mp3";
     public static final String SOUND_WALKING_PATH = "music/sound_walking.mp3";
     public static final String SOUND_SHOT_PATH = "music/sound_shot.mp3";
     public static final String SOUND_ENERGY_PATH = "music/f7b30b479a2a752.mp3";
-    public static final String MUSIC_PLANET_PATH = "music/planet_music.mp3";
+    public static final String MUSIC_PLANET_PATH = "music/Planet_of_Nightmares.mp3";
     public static final String SOUND_DAMAGE_COSMONAUT = "music/damage_cosmonaut.mp3";
     public static final String SOUND_DAMAGE_ENEMY = "music/damage_enemy.mp3";
 

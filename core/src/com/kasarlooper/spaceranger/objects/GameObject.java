@@ -1,5 +1,7 @@
 package com.kasarlooper.spaceranger.objects;
 
+import com.kasarlooper.spaceranger.MyGdxGame;
+
 public class GameObject {
     public int x;
     public int y;
@@ -13,7 +15,7 @@ public class GameObject {
         return  null;
     }
 
-    public void hit(Type type) {
+    public void hit(Type type, MyGdxGame myGdxGame) {
         // вся физика ударов и т.п.
     }
 

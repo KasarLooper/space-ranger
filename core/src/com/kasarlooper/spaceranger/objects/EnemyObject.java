@@ -18,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
+import com.kasarlooper.spaceranger.MyGdxGame;
 
 import java.util.Random;
 
@@ -49,7 +50,7 @@ public class EnemyObject extends PhysicsObject {
     }
 
     @Override
-    public void hit(Type type) {
+    public void hit(Type type, MyGdxGame myGdxGame) {
         if (type == Type.Player || type == Type.Enemy || type == Type.Bullet || type == Type.Asteroid) {
             wasHit = true;
         }
