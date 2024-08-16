@@ -182,6 +182,8 @@ public class SpaceGameScreen extends GameScreen {
 
     @Override
     protected void drawStatic() {
+        shipObject.staticDraw(myGdxGame.batch);
+
         backgroundFireButton.draw(myGdxGame.batch);
         fireButton.draw(myGdxGame.batch);
         purpose.draw(myGdxGame.batch);
@@ -193,7 +195,7 @@ public class SpaceGameScreen extends GameScreen {
     protected void drawDynamic() {
         backgroundView.draw(myGdxGame.batch);
         for (BoomObject boom: boomArray) boom.draw(myGdxGame.batch);
-        shipObject.draw(myGdxGame.batch);
+        //shipObject.draw(myGdxGame.batch);
         for (BulletObject bullet : bulletArray) bullet.draw(myGdxGame.batch);
         for (CoreObject core: coreArray) core.draw(myGdxGame.batch);
         for (EnemyObject enemy: enemyArray) enemy.draw(myGdxGame.batch);

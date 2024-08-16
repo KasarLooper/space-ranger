@@ -1,6 +1,8 @@
 package com.kasarlooper.spaceranger.objects;
 
 import static com.kasarlooper.spaceranger.GameSettings.COUNT_FRAMES_ONE_IMG;
+import static com.kasarlooper.spaceranger.GameSettings.SCREEN_HEIGHT;
+import static com.kasarlooper.spaceranger.GameSettings.SCREEN_WIDTH;
 import static com.kasarlooper.spaceranger.GameSettings.SPEED_SHIP;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -55,6 +57,13 @@ public class ShipObject extends PhysicsObject {
     @Override
     public void draw(SpriteBatch batch) {
         sprite.setBounds(getX() - width / 2f, getY() - height / 2f, width, height);
+        if (i > 0 && i < 19 * COUNT_FRAMES_ONE_IMG) sprite.setTexture(new Texture(String.format(GameResources.ANIM_SHIP_PORTAL_IMG_PATH_PATTERN,
+                i / COUNT_FRAMES_ONE_IMG + 1)));
+        sprite.draw(batch);
+    }
+
+    public void staticDraw(SpriteBatch batch) {
+        sprite.setBounds((SCREEN_WIDTH - width) / 2f, (SCREEN_HEIGHT - height) / 2f, width, height);
         if (i > 0 && i < 19 * COUNT_FRAMES_ONE_IMG) sprite.setTexture(new Texture(String.format(GameResources.ANIM_SHIP_PORTAL_IMG_PATH_PATTERN,
                 i / COUNT_FRAMES_ONE_IMG + 1)));
         sprite.draw(batch);
