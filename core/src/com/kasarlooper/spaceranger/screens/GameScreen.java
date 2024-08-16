@@ -51,7 +51,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
         black_out_on_pause = new MovingBackgroundView(GameResources.BLACKOUT_IMG_PATH);
 
         colliders = new Box2DDebugRenderer(true, false, false, false, false, false);
-        isCollidersShown = true;
+        isCollidersShown = false;
         isGraphicsShown = true;
     }
 
