@@ -97,6 +97,11 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
         myGdxGame.batch.end();
     }
 
+    @Override
+    public void pause() {
+        onPause();
+    }
+
     protected World getWorld() {
         return null;
     }
