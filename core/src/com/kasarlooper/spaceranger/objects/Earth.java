@@ -34,7 +34,7 @@ public class Earth extends GameObject{
 
         FixtureDef fixture = new FixtureDef();
         fixture.shape = shape;
-        fixture.friction = 0.5f;
+        fixture.friction = 1f;
         fixture.restitution = 0;
         Fixture fix = body.createFixture(fixture);
         fix.setUserData(this);

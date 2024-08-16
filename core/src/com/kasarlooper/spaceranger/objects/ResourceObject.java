@@ -14,7 +14,7 @@ public class ResourceObject extends PhysicsObject {
 
     @Override
     protected float getFriction() {
-        return 0;
+        return 1;
     }
 
     @Override

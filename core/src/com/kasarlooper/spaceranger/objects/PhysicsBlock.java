@@ -105,7 +105,7 @@ public class PhysicsBlock extends Block implements Drawable {
     }
 
     protected float getFriction() {
-        return 0;
+        return 1;
     }
 
     protected float getRestitution() {
