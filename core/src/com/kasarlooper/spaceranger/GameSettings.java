@@ -45,8 +45,6 @@ public class GameSettings {
     // Asteroid settings
     public static final int ASTEROID_WIDTH_MIN = 100;
     public static final int ASTEROID_WIDTH_MAX = 200;
-    public static final int ASTEROID_HEIGHT_MIN = 100;
-    public static final int ASTEROID_HEIGHT_MAX = 200;
     public static final int ASTEROID_SPEED = 4;
 
     // Bullet Setting
@@ -64,6 +62,9 @@ public class GameSettings {
     public static final int ENEMY_CHANCE_CHANGE_AIM = 10; // 5
 
     // PLANET
+
+    public static final int WRECK_COUNT = 3;
+    public static final int CRYSTAL_COUNT = 2;
 
     public static final double GRAVITY_PLANET_Y = -30;
     public static final double GRAVITY_PLANET_X = 0;

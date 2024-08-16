@@ -16,10 +16,12 @@ import static com.kasarlooper.spaceranger.GameSettings.COSMONAUT_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.COSMONAUT_JUMP_FORCE;
 import static com.kasarlooper.spaceranger.GameSettings.COSMONAUT_SPEED;
 import static com.kasarlooper.spaceranger.GameSettings.COSMONAUT_WIDTH;
+import static com.kasarlooper.spaceranger.GameSettings.CRYSTAL_COUNT;
 import static com.kasarlooper.spaceranger.GameSettings.GROUND_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_WIDTH;
+import static com.kasarlooper.spaceranger.GameSettings.WRECK_COUNT;
 import static com.kasarlooper.spaceranger.GraphicsSettings.PLANET_AIM2_PATTERN;
 import static com.kasarlooper.spaceranger.State.ENDED;
 import static com.kasarlooper.spaceranger.State.PAUSED;
@@ -179,7 +181,7 @@ public class PlanetGameScreen extends GameScreen {
                 updateAlien();
                 updateCore();
 
-                if (spaceman.cristalCount >= 4 && spaceman.wreckCount >= 4) {
+                if (spaceman.cristalCount >= CRYSTAL_COUNT && spaceman.wreckCount >= WRECK_COUNT) {
                     purpose.setText(PLANET_AIM2_PATTERN);
                     purpose.TextPosition();
                     isEnoughResources = true;
