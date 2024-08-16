@@ -18,7 +18,7 @@ android {
         exclude 'META-INF/robovm/ios/robovm.xml'
     }
     defaultConfig {
-        applicationId "com.mygdx.game"
+        applicationId "com.kasarlooper.spaceranger"
         minSdkVersion 19
         targetSdkVersion 34
         versionCode 1
