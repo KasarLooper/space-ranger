@@ -38,6 +38,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
 
     Box2DDebugRenderer colliders;
     private boolean isCollidersShown;
+    private boolean isGraphicsShown;
 
 
     public GameScreen(MyGdxGame game) {
@@ -51,6 +52,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
 
         colliders = new Box2DDebugRenderer(true, false, false, false, false, false);
         isCollidersShown = true;
+        isGraphicsShown = true;
     }
 
     @Override
@@ -70,10 +72,12 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
         myGdxGame.camera.update();
         ScreenUtils.clear(108f / 255f, 123f / 255f, 188f / 255f, 0);
 
-        myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
-        myGdxGame.batch.begin();
-        drawDynamic();
-        myGdxGame.batch.end();
+        if (isGraphicsShown) {
+            myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
+            myGdxGame.batch.begin();
+            drawDynamic();
+            myGdxGame.batch.end();
+        }
 
         if (isCollidersShown) {
             myGdxGame.camera.position.x -= SCREEN_WIDTH / 2f;
@@ -232,6 +236,9 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     public boolean keyDown(int keycode) {
         if (keycode == Input.Keys.E)
             isCollidersShown = !isCollidersShown;
+        else if (keycode == Input.Keys.R) {
+            isGraphicsShown = !isGraphicsShown;
+        }
         return true;
     }
 

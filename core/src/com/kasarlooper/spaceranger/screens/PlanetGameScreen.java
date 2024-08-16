@@ -121,6 +121,7 @@ public class PlanetGameScreen extends GameScreen {
 
         dx = 0;
         dy = 0;
+
     }
 
     @Override
@@ -153,18 +154,14 @@ public class PlanetGameScreen extends GameScreen {
         if (spaceman.isAlive()) {
             if (session.state == com.kasarlooper.spaceranger.State.PLAYING) {
                 backgroundView.move(spaceman.getX(), spaceman.getY());
-                if (isJump)
-                    spaceman.jump();
-                spaceman.updateFrames();
-                for (AlienObject alien : aliens) {
-                    alien.move(spaceman.getX(), spaceman.getY(), physics);
-                    alien.updateFrames();
-                }
+                if (isJump) spaceman.jump();
+                for (AlienObject alien : aliens)
+                    alien.move((int) spaceman.getX(), (int) spaceman.getY(), physics);
                 myGdxGame.stepWorld(myGdxGame.planet);
-                spaceman.updateJump();
-                for (AlienObject alien : aliens) alien.updateJump();
-                lives.setLeftLives(spaceman.liveLeft);
+                spaceman.update();
+                for (AlienObject alien : aliens) alien.update();
 
+                lives.setLeftLives(spaceman.liveLeft);
                 if (lightning != null && lightning.destroyIfNeed()) lightning = null;
                 if (lightning == null && isLighting && LightningBulletObject.isShootTime()) {
                     lightning = new LightningBulletObject(spaceman, myGdxGame.planet);
@@ -188,7 +185,7 @@ public class PlanetGameScreen extends GameScreen {
                     isEnoughResources = true;
                 }
 
-                if (capsule.isCollision(spaceman.getX(), spaceman.getY()) && isEnoughResources) {
+                if (capsule.isCollision((int) spaceman.getX(), (int) spaceman.getY()) && isEnoughResources) {
                     session.state = ENDED;
                     ((PlanetGameSession) session).setVictory();
                     myGdxGame.passPlanetLevel();
@@ -214,7 +211,7 @@ public class PlanetGameScreen extends GameScreen {
                 block.draw(myGdxGame.batch);
             }
         }
-        spaceman.draw(myGdxGame.batch);
+        //spaceman.draw(myGdxGame.batch);
         super.drawDynamic();
         if (lightning != null) lightning.draw(myGdxGame.batch);
         for (ResourceObject wreck : wrecks) wreck.draw(myGdxGame.batch);
@@ -224,6 +221,8 @@ public class PlanetGameScreen extends GameScreen {
 
     @Override
     public void drawStatic() {
+        spaceman.staticDraw(myGdxGame.batch);
+
         jumpButton.draw(myGdxGame.batch);
         lives.draw(myGdxGame.batch);
         strip.draw(myGdxGame.batch);
@@ -474,7 +473,7 @@ public class PlanetGameScreen extends GameScreen {
             if (!alien.isAlive()) {
                 if (rd.nextInt(100) < CHANCE_CRYSTAL_DROP) {
                     ResourceObject crystal = new ResourceObject(
-                            alien.getX(), alien.getY(),
+                            (int) alien.getX(), (int) alien.getY(),
                             BLOCK_SIZE,BLOCK_SIZE,
                             GameResources.CRYSTAL_IMG_PATH,
                             myGdxGame.planet
@@ -482,7 +481,7 @@ public class PlanetGameScreen extends GameScreen {
                     crystals.add(crystal);
                 } else if (rd.nextInt(100) < CHANCE_WRECK_DROP) {
                     ResourceObject wreck = new ResourceObject(
-                            alien.getX(), alien.getY(),
+                            (int) alien.getX(), (int) alien.getY(),
                             BLOCK_SIZE, BLOCK_SIZE,
                             GameResources.WRECKAGE_IMG_PATH,
                             myGdxGame.planet

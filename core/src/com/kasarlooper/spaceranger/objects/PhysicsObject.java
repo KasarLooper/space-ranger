@@ -53,19 +53,19 @@ public abstract class PhysicsObject extends GameObject implements Drawable {
         texture.dispose();
     }
 
-    public int getX() {
+    public float getX() {
         return (int) (body.getPosition().x / SCALE);
     }
 
-    public int getY() {
+    public float getY() {
         return (int) (body.getPosition().y / SCALE);
     }
 
-    public void setX(int x) {
+    public void setX(float x) {
         body.setTransform(x * SCALE, body.getPosition().y, 0);
     }
 
-    public void setY(int y) {
+    public void setY(float y) {
         body.setTransform(body.getPosition().x, y * SCALE, 0);
     }
 

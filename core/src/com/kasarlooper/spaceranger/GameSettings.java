@@ -84,8 +84,8 @@ public class GameSettings {
     public static final int MAP_HEIGHT = 16;
 
     // Cosmonaut settings
-    public static final int COSMONAUT_WIDTH = 85;
-    public static final int COSMONAUT_HEIGHT = 170;
+    public static final int COSMONAUT_WIDTH = 65; // 85
+    public static final int COSMONAUT_HEIGHT = 160; // 170
     public static final int COSMONAUT_SPEED = 10;
     public static final int COSMONAUT_JUMP_FORCE = 75;
     public static final int FRAME_DURATION = 20;
@@ -98,8 +98,8 @@ public class GameSettings {
 
 
     // Alien settings
-    public static final int ALIEN_WIDTH = 85;
-    public static final int ALIEN_HEIGHT = 170;
+    public static final int ALIEN_WIDTH = 65;
+    public static final int ALIEN_HEIGHT = 160;
     public static final int ALIEN_SPEED = 6;
     public static final int ALIEN_JUMP_FORCE = 75;
     public static final int ALIEN_DAMAGE_IMPULSE = 100000;

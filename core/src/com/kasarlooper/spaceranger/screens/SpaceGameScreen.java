@@ -329,7 +329,7 @@ public class SpaceGameScreen extends GameScreen {
                 ASTEROID_IMG_PATH,
                 (int) pair.x, (int) pair.y,
                 size, size, myGdxGame.space,
-                shipObject.getX(), shipObject.getY());
+                (int) shipObject.getX(), (int) shipObject.getY());
         asteroidArray.add(asteroid);
     }
 

@@ -6,12 +6,12 @@ import com.kasarlooper.spaceranger.GameResources;
 
 public class BoomObject{
     int i = 3;
-    private int x, y;
+    private float x, y;
     private int width;
     private int height;
     private Texture texture;
 
-    public BoomObject(int x, int y) {
+    public BoomObject(float x, float y) {
         this.x = x;
         this.y = y;
         width = 1;

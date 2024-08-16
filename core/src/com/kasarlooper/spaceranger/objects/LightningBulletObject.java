@@ -25,8 +25,8 @@ public class LightningBulletObject extends PhysicsObject{
     Sprite sprite;
     public LightningBulletObject(SpacemanObject spaceman, World world) {
         super(spaceman.isRightDirection ? GameResources.LIGHTNING_RIGHT_IMG_PATH : GameResources.LIGHTNING_LEFT_IMG_PATH,
-                spaceman.isRightDirection ? spaceman.getX() + (LIGHTING_WIDTH) / 2 + COSMONAUT_WIDTH : spaceman.getX() - (LIGHTING_WIDTH) / 2 - COSMONAUT_WIDTH,
-                spaceman.getY(), LIGHTING_WIDTH, GameSettings.LIGHTING_HEIGHT, world);
+                (int) (spaceman.isRightDirection ? spaceman.getX() + (LIGHTING_WIDTH) / 2 + COSMONAUT_WIDTH : spaceman.getX() - (LIGHTING_WIDTH) / 2 - COSMONAUT_WIDTH),
+                (int) (spaceman.getY()), LIGHTING_WIDTH, GameSettings.LIGHTING_HEIGHT, world);
         body.setBullet(true);
         sprite = new Sprite(texture);
         type = Type.Bullet;
@@ -69,7 +69,7 @@ public class LightningBulletObject extends PhysicsObject{
     @Override
     public void draw(SpriteBatch batch) {
         body.applyForceToCenter(0f, (float) (-body.getMass() * GRAVITY_PLANET_Y), false);
-        sprite.setBounds(getX() - width / 2f, getY() - height / 2f, width, height);
+        sprite.setBounds(Math.round(getX() - width / 2f), Math.round(getY() - height / 2f), width, height);
         sprite.draw(batch);
     }
 

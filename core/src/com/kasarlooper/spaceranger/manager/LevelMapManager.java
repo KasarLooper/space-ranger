@@ -131,7 +131,7 @@ public class LevelMapManager {
     private void initPlayer(int red, int green, int blue, int x, int y, World world) {
         if (red == 255 && green == 0 && blue == 0) {
             playerX = x * BLOCK_SIZE;
-            playerY = GROUND_HEIGHT + COSMONAUT_HEIGHT / 2 + (MAP_HEIGHT - y) * BLOCK_SIZE;
+            playerY = GROUND_HEIGHT + 85 + (MAP_HEIGHT - y) * BLOCK_SIZE;
             playerPixelX = x;
         }
     }

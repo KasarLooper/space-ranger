@@ -53,7 +53,6 @@ public class MyGdxGame extends Game {
 	public AudioManager audioManager;
 	@Override
 	public void create () {
-		System.out.println(MemoryManager.loadLevel());
 		Box2D.init();
 		space = new World(new Vector2(0, 0), true);
 		planet = new World(new Vector2((float) GameSettings.GRAVITY_PLANET_X, (float) GameSettings.GRAVITY_PLANET_Y), true);
@@ -95,14 +94,16 @@ public class MyGdxGame extends Game {
 		return false;
 	}
 
-	public void stepWorld(World world) {
+	public boolean stepWorld(World world) {
 		float delta = Gdx.graphics.getDeltaTime();
 		accumulator += Math.min(delta, 0.25f);
 
 		if (accumulator >= STEP_TIME) {
 			accumulator -= STEP_TIME;
 			world.step(STEP_TIME, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+			return true;
 		}
+		return false;
 	}
 
 	public void spaceLevel() {

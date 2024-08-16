@@ -1,6 +1,8 @@
 package com.kasarlooper.spaceranger.objects;
 
 import static com.kasarlooper.spaceranger.GameSettings.SCALE;
+import static com.kasarlooper.spaceranger.GameSettings.SCREEN_HEIGHT;
+import static com.kasarlooper.spaceranger.GameSettings.SCREEN_WIDTH;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -86,13 +88,13 @@ public class SpacemanObject extends PhysicsObject {
     @Override
     protected Shape getShape(float x, float y, float width, float height) {
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox((width - 20) * SCALE / 2f, (height - 10) * SCALE / 2f);
+        shape.setAsBox((width) * SCALE / 2f, (height) * SCALE / 2f);
         return shape;
     }
 
     @Override
     public void draw(SpriteBatch batch) {
-        sprite.setBounds(getX() - (width / 2f), getY() - (height / 2f), width, height);
+        sprite.setBounds(getX() - width / 2f, getY() - (height) / 2f, width, height);
         boolean isRed = TimeUtils.millis() - damageTime <= GameSettings.LIGHTNING_DAMAGE_MILLIS;
         if (isRed) batch.setShader(GameResources.RED_SHADER);
         sprite.draw(batch);
@@ -126,7 +128,12 @@ public class SpacemanObject extends PhysicsObject {
         isStop = true;
     }
 
-    public void updateFrames() {
+    public void update() {
+        updateFrames();
+        updateJump();
+    }
+
+    protected void updateFrames() {
         if (isStop) {
             if (i == 0) {
                 isStop = false;
@@ -143,9 +150,9 @@ public class SpacemanObject extends PhysicsObject {
         else if (isLeftStep) body.setLinearVelocity(-speed, body.getLinearVelocity().y);
     }
 
-    public void updateJump() {
+    protected void updateJump() {
         body.setAwake(true);
-        isJump = !blockMap.isContact(getX(), getY(), width, height) && body.getLinearVelocity().y != 0;
+        isJump = !blockMap.isContact((int) getX(), (int ) getY(), width, height) && body.getLinearVelocity().y != 0;
         if (!isJump) isWalk = true;
         else if (TimeUtils.millis() - lastChangeIsWalkTime > 500) {
             isWalk = false;
@@ -191,5 +198,13 @@ public class SpacemanObject extends PhysicsObject {
     @Override
     protected float getFriction() {
         return 0;
+    }
+
+    public void staticDraw(SpriteBatch batch) {
+        sprite.setBounds((SCREEN_WIDTH - width) / 2f, (SCREEN_HEIGHT - height) / 2f - 10f, width, height);
+        boolean isRed = TimeUtils.millis() - damageTime <= GameSettings.LIGHTNING_DAMAGE_MILLIS;
+        if (isRed) batch.setShader(GameResources.RED_SHADER);
+        sprite.draw(batch);
+        if (isRed) batch.setShader(null);
     }
 }

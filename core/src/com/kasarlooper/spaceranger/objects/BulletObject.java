@@ -39,7 +39,7 @@ public class BulletObject extends PhysicsObject {
         wasHit = true;
     }
 
-    public boolean destroy(int centreX, int centreY) {
+    public boolean destroy(float centreX, float centreY) {
         return wasHit || !(getX() > centreX - (width + SCREEN_WIDTH) / 2 &&
                 getX() < centreX + (width + SCREEN_WIDTH) / 2 &&
                 getY() > centreY - (height + SCREEN_HEIGHT) / 2 &&

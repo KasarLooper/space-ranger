@@ -13,6 +13,7 @@ public class BlockMap {
         for (PhysicsBlock block : blockList) {
             int x = block.x / BLOCK_SIZE;
             int y = 16 - (block.y - 95 + BLOCK_SIZE) / BLOCK_SIZE;
+            System.out.println(x + " " + y);
             blocks[y][x] = block;
         }
 
