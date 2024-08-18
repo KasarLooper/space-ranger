@@ -3,20 +3,14 @@ package com.kasarlooper.spaceranger.objects;
 import static com.kasarlooper.spaceranger.GameSettings.EARTH_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.EARTH_WIDTH;
 import static com.kasarlooper.spaceranger.GameSettings.GROUND_HEIGHT;
-import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_WIDTH;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.EdgeShape;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.GameResources;
-import com.kasarlooper.spaceranger.objects.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.physics.BodyBuilder;
 
 public class Earth extends GameObject{
     Body body;

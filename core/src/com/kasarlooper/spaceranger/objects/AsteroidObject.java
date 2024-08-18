@@ -9,10 +9,9 @@ import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.MyGdxGame;
-import com.kasarlooper.spaceranger.objects.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.physics.BodyBuilder;
 
 import java.util.Random;
-import java.util.Scanner;
 
 public class AsteroidObject extends PhysicsObject {
     private static final Random rd = new Random();

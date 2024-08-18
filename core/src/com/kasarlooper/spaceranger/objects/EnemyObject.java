@@ -23,7 +23,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
-import com.kasarlooper.spaceranger.objects.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.physics.BodyBuilder;
 
 import java.util.Random;
 

@@ -1,4 +1,4 @@
-package com.kasarlooper.spaceranger.objects.physics;
+package com.kasarlooper.spaceranger.physics;
 
 import static com.kasarlooper.spaceranger.GameSettings.EARTH_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.GROUND_HEIGHT;

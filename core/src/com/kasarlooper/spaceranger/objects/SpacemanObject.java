@@ -22,7 +22,7 @@ import com.kasarlooper.spaceranger.BlockMap;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
-import com.kasarlooper.spaceranger.objects.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.physics.BodyBuilder;
 
 public class SpacemanObject extends PhysicsObject {
     private BlockMap blockMap;

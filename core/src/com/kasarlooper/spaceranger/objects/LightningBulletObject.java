@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
-import com.kasarlooper.spaceranger.objects.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.physics.BodyBuilder;
 
 public class LightningBulletObject extends PhysicsObject{
     private final Type type;
