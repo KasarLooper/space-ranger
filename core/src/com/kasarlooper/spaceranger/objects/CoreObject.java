@@ -3,10 +3,13 @@ package com.kasarlooper.spaceranger.objects;
 import static com.kasarlooper.spaceranger.GameResources.CORE_IMG_PATH;
 import static com.kasarlooper.spaceranger.GameSettings.CORE_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.CORE_WIDTH;
+import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.MyGdxGame;
+import com.kasarlooper.spaceranger.objects.physics.BodyBuilder;
 
 public class CoreObject extends PhysicsObject {
 
@@ -20,6 +23,14 @@ public class CoreObject extends PhysicsObject {
         this.x = x;
         this.y = y;
         wasHit = false;
+    }
+
+    @Override
+    protected Body createBody(float x, float y, World world) {
+        return BodyBuilder.init()
+                .cords(x * SCALE, y * SCALE)
+                .size(width * SCALE, height * SCALE)
+                .createBody(world, this);
     }
 
     @Override

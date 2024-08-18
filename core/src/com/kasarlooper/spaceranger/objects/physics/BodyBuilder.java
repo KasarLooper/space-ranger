@@ -15,7 +15,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.objects.GameObject;
-import com.kasarlooper.spaceranger.objects.Type;
 
 public class BodyBuilder {
     public interface ShapeBuilder {
@@ -48,6 +47,7 @@ public class BodyBuilder {
         bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.fixedRotation = true;
+        shapeBuilder = CIRCLE;
 
         fixtureDef = new FixtureDef();
         fixtureDef.density = 0.1f;

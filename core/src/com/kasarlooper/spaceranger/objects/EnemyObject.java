@@ -2,7 +2,6 @@ package com.kasarlooper.spaceranger.objects;
 
 import static com.kasarlooper.spaceranger.GameResources.ENEMY_SHIP_IMG_PATH;
 import static com.kasarlooper.spaceranger.GameSettings.BULLET_HEIGHT;
-import static com.kasarlooper.spaceranger.GameSettings.BULLET_SPEED;
 import static com.kasarlooper.spaceranger.GameSettings.ENEMY_CHANCE_CHANGE_AIM;
 import static com.kasarlooper.spaceranger.GameSettings.ENEMY_CHECK_ANGLE;
 import static com.kasarlooper.spaceranger.GameSettings.ENEMY_CHECK_DISTANCE;
@@ -11,6 +10,7 @@ import static com.kasarlooper.spaceranger.GameSettings.ENEMY_SHOOT_ANGLE;
 import static com.kasarlooper.spaceranger.GameSettings.ENEMY_TO_PLAYER_ROTATION_SPEED;
 import static com.kasarlooper.spaceranger.GameSettings.ENEMY_USUAL_ROTATION_SPEED;
 import static com.kasarlooper.spaceranger.GameSettings.ENEMY_WIDTH;
+import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 import static com.kasarlooper.spaceranger.GameSettings.SPEED_ENEMY;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -18,10 +18,12 @@ import static java.lang.Math.toRadians;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
+import com.kasarlooper.spaceranger.objects.physics.BodyBuilder;
 
 import java.util.Random;
 
@@ -45,6 +47,14 @@ public class EnemyObject extends PhysicsObject {
         sprite.setBounds(x, y, width, height);
         sprite.setOrigin(width / 2f, height / 2f);
         hasAim = false;
+    }
+
+    @Override
+    protected Body createBody(float x, float y, World world) {
+        return BodyBuilder.init()
+                .cords(x * SCALE, y * SCALE)
+                .size(width * SCALE, height * SCALE)
+                .createBody(world, this);
     }
 
     @Override
@@ -82,14 +92,6 @@ public class EnemyObject extends PhysicsObject {
             if (aim < 0) da = -da;
             sprite.setRotation(sprite.getRotation() + da);
             aim -= da;
-            /*
-            if (Math.abs(aim) <= ENEMY_TO_PLAYER_ROTATION_SPEED) sprite.setRotation(sprite.getRotation() + aim);
-            else {
-                float da = (aim > 0 ? 1 : -1) * ENEMY_TO_PLAYER_ROTATION_SPEED;
-                aim -= da;
-                sprite.setRotation(sprite.getRotation() + da);
-            }
-             */
         } else {
             sprite.setRotation(sprite.getRotation() + ENEMY_USUAL_ROTATION_SPEED);
             hasAim = false;

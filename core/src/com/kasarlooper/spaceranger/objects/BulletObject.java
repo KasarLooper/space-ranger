@@ -5,6 +5,7 @@ import static com.kasarlooper.spaceranger.GameResources.ENEMY_BULLET_IMG_PATH;
 import static com.kasarlooper.spaceranger.GameSettings.BULLET_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.BULLET_SPEED;
 import static com.kasarlooper.spaceranger.GameSettings.BULLET_WIDTH;
+import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_WIDTH;
 import static java.lang.Math.cos;
@@ -14,9 +15,10 @@ import static java.lang.Math.toRadians;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
-import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.MyGdxGame;
+import com.kasarlooper.spaceranger.objects.physics.BodyBuilder;
 
 public class BulletObject extends PhysicsObject {
     private Type type;
@@ -33,6 +35,14 @@ public class BulletObject extends PhysicsObject {
         wasHit = false;
         if (isEnemy) type = Type.EnemyBullet;
         else type = Type.Bullet;
+    }
+
+    @Override
+    protected Body createBody(float x, float y, World world) {
+        return BodyBuilder.init()
+                .cords(x * SCALE, y * SCALE)
+                .size(width * SCALE, height * SCALE)
+                .createBody(world, this);
     }
 
     @Override

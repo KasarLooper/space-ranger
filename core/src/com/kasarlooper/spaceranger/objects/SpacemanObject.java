@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -21,6 +22,7 @@ import com.kasarlooper.spaceranger.BlockMap;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
+import com.kasarlooper.spaceranger.objects.physics.BodyBuilder;
 
 public class SpacemanObject extends PhysicsObject {
     private BlockMap blockMap;
@@ -76,16 +78,22 @@ public class SpacemanObject extends PhysicsObject {
         damageTime = 0;
     }
 
+    @Override
+    protected Body createBody(float x, float y, World world) {
+        return BodyBuilder.init()
+                .cords(x * SCALE, y * SCALE)
+                .size(width * SCALE, height * SCALE)
+                .shape(BodyBuilder.RECTANGLE)
+                .createBody(world, this);
+    }
+
     protected void initTextures(int defaultFrame) {
         left = new Texture[14];
-        //right = new Texture[14];
         for (int i = 2; i <= 14; i+=2) {
             int j = i / 2 + 3;
             if (j > 7) j -= 7;
             left[i - 2] = new Texture(String.format(COSMONAUT_ANIM_LEFT_IMG_PATTERN, j));
             left[i - 1] = new Texture(String.format(COSMONAUT_ANIM_LEFT_IMG_PATTERN, j));
-            //right[i - 2] = new Texture(String.format(GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN, j));
-            //right[i - 1] = new Texture(String.format(GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN, j));
         }
         i = 0;
         liveLeft = 3;
@@ -178,7 +186,6 @@ public class SpacemanObject extends PhysicsObject {
             accumulator -= GameSettings.FRAME_DURATION;
             i++;
             if (i >= left.length) i = 0;
-            //System.out.println(accumulator);
         }
     }
 
@@ -198,11 +205,6 @@ public class SpacemanObject extends PhysicsObject {
         if (left != null)
             for (Texture tex : left)
                 tex.dispose();
-        /*
-        if (right != null)
-            for (Texture tex : right)
-                tex.dispose();
-         */
     }
 
     public Type type() {
