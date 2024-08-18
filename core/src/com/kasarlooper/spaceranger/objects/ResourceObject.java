@@ -29,10 +29,6 @@ public class ResourceObject extends PhysicsObject {
                 .createBody(world, this);
     }
 
-    @Override
-    protected float getFriction() {
-        return 1;
-    }
 
     @Override
     public void hit(Type type, MyGdxGame myGdxGame) {

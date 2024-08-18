@@ -73,8 +73,8 @@ public class EnemyObject extends PhysicsObject {
         final int padding = 50;
         if (TimeUtils.millis() - lastShootTime > GameSettings.ENEMY_SHOOT_COOL_DOWN) {
             lastShootTime = TimeUtils.millis();
-            return new BulletObject((int) (getX() + cos(toRadians(getRotation())) * (getRadius() / 2 + BULLET_HEIGHT + padding)),
-                    (int) (getY() + sin(toRadians(getRotation())) * (getRadius() / 2 + BULLET_HEIGHT + padding)),
+            return new BulletObject((int) (getX() + cos(toRadians(getRotation())) * (height * SCALE / 4f + BULLET_HEIGHT + padding)),
+                    (int) (getY() + sin(toRadians(getRotation())) * (height * SCALE / 4f + BULLET_HEIGHT + padding)),
                     world, getRotation(), true);
         }
         return null;
@@ -84,7 +84,7 @@ public class EnemyObject extends PhysicsObject {
         float playerAngle = getAngleOfPlayer(playerX, playerY);
         float playerDistance = getPlayerDistance(playerX, playerY);
         if (Math.abs(playerAngle) < ENEMY_CHECK_ANGLE && playerDistance < ENEMY_CHECK_DISTANCE) {
-            if (!hasAim /*|| rd.nextInt(100) < ENEMY_CHANCE_CHANGE_AIM*/) {
+            if (!hasAim) {
                 aim = -playerAngle - rd.nextInt(ENEMY_SHOOT_ANGLE) * 2 + ENEMY_CHANCE_CHANGE_AIM;
             }
             if (!hasAim) hasAim = true;

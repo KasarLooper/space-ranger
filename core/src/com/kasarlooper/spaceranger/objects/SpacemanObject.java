@@ -14,8 +14,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.BlockMap;
@@ -101,13 +99,6 @@ public class SpacemanObject extends PhysicsObject {
 
     public boolean isAlive() {
         return liveLeft > 0;
-    }
-
-    @Override
-    protected Shape getShape(float x, float y, float width, float height) {
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox((width) * SCALE / 2f, (height) * SCALE / 2f);
-        return shape;
     }
 
     @Override
@@ -209,11 +200,6 @@ public class SpacemanObject extends PhysicsObject {
 
     public Type type() {
         return Type.Player;
-    }
-
-    @Override
-    protected float getFriction() {
-        return 0;
     }
 
     public void staticDraw(SpriteBatch batch) {

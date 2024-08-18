@@ -1,10 +1,8 @@
 package com.kasarlooper.spaceranger.screens;
 
-import static com.kasarlooper.spaceranger.GameResources.ASTEROID_IMG_PATH;
 import static com.kasarlooper.spaceranger.GameSettings.ASTEROID_WIDTH_MAX;
 import static com.kasarlooper.spaceranger.GameSettings.ASTEROID_WIDTH_MIN;
 import static com.kasarlooper.spaceranger.GameSettings.BULLET_HEIGHT;
-import static com.kasarlooper.spaceranger.GameSettings.BULLET_SPEED;
 import static com.kasarlooper.spaceranger.GameSettings.CHANCE_ASTEROID_SPAWN;
 import static com.kasarlooper.spaceranger.GameSettings.CHANCE_CORE_SPAWN;
 import static com.kasarlooper.spaceranger.GameSettings.CORE_HEIGHT;
@@ -14,6 +12,8 @@ import static com.kasarlooper.spaceranger.GameSettings.ENEMY_WIDTH;
 import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_WIDTH;
+import static com.kasarlooper.spaceranger.GameSettings.SHIP_HEIGHT;
+import static com.kasarlooper.spaceranger.GameSettings.SHIP_WIDTH;
 import static com.kasarlooper.spaceranger.State.ENDED;
 import static com.kasarlooper.spaceranger.State.PAUSED;
 import static com.kasarlooper.spaceranger.State.PLAYING;
@@ -128,11 +128,11 @@ public class SpaceGameScreen extends GameScreen {
                 if (session.state == PLAYING) {
                     final int padding = 30;
                     if (isTouchedShoot && shipObject.needToShoot()) {
-                        BulletObject Bullet = new BulletObject(
-                                (int) (shipObject.getX() + cos(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
-                                (int) (shipObject.getY() + sin(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
+                        BulletObject bullet = new BulletObject(
+                                (int) (shipObject.getX() + cos(toRadians(shipObject.getRotation())) * (SHIP_WIDTH * SCALE / 4f + BULLET_HEIGHT + padding)),
+                                (int) (shipObject.getY() + sin(toRadians(shipObject.getRotation())) * (SHIP_HEIGHT * SCALE / 4f + BULLET_HEIGHT + padding)),
                                 myGdxGame.space, shipObject.getRotation(), false);
-                        bulletArray.add(Bullet);
+                        bulletArray.add(bullet);
                         myGdxGame.audioManager.soundBullet.play(0.2f);
                     }
                     if (session.shouldSpawn()) {

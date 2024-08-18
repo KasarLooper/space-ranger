@@ -5,28 +5,17 @@ import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 
 
 public abstract class PhysicsObject extends GameObject {
-    public int width;
-    public int height;
-
     public Body body;
     public Texture texture;
     World world;
 
 
-
-    PhysicsObject(String texturePath, int x, int y, int wight, int height, World world) {
-        super(x, y);
-        this.width = wight;
-        this.height = height;
+    PhysicsObject(String texturePath, int x, int y, int width, int height, World world) {
+        super(x, y, width, height);
         this.x = x;
         this.y = y;
 
@@ -68,55 +57,5 @@ public abstract class PhysicsObject extends GameObject {
         body.setTransform(body.getPosition().x, y * SCALE, 0);
     }
 
-    public float getRadius() {
-        return Math.max(width, height) * SCALE / 2f;
-    }
-
-
-    protected Body createBody(float x, float y, World world) {
-        BodyDef def = new BodyDef();
-
-        def.type = getBodyType();
-        def.fixedRotation = true; // запрет на вращение
-        Body body = world.createBody(def);
-
-        Shape shape = getShape(x, y, (float) width,  (float) height);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        //fixtureDef.filter.categoryBits = cBits; // биты
-
-        fixtureDef.shape = shape;
-        fixtureDef.density = getDensity();
-        fixtureDef.friction = getFriction();
-        fixtureDef.restitution = getRestitution();
-
-        Fixture fixture = body.createFixture(fixtureDef);
-        fixture.setUserData(this);
-        shape.dispose();
-
-        body.setTransform(x * SCALE, y * SCALE, 0);
-        return body;
-    }
-
-    protected Shape getShape(float x, float y, float width, float height) {
-        CircleShape shape = new CircleShape();
-        shape.setRadius(getRadius());
-        return shape;
-    }
-
-    protected BodyDef.BodyType getBodyType() {
-        return BodyDef.BodyType.DynamicBody;
-    }
-
-    protected float getRestitution() {
-        return 0f;
-    }
-
-    protected float getDensity() {
-        return 0.1f;
-    }
-
-    protected float getFriction() {
-        return 1f;
-    }
+    protected abstract Body createBody(float x, float y, World world);
 }

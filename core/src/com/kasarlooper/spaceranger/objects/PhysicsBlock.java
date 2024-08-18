@@ -21,9 +21,7 @@ public class PhysicsBlock extends Block {
 
 
     public PhysicsBlock(int x, int y, boolean isGreen, World world) {
-        super(x, y);
-        this.width = BLOCK_SIZE;
-        this.height = BLOCK_SIZE;
+        super(x, y, BLOCK_SIZE, BLOCK_SIZE);
         this.x = x;
         this.y = y;
 
