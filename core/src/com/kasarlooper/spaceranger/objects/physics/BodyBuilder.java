@@ -110,7 +110,7 @@ public class BodyBuilder {
         fixture.setUserData(object);
 
         shape.dispose();
-        if (!shapeBuilder.equals(GROUND)) body.setTransform(cords.x - size.x / 2f, cords.y - size.y / 2f, 0);
+        if (!shapeBuilder.equals(GROUND)) body.setTransform(cords.x, cords.y, 0);
         return body;
     }
 }

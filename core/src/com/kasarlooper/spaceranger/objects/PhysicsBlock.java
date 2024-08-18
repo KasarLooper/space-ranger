@@ -8,11 +8,6 @@ import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.objects.physics.BodyBuilder;
 
@@ -68,7 +63,7 @@ public class PhysicsBlock extends Block {
 
     private Body createBody(float x, float y, World world) {
         return BodyBuilder.init()
-                .cords((x + width / 2f) * SCALE, (y + width / 2f) * SCALE)
+                .cords(x * SCALE, y * SCALE)
                 .size(width * SCALE, height * SCALE)
                 .shape(BodyBuilder.RECTANGLE)
                 .friction()
