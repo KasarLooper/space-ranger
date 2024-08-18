@@ -248,8 +248,7 @@ public class PlanetGameScreen extends GameScreen {
             int i = rd.nextInt(near.size());
             int x = near.get(i).x;
             int y = near.get(i).y;
-            aliens.add(new AlienObject(x, y, ALIEN_WIDTH, ALIEN_HEIGHT, ALIEN_ANIM_LEFT_IMG_PATTERN,
-                    5, ALIEN_SPEED, ALIEN_JUMP_FORCE, myGdxGame.planet, blockMap));
+            aliens.add(new AlienObject(x, y, myGdxGame.planet, blockMap));
         }
     }
 

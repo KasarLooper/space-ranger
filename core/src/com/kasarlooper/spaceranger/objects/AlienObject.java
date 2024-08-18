@@ -1,5 +1,10 @@
 package com.kasarlooper.spaceranger.objects;
 
+import static com.kasarlooper.spaceranger.GameResources.ALIEN_ANIM_LEFT_IMG_PATTERN;
+import static com.kasarlooper.spaceranger.GameSettings.ALIEN_HEIGHT;
+import static com.kasarlooper.spaceranger.GameSettings.ALIEN_JUMP_FORCE;
+import static com.kasarlooper.spaceranger.GameSettings.ALIEN_SPEED;
+import static com.kasarlooper.spaceranger.GameSettings.ALIEN_WIDTH;
 import static com.kasarlooper.spaceranger.GameSettings.BLOCK_SIZE;
 import static com.kasarlooper.spaceranger.GameSettings.COSMONAUT_HEIGHT;
 
@@ -20,8 +25,9 @@ public class AlienObject extends SpacemanObject{
     float lastX, lastY;
     private long stopTime;
 
-    public AlienObject(int x, int y, int wight, int height, String texturePath, int defaultFrame, int speed, int jumpImpulse, World world, BlockMap blockMap) {
-        super(x, y, wight, height, texturePath, defaultFrame, speed, jumpImpulse, world, blockMap);
+    public AlienObject(int x, int y, World world, BlockMap blockMap) {
+        super(x, y, ALIEN_WIDTH, ALIEN_HEIGHT, ALIEN_ANIM_LEFT_IMG_PATTERN, 5,
+                ALIEN_SPEED, ALIEN_JUMP_FORCE, world, blockMap);
         lastCheckTime1 = TimeUtils.millis();
         lastX = getX();
         stopTime = 0;
@@ -33,8 +39,8 @@ public class AlienObject extends SpacemanObject{
         for (int i = 2; i <= 18; i+=2) {
             int j = i / 2 + 4;
             if (j > 9) j -= 9;
-            left[i - 2] = new Texture(String.format(GameResources.ALIEN_ANIM_LEFT_IMG_PATTERN, j));
-            left[i - 1] = new Texture(String.format(GameResources.ALIEN_ANIM_LEFT_IMG_PATTERN, j));
+            left[i - 2] = new Texture(String.format(ALIEN_ANIM_LEFT_IMG_PATTERN, j));
+            left[i - 1] = new Texture(String.format(ALIEN_ANIM_LEFT_IMG_PATTERN, j));
         }
         i = 0;
         isJump = false;
