@@ -102,7 +102,7 @@ public class PlanetGameScreen extends GameScreen {
                 COSMONAUT_ANIM_LEFT_IMG_PATTERN, 4,
                 COSMONAUT_SPEED, COSMONAUT_JUMP_FORCE,
                 myGdxGame.planet, blockMap);
-        earth = new Earth(GROUND_HEIGHT, myGdxGame.planet);
+        earth = new Earth(myGdxGame.planet);
         aliens = new ArrayList<>();
         wrecks = new ArrayList<>();
         crystals = new ArrayList<>();
