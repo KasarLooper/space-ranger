@@ -7,19 +7,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.Shape;
-import com.badlogic.gdx.physics.box2d.World;
+import com.kasarlooper.spaceranger.physics.WorldWrap;
 
 
 public abstract class PhysicsObject extends GameObject {
     public Body body;
     public Texture texture;
-    protected World world;
+    protected WorldWrap world;
 
 
-    protected PhysicsObject(String texturePath, int x, int y, float wight, float height, World world) {
+    protected PhysicsObject(String texturePath, int x, int y, float wight, float height, WorldWrap world) {
         super(x, y, wight, height);
         this.x = x;
         this.y = y;
@@ -67,30 +65,7 @@ public abstract class PhysicsObject extends GameObject {
     }
 
 
-    protected Body createBody(float x, float y, World world) {
-        BodyDef def = new BodyDef();
-
-        def.type = getBodyType();
-        def.fixedRotation = true; // запрет на вращение
-        Body body = world.createBody(def);
-
-        Shape shape = getShape(x, y, (float) width,  (float) height);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        //fixtureDef.filter.categoryBits = cBits; // биты
-
-        fixtureDef.shape = shape;
-        fixtureDef.density = getDensity();
-        fixtureDef.friction = getFriction();
-        fixtureDef.restitution = getRestitution();
-
-        Fixture fixture = body.createFixture(fixtureDef);
-        fixture.setUserData(this);
-        shape.dispose();
-
-        body.setTransform(x * SCALE, y * SCALE, 0);
-        return body;
-    }
+    protected abstract Body createBody(float x, float y, WorldWrap world);
 
     protected Shape getShape(float x, float y, float width, float height) {
         CircleShape shape = new CircleShape();

@@ -12,8 +12,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.math.Matrix4;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.GameResources;
@@ -24,9 +22,11 @@ import com.kasarlooper.spaceranger.components.JoystickView;
 import com.kasarlooper.spaceranger.components.MovingBackgroundView;
 import com.kasarlooper.spaceranger.levels.space.SpaceGameScreen;
 import com.kasarlooper.spaceranger.manager.AudioManager;
+import com.kasarlooper.spaceranger.physics.WorldWrap;
 import com.kasarlooper.spaceranger.session.GameSession;
 
 public abstract class GameScreen extends ScreenAdapter implements InputProcessor {
+    protected WorldWrap world;
     protected GameSession session;
     protected MyGdxGame myGdxGame;
     protected JoystickView joystick;
@@ -38,7 +38,6 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     private float camX;
     private float camY;
 
-    Box2DDebugRenderer colliders;
     private boolean isCollidersShown;
     private boolean isGraphicsShown;
 
@@ -52,7 +51,6 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
         nextButton = new ButtonView(430, 416, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Далее");
         black_out_on_pause = new MovingBackgroundView(GameResources.BLACKOUT_IMG_PATH);
 
-        colliders = new Box2DDebugRenderer(true, false, false, false, false, false);
         isCollidersShown = false;
         isGraphicsShown = true;
     }
@@ -87,7 +85,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
             myGdxGame.camera.position.y -= SCREEN_HEIGHT / 2f;
             myGdxGame.camera.zoom = SCALE;
             myGdxGame.camera.update();
-            colliders.render(getWorld(), new Matrix4().setToOrtho2D(getCameraX(), getCameraY(), GameSettings.SCREEN_WIDTH * SCALE, SCREEN_HEIGHT * SCALE));
+            world.render(new Matrix4().setToOrtho2D(getCameraX(), getCameraY(), GameSettings.SCREEN_WIDTH * SCALE, SCREEN_HEIGHT * SCALE));
             myGdxGame.camera.position.x += SCREEN_WIDTH / 2f;
             myGdxGame.camera.position.y += SCREEN_HEIGHT / 2f;
             myGdxGame.camera.zoom = 1;
@@ -103,10 +101,6 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     @Override
     public void pause() {
         onPause();
-    }
-
-    protected World getWorld() {
-        return null;
     }
 
     protected float getCameraX() {

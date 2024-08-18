@@ -16,7 +16,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.BlockMap;
 import com.kasarlooper.spaceranger.GameResources;
@@ -26,6 +25,7 @@ import com.kasarlooper.spaceranger.manager.AudioManager;
 import com.kasarlooper.spaceranger.objects.PhysicsObject;
 import com.kasarlooper.spaceranger.objects.Type;
 import com.kasarlooper.spaceranger.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.physics.WorldWrap;
 
 public class SpacemanObject extends PhysicsObject {
     private BlockMap blockMap;
@@ -51,12 +51,12 @@ public class SpacemanObject extends PhysicsObject {
 
     public int cristalCount, wreckCount;
 
-    public SpacemanObject(int x, int y, World world, BlockMap blockMap) {
+    public SpacemanObject(int x, int y, WorldWrap world, BlockMap blockMap) {
         this(x, y, COSMONAUT_WIDTH, COSMONAUT_HEIGHT, COSMONAUT_ANIM_LEFT_IMG_PATTERN, 4,
                 COSMONAUT_SPEED, COSMONAUT_JUMP_FORCE, world, blockMap);
     }
 
-    protected SpacemanObject(int x, int y, int wight, int height, String texturePath, int defaultFrame, int speed, int jumpImpulse, World world, BlockMap blockMap) {
+    protected SpacemanObject(int x, int y, int wight, int height, String texturePath, int defaultFrame, int speed, int jumpImpulse, WorldWrap world, BlockMap blockMap) {
         super(String.format(texturePath, defaultFrame), x, y, wight, height, world);
         defaultY = y;
         this.defaultFrame = defaultFrame;
@@ -82,7 +82,7 @@ public class SpacemanObject extends PhysicsObject {
     }
 
     @Override
-    protected Body createBody(float x, float y, World world) {
+    protected Body createBody(float x, float y, WorldWrap world) {
         return BodyBuilder.init()
                 .cords(x * SCALE, y * SCALE)
                 .size(width * SCALE, height * SCALE)

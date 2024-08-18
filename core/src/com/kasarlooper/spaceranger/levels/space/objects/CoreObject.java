@@ -7,11 +7,11 @@ import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.MyGdxGame;
 import com.kasarlooper.spaceranger.objects.PhysicsObject;
 import com.kasarlooper.spaceranger.objects.Type;
 import com.kasarlooper.spaceranger.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.physics.WorldWrap;
 
 public class CoreObject extends PhysicsObject {
 
@@ -20,7 +20,7 @@ public class CoreObject extends PhysicsObject {
     public boolean wasHit;
     public boolean wasCollected;
 
-    public CoreObject(int x, int y, World world) {
+    public CoreObject(int x, int y, WorldWrap world) {
         super(CORE_IMG_PATH, x, y, CORE_WIDTH, CORE_HEIGHT, world);
         this.x = x;
         this.y = y;
@@ -28,7 +28,7 @@ public class CoreObject extends PhysicsObject {
     }
 
     @Override
-    protected Body createBody(float x, float y, World world) {
+    protected Body createBody(float x, float y, WorldWrap world) {
         return BodyBuilder.init()
                 .cords(x * SCALE, y * SCALE)
                 .size(width * SCALE, height * SCALE)

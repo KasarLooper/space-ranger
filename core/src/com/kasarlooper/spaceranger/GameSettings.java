@@ -66,8 +66,7 @@ public class GameSettings {
     public static final int WRECK_COUNT = 3;
     public static final int CRYSTAL_COUNT = 2;
 
-    public static final double GRAVITY_PLANET_Y = -30;
-    public static final double GRAVITY_PLANET_X = 0;
+    public static final float GRAVITY = 30f;
     public static final int GROUND_HEIGHT = 10;
     public static final int CAMERA_Y_FROM_CENTER = 0;
 

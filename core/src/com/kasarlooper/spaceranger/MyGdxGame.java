@@ -13,7 +13,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.World;
@@ -27,8 +26,6 @@ import com.kasarlooper.spaceranger.screens.MemoriesScreen;
 import com.kasarlooper.spaceranger.screens.MenuScreen;
 
 public class MyGdxGame extends Game {
-	public World space;
-	public World planet;
 	private float accumulator;
 
 	public State state;
@@ -51,8 +48,6 @@ public class MyGdxGame extends Game {
 	@Override
 	public void create () {
 		Box2D.init();
-		space = new World(new Vector2(0, 0), true);
-		planet = new World(new Vector2((float) GameSettings.GRAVITY_PLANET_X, (float) GameSettings.GRAVITY_PLANET_Y), true);
 
 		commonWhiteFont = FontBuilder.generate(50, Color.WHITE, GameResources.FONT_PATH);
 		averageWhiteFont = FontBuilder.generate(25, Color.WHITE, GameResources.FONT_PATH);
@@ -99,18 +94,6 @@ public class MyGdxGame extends Game {
 			accumulator -= STEP_TIME;
 			world.step(STEP_TIME, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 		}
-	}
-
-	public void spaceLevel() {
-		setScreen(spaceLevel);
-
-	}
-
-	public void planetLevel() {
-		setScreen(planetLevel);
-		Gdx.input.setInputProcessor(planetLevel);
-		AudioManager.spaceMusic.stop();
-		AudioManager.planetMusic.play();
 	}
 
 	public void mainMenuMusic() {

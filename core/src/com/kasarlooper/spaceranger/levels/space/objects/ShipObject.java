@@ -15,7 +15,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
@@ -23,6 +22,7 @@ import com.kasarlooper.spaceranger.MyGdxGame;
 import com.kasarlooper.spaceranger.objects.PhysicsObject;
 import com.kasarlooper.spaceranger.objects.Type;
 import com.kasarlooper.spaceranger.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.physics.WorldWrap;
 
 public class ShipObject extends PhysicsObject {
     public int livesLeft;
@@ -35,7 +35,7 @@ public class ShipObject extends PhysicsObject {
     int i = 0;
     private boolean isStop = false;
 
-    public ShipObject(int x, int y, World world) {
+    public ShipObject(int x, int y, WorldWrap world) {
         super(String.format(GameResources.SHIP_IMG_PATH, 3), x, y, SHIP_WIDTH, SHIP_HEIGHT, world);
         body.setLinearDamping(10f);
         livesLeft = 3;
@@ -46,7 +46,7 @@ public class ShipObject extends PhysicsObject {
     }
 
     @Override
-    protected Body createBody(float x, float y, World world) {
+    protected Body createBody(float x, float y, WorldWrap world) {
         return BodyBuilder.init()
                 .cords(x * SCALE, y * SCALE)
                 .size(width * SCALE, height * SCALE)

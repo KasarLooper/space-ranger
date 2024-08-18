@@ -8,10 +8,10 @@ import static com.kasarlooper.spaceranger.GameSettings.SCREEN_WIDTH;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.objects.GameObject;
 import com.kasarlooper.spaceranger.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.physics.WorldWrap;
 
 public class Earth extends GameObject {
     Body body;
@@ -19,7 +19,7 @@ public class Earth extends GameObject {
     float cameraX;
     float[] earthXs;
 
-    public Earth(World world) {
+    public Earth(WorldWrap world) {
         super(0, GROUND_HEIGHT);
         body = BodyBuilder.init()
                 .cords(0, 0)

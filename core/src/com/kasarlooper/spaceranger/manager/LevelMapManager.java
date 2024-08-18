@@ -8,10 +8,10 @@ import static com.kasarlooper.spaceranger.GameSettings.MAP_HEIGHT;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
-import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.levels.planet.objects.PhysicsBlock;
 import com.kasarlooper.spaceranger.objects.GameObject;
+import com.kasarlooper.spaceranger.physics.WorldWrap;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,7 +25,7 @@ public class LevelMapManager {
     int capsuleEndX, capsuleEndY;
     int playerPixelX;
 
-    public void loadMap(World world) {
+    public void loadMap(WorldWrap world) {
         physics = new ArrayList<>();
         mobSpawns = new ArrayList<>();
         resSpawns = new ArrayList<>();
@@ -119,7 +119,7 @@ public class LevelMapManager {
         return getY(capsuleStartY) - getY(capsuleEndY);
     }
 
-    private void initPlayer(int red, int green, int blue, int x, int y, World world) {
+    private void initPlayer(int red, int green, int blue, int x, int y, WorldWrap world) {
         if (red == 255 && green == 0 && blue == 0) {
             playerX = x * BLOCK_SIZE;
             playerY = GROUND_HEIGHT + 85 + (MAP_HEIGHT - y) * BLOCK_SIZE;
@@ -127,7 +127,7 @@ public class LevelMapManager {
         }
     }
 
-    private void initBlocks(int red, int green, int blue, int x, int y, World world) {
+    private void initBlocks(int red, int green, int blue, int x, int y, WorldWrap world) {
         if (red == 0 && green == 255 && blue == 0) {
             physics.add(new PhysicsBlock(getX(x), getY(y), true, world));
         } else if (red == 0 && green == 0 && blue == 0) {

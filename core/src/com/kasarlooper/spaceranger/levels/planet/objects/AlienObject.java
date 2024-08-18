@@ -8,13 +8,13 @@ import static com.kasarlooper.spaceranger.GameSettings.ALIEN_WIDTH;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.BlockMap;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
 import com.kasarlooper.spaceranger.manager.AudioManager;
 import com.kasarlooper.spaceranger.objects.Type;
+import com.kasarlooper.spaceranger.physics.WorldWrap;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,7 @@ public class AlienObject extends SpacemanObject{
     float lastX, lastY;
     private long stopTime;
 
-    public AlienObject(int x, int y, World world, BlockMap blockMap) {
+    public AlienObject(int x, int y, WorldWrap world, BlockMap blockMap) {
         super(x, y, ALIEN_WIDTH, ALIEN_HEIGHT, ALIEN_ANIM_LEFT_IMG_PATTERN, 5,
                 ALIEN_SPEED, ALIEN_JUMP_FORCE, world, blockMap);
         lastCheckTime1 = TimeUtils.millis();

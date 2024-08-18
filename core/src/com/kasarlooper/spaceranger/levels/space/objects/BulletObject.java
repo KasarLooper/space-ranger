@@ -16,18 +16,19 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.MyGdxGame;
 import com.kasarlooper.spaceranger.objects.PhysicsObject;
 import com.kasarlooper.spaceranger.objects.Type;
 import com.kasarlooper.spaceranger.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.physics.WorldWrap;
 
 public class BulletObject extends PhysicsObject {
     private Type type;
     public boolean wasHit;
 
     Sprite sprite;
-    public BulletObject(int x, int y, World world, float degrees, boolean isEnemy) {
+
+    public BulletObject(int x, int y, WorldWrap world, float degrees, boolean isEnemy) {
         super(isEnemy ? ENEMY_BULLET_IMG_PATH : BULLET_IMG_PATH, x, y, BULLET_WIDTH, BULLET_HEIGHT, world);
         body.setLinearVelocity(new Vector2((float) (cos(toRadians(degrees)) * BULLET_SPEED),
                 (float) (sin(toRadians(degrees)) * BULLET_SPEED)));
@@ -40,7 +41,7 @@ public class BulletObject extends PhysicsObject {
     }
 
     @Override
-    protected Body createBody(float x, float y, World world) {
+    protected Body createBody(float x, float y, WorldWrap world) {
         return BodyBuilder.init()
                 .cords(x * SCALE, y * SCALE)
                 .size(width * SCALE, height * SCALE)

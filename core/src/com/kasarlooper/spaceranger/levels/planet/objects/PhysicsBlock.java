@@ -8,17 +8,17 @@ import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.objects.Type;
 import com.kasarlooper.spaceranger.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.physics.WorldWrap;
 
 public class PhysicsBlock extends Block {
     public Body body;
     public Texture texture;
-    World world;
+    WorldWrap world;
 
 
-    public PhysicsBlock(int x, int y, boolean isGreen, World world) {
+    public PhysicsBlock(int x, int y, boolean isGreen, WorldWrap world) {
         super(x, y, BLOCK_SIZE, BLOCK_SIZE);
         this.x = x;
         this.y = y;
@@ -57,7 +57,7 @@ public class PhysicsBlock extends Block {
     }
 
 
-    private Body createBody(float x, float y, World world) {
+    private Body createBody(float x, float y, WorldWrap world) {
         return BodyBuilder.init()
                 .cords(x * SCALE, y * SCALE)
                 .size(width * SCALE, height * SCALE)

@@ -13,7 +13,6 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
-import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.objects.GameObject;
 
 public class BodyBuilder {
@@ -98,14 +97,14 @@ public class BodyBuilder {
         return this;
     }
 
-    public Body createBody(World world, GameObject object) {
+    public Body createBody(WorldWrap world, GameObject object) {
         if (cords == null) throw new RuntimeException("No cords specified");
         if (size == null) throw new RuntimeException("No size specified");
 
         Shape shape = shapeBuilder.getShape(size.x, size.y);
         fixtureDef.shape = shape;
 
-        Body body = world.createBody(bodyDef);
+        Body body = world.createBody(bodyDef, fixtureDef.isSensor);
         Fixture fixture = body.createFixture(fixtureDef);
         fixture.setUserData(object);
 

@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
@@ -16,6 +15,7 @@ import com.kasarlooper.spaceranger.MyGdxGame;
 import com.kasarlooper.spaceranger.objects.PhysicsObject;
 import com.kasarlooper.spaceranger.objects.Type;
 import com.kasarlooper.spaceranger.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.physics.WorldWrap;
 
 public class LightningBulletObject extends PhysicsObject {
     private final Type type;
@@ -23,7 +23,8 @@ public class LightningBulletObject extends PhysicsObject {
     private static long lastShootTime;
 
     Sprite sprite;
-    public LightningBulletObject(SpacemanObject spaceman, World world) {
+
+    public LightningBulletObject(SpacemanObject spaceman, WorldWrap world) {
         super(spaceman.isRightDirection ? GameResources.LIGHTNING_RIGHT_IMG_PATH : GameResources.LIGHTNING_LEFT_IMG_PATH,
                 (int) (spaceman.isRightDirection ? spaceman.getX() + (LIGHTING_WIDTH) / 2 + COSMONAUT_WIDTH : spaceman.getX() - (LIGHTING_WIDTH) / 2 - COSMONAUT_WIDTH),
                 (int) (spaceman.getY()), LIGHTING_WIDTH, GameSettings.LIGHTING_HEIGHT, world);
@@ -40,7 +41,7 @@ public class LightningBulletObject extends PhysicsObject {
     }
 
     @Override
-    protected Body createBody(float x, float y, World world) {
+    protected Body createBody(float x, float y, WorldWrap world) {
         return BodyBuilder.init()
                 .cords(x * SCALE, y * SCALE)
                 .size(width * SCALE, height * SCALE)

@@ -7,18 +7,18 @@ import static com.kasarlooper.spaceranger.GameSettings.ASTEROID_WIDTH_MIN;
 import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.MyGdxGame;
 import com.kasarlooper.spaceranger.objects.PhysicsObject;
 import com.kasarlooper.spaceranger.objects.Type;
 import com.kasarlooper.spaceranger.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.physics.WorldWrap;
 
 import java.util.Random;
 
 public class AsteroidObject extends PhysicsObject {
     private static final Random rd = new Random();
 
-    public AsteroidObject(int x, int y, World world, int playerX, int playerY) {
+    public AsteroidObject(int x, int y, WorldWrap world, int playerX, int playerY) {
         super(ASTEROID_IMG_PATH, x, y, ASTEROID_WIDTH_MIN + rd.nextInt(ASTEROID_WIDTH_MAX - ASTEROID_WIDTH_MIN),
                 ASTEROID_WIDTH_MIN + rd.nextInt(ASTEROID_WIDTH_MAX - ASTEROID_WIDTH_MIN), world);
         float dx = playerX - x;
@@ -30,7 +30,7 @@ public class AsteroidObject extends PhysicsObject {
     }
 
     @Override
-    protected Body createBody(float x, float y, World world) {
+    protected Body createBody(float x, float y, WorldWrap world) {
         return BodyBuilder.init()
                 .cords(x * SCALE, y * SCALE)
                 .size(width * SCALE, height * SCALE)

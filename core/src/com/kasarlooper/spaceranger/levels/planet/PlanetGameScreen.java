@@ -6,6 +6,7 @@ import static com.kasarlooper.spaceranger.GameSettings.CHANCE_CRYSTAL_DROP;
 import static com.kasarlooper.spaceranger.GameSettings.CHANCE_CRYSTAL_SPAWN;
 import static com.kasarlooper.spaceranger.GameSettings.CHANCE_WRECK_DROP;
 import static com.kasarlooper.spaceranger.GameSettings.CRYSTAL_COUNT;
+import static com.kasarlooper.spaceranger.GameSettings.GRAVITY;
 import static com.kasarlooper.spaceranger.GameSettings.GROUND_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_HEIGHT;
@@ -18,7 +19,6 @@ import static com.kasarlooper.spaceranger.State.PLAYING;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.BlockMap;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GraphicsSettings;
@@ -37,10 +37,10 @@ import com.kasarlooper.spaceranger.levels.planet.objects.PhysicsBlock;
 import com.kasarlooper.spaceranger.levels.planet.objects.ResourceObject;
 import com.kasarlooper.spaceranger.levels.planet.objects.SpacemanObject;
 import com.kasarlooper.spaceranger.manager.AudioManager;
-import com.kasarlooper.spaceranger.manager.ContactManager;
 import com.kasarlooper.spaceranger.manager.LevelMapManager;
 import com.kasarlooper.spaceranger.objects.GameObject;
 import com.kasarlooper.spaceranger.objects.PhysicsObject;
+import com.kasarlooper.spaceranger.physics.WorldWrap;
 import com.kasarlooper.spaceranger.screens.GameScreen;
 import com.kasarlooper.spaceranger.session.PlanetGameSession;
 
@@ -51,7 +51,6 @@ import java.util.Random;
 public class PlanetGameScreen extends GameScreen {
     LevelMapManager loader;
     BlockMap blockMap;
-    ContactManager contactManager;
     MovingBackgroundView backgroundView;
 
     SpacemanObject spaceman;
@@ -77,18 +76,19 @@ public class PlanetGameScreen extends GameScreen {
 
     public PlanetGameScreen(MyGdxGame game) {
         super(game);
+        world = new WorldWrap(GRAVITY, game);
+
         session = new PlanetGameSession();
         loader = new LevelMapManager();
-        contactManager = new ContactManager(myGdxGame.planet, myGdxGame);
-        loader.loadMap(myGdxGame.planet);
+        loader.loadMap(world);
         physics = loader.getPhysics();
         blockMap = new BlockMap(physics, 200, 16);
         mobSpawns = loader.getMobSpawns();
         resSpawns = loader.getResSpawns();
         backgroundView = new MovingBackgroundLeftRightView(GameResources.BACKGROUND_2_IMG_PATH);
 
-        spaceman = new SpacemanObject(loader.getPlayerX(), loader.getPlayerY(), myGdxGame.planet, blockMap);
-        earth = new Earth(myGdxGame.planet);
+        spaceman = new SpacemanObject(loader.getPlayerX(), loader.getPlayerY(), world, blockMap);
+        earth = new Earth(world);
         aliens = new ArrayList<>();
         wrecks = new ArrayList<>();
         crystals = new ArrayList<>();
@@ -110,11 +110,6 @@ public class PlanetGameScreen extends GameScreen {
         dx = 0;
         dy = 0;
 
-    }
-
-    @Override
-    protected World getWorld() {
-        return myGdxGame.planet;
     }
 
     protected float getCameraX() {
@@ -145,14 +140,14 @@ public class PlanetGameScreen extends GameScreen {
                 if (isJump) spaceman.jump();
                 for (AlienObject alien : aliens)
                     alien.move((int) spaceman.getX(), (int) spaceman.getY(), physics);
-                myGdxGame.stepWorld(myGdxGame.planet);
+                world.update(delta);
                 spaceman.update();
                 for (AlienObject alien : aliens) alien.update();
 
                 lives.setLeftLives(spaceman.liveLeft);
                 if (lightning != null && lightning.destroyIfNeed()) lightning = null;
                 if (lightning == null && isLighting && LightningBulletObject.isShootTime()) {
-                    lightning = new LightningBulletObject(spaceman, myGdxGame.planet);
+                    lightning = new LightningBulletObject(spaceman, world);
                     AudioManager.soundShot.play(0.2f);
                 }
 
@@ -241,7 +236,7 @@ public class PlanetGameScreen extends GameScreen {
             int i = rd.nextInt(near.size());
             int x = near.get(i).x;
             int y = near.get(i).y;
-            aliens.add(new AlienObject(x, y, myGdxGame.planet, blockMap));
+            aliens.add(new AlienObject(x, y, world, blockMap));
         }
     }
 
@@ -257,7 +252,7 @@ public class PlanetGameScreen extends GameScreen {
             int i = rd.nextInt(near.size());
             int x = near.get(i).x;
             int y = near.get(i).y;
-            crystals.add(new ResourceObject(x, y, true, myGdxGame.planet));
+            crystals.add(new ResourceObject(x, y, true, world));
         }
     }
 
@@ -305,14 +300,14 @@ public class PlanetGameScreen extends GameScreen {
     @Override
     public void restartGame() {
         super.restartGame();
-        myGdxGame.planet.destroyBody(spaceman.body);
+        world.destroyBody(spaceman.body);
         for (AlienObject alien : aliens)
-            myGdxGame.planet.destroyBody(alien.body);
+            world.destroyBody(alien.body);
         for (ResourceObject res : wrecks)
-            myGdxGame.planet.destroyBody(res.body);
+            world.destroyBody(res.body);
         for (ResourceObject res : crystals)
-            myGdxGame.planet.destroyBody(res.body);
-        spaceman = new SpacemanObject(loader.getPlayerX(), loader.getPlayerY(), myGdxGame.planet, blockMap);
+            world.destroyBody(res.body);
+        spaceman = new SpacemanObject(loader.getPlayerX(), loader.getPlayerY(), world, blockMap);
         aliens = new ArrayList<>();
         wrecks = new ArrayList<>();
         crystals = new ArrayList<>();
@@ -461,13 +456,13 @@ public class PlanetGameScreen extends GameScreen {
             AlienObject alien = iterator.next();
             if (!alien.isAlive()) {
                 if (rd.nextInt(100) < CHANCE_CRYSTAL_DROP) {
-                    ResourceObject crystal = new ResourceObject((int) alien.getX(), (int) alien.getY(), true, myGdxGame.planet);
+                    ResourceObject crystal = new ResourceObject((int) alien.getX(), (int) alien.getY(), true, world);
                     crystals.add(crystal);
                 } else if (rd.nextInt(100) < CHANCE_WRECK_DROP) {
-                    ResourceObject wreck = new ResourceObject((int) alien.getX(), (int) alien.getY(), false, myGdxGame.planet);
+                    ResourceObject wreck = new ResourceObject((int) alien.getX(), (int) alien.getY(), false, world);
                     wrecks.add(wreck);
                 }
-                myGdxGame.planet.destroyBody(alien.body);
+                world.destroyBody(alien.body);
                 iterator.remove();
             }
         }
@@ -480,7 +475,7 @@ public class PlanetGameScreen extends GameScreen {
             if (wreck.destroy()) {
                 spaceman.wreckCount += 1;
                 purpose.setText(String.format(GraphicsSettings.PLANET_AIM1_PATTERN, spaceman.wreckCount, spaceman.cristalCount));
-                myGdxGame.planet.destroyBody(wreck.body);
+                world.destroyBody(wreck.body);
                 iterator1.remove();
             }
         }
@@ -491,7 +486,7 @@ public class PlanetGameScreen extends GameScreen {
             if (crystal.destroy()) {
                 spaceman.cristalCount += 1;
                 purpose.setText(String.format(GraphicsSettings.PLANET_AIM1_PATTERN, spaceman.wreckCount, spaceman.cristalCount));
-                myGdxGame.planet.destroyBody(crystal.body);
+                world.destroyBody(crystal.body);
                 iterator2.remove();
             }
         }
