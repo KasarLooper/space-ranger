@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.kasarlooper.spaceranger.objects.GameObject;
 import com.kasarlooper.spaceranger.objects.Type;
 
 public class BodyBuilder {
@@ -59,14 +60,14 @@ public class BodyBuilder {
     }
 
     // Required
-    public BodyBuilder cords(Vector2 cords) {
-        this.cords = cords;
+    public BodyBuilder cords(float x, float y) {
+        this.cords = new Vector2(x, y);
         return this;
     }
 
     // Required
-    public BodyBuilder size(Vector2 size) {
-        this.size = size;
+    public BodyBuilder size(float x, float y) {
+        this.size = new Vector2(x, y);
         return this;
     }
 
@@ -82,7 +83,7 @@ public class BodyBuilder {
     }
 
     // Default: circle
-    public BodyBuilder shapeBuilder(ShapeBuilder builder) {
+    public BodyBuilder shape(ShapeBuilder builder) {
         shapeBuilder = builder;
         return this;
     }
@@ -97,20 +98,19 @@ public class BodyBuilder {
         return this;
     }
 
-    public Body createBody(World world, Type type) {
+    public Body createBody(World world, GameObject object) {
         if (cords == null) throw new RuntimeException("No cords specified");
         if (size == null) throw new RuntimeException("No size specified");
 
         Shape shape = shapeBuilder.getShape(size.x, size.y);
         fixtureDef.shape = shape;
-        shape.dispose();
 
         Body body = world.createBody(bodyDef);
-        body.setTransform(cords.x - size.x / 2f, cords.y - size.y / 2f, 0);
-
         Fixture fixture = body.createFixture(fixtureDef);
-        fixture.setUserData(type);
+        fixture.setUserData(object);
 
+        shape.dispose();
+        body.setTransform(cords.x - size.x / 2f, cords.y - size.y / 2f, 0);
         return body;
     }
 }

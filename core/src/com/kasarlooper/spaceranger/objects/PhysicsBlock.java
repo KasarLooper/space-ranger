@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.kasarlooper.spaceranger.objects.physics.BodyBuilder;
 
 public class PhysicsBlock extends Block implements Drawable {
     public int width;
@@ -64,55 +65,17 @@ public class PhysicsBlock extends Block implements Drawable {
 
 
     private Body createBody(float x, float y, World world) {
-        BodyDef def = new BodyDef();
-
-        def.type = getBodyType();
-        def.fixedRotation = true; // запрет на вращение
-        Body body = world.createBody(def);
-
-        Shape shape = getShape(x, y, (float) width,  (float) height);
-
-        FixtureDef fixtureDef = new FixtureDef();
-        //fixtureDef.filter.categoryBits = cBits; // биты
-
-        fixtureDef.shape = shape;
-        fixtureDef.density = getDensity();
-        fixtureDef.friction = getFriction();
-        fixtureDef.restitution = getRestitution();
-
-        Fixture fixture = body.createFixture(fixtureDef);
-        fixture.setUserData(this);
-        shape.dispose();
-
-        body.setTransform(x * SCALE, y * SCALE, 0);
-        return body;
+        return BodyBuilder.init()
+                .cords((x + width / 2f) * SCALE, (y + width / 2f) * SCALE)
+                .size(width * SCALE, height * SCALE)
+                .shape(BodyBuilder.RECTANGLE)
+                .friction()
+                .staticType()
+                .createBody(world, this);
     }
 
     @Override
     public Type type() {
         return Type.Block;
-    }
-
-    protected Shape getShape(float x, float y, float width, float height) {
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox((width) * SCALE / 2f, (height) * SCALE / 2f);
-
-        return shape;
-    }
-
-    protected BodyDef.BodyType getBodyType() {
-        return BodyDef.BodyType.StaticBody;
-    }
-
-    protected float getFriction() {
-        return 1;
-    }
-
-    protected float getRestitution() {
-        return 0f;
-    }
-
-    protected float getDensity() {
-        return 0.1f;
     }
 }
