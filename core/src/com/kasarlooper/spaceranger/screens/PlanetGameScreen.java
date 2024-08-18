@@ -265,7 +265,7 @@ public class PlanetGameScreen extends GameScreen {
             int i = rd.nextInt(near.size());
             int x = near.get(i).x;
             int y = near.get(i).y;
-            crystals.add(new ResourceObject(x, y, BLOCK_SIZE, BLOCK_SIZE, CRYSTAL_IMG_PATH, myGdxGame.planet));
+            crystals.add(new ResourceObject(x, y, true, myGdxGame.planet));
         }
     }
 
@@ -474,20 +474,10 @@ public class PlanetGameScreen extends GameScreen {
             AlienObject alien = iterator.next();
             if (!alien.isAlive()) {
                 if (rd.nextInt(100) < CHANCE_CRYSTAL_DROP) {
-                    ResourceObject crystal = new ResourceObject(
-                            (int) alien.getX(), (int) alien.getY(),
-                            BLOCK_SIZE,BLOCK_SIZE,
-                            GameResources.CRYSTAL_IMG_PATH,
-                            myGdxGame.planet
-                    );
+                    ResourceObject crystal = new ResourceObject((int) alien.getX(), (int) alien.getY(), true, myGdxGame.planet);
                     crystals.add(crystal);
                 } else if (rd.nextInt(100) < CHANCE_WRECK_DROP) {
-                    ResourceObject wreck = new ResourceObject(
-                            (int) alien.getX(), (int) alien.getY(),
-                            BLOCK_SIZE, BLOCK_SIZE,
-                            GameResources.WRECKAGE_IMG_PATH,
-                            myGdxGame.planet
-                    );
+                    ResourceObject wreck = new ResourceObject((int) alien.getX(), (int) alien.getY(), false, myGdxGame.planet);
                     wrecks.add(wreck);
                 }
                 myGdxGame.planet.destroyBody(alien.body);

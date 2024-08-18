@@ -50,7 +50,7 @@ public class GameSettings {
     // Bullet Setting
     public static final int BULLET_WIDTH = 15;
     public static final int BULLET_HEIGHT = 50;
-    public static final int Bullet_Speed = 30; // in ms
+    public static final int BULLET_SPEED = 30; // in ms
 
     //Enemy behaviour settings
     public static final int ENEMY_CHECK_DISTANCE = 1200;

@@ -1,12 +1,10 @@
 package com.kasarlooper.spaceranger.screens;
 
 import static com.kasarlooper.spaceranger.GameResources.ASTEROID_IMG_PATH;
-import static com.kasarlooper.spaceranger.GameResources.CORE_IMG_PATH;
-import static com.kasarlooper.spaceranger.GameResources.ENEMY_SHIP_IMG_PATH;
 import static com.kasarlooper.spaceranger.GameSettings.ASTEROID_WIDTH_MAX;
 import static com.kasarlooper.spaceranger.GameSettings.ASTEROID_WIDTH_MIN;
 import static com.kasarlooper.spaceranger.GameSettings.BULLET_HEIGHT;
-import static com.kasarlooper.spaceranger.GameSettings.Bullet_Speed;
+import static com.kasarlooper.spaceranger.GameSettings.BULLET_SPEED;
 import static com.kasarlooper.spaceranger.GameSettings.CHANCE_ASTEROID_SPAWN;
 import static com.kasarlooper.spaceranger.GameSettings.CHANCE_CORE_SPAWN;
 import static com.kasarlooper.spaceranger.GameSettings.CORE_HEIGHT;
@@ -24,7 +22,6 @@ import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.EntitySpawner;
 import com.kasarlooper.spaceranger.GameResources;
@@ -79,12 +76,7 @@ public class SpaceGameScreen extends GameScreen {
         session = new SpaceGameSession();
         backgroundView = new MovingBackgroundView(GameResources.BACKGROUND_IMG_PATH, GraphicsSettings.DEPTH_SPACE_BACKGROUND_SPEED_RATIO);
         contactManager = new ContactManager(myGdxGame.space, myGdxGame);
-        shipObject = new ShipObject(
-                GameSettings.SCREEN_WIDTH / 2, GameSettings.SCREEN_HEIGHT / 2,
-                GameSettings.SHIP_WIDTH, GameSettings.SHIP_HEIGHT,
-                String.format(GameResources.SHIP_IMG_PATH, 3),
-                myGdxGame.space
-        );
+        shipObject = new ShipObject(GameSettings.SCREEN_WIDTH / 2, GameSettings.SCREEN_HEIGHT / 2, myGdxGame.space);
         fireButton = new ButtonView(1113, 75, 100, 100, GameResources.FIRE_BUTTON_IMG_PATH); // "Remove-bg.ai_1720009081104.png"
         backgroundFireButton = new ImageView(1060, 25, GameResources.JOYSTICK_BACK_IMG_PATH);
         joystick = new JoystickView(25, 25);
@@ -139,10 +131,7 @@ public class SpaceGameScreen extends GameScreen {
                         BulletObject Bullet = new BulletObject(
                                 (int) (shipObject.getX() + cos(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
                                 (int) (shipObject.getY() + sin(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
-                                GameSettings.BULLET_WIDTH, BULLET_HEIGHT,
-                                GameResources.BULLET_IMG_PATH,
-                                myGdxGame.space, shipObject.getRotation(), Bullet_Speed, false
-                        );
+                                myGdxGame.space, shipObject.getRotation(), false);
                         bulletArray.add(Bullet);
                         myGdxGame.audioManager.soundBullet.play(0.2f);
                     }
@@ -294,12 +283,7 @@ public class SpaceGameScreen extends GameScreen {
             System.out.println("shipObject");
             myGdxGame.space.destroyBody(shipObject.body);
         }
-        shipObject = new ShipObject(
-                GameSettings.SCREEN_WIDTH / 2, GameSettings.SCREEN_HEIGHT / 2,
-                GameSettings.SHIP_WIDTH, GameSettings.SHIP_HEIGHT,
-                String.format(GameResources.SHIP_IMG_PATH, 3),
-                myGdxGame.space
-        );
+        shipObject = new ShipObject(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, myGdxGame.space);
         purpose.setText("Цель - энергия: 0/3");
         live.setLeftLives(3);
         bulletArray.clear();
@@ -310,32 +294,20 @@ public class SpaceGameScreen extends GameScreen {
     // Генераторы
     private void generateCore() {
         EntitySpawner.Pair pair = spawner.newPair(shipObject.getX(), shipObject.getY(), CORE_WIDTH / 2, CORE_HEIGHT / 2, shipObject.getRotation());
-        CoreObject coreObject = new CoreObject(
-                (int) pair.x, (int) pair.y,
-                CORE_WIDTH, CORE_HEIGHT, myGdxGame.space,
-                CORE_IMG_PATH
-        );
+        CoreObject coreObject = new CoreObject((int) pair.x, (int) pair.y, myGdxGame.space);
         coreArray.add(coreObject);
     }
 
     private void generateEnemy() {
         EntitySpawner.Pair pair = spawner.newPair(shipObject.getX(), shipObject.getY(), ENEMY_WIDTH / 2, ENEMY_HEIGHT / 2, shipObject.getRotation());
-        EnemyObject enemy = new EnemyObject(
-                (int) pair.x, (int) pair.y,
-                ENEMY_WIDTH, ENEMY_HEIGHT, myGdxGame.space,
-                ENEMY_SHIP_IMG_PATH
-        );
+        EnemyObject enemy = new EnemyObject((int) pair.x, (int) pair.y, myGdxGame.space);
         enemyArray.add(enemy);
     }
 
     private void generateAsteroid() {
         int size = ASTEROID_WIDTH_MIN + rd.nextInt(ASTEROID_WIDTH_MAX - ASTEROID_WIDTH_MIN);
         EntitySpawner.Pair pair = spawner.newPair(shipObject.getX(), shipObject.getY(), size / 2, size / 2, shipObject.getRotation());
-        AsteroidObject asteroid = new AsteroidObject(
-                ASTEROID_IMG_PATH,
-                (int) pair.x, (int) pair.y,
-                size, size, myGdxGame.space,
-                (int) shipObject.getX(), (int) shipObject.getY());
+        AsteroidObject asteroid = new AsteroidObject((int) pair.x, (int) pair.y, myGdxGame.space, (int) shipObject.getX(), (int) shipObject.getY());
         asteroidArray.add(asteroid);
     }
 

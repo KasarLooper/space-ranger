@@ -1,12 +1,16 @@
 package com.kasarlooper.spaceranger.objects;
 
+import static com.kasarlooper.spaceranger.GameResources.ENEMY_SHIP_IMG_PATH;
 import static com.kasarlooper.spaceranger.GameSettings.BULLET_HEIGHT;
+import static com.kasarlooper.spaceranger.GameSettings.BULLET_SPEED;
 import static com.kasarlooper.spaceranger.GameSettings.ENEMY_CHANCE_CHANGE_AIM;
 import static com.kasarlooper.spaceranger.GameSettings.ENEMY_CHECK_ANGLE;
 import static com.kasarlooper.spaceranger.GameSettings.ENEMY_CHECK_DISTANCE;
+import static com.kasarlooper.spaceranger.GameSettings.ENEMY_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.ENEMY_SHOOT_ANGLE;
 import static com.kasarlooper.spaceranger.GameSettings.ENEMY_TO_PLAYER_ROTATION_SPEED;
 import static com.kasarlooper.spaceranger.GameSettings.ENEMY_USUAL_ROTATION_SPEED;
+import static com.kasarlooper.spaceranger.GameSettings.ENEMY_WIDTH;
 import static com.kasarlooper.spaceranger.GameSettings.SPEED_ENEMY;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -16,7 +20,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
-import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
 
@@ -32,8 +35,8 @@ public class EnemyObject extends PhysicsObject {
     Random rd;
     public boolean wasHit;
 
-    public EnemyObject(int x, int y, int width, int height, World world, String texturePath) {
-        super(texturePath, x, y, width, height, world);
+    public EnemyObject(int x, int y, World world) {
+        super(ENEMY_SHIP_IMG_PATH, x, y, ENEMY_WIDTH, ENEMY_HEIGHT, world);
         this.x = x;
         this.y = y;
         rd = new Random();
@@ -62,9 +65,7 @@ public class EnemyObject extends PhysicsObject {
             lastShootTime = TimeUtils.millis();
             return new BulletObject((int) (getX() + cos(toRadians(getRotation())) * (getRadius() / 2 + BULLET_HEIGHT + padding)),
                     (int) (getY() + sin(toRadians(getRotation())) * (getRadius() / 2 + BULLET_HEIGHT + padding)),
-                    GameSettings.BULLET_WIDTH, BULLET_HEIGHT,
-                    GameResources.ENEMY_BULLET_IMG_PATH, world,
-                    getRotation(), GameSettings.Bullet_Speed, true);
+                    world, getRotation(), true);
         }
         return null;
     }

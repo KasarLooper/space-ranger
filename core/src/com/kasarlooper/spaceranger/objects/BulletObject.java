@@ -1,5 +1,10 @@
 package com.kasarlooper.spaceranger.objects;
 
+import static com.kasarlooper.spaceranger.GameResources.BULLET_IMG_PATH;
+import static com.kasarlooper.spaceranger.GameResources.ENEMY_BULLET_IMG_PATH;
+import static com.kasarlooper.spaceranger.GameSettings.BULLET_HEIGHT;
+import static com.kasarlooper.spaceranger.GameSettings.BULLET_SPEED;
+import static com.kasarlooper.spaceranger.GameSettings.BULLET_WIDTH;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_WIDTH;
 import static java.lang.Math.cos;
@@ -10,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.MyGdxGame;
 
 public class BulletObject extends PhysicsObject {
@@ -17,9 +23,10 @@ public class BulletObject extends PhysicsObject {
     public boolean wasHit;
 
     Sprite sprite;
-    public BulletObject(int x, int y, int wight, int height, String texturePath, World world, float degrees, int speed, boolean isEnemy) {
-        super(texturePath, x, y, wight, height, world);
-        body.setLinearVelocity(new Vector2((float) (cos(toRadians(degrees)) * speed), (float) (sin(toRadians(degrees)) * speed)));
+    public BulletObject(int x, int y, World world, float degrees, boolean isEnemy) {
+        super(isEnemy ? ENEMY_BULLET_IMG_PATH : BULLET_IMG_PATH, x, y, BULLET_WIDTH, BULLET_HEIGHT, world);
+        body.setLinearVelocity(new Vector2((float) (cos(toRadians(degrees)) * BULLET_SPEED),
+                (float) (sin(toRadians(degrees)) * BULLET_SPEED)));
         body.setBullet(true);
         sprite = new Sprite(texture);
         sprite.setRotation(degrees + 270);

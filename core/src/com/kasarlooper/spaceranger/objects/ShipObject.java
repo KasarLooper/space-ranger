@@ -3,6 +3,8 @@ package com.kasarlooper.spaceranger.objects;
 import static com.kasarlooper.spaceranger.GameSettings.COUNT_FRAMES_ONE_IMG;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_WIDTH;
+import static com.kasarlooper.spaceranger.GameSettings.SHIP_HEIGHT;
+import static com.kasarlooper.spaceranger.GameSettings.SHIP_WIDTH;
 import static com.kasarlooper.spaceranger.GameSettings.SPEED_SHIP;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -28,13 +30,13 @@ public class ShipObject extends PhysicsObject {
     int i = 0;
     private boolean isStop = false;
 
-    public ShipObject(int x, int y, int wight, int height, String texturePath, World world) {
-        super(texturePath, x, y, wight, height, world);
+    public ShipObject(int x, int y, World world) {
+        super(String.format(GameResources.SHIP_IMG_PATH, 3), x, y, SHIP_WIDTH, SHIP_HEIGHT, world);
         body.setLinearDamping(10f);
         livesLeft = 3;
         body.setLinearDamping(10);
         sprite = new Sprite(texture);
-        sprite.setOrigin(wight / 2f, height / 2f);
+        sprite.setOrigin(width / 2f, height / 2f);
         shot_cool_down = GameSettings.SHOOTING_COOL_DOWN;
     }
 

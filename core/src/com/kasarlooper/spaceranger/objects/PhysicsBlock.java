@@ -1,5 +1,8 @@
 package com.kasarlooper.spaceranger.objects;
 
+import static com.kasarlooper.spaceranger.GameResources.TEXTURE_BOX_BLACK;
+import static com.kasarlooper.spaceranger.GameResources.TEXTURE_BOX_GREEN;
+import static com.kasarlooper.spaceranger.GameSettings.BLOCK_SIZE;
 import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 
 import com.badlogic.gdx.graphics.Texture;
@@ -22,14 +25,14 @@ public class PhysicsBlock extends Block {
     World world;
 
 
-    public PhysicsBlock(int x, int y, int wight, int height, String texturePath, World world) {
+    public PhysicsBlock(int x, int y, boolean isGreen, World world) {
         super(x, y);
-        this.width = wight;
-        this.height = height;
+        this.width = BLOCK_SIZE;
+        this.height = BLOCK_SIZE;
         this.x = x;
         this.y = y;
 
-        texture = new Texture(texturePath);
+        texture = new Texture(isGreen ? TEXTURE_BOX_GREEN : TEXTURE_BOX_BLACK);
         body = createBody(x, y, world);
         this.world = world;
     }

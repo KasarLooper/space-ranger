@@ -1,5 +1,9 @@
 package com.kasarlooper.spaceranger.objects;
 
+import static com.kasarlooper.spaceranger.GameResources.CORE_IMG_PATH;
+import static com.kasarlooper.spaceranger.GameSettings.CORE_HEIGHT;
+import static com.kasarlooper.spaceranger.GameSettings.CORE_WIDTH;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.MyGdxGame;
@@ -11,8 +15,8 @@ public class CoreObject extends PhysicsObject {
     public boolean wasHit;
     public boolean wasCollected;
 
-    public CoreObject(int x, int y, int wight, int height, World world, String texturePath) {
-        super(texturePath, x, y, wight, height, world);
+    public CoreObject(int x, int y, World world) {
+        super(CORE_IMG_PATH, x, y, CORE_WIDTH, CORE_HEIGHT, world);
         this.x = x;
         this.y = y;
         wasHit = false;

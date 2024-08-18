@@ -2,7 +2,6 @@ package com.kasarlooper.spaceranger.manager;
 
 
 import static com.kasarlooper.spaceranger.GameSettings.BLOCK_SIZE;
-import static com.kasarlooper.spaceranger.GameSettings.COSMONAUT_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.GROUND_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.MAP_HEIGHT;
 
@@ -11,8 +10,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.GameResources;
-import com.kasarlooper.spaceranger.GameSettings;
-import com.kasarlooper.spaceranger.objects.DecorativeBlock;
 import com.kasarlooper.spaceranger.objects.GameObject;
 import com.kasarlooper.spaceranger.objects.PhysicsBlock;
 
@@ -21,7 +18,6 @@ import java.util.Collections;
 
 public class LevelMapManager {
     ArrayList<PhysicsBlock> physics;
-    ArrayList<DecorativeBlock> decors;
     ArrayList<GameObject> mobSpawns;
     ArrayList<GameObject> resSpawns;
     int playerX, playerY;
@@ -31,7 +27,6 @@ public class LevelMapManager {
 
     public void loadMap(World world) {
         physics = new ArrayList<>();
-        decors = new ArrayList<>();
         mobSpawns = new ArrayList<>();
         resSpawns = new ArrayList<>();
         capsuleStartX = -1;
@@ -90,10 +85,6 @@ public class LevelMapManager {
         return physics;
     }
 
-    public ArrayList<DecorativeBlock> getDecors() {
-        return decors;
-    }
-
     public int getPlayerX() {
         return playerX;
     }
@@ -138,13 +129,9 @@ public class LevelMapManager {
 
     private void initBlocks(int red, int green, int blue, int x, int y, World world) {
         if (red == 0 && green == 255 && blue == 0) {
-            physics.add(new PhysicsBlock(getX(x), getY(y),
-                    GameSettings.BLOCK_SIZE, GameSettings.BLOCK_SIZE,
-                    GameResources.TEXTURE_BOX_GREEN, world));
+            physics.add(new PhysicsBlock(getX(x), getY(y), true, world));
         } else if (red == 0 && green == 0 && blue == 0) {
-            physics.add(new PhysicsBlock(getX(x), getY(y),
-                    GameSettings.BLOCK_SIZE, GameSettings.BLOCK_SIZE,
-                    GameResources.TEXTURE_BOX_BLACK, world));
+            physics.add(new PhysicsBlock(getX(x), getY(y), false, world));
         } else if (red == 0 && green == 0 && blue == 255) {
             resSpawns.add(new GameObject(getX(x), getY(y)));
         } else if (red == 255 && green == 255 && blue == 0) {

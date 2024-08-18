@@ -1,13 +1,22 @@
 package com.kasarlooper.spaceranger.objects;
 
+import static com.kasarlooper.spaceranger.GameResources.ASTEROID_IMG_PATH;
 import static com.kasarlooper.spaceranger.GameSettings.ASTEROID_SPEED;
+import static com.kasarlooper.spaceranger.GameSettings.ASTEROID_WIDTH_MAX;
+import static com.kasarlooper.spaceranger.GameSettings.ASTEROID_WIDTH_MIN;
 
 import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.MyGdxGame;
 
+import java.util.Random;
+import java.util.Scanner;
+
 public class AsteroidObject extends PhysicsObject {
-    public AsteroidObject(String texturePath, int x, int y, int wight, int height, World world, int playerX, int playerY) {
-        super(texturePath, x, y, wight, height, world);
+    private static final Random rd = new Random();
+
+    public AsteroidObject(int x, int y, World world, int playerX, int playerY) {
+        super(ASTEROID_IMG_PATH, x, y, ASTEROID_WIDTH_MIN + rd.nextInt(ASTEROID_WIDTH_MAX - ASTEROID_WIDTH_MIN),
+                ASTEROID_WIDTH_MIN + rd.nextInt(ASTEROID_WIDTH_MAX - ASTEROID_WIDTH_MIN), world);
         float dx = playerX - x;
         float dy = playerY - y;
         float ratio = (float) Math.sqrt(dx * dx + dy * dy);
