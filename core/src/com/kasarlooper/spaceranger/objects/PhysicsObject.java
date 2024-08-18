@@ -16,10 +16,10 @@ import com.badlogic.gdx.physics.box2d.World;
 public abstract class PhysicsObject extends GameObject {
     public Body body;
     public Texture texture;
-    World world;
+    protected World world;
 
 
-    PhysicsObject(String texturePath, int x, int y, float wight, float height, World world) {
+    protected PhysicsObject(String texturePath, int x, int y, float wight, float height, World world) {
         super(x, y, wight, height);
         this.x = x;
         this.y = y;

@@ -17,17 +17,18 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.GameResources;
-import com.kasarlooper.spaceranger.session.GameSession;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
 import com.kasarlooper.spaceranger.components.ButtonView;
 import com.kasarlooper.spaceranger.components.JoystickView;
 import com.kasarlooper.spaceranger.components.MovingBackgroundView;
+import com.kasarlooper.spaceranger.levels.space.SpaceGameScreen;
+import com.kasarlooper.spaceranger.session.GameSession;
 
 public abstract class GameScreen extends ScreenAdapter implements InputProcessor {
     protected GameSession session;
-    MyGdxGame myGdxGame;
-    JoystickView joystick;
+    protected MyGdxGame myGdxGame;
+    protected JoystickView joystick;
     long showTime;
     ButtonView pauseButton, endButton, continueButton, restartButton, nextButton;
     MovingBackgroundView black_out_on_pause;

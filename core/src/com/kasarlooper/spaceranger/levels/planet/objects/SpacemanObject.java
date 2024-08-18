@@ -1,4 +1,4 @@
-package com.kasarlooper.spaceranger.objects;
+package com.kasarlooper.spaceranger.levels.planet.objects;
 
 import static com.kasarlooper.spaceranger.GameResources.COSMONAUT_ANIM_LEFT_IMG_PATTERN;
 import static com.kasarlooper.spaceranger.GameSettings.COSMONAUT_HEIGHT;
@@ -22,6 +22,8 @@ import com.kasarlooper.spaceranger.BlockMap;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
+import com.kasarlooper.spaceranger.objects.PhysicsObject;
+import com.kasarlooper.spaceranger.objects.Type;
 import com.kasarlooper.spaceranger.physics.BodyBuilder;
 
 public class SpacemanObject extends PhysicsObject {

@@ -1,4 +1,4 @@
-package com.kasarlooper.spaceranger.objects;
+package com.kasarlooper.spaceranger.levels.planet.objects;
 
 import static com.kasarlooper.spaceranger.GameSettings.EARTH_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.EARTH_WIDTH;
@@ -10,9 +10,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.GameResources;
+import com.kasarlooper.spaceranger.objects.GameObject;
 import com.kasarlooper.spaceranger.physics.BodyBuilder;
 
-public class Earth extends GameObject{
+public class Earth extends GameObject {
     Body body;
     Texture texture;
     float cameraX;

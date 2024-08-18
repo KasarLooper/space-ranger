@@ -1,4 +1,4 @@
-package com.kasarlooper.spaceranger.objects;
+package com.kasarlooper.spaceranger.levels.space.objects;
 
 import static com.kasarlooper.spaceranger.GameResources.BULLET_IMG_PATH;
 import static com.kasarlooper.spaceranger.GameResources.ENEMY_BULLET_IMG_PATH;
@@ -18,6 +18,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.MyGdxGame;
+import com.kasarlooper.spaceranger.objects.PhysicsObject;
+import com.kasarlooper.spaceranger.objects.Type;
 import com.kasarlooper.spaceranger.physics.BodyBuilder;
 
 public class BulletObject extends PhysicsObject {

@@ -1,4 +1,4 @@
-package com.kasarlooper.spaceranger.objects;
+package com.kasarlooper.spaceranger.levels.planet.objects;
 
 import static com.kasarlooper.spaceranger.GameSettings.COSMONAUT_WIDTH;
 import static com.kasarlooper.spaceranger.GameSettings.LIGHTING_WIDTH;
@@ -13,9 +13,11 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
+import com.kasarlooper.spaceranger.objects.PhysicsObject;
+import com.kasarlooper.spaceranger.objects.Type;
 import com.kasarlooper.spaceranger.physics.BodyBuilder;
 
-public class LightningBulletObject extends PhysicsObject{
+public class LightningBulletObject extends PhysicsObject {
     private final Type type;
     private boolean hasToBeDestroyed;
     private static long lastShootTime;

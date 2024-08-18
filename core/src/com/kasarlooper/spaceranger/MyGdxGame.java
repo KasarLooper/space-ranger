@@ -17,6 +17,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.World;
+import com.kasarlooper.spaceranger.levels.LevelManager;
 import com.kasarlooper.spaceranger.manager.AudioManager;
 import com.kasarlooper.spaceranger.manager.LevelMapManager;
 import com.kasarlooper.spaceranger.manager.MemoryManager;
@@ -24,8 +25,6 @@ import com.kasarlooper.spaceranger.screens.GameScreen;
 import com.kasarlooper.spaceranger.screens.HistoryScreen;
 import com.kasarlooper.spaceranger.screens.MemoriesScreen;
 import com.kasarlooper.spaceranger.screens.MenuScreen;
-import com.kasarlooper.spaceranger.screens.PlanetGameScreen;
-import com.kasarlooper.spaceranger.screens.SpaceGameScreen;
 
 public class MyGdxGame extends Game {
 	public World space;
@@ -38,8 +37,7 @@ public class MyGdxGame extends Game {
 	public SpriteBatch batch;
 	public Vector3 touch;
 	public OrthographicCamera camera;
-	public SpaceGameScreen spaceScreen;
-	public PlanetGameScreen planetScreen;
+	public GameScreen spaceLevel, planetLevel;
 	public MenuScreen menuScreen;
 	public MemoriesScreen memoriesScreen;
 	public BitmapFont commonWhiteFont;
@@ -64,12 +62,13 @@ public class MyGdxGame extends Game {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, GameSettings.SCREEN_WIDTH, GameSettings.SCREEN_HEIGHT);
 
-		spaceScreen = new SpaceGameScreen(this);
-		planetScreen = new PlanetGameScreen(this);
+		spaceLevel = LevelManager.getSpaceLevel(this);
+		planetLevel = LevelManager.getPlanetLevel(this);
+
 		menuScreen = new MenuScreen(this);
 		memoriesScreen = new MemoriesScreen(this);
-		spaceHistory = new HistoryScreen(this, SPACE_HISTORY_ARRAY, spaceScreen, false);
-		planetHistory = new HistoryScreen(this, PLANET_HISTORY_ARRAY, planetScreen, false);
+		spaceHistory = new HistoryScreen(this, SPACE_HISTORY_ARRAY, spaceLevel, false);
+		planetHistory = new HistoryScreen(this, PLANET_HISTORY_ARRAY, planetLevel, false);
 		endHistory = new HistoryScreen(this, END_HISTORY_ARRAY, menuScreen, true);
 		audioManager = new AudioManager();
 		state = State.ENDED;
@@ -105,15 +104,15 @@ public class MyGdxGame extends Game {
 	}
 
 	public void spaceLevel() {
-		setScreen(spaceScreen);
-		Gdx.input.setInputProcessor(spaceScreen);
+		setScreen(spaceLevel);
+		Gdx.input.setInputProcessor(spaceLevel);
 		audioManager.spaceMusic.play();
 		audioManager.planetMusic.stop();
 	}
 
 	public void planetLevel() {
-		setScreen(planetScreen);
-		Gdx.input.setInputProcessor(planetScreen);
+		setScreen(planetLevel);
+		Gdx.input.setInputProcessor(planetLevel);
 		audioManager.spaceMusic.stop();
 		audioManager.planetMusic.play();
 	}

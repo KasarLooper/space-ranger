@@ -1,10 +1,8 @@
-package com.kasarlooper.spaceranger.screens;
+package com.kasarlooper.spaceranger.levels.space;
 
-import static com.kasarlooper.spaceranger.GameResources.ASTEROID_IMG_PATH;
 import static com.kasarlooper.spaceranger.GameSettings.ASTEROID_WIDTH_MAX;
 import static com.kasarlooper.spaceranger.GameSettings.ASTEROID_WIDTH_MIN;
 import static com.kasarlooper.spaceranger.GameSettings.BULLET_HEIGHT;
-import static com.kasarlooper.spaceranger.GameSettings.BULLET_SPEED;
 import static com.kasarlooper.spaceranger.GameSettings.CHANCE_ASTEROID_SPAWN;
 import static com.kasarlooper.spaceranger.GameSettings.CHANCE_CORE_SPAWN;
 import static com.kasarlooper.spaceranger.GameSettings.CORE_HEIGHT;
@@ -34,13 +32,14 @@ import com.kasarlooper.spaceranger.components.JoystickView;
 import com.kasarlooper.spaceranger.components.LiveView;
 import com.kasarlooper.spaceranger.components.MovingBackgroundView;
 import com.kasarlooper.spaceranger.components.TextView;
+import com.kasarlooper.spaceranger.levels.space.objects.AsteroidObject;
+import com.kasarlooper.spaceranger.levels.space.objects.BoomObject;
+import com.kasarlooper.spaceranger.levels.space.objects.BulletObject;
+import com.kasarlooper.spaceranger.levels.space.objects.CoreObject;
+import com.kasarlooper.spaceranger.levels.space.objects.EnemyObject;
+import com.kasarlooper.spaceranger.levels.space.objects.ShipObject;
 import com.kasarlooper.spaceranger.manager.ContactManager;
-import com.kasarlooper.spaceranger.objects.AsteroidObject;
-import com.kasarlooper.spaceranger.objects.BoomObject;
-import com.kasarlooper.spaceranger.objects.BulletObject;
-import com.kasarlooper.spaceranger.objects.CoreObject;
-import com.kasarlooper.spaceranger.objects.EnemyObject;
-import com.kasarlooper.spaceranger.objects.ShipObject;
+import com.kasarlooper.spaceranger.screens.GameScreen;
 import com.kasarlooper.spaceranger.session.SpaceGameSession;
 
 import java.util.ArrayList;

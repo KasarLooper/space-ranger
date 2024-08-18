@@ -1,4 +1,4 @@
-package com.kasarlooper.spaceranger.objects;
+package com.kasarlooper.spaceranger.levels.space.objects;
 
 import static com.kasarlooper.spaceranger.GameResources.ENEMY_SHIP_IMG_PATH;
 import static com.kasarlooper.spaceranger.GameSettings.BULLET_HEIGHT;
@@ -23,6 +23,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
+import com.kasarlooper.spaceranger.objects.PhysicsObject;
+import com.kasarlooper.spaceranger.objects.Type;
 import com.kasarlooper.spaceranger.physics.BodyBuilder;
 
 import java.util.Random;

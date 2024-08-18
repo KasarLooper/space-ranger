@@ -1,24 +1,21 @@
-package com.kasarlooper.spaceranger.objects;
+package com.kasarlooper.spaceranger.levels.planet.objects;
 
 import static com.kasarlooper.spaceranger.GameResources.ALIEN_ANIM_LEFT_IMG_PATTERN;
 import static com.kasarlooper.spaceranger.GameSettings.ALIEN_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.ALIEN_JUMP_FORCE;
 import static com.kasarlooper.spaceranger.GameSettings.ALIEN_SPEED;
 import static com.kasarlooper.spaceranger.GameSettings.ALIEN_WIDTH;
-import static com.kasarlooper.spaceranger.GameSettings.BLOCK_SIZE;
-import static com.kasarlooper.spaceranger.GameSettings.COSMONAUT_HEIGHT;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.BlockMap;
-import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
+import com.kasarlooper.spaceranger.objects.Type;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class AlienObject extends SpacemanObject{
     long lastCheckTime1, lastCheckTime2;

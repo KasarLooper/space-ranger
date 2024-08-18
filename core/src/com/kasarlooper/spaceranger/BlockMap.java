@@ -2,7 +2,8 @@ package com.kasarlooper.spaceranger;
 
 import static com.kasarlooper.spaceranger.GameSettings.BLOCK_SIZE;
 
-import com.kasarlooper.spaceranger.objects.PhysicsBlock;
+import com.kasarlooper.spaceranger.levels.planet.objects.PhysicsBlock;
+
 import java.util.List;
 
 public class BlockMap {

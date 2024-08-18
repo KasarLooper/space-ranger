@@ -12,6 +12,8 @@ import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
 import com.kasarlooper.spaceranger.components.MiddleButtonView;
 import com.kasarlooper.spaceranger.components.MiddleTextView;
+import com.kasarlooper.spaceranger.levels.planet.PlanetGameScreen;
+import com.kasarlooper.spaceranger.levels.space.SpaceGameScreen;
 import com.kasarlooper.spaceranger.manager.MemoryManager;
 
 public class HistoryScreen extends ScreenAdapter {

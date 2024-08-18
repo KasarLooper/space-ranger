@@ -1,9 +1,10 @@
-package com.kasarlooper.spaceranger.objects;
+package com.kasarlooper.spaceranger.levels.planet.objects;
 
 import static com.kasarlooper.spaceranger.GameResources.CAPSULE_IMG_PATH;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.kasarlooper.spaceranger.objects.GameObject;
 
 public class CapsuleObject extends GameObject {
     Texture texture;

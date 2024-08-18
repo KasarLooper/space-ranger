@@ -10,8 +10,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.GameResources;
+import com.kasarlooper.spaceranger.levels.planet.objects.PhysicsBlock;
 import com.kasarlooper.spaceranger.objects.GameObject;
-import com.kasarlooper.spaceranger.objects.PhysicsBlock;
 
 import java.util.ArrayList;
 import java.util.Collections;

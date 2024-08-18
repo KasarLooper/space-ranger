@@ -1,4 +1,4 @@
-package com.kasarlooper.spaceranger.objects;
+package com.kasarlooper.spaceranger.levels.space.objects;
 
 import static com.kasarlooper.spaceranger.GameSettings.COUNT_FRAMES_ONE_IMG;
 import static com.kasarlooper.spaceranger.GameSettings.SCALE;
@@ -20,6 +20,8 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
+import com.kasarlooper.spaceranger.objects.PhysicsObject;
+import com.kasarlooper.spaceranger.objects.Type;
 import com.kasarlooper.spaceranger.physics.BodyBuilder;
 
 public class ShipObject extends PhysicsObject {
