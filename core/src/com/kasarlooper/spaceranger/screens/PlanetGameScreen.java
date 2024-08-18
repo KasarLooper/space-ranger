@@ -96,12 +96,7 @@ public class PlanetGameScreen extends GameScreen {
         resSpawns = loader.getResSpawns();
         backgroundView = new MovingBackgroundLeftRightView(GameResources.BACKGROUND_2_IMG_PATH);
 
-        spaceman = new SpacemanObject(
-                loader.getPlayerX(), loader.getPlayerY(),
-                COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
-                COSMONAUT_ANIM_LEFT_IMG_PATTERN, 4,
-                COSMONAUT_SPEED, COSMONAUT_JUMP_FORCE,
-                myGdxGame.planet, blockMap);
+        spaceman = new SpacemanObject(loader.getPlayerX(), loader.getPlayerY(), myGdxGame.planet, blockMap);
         earth = new Earth(myGdxGame.planet);
         aliens = new ArrayList<>();
         wrecks = new ArrayList<>();
@@ -319,12 +314,7 @@ public class PlanetGameScreen extends GameScreen {
             myGdxGame.planet.destroyBody(res.body);
         for (ResourceObject res : crystals)
             myGdxGame.planet.destroyBody(res.body);
-        spaceman = new SpacemanObject(
-                loader.getPlayerX(), loader.getPlayerY(),
-                COSMONAUT_WIDTH, COSMONAUT_HEIGHT,
-                COSMONAUT_ANIM_LEFT_IMG_PATTERN, 4,
-                COSMONAUT_SPEED, COSMONAUT_JUMP_FORCE,
-                myGdxGame.planet, blockMap);
+        spaceman = new SpacemanObject(loader.getPlayerX(), loader.getPlayerY(), myGdxGame.planet, blockMap);
         aliens = new ArrayList<>();
         wrecks = new ArrayList<>();
         crystals = new ArrayList<>();

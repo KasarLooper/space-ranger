@@ -1,5 +1,10 @@
 package com.kasarlooper.spaceranger.objects;
 
+import static com.kasarlooper.spaceranger.GameResources.COSMONAUT_ANIM_LEFT_IMG_PATTERN;
+import static com.kasarlooper.spaceranger.GameSettings.COSMONAUT_HEIGHT;
+import static com.kasarlooper.spaceranger.GameSettings.COSMONAUT_JUMP_FORCE;
+import static com.kasarlooper.spaceranger.GameSettings.COSMONAUT_SPEED;
+import static com.kasarlooper.spaceranger.GameSettings.COSMONAUT_WIDTH;
 import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_WIDTH;
@@ -32,7 +37,6 @@ public class SpacemanObject extends PhysicsObject {
     boolean isJump;
     boolean isWalk;
     Texture[] left;
-    //Texture[] right;
     long lastChangeIsWalkTime;
     long lastJumpTime;
     public int liveLeft;
@@ -42,7 +46,12 @@ public class SpacemanObject extends PhysicsObject {
 
     public int cristalCount, wreckCount;
 
-    public SpacemanObject(int x, int y, int wight, int height, String texturePath, int defaultFrame, int speed, int jumpImpulse, World world, BlockMap blockMap) {
+    public SpacemanObject(int x, int y, World world, BlockMap blockMap) {
+        this(x, y, COSMONAUT_WIDTH, COSMONAUT_HEIGHT, COSMONAUT_ANIM_LEFT_IMG_PATTERN, 4,
+                COSMONAUT_SPEED, COSMONAUT_JUMP_FORCE, world, blockMap);
+    }
+
+    protected SpacemanObject(int x, int y, int wight, int height, String texturePath, int defaultFrame, int speed, int jumpImpulse, World world, BlockMap blockMap) {
         super(String.format(texturePath, defaultFrame), x, y, wight, height, world);
         defaultY = y;
         this.defaultFrame = defaultFrame;
@@ -73,8 +82,8 @@ public class SpacemanObject extends PhysicsObject {
         for (int i = 2; i <= 14; i+=2) {
             int j = i / 2 + 3;
             if (j > 7) j -= 7;
-            left[i - 2] = new Texture(String.format(GameResources.COSMONAUT_ANIM_LEFT_IMG_PATTERN, j));
-            left[i - 1] = new Texture(String.format(GameResources.COSMONAUT_ANIM_LEFT_IMG_PATTERN, j));
+            left[i - 2] = new Texture(String.format(COSMONAUT_ANIM_LEFT_IMG_PATTERN, j));
+            left[i - 1] = new Texture(String.format(COSMONAUT_ANIM_LEFT_IMG_PATTERN, j));
             //right[i - 2] = new Texture(String.format(GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN, j));
             //right[i - 1] = new Texture(String.format(GameResources.COSMONAUT_ANIM_RIGHT_IMG_PATTERN, j));
         }
