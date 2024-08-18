@@ -38,6 +38,7 @@ import com.kasarlooper.spaceranger.levels.space.objects.BulletObject;
 import com.kasarlooper.spaceranger.levels.space.objects.CoreObject;
 import com.kasarlooper.spaceranger.levels.space.objects.EnemyObject;
 import com.kasarlooper.spaceranger.levels.space.objects.ShipObject;
+import com.kasarlooper.spaceranger.manager.AudioManager;
 import com.kasarlooper.spaceranger.manager.ContactManager;
 import com.kasarlooper.spaceranger.screens.GameScreen;
 import com.kasarlooper.spaceranger.session.SpaceGameSession;
@@ -109,7 +110,13 @@ public class SpaceGameScreen extends GameScreen {
     @Override
     public void show() {
         super.show();
-        //enemyArray.add(new EnemyObject(100, 100, ENEMY_WIDTH, ENEMY_HEIGHT, myGdxGame.world, ENEMY_SHIP_IMG_PATH));
+        AudioManager.spaceMusic.play();
+    }
+
+    @Override
+    public void hide() {
+        super.hide();
+        AudioManager.spaceMusic.stop();
     }
 
     @Override
@@ -132,7 +139,7 @@ public class SpaceGameScreen extends GameScreen {
                                 (int) (shipObject.getY() + sin(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
                                 myGdxGame.space, shipObject.getRotation(), false);
                         bulletArray.add(Bullet);
-                        myGdxGame.audioManager.soundBullet.play(0.2f);
+                        AudioManager.soundBullet.play(0.2f);
                     }
                     if (session.shouldSpawn()) {
                         if (rd.nextInt(100) < CHANCE_CORE_SPAWN) generateCore();
@@ -212,11 +219,11 @@ public class SpaceGameScreen extends GameScreen {
                 if (core.wasCollected) {
                     ((SpaceGameSession) session).core_was_collected();
                     purpose.setText(String.format("Цель - энергия: %d/3", ((SpaceGameSession) session).getCoreCollected()));
-                    myGdxGame.audioManager.soundEnergyGive.play(0.2f);
+                    AudioManager.soundEnergyGive.play(0.2f);
                 } else {
                     boomArray.add(new BoomObject(core.x, core.y));
                     if (myGdxGame.camera.frustum.sphereInFrustum(core.getX(), core.getY(), 0, Math.max(core.height, core.width))) {
-                        myGdxGame.audioManager.soundBoom.play(0.2f);
+                        AudioManager.soundBoom.play(0.2f);
                     }
                 }
                 System.out.println("core");
@@ -236,7 +243,7 @@ public class SpaceGameScreen extends GameScreen {
                 BoomObject boom = new BoomObject(enemy.getX(), enemy.getY());
                 boomArray.add(boom);
                 if (myGdxGame.camera.frustum.sphereInFrustum(enemy.getX(), enemy.getY(), 0, Math.max(enemy.height, enemy.width))) {
-                    myGdxGame.audioManager.soundBoom.play(0.2f);
+                    AudioManager.soundBoom.play(0.2f);
                 }
                 iterator.remove();
             }

@@ -12,8 +12,6 @@ import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
 import com.kasarlooper.spaceranger.components.MiddleButtonView;
 import com.kasarlooper.spaceranger.components.MiddleTextView;
-import com.kasarlooper.spaceranger.levels.planet.PlanetGameScreen;
-import com.kasarlooper.spaceranger.levels.space.SpaceGameScreen;
 import com.kasarlooper.spaceranger.manager.MemoryManager;
 
 public class HistoryScreen extends ScreenAdapter {
@@ -65,12 +63,9 @@ public class HistoryScreen extends ScreenAdapter {
                 if (i < texts.length) {
                     text.setText(texts[i]);
                 } else if (i > texts.length || photo == null) {
-                    if (nextScreen instanceof SpaceGameScreen) game.spaceLevel();
-                    else if (nextScreen instanceof PlanetGameScreen) game.planetLevel();
-                    else {
-                        game.setScreen(nextScreen);
+                    game.setScreen(nextScreen);
+                    if (nextScreen instanceof MenuScreen)
                         MemoryManager.saveLevel(1);
-                    }
                 }
             }
         }

@@ -48,7 +48,6 @@ public class MyGdxGame extends Game {
 	public HistoryScreen endHistory;
 	public boolean isInPlot;
 
-	public AudioManager audioManager;
 	@Override
 	public void create () {
 		Box2D.init();
@@ -70,7 +69,6 @@ public class MyGdxGame extends Game {
 		spaceHistory = new HistoryScreen(this, SPACE_HISTORY_ARRAY, spaceLevel, false);
 		planetHistory = new HistoryScreen(this, PLANET_HISTORY_ARRAY, planetLevel, false);
 		endHistory = new HistoryScreen(this, END_HISTORY_ARRAY, menuScreen, true);
-		audioManager = new AudioManager();
 		state = State.ENDED;
 		setScreen(menuScreen);
 
@@ -105,21 +103,19 @@ public class MyGdxGame extends Game {
 
 	public void spaceLevel() {
 		setScreen(spaceLevel);
-		Gdx.input.setInputProcessor(spaceLevel);
-		audioManager.spaceMusic.play();
-		audioManager.planetMusic.stop();
+
 	}
 
 	public void planetLevel() {
 		setScreen(planetLevel);
 		Gdx.input.setInputProcessor(planetLevel);
-		audioManager.spaceMusic.stop();
-		audioManager.planetMusic.play();
+		AudioManager.spaceMusic.stop();
+		AudioManager.planetMusic.play();
 	}
 
 	public void mainMenuMusic() {
-		audioManager.spaceMusic.stop();
-		audioManager.planetMusic.stop();
+		AudioManager.spaceMusic.stop();
+		AudioManager.planetMusic.stop();
 	}
 
 	public void passSpaceLevel() {

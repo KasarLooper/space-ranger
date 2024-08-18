@@ -22,6 +22,7 @@ import com.kasarlooper.spaceranger.BlockMap;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
+import com.kasarlooper.spaceranger.manager.AudioManager;
 import com.kasarlooper.spaceranger.objects.PhysicsObject;
 import com.kasarlooper.spaceranger.objects.Type;
 import com.kasarlooper.spaceranger.physics.BodyBuilder;
@@ -196,7 +197,7 @@ public class SpacemanObject extends PhysicsObject {
         body.applyLinearImpulse(new Vector2(0, 3), body.getWorldCenter(), true);
         if (type == Type.Enemy) {
             liveLeft -= 1;
-            myGdxGame.audioManager.soundDamageCosmonaut.play(0.2f);
+            AudioManager.soundDamageCosmonaut.play(0.2f);
             damageTime = TimeUtils.millis();
         }
     }

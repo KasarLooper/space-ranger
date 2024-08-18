@@ -23,6 +23,7 @@ import com.kasarlooper.spaceranger.components.ButtonView;
 import com.kasarlooper.spaceranger.components.JoystickView;
 import com.kasarlooper.spaceranger.components.MovingBackgroundView;
 import com.kasarlooper.spaceranger.levels.space.SpaceGameScreen;
+import com.kasarlooper.spaceranger.manager.AudioManager;
 import com.kasarlooper.spaceranger.session.GameSession;
 
 public abstract class GameScreen extends ScreenAdapter implements InputProcessor {
@@ -66,6 +67,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
         }
         showTime = TimeUtils.millis();
         restartGame();
+        Gdx.input.setInputProcessor(this);
     }
 
     @Override
@@ -180,7 +182,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
         if ((session.state == PAUSED || session.state == ENDED) && endButton.isHit(screenX, SCREEN_HEIGHT - screenY)) {
             session.state = ENDED;
             myGdxGame.setScreen(myGdxGame.menuScreen);
-            myGdxGame.audioManager.spaceMusic.stop();
+            AudioManager.spaceMusic.stop();
             isReload = true;
             camX = myGdxGame.camera.position.x;
             camY = myGdxGame.camera.position.y;

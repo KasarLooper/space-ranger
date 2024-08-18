@@ -11,6 +11,7 @@ public class MemoryManager {
     }
 
     public static void saveLevel(int i) {
+        System.out.println("level saved: " + i);
         preferences.putInteger("i", i);
         preferences.flush();
     }

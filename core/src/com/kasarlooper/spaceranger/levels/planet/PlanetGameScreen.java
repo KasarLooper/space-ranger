@@ -36,6 +36,7 @@ import com.kasarlooper.spaceranger.levels.planet.objects.LightningBulletObject;
 import com.kasarlooper.spaceranger.levels.planet.objects.PhysicsBlock;
 import com.kasarlooper.spaceranger.levels.planet.objects.ResourceObject;
 import com.kasarlooper.spaceranger.levels.planet.objects.SpacemanObject;
+import com.kasarlooper.spaceranger.manager.AudioManager;
 import com.kasarlooper.spaceranger.manager.ContactManager;
 import com.kasarlooper.spaceranger.manager.LevelMapManager;
 import com.kasarlooper.spaceranger.objects.GameObject;
@@ -152,7 +153,7 @@ public class PlanetGameScreen extends GameScreen {
                 if (lightning != null && lightning.destroyIfNeed()) lightning = null;
                 if (lightning == null && isLighting && LightningBulletObject.isShootTime()) {
                     lightning = new LightningBulletObject(spaceman, myGdxGame.planet);
-                    myGdxGame.audioManager.soundShot.play(0.2f);
+                    AudioManager.soundShot.play(0.2f);
                 }
 
                 if (((PlanetGameSession)session).shouldSpawnCore()) {
@@ -186,6 +187,13 @@ public class PlanetGameScreen extends GameScreen {
     @Override
     public void show() {
         super.show();
+        AudioManager.planetMusic.play();
+    }
+
+    @Override
+    public void hide() {
+        super.hide();
+        AudioManager.planetMusic.stop();
     }
 
     @Override

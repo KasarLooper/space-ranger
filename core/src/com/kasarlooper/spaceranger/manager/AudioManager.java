@@ -6,18 +6,18 @@ import com.badlogic.gdx.audio.Sound;
 import com.kasarlooper.spaceranger.GameResources;
 
 public class AudioManager {
-    public Music spaceMusic;
-    public Sound soundBullet;
-    public Sound soundBoom;
-    public Sound soundEnergyGive;
-    public Sound soundShot;
-    public Sound soundWalking;
-    public Music planetMusic;
-    public Sound soundDamageEnemy;
-    public Sound soundDamageCosmonaut;
+    public static Music spaceMusic;
+    public static Sound soundBullet;
+    public static Sound soundBoom;
+    public static Sound soundEnergyGive;
+    public static Sound soundShot;
+    public static Sound soundWalking;
+    public static Music planetMusic;
+    public static Sound soundDamageEnemy;
+    public static Sound soundDamageCosmonaut;
 
 
-    public AudioManager() {
+    static {
         spaceMusic = Gdx.audio.newMusic(Gdx.files.internal(GameResources.MUSIC_SPACE_PATH));
         soundBullet = Gdx.audio.newSound(Gdx.files.internal(GameResources.SOUND_BULLET_PATH));
         soundBoom = Gdx.audio.newSound(Gdx.files.internal(GameResources.SOUND_BOOM_PATH));
