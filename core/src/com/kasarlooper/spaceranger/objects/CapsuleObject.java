@@ -6,13 +6,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class CapsuleObject extends GameObject {
-    int width, height;
     Texture texture;
 
-    public CapsuleObject(int x, int y, int width, int height) {
-        super(x, y);
-        this.width = width;
-        this.height = height;
+    public CapsuleObject(int x, int y, float width, float height) {
+        super(x, y, width, height);
         texture = new Texture(CAPSULE_IMG_PATH);
     }
 

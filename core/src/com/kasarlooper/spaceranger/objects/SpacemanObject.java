@@ -171,7 +171,7 @@ public class SpacemanObject extends PhysicsObject {
 
     protected void updateJump() {
         body.setAwake(true);
-        isJump = !blockMap.isContact((int) getX(), (int ) getY(), width, height) && body.getLinearVelocity().y != 0;
+        isJump = !blockMap.isContact((int) getX(), (int) getY(), (int) width, (int) height) && body.getLinearVelocity().y != 0;
         if (!isJump) isWalk = true;
         else if (TimeUtils.millis() - lastChangeIsWalkTime > 500) {
             isWalk = false;

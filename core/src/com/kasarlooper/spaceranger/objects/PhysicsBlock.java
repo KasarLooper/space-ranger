@@ -12,18 +12,13 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.objects.physics.BodyBuilder;
 
 public class PhysicsBlock extends Block {
-    public int width;
-    public int height;
-
     public Body body;
     public Texture texture;
     World world;
 
 
     public PhysicsBlock(int x, int y, boolean isGreen, World world) {
-        super(x, y);
-        this.width = BLOCK_SIZE;
-        this.height = BLOCK_SIZE;
+        super(x, y, BLOCK_SIZE, BLOCK_SIZE);
         this.x = x;
         this.y = y;
 

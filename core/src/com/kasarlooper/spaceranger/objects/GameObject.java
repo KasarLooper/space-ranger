@@ -5,10 +5,18 @@ import com.kasarlooper.spaceranger.MyGdxGame;
 public class GameObject {
     public int x;
     public int y;
+    public float width;
+    public float height;
 
-    public GameObject(int x, int y) {
+    public GameObject(int x, int y, float width, float height) {
         this.x = x;
         this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+
+    public GameObject(int x, int y) {
+        this(x, y, 0, 0);
     }
 
     public Type type() {
