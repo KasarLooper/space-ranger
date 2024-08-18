@@ -5,7 +5,7 @@ import static com.kasarlooper.spaceranger.GameResources.CAPSULE_IMG_PATH;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class CapsuleObject extends GameObject implements Drawable {
+public class CapsuleObject extends GameObject {
     int width, height;
     Texture texture;
 
@@ -20,7 +20,6 @@ public class CapsuleObject extends GameObject implements Drawable {
         return x >= this.x && x <= this.x + width && y <= this.y && y >= this.y - height;
     }
 
-    @Override
     public void draw(SpriteBatch batch) {
         batch.draw(texture, x, y - height, width, height);
     }

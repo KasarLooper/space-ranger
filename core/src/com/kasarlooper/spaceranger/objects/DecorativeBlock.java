@@ -3,7 +3,7 @@ package com.kasarlooper.spaceranger.objects;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class DecorativeBlock extends Block implements Drawable {
+public class DecorativeBlock extends Block {
     int width;
     int height;
     Texture texture;
@@ -17,7 +17,6 @@ public class DecorativeBlock extends Block implements Drawable {
         texture = new Texture(texturePath);
     }
 
-    @Override
     public void draw(SpriteBatch batch) {
         batch.draw(texture, x - width / 2f, y - height / 2f, width, height);
     }

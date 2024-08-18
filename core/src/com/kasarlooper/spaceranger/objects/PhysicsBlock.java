@@ -13,7 +13,7 @@ import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.objects.physics.BodyBuilder;
 
-public class PhysicsBlock extends Block implements Drawable {
+public class PhysicsBlock extends Block {
     public int width;
     public int height;
 
@@ -34,7 +34,6 @@ public class PhysicsBlock extends Block implements Drawable {
         this.world = world;
     }
 
-    @Override
     public void draw(SpriteBatch batch) {
         batch.draw(texture,
                 getX() - (width / 2f),

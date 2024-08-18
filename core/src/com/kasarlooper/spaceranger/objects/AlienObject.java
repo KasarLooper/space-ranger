@@ -30,14 +30,11 @@ public class AlienObject extends SpacemanObject{
     @Override
     protected void initTextures(int defaultFrame) {
         left = new Texture[18];
-        //right = new Texture[18];
         for (int i = 2; i <= 18; i+=2) {
             int j = i / 2 + 4;
             if (j > 9) j -= 9;
             left[i - 2] = new Texture(String.format(GameResources.ALIEN_ANIM_LEFT_IMG_PATTERN, j));
             left[i - 1] = new Texture(String.format(GameResources.ALIEN_ANIM_LEFT_IMG_PATTERN, j));
-            //right[i - 2] = new Texture(String.format(GameResources.ALIEN_ANIM_RIGHT_IMG_PATTERN, j));
-            //right[i - 1] = new Texture(String.format(GameResources.ALIEN_ANIM_RIGHT_IMG_PATTERN, j));
         }
         i = 0;
         isJump = false;
@@ -71,50 +68,8 @@ public class AlienObject extends SpacemanObject{
         else stepLeft();
     }
 
-    private ArrayList<Pair> getBlockDistances(ArrayList<PhysicsBlock> blocks, boolean isRight) {
-        ArrayList<Pair> result = new ArrayList<>();
-        for (PhysicsBlock block : blocks) {
-            float dx = isRight ? block.getX() - getX() : getX() - block.getX();
-            if (dx <= BLOCK_SIZE / 2f) continue;
-            if (dx >= BLOCK_SIZE * 5.5f) continue;
-            dx += BLOCK_SIZE / 2f;
-            int blockX = (int) Math.floor(dx / BLOCK_SIZE);
-            int blockY = (int) Math.floor((block.getY() - BLOCK_SIZE / 2f - getY() + COSMONAUT_HEIGHT / 2f) / BLOCK_SIZE) + 1;
-            result.add(new Pair(blockX, blockY));
-        }
-        Collections.sort(result, (o1, o2) -> Integer.compare(o1.x, o2.x));
-        return result;
-    }
-
-    private static class Pair {
-        public int x;
-        public int y;
-
-        public Pair(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        @Override
-        public String toString() {
-            return "Pair{" +
-                    "x=" + x +
-                    ", y=" + y +
-                    '}';
-        }
-    }
-
     @Override
     public Type type() {
         return Type.Enemy;
-    }
-
-    public boolean isAlive() {
-        return liveLeft > 0;
-    }
-
-    @Override
-    protected float getFriction() {
-        return 0;
     }
 }
