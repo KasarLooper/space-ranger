@@ -10,7 +10,6 @@ import static com.kasarlooper.spaceranger.GameSettings.ENEMY_SHOOT_ANGLE;
 import static com.kasarlooper.spaceranger.GameSettings.ENEMY_TO_PLAYER_ROTATION_SPEED;
 import static com.kasarlooper.spaceranger.GameSettings.ENEMY_USUAL_ROTATION_SPEED;
 import static com.kasarlooper.spaceranger.GameSettings.ENEMY_WIDTH;
-import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 import static com.kasarlooper.spaceranger.GameSettings.SPEED_ENEMY;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
@@ -54,8 +53,8 @@ public class EnemyObject extends PhysicsObject {
     @Override
     protected Body createBody(float x, float y, WorldWrap world) {
         return BodyBuilder.init()
-                .cords(x * SCALE, y * SCALE)
-                .size(width * SCALE, height * SCALE)
+                .cords(x, y)
+                .size(width, height)
                 .createBody(world, this);
     }
 

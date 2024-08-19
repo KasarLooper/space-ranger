@@ -1,7 +1,6 @@
 package com.kasarlooper.spaceranger.levels.space.objects;
 
 import static com.kasarlooper.spaceranger.GameSettings.COUNT_FRAMES_ONE_IMG;
-import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_WIDTH;
 import static com.kasarlooper.spaceranger.GameSettings.SHIP_HEIGHT;
@@ -48,8 +47,8 @@ public class ShipObject extends PhysicsObject {
     @Override
     protected Body createBody(float x, float y, WorldWrap world) {
         return BodyBuilder.init()
-                .cords(x * SCALE, y * SCALE)
-                .size(width * SCALE, height * SCALE)
+                .cords(x, y)
+                .size(width, height)
                 .createBody(world, this);
     }
 

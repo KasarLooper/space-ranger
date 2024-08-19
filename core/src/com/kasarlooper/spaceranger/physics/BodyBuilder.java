@@ -60,13 +60,13 @@ public class BodyBuilder {
 
     // Required
     public BodyBuilder cords(float x, float y) {
-        this.cords = new Vector2(x, y);
+        this.cords = new Vector2(x * SCALE, y * SCALE);
         return this;
     }
 
     // Required
     public BodyBuilder size(float x, float y) {
-        this.size = new Vector2(x, y);
+        this.size = new Vector2(x * SCALE, y * SCALE);
         return this;
     }
 

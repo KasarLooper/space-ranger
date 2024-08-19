@@ -2,7 +2,6 @@ package com.kasarlooper.spaceranger.levels.planet.objects;
 
 import static com.kasarlooper.spaceranger.GameSettings.COSMONAUT_WIDTH;
 import static com.kasarlooper.spaceranger.GameSettings.LIGHTING_WIDTH;
-import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -43,8 +42,8 @@ public class LightningBulletObject extends PhysicsObject {
     @Override
     protected Body createBody(float x, float y, WorldWrap world) {
         return BodyBuilder.init()
-                .cords(x * SCALE, y * SCALE)
-                .size(width * SCALE, height * SCALE)
+                .cords(x, y)
+                .size(width, height)
                 .sensor()
                 .staticType()
                 .createBody(world, this);

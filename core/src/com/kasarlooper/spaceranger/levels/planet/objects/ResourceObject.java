@@ -3,7 +3,6 @@ package com.kasarlooper.spaceranger.levels.planet.objects;
 import static com.kasarlooper.spaceranger.GameResources.CRYSTAL_IMG_PATH;
 import static com.kasarlooper.spaceranger.GameResources.WRECKAGE_IMG_PATH;
 import static com.kasarlooper.spaceranger.GameSettings.BLOCK_SIZE;
-import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.kasarlooper.spaceranger.MyGdxGame;
@@ -25,8 +24,8 @@ public class ResourceObject extends PhysicsObject {
     @Override
     protected Body createBody(float x, float y, WorldWrap world) {
         return BodyBuilder.init()
-                .cords(x * SCALE, y * SCALE)
-                .size(width * SCALE, height * SCALE)
+                .cords(x, y)
+                .size(width, height)
                 .friction()
                 .createBody(world, this);
     }

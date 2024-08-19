@@ -59,8 +59,8 @@ public class PhysicsBlock extends Block {
 
     private Body createBody(float x, float y, WorldWrap world) {
         return BodyBuilder.init()
-                .cords(x * SCALE, y * SCALE)
-                .size(width * SCALE, height * SCALE)
+                .cords(x, y)
+                .size(width, height)
                 .shape(BodyBuilder.RECTANGLE)
                 .friction()
                 .staticType()
