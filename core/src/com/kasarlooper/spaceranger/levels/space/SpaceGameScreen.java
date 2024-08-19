@@ -19,6 +19,7 @@ import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.kasarlooper.spaceranger.EntitySpawner;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
@@ -306,6 +307,15 @@ public class SpaceGameScreen extends GameScreen {
         EntitySpawner.Pair pair = spawner.newPair(shipObject.getX(), shipObject.getY(), size / 2, size / 2, shipObject.getRotation());
         AsteroidObject asteroid = new AsteroidObject((int) pair.x, (int) pair.y, world, (int) shipObject.getX(), (int) shipObject.getY());
         asteroidArray.add(asteroid);
+    }
+
+    @Override
+    public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.W) {
+            joystick.onTouch((int) joystick.getX(), (int) joystick.getY());
+            joystick.onDrag((int) joystick.getX(), (int) joystick.getY() + 10);
+        }
+        return true;
     }
 
     @Override

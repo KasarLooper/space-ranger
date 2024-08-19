@@ -31,11 +31,6 @@ public class ResourceObject extends PhysicsObject {
     }
 
     @Override
-    protected float getFriction() {
-        return 1;
-    }
-
-    @Override
     public void hit(Type type, MyGdxGame myGdxGame) {
         if (type == Type.Player) {
             wasHit = true;

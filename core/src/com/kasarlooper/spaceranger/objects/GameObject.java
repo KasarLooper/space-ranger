@@ -3,8 +3,8 @@ package com.kasarlooper.spaceranger.objects;
 import com.kasarlooper.spaceranger.MyGdxGame;
 
 public class GameObject {
-    public int x;
-    public int y;
+    protected int x;
+    protected int y;
     public float width;
     public float height;
 
@@ -13,6 +13,22 @@ public class GameObject {
         this.y = y;
         this.width = width;
         this.height = height;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     public GameObject(int x, int y) {

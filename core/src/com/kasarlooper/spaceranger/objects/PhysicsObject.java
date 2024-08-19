@@ -5,9 +5,6 @@ import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.kasarlooper.spaceranger.physics.WorldWrap;
 
 
@@ -44,48 +41,17 @@ public abstract class PhysicsObject extends GameObject {
         texture.dispose();
     }
 
-    public float getX() {
+    public int getX() {
         return (int) (body.getPosition().x / SCALE);
     }
 
-    public float getY() {
+    public int getY() {
         return (int) (body.getPosition().y / SCALE);
-    }
-
-    public void setX(float x) {
-        body.setTransform(x * SCALE, body.getPosition().y, 0);
-    }
-
-    public void setY(float y) {
-        body.setTransform(body.getPosition().x, y * SCALE, 0);
     }
 
     public float getRadius() {
         return Math.max(width, height) * SCALE / 2f;
     }
 
-
     protected abstract Body createBody(float x, float y, WorldWrap world);
-
-    protected Shape getShape(float x, float y, float width, float height) {
-        CircleShape shape = new CircleShape();
-        shape.setRadius(getRadius());
-        return shape;
-    }
-
-    protected BodyDef.BodyType getBodyType() {
-        return BodyDef.BodyType.DynamicBody;
-    }
-
-    protected float getRestitution() {
-        return 0f;
-    }
-
-    protected float getDensity() {
-        return 0.1f;
-    }
-
-    protected float getFriction() {
-        return 1f;
-    }
 }

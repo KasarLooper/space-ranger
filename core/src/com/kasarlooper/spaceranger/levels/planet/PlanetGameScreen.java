@@ -226,15 +226,15 @@ public class PlanetGameScreen extends GameScreen {
     public void spawnAlien() {
         ArrayList<GameObject> near = new ArrayList<>();
         for (GameObject cords : mobSpawns) {
-            float dx = Math.abs(cords.x - spaceman.getX());
+            float dx = Math.abs(cords.getX() - spaceman.getX());
             if (dx > SCREEN_WIDTH / 2f && dx < SCREEN_WIDTH * 2.5f)
                 near.add(cords);
         }
         removeCollapsed(near);
         if (!near.isEmpty()) {
             int i = rd.nextInt(near.size());
-            int x = near.get(i).x;
-            int y = near.get(i).y;
+            int x = near.get(i).getX();
+            int y = near.get(i).getY();
             aliens.add(new AlienObject(x, y, world, blockMap));
         }
     }
@@ -242,15 +242,15 @@ public class PlanetGameScreen extends GameScreen {
     public void spawnCrystal() {
         ArrayList<GameObject> near = new ArrayList<>();
         for (GameObject cords : resSpawns) {
-            float dx = Math.abs(cords.x - spaceman.getX());
+            float dx = Math.abs(cords.getX() - spaceman.getX());
             if (dx > SCREEN_WIDTH / 2f && dx < SCREEN_WIDTH * 2.5f)
                 near.add(cords);
         }
         removeCollapsed(near);
         if (!near.isEmpty()) {
             int i = rd.nextInt(near.size());
-            int x = near.get(i).x;
-            int y = near.get(i).y;
+            int x = near.get(i).getX();
+            int y = near.get(i).getY();
             crystals.add(new ResourceObject(x, y, true, world));
         }
     }
@@ -262,8 +262,8 @@ public class PlanetGameScreen extends GameScreen {
             boolean shouldRemove = false;
 
             for (PhysicsObject object2 : wrecks) {
-                if (Math.abs(object1.x - object2.getX()) <= BLOCK_SIZE &&
-                        Math.abs(object1.y - object2.getY()) <= BLOCK_SIZE) {
+                if (Math.abs(object1.getX() - object2.getX()) <= BLOCK_SIZE &&
+                        Math.abs(object1.getY() - object2.getY()) <= BLOCK_SIZE) {
                     shouldRemove = true;
                     break;
                 }
@@ -271,8 +271,8 @@ public class PlanetGameScreen extends GameScreen {
 
             if (!shouldRemove) {
                 for (PhysicsObject object2 : aliens) {
-                    if (Math.abs(object1.x - object2.getX()) <= BLOCK_SIZE &&
-                            Math.abs(object1.y - object2.getY()) <= BLOCK_SIZE) {
+                    if (Math.abs(object1.getX() - object2.getX()) <= BLOCK_SIZE &&
+                            Math.abs(object1.getY() - object2.getY()) <= BLOCK_SIZE) {
                         shouldRemove = true;
                         break;
                     }
@@ -281,8 +281,8 @@ public class PlanetGameScreen extends GameScreen {
 
             if (!shouldRemove) {
                 for (PhysicsObject object2 : crystals) {
-                    if (Math.abs(object1.x - object2.getX()) <= BLOCK_SIZE &&
-                            Math.abs(object1.y - object2.getY()) <= BLOCK_SIZE) {
+                    if (Math.abs(object1.getX() - object2.getX()) <= BLOCK_SIZE &&
+                            Math.abs(object1.getY() - object2.getY()) <= BLOCK_SIZE) {
                         shouldRemove = true;
                         break;
                     }

@@ -5,7 +5,6 @@ import static com.kasarlooper.spaceranger.GameSettings.COSMONAUT_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.COSMONAUT_JUMP_FORCE;
 import static com.kasarlooper.spaceranger.GameSettings.COSMONAUT_SPEED;
 import static com.kasarlooper.spaceranger.GameSettings.COSMONAUT_WIDTH;
-import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_WIDTH;
 
@@ -14,8 +13,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.BlockMap;
 import com.kasarlooper.spaceranger.GameResources;
@@ -104,13 +101,6 @@ public class SpacemanObject extends PhysicsObject {
 
     public boolean isAlive() {
         return liveLeft > 0;
-    }
-
-    @Override
-    protected Shape getShape(float x, float y, float width, float height) {
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox((width) * SCALE / 2f, (height) * SCALE / 2f);
-        return shape;
     }
 
     @Override
@@ -212,11 +202,6 @@ public class SpacemanObject extends PhysicsObject {
 
     public Type type() {
         return Type.Player;
-    }
-
-    @Override
-    protected float getFriction() {
-        return 0;
     }
 
     public void staticDraw(SpriteBatch batch) {
