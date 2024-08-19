@@ -20,6 +20,7 @@ import com.kasarlooper.spaceranger.MyGdxGame;
 import com.kasarlooper.spaceranger.components.ButtonView;
 import com.kasarlooper.spaceranger.components.JoystickView;
 import com.kasarlooper.spaceranger.components.MovingBackgroundView;
+import com.kasarlooper.spaceranger.levels.drawing.GraphicsRenderer;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 import com.kasarlooper.spaceranger.levels.space.SpaceGameScreen;
 import com.kasarlooper.spaceranger.manager.AudioManager;
@@ -27,8 +28,10 @@ import com.kasarlooper.spaceranger.session.GameSession;
 
 public abstract class GameScreen extends ScreenAdapter implements InputProcessor {
     protected WorldWrap world;
+    protected GraphicsRenderer gRenderer;
     protected GameSession session;
     protected MyGdxGame myGdxGame;
+
     protected JoystickView joystick;
     long showTime;
     ButtonView pauseButton, endButton, continueButton, restartButton, nextButton;
@@ -51,7 +54,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
         nextButton = new ButtonView(430, 416, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Далее");
         black_out_on_pause = new MovingBackgroundView(GameResources.BLACKOUT_IMG_PATH);
 
-        isCollidersShown = false;
+        isCollidersShown = true;
         isGraphicsShown = true;
     }
 
@@ -74,10 +77,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
         ScreenUtils.clear(108f / 255f, 123f / 255f, 188f / 255f, 0);
 
         if (isGraphicsShown) {
-            myGdxGame.batch.setProjectionMatrix(myGdxGame.camera.combined);
-            myGdxGame.batch.begin();
-            drawDynamic();
-            myGdxGame.batch.end();
+            gRenderer.render(delta);
         }
 
         if (isCollidersShown) {

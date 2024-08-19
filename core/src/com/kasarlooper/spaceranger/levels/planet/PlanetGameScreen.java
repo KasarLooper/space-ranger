@@ -29,6 +29,7 @@ import com.kasarlooper.spaceranger.components.MovingBackgroundLeftRightView;
 import com.kasarlooper.spaceranger.components.MovingBackgroundView;
 import com.kasarlooper.spaceranger.components.TextView;
 import com.kasarlooper.spaceranger.levels.GameObject;
+import com.kasarlooper.spaceranger.levels.drawing.GraphicsRenderer;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 import com.kasarlooper.spaceranger.levels.planet.objects.AlienObject;
 import com.kasarlooper.spaceranger.levels.planet.objects.CapsuleObject;
@@ -75,6 +76,7 @@ public class PlanetGameScreen extends GameScreen {
     public PlanetGameScreen(MyGdxGame game) {
         super(game);
         world = new WorldWrap(GRAVITY, game);
+        gRenderer = new GraphicsRenderer(myGdxGame.batch, myGdxGame.camera);
 
         session = new PlanetGameSession();
         loader = new LevelMapManager();
@@ -199,7 +201,6 @@ public class PlanetGameScreen extends GameScreen {
                 block.draw(myGdxGame.batch);
             }
         }
-        //spaceman.draw(myGdxGame.batch);
         super.drawDynamic();
         if (lightning != null) lightning.draw(myGdxGame.batch);
         for (ResourceObject wreck : wrecks) wreck.draw(myGdxGame.batch);
@@ -209,8 +210,6 @@ public class PlanetGameScreen extends GameScreen {
 
     @Override
     public void drawStatic() {
-        spaceman.staticDraw(myGdxGame.batch);
-
         jumpButton.draw(myGdxGame.batch);
         lives.draw(myGdxGame.batch);
         strip.draw(myGdxGame.batch);

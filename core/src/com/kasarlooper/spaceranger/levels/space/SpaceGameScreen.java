@@ -33,6 +33,7 @@ import com.kasarlooper.spaceranger.components.JoystickView;
 import com.kasarlooper.spaceranger.components.LiveView;
 import com.kasarlooper.spaceranger.components.MovingBackgroundView;
 import com.kasarlooper.spaceranger.components.TextView;
+import com.kasarlooper.spaceranger.levels.drawing.GraphicsRenderer;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 import com.kasarlooper.spaceranger.levels.space.objects.AsteroidObject;
 import com.kasarlooper.spaceranger.levels.space.objects.BoomObject;
@@ -71,6 +72,7 @@ public class SpaceGameScreen extends GameScreen {
         super(myGdxGame);
         this.myGdxGame = myGdxGame;
         world = new WorldWrap(0, myGdxGame);
+        gRenderer = new GraphicsRenderer(myGdxGame.batch, myGdxGame.camera);
 
         session = new SpaceGameSession();
         backgroundView = new MovingBackgroundView(GameResources.BACKGROUND_IMG_PATH, GraphicsSettings.DEPTH_SPACE_BACKGROUND_SPEED_RATIO);
@@ -169,8 +171,6 @@ public class SpaceGameScreen extends GameScreen {
 
     @Override
     protected void drawStatic() {
-        shipObject.staticDraw(myGdxGame.batch);
-
         backgroundFireButton.draw(myGdxGame.batch);
         fireButton.draw(myGdxGame.batch);
         purpose.draw(myGdxGame.batch);
@@ -182,7 +182,6 @@ public class SpaceGameScreen extends GameScreen {
     protected void drawDynamic() {
         backgroundView.draw(myGdxGame.batch);
         for (BoomObject boom: boomArray) boom.draw(myGdxGame.batch);
-        //shipObject.draw(myGdxGame.batch);
         for (BulletObject bullet : bulletArray) bullet.draw(myGdxGame.batch);
         for (CoreObject core: coreArray) core.draw(myGdxGame.batch);
         for (EnemyObject enemy: enemyArray) enemy.draw(myGdxGame.batch);
