@@ -41,14 +41,6 @@ public abstract class PhysicsObject extends GameObject {
         texture.dispose();
     }
 
-    public int getX() {
-        return (int) (body.getPosition().x / SCALE);
-    }
-
-    public int getY() {
-        return (int) (body.getPosition().y / SCALE);
-    }
-
     public float getRadius() {
         return Math.max(width, height) * SCALE / 2f;
     }
