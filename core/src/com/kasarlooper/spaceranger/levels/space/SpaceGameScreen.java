@@ -9,7 +9,6 @@ import static com.kasarlooper.spaceranger.GameSettings.CORE_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.CORE_WIDTH;
 import static com.kasarlooper.spaceranger.GameSettings.ENEMY_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.ENEMY_WIDTH;
-import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_WIDTH;
 import static com.kasarlooper.spaceranger.State.ENDED;
@@ -90,13 +89,13 @@ public class SpaceGameScreen extends GameScreen {
         boomArray = new ArrayList<>();
     }
 
-    protected float getCameraX() {
-        return -(-shipObject.getX() + SCREEN_WIDTH / 2f) * SCALE;
+    protected float getCenterX() {
+        return shipObject.getX();
     }
 
     @Override
-    protected float getCameraY() {
-        return -(-shipObject.getY() + SCREEN_HEIGHT / 2f) * SCALE;
+    protected float getCenterY() {
+        return shipObject.getY();
     }
 
     @Override

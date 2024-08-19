@@ -51,7 +51,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
         nextButton = new ButtonView(430, 416, 440, 70, myGdxGame.averageWhiteFont, GameResources.BUTTON_IMG_PATH, "Далее");
         black_out_on_pause = new MovingBackgroundView(GameResources.BLACKOUT_IMG_PATH);
 
-        isCollidersShown = false;
+        isCollidersShown = true;
         isGraphicsShown = true;
     }
 
@@ -81,15 +81,9 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
         }
 
         if (isCollidersShown) {
-            myGdxGame.camera.position.x -= SCREEN_WIDTH / 2f;
-            myGdxGame.camera.position.y -= SCREEN_HEIGHT / 2f;
-            myGdxGame.camera.zoom = SCALE;
-            myGdxGame.camera.update();
-            world.render(new Matrix4().setToOrtho2D(getCameraX(), getCameraY(), GameSettings.SCREEN_WIDTH * SCALE, SCREEN_HEIGHT * SCALE));
-            myGdxGame.camera.position.x += SCREEN_WIDTH / 2f;
-            myGdxGame.camera.position.y += SCREEN_HEIGHT / 2f;
-            myGdxGame.camera.zoom = 1;
-            myGdxGame.camera.update();
+            world.render(new Matrix4().setToOrtho2D((getCenterX() - SCREEN_WIDTH / 2f) * SCALE,
+                    (getCenterY() - SCREEN_HEIGHT / 2f) * SCALE,
+                    GameSettings.SCREEN_WIDTH * SCALE, SCREEN_HEIGHT * SCALE));
         }
 
         myGdxGame.batch.setProjectionMatrix(new Matrix4().setToOrtho2D(0, 0, GameSettings.SCREEN_WIDTH, SCREEN_HEIGHT));
@@ -100,16 +94,14 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
 
     @Override
     public void pause() {
-        onPause();
+        if (session.state == PLAYING)
+            session.pauseGame();
+
     }
 
-    protected float getCameraX() {
-        return 0;
-    }
+    protected abstract float getCenterX();
 
-    protected float getCameraY() {
-        return 0;
-    }
+    protected abstract float getCenterY();
 
     public void onPause() {
         switch (session.state) {

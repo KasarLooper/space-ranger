@@ -1,8 +1,5 @@
 package com.kasarlooper.spaceranger;
 
-import static com.kasarlooper.spaceranger.GameSettings.POSITION_ITERATIONS;
-import static com.kasarlooper.spaceranger.GameSettings.STEP_TIME;
-import static com.kasarlooper.spaceranger.GameSettings.VELOCITY_ITERATIONS;
 import static com.kasarlooper.spaceranger.GraphicsSettings.END_HISTORY_ARRAY;
 import static com.kasarlooper.spaceranger.GraphicsSettings.PLANET_HISTORY_ARRAY;
 import static com.kasarlooper.spaceranger.GraphicsSettings.SPACE_HISTORY_ARRAY;
@@ -15,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2D;
-import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.levels.LevelManager;
 import com.kasarlooper.spaceranger.manager.AudioManager;
 import com.kasarlooper.spaceranger.manager.LevelMapManager;
@@ -26,11 +22,6 @@ import com.kasarlooper.spaceranger.screens.MemoriesScreen;
 import com.kasarlooper.spaceranger.screens.MenuScreen;
 
 public class MyGdxGame extends Game {
-	private float accumulator;
-
-	public State state;
-
-
 	public SpriteBatch batch;
 	public Vector3 touch;
 	public OrthographicCamera camera;
@@ -64,7 +55,6 @@ public class MyGdxGame extends Game {
 		spaceHistory = new HistoryScreen(this, SPACE_HISTORY_ARRAY, spaceLevel, false);
 		planetHistory = new HistoryScreen(this, PLANET_HISTORY_ARRAY, planetLevel, false);
 		endHistory = new HistoryScreen(this, END_HISTORY_ARRAY, menuScreen, true);
-		state = State.ENDED;
 		setScreen(menuScreen);
 
 		levelMapManager = new LevelMapManager();
@@ -84,16 +74,6 @@ public class MyGdxGame extends Game {
 			return true;
 		}
 		return false;
-	}
-
-	public void stepWorld(World world) {
-		float delta = Gdx.graphics.getDeltaTime();
-		accumulator += Math.min(delta, 0.25f);
-
-		if (accumulator >= STEP_TIME) {
-			accumulator -= STEP_TIME;
-			world.step(STEP_TIME, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-		}
 	}
 
 	public void mainMenuMusic() {

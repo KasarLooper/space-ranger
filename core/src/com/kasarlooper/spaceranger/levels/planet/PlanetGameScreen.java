@@ -8,7 +8,6 @@ import static com.kasarlooper.spaceranger.GameSettings.CHANCE_WRECK_DROP;
 import static com.kasarlooper.spaceranger.GameSettings.CRYSTAL_COUNT;
 import static com.kasarlooper.spaceranger.GameSettings.GRAVITY;
 import static com.kasarlooper.spaceranger.GameSettings.GROUND_HEIGHT;
-import static com.kasarlooper.spaceranger.GameSettings.SCALE;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_WIDTH;
 import static com.kasarlooper.spaceranger.GameSettings.WRECK_COUNT;
@@ -112,13 +111,13 @@ public class PlanetGameScreen extends GameScreen {
 
     }
 
-    protected float getCameraX() {
-        return -(-spaceman.getX() + SCREEN_WIDTH / 2f) * SCALE;
+    protected float getCenterX() {
+        return spaceman.getX();
     }
 
     @Override
-    protected float getCameraY() {
-        return -(-spaceman.getY() + SCREEN_HEIGHT / 2f) * SCALE;
+    protected float getCenterY() {
+        return spaceman.getY();
     }
 
     float dx, dy;
