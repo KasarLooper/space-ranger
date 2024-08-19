@@ -15,11 +15,14 @@ import com.kasarlooper.spaceranger.physics.WorldWrap;
 import java.util.Random;
 
 public class AsteroidObject extends PhysicsObject {
+    public Body body;
+
     private static final Random rd = new Random();
 
     public AsteroidObject(int x, int y, WorldWrap world, int playerX, int playerY) {
         super(ASTEROID_IMG_PATH, x, y, ASTEROID_WIDTH_MIN + rd.nextInt(ASTEROID_WIDTH_MAX - ASTEROID_WIDTH_MIN),
-                ASTEROID_WIDTH_MIN + rd.nextInt(ASTEROID_WIDTH_MAX - ASTEROID_WIDTH_MIN), world);
+                ASTEROID_WIDTH_MIN + rd.nextInt(ASTEROID_WIDTH_MAX - ASTEROID_WIDTH_MIN));
+        body = createBody(x, y, world);
         float dx = playerX - x;
         float dy = playerY - y;
         float ratio = (float) Math.sqrt(dx * dx + dy * dy);

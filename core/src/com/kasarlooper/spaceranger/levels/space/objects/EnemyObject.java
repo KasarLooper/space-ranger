@@ -29,6 +29,9 @@ import com.kasarlooper.spaceranger.physics.WorldWrap;
 import java.util.Random;
 
 public class EnemyObject extends PhysicsObject {
+    private final WorldWrap world;
+    public Body body;
+
     public int x, y;
     private long lastShootTime;
     private float aim;
@@ -39,7 +42,9 @@ public class EnemyObject extends PhysicsObject {
     public boolean wasHit;
 
     public EnemyObject(int x, int y, WorldWrap world) {
-        super(ENEMY_SHIP_IMG_PATH, x, y, ENEMY_WIDTH, ENEMY_HEIGHT, world);
+        super(ENEMY_SHIP_IMG_PATH, x, y, ENEMY_WIDTH, ENEMY_HEIGHT);
+        body = createBody(x, y, world);
+        this.world = world;
         this.x = x;
         this.y = y;
         rd = new Random();

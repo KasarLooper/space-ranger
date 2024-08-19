@@ -22,13 +22,16 @@ import com.kasarlooper.spaceranger.physics.BodyBuilder;
 import com.kasarlooper.spaceranger.physics.WorldWrap;
 
 public class BulletObject extends PhysicsObject {
+    public Body body;
+
     private Type type;
     public boolean wasHit;
 
     Sprite sprite;
 
     public BulletObject(int x, int y, WorldWrap world, float degrees, boolean isEnemy) {
-        super(isEnemy ? ENEMY_BULLET_IMG_PATH : BULLET_IMG_PATH, x, y, BULLET_WIDTH, BULLET_HEIGHT, world);
+        super(isEnemy ? ENEMY_BULLET_IMG_PATH : BULLET_IMG_PATH, x, y, BULLET_WIDTH, BULLET_HEIGHT);
+        body = createBody(x, y, world);
         body.setLinearVelocity(new Vector2((float) (cos(toRadians(degrees)) * BULLET_SPEED),
                 (float) (sin(toRadians(degrees)) * BULLET_SPEED)));
         body.setBullet(true);

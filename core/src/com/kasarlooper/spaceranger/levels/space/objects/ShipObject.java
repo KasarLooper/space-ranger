@@ -24,6 +24,8 @@ import com.kasarlooper.spaceranger.physics.BodyBuilder;
 import com.kasarlooper.spaceranger.physics.WorldWrap;
 
 public class ShipObject extends PhysicsObject {
+    public Body body;
+
     public int livesLeft;
     Sprite sprite;
 
@@ -35,7 +37,8 @@ public class ShipObject extends PhysicsObject {
     private boolean isStop = false;
 
     public ShipObject(int x, int y, WorldWrap world) {
-        super(String.format(GameResources.SHIP_IMG_PATH, 3), x, y, SHIP_WIDTH, SHIP_HEIGHT, world);
+        super(String.format(GameResources.SHIP_IMG_PATH, 3), x, y, SHIP_WIDTH, SHIP_HEIGHT);
+        body = createBody(x, y, world);
         body.setLinearDamping(10f);
         livesLeft = 3;
         body.setLinearDamping(10);

@@ -167,7 +167,7 @@ public class PlanetGameScreen extends GameScreen {
                     isEnoughResources = true;
                 }
 
-                if (capsule.isCollision((int) spaceman.getX(), (int) spaceman.getY()) && isEnoughResources) {
+                if (capsule.isCollision(spaceman.getX(), spaceman.getY()) && isEnoughResources) {
                     session.state = ENDED;
                     ((PlanetGameSession) session).setVictory();
                     myGdxGame.passPlanetLevel();

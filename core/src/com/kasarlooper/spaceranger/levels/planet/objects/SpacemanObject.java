@@ -25,6 +25,8 @@ import com.kasarlooper.spaceranger.physics.BodyBuilder;
 import com.kasarlooper.spaceranger.physics.WorldWrap;
 
 public class SpacemanObject extends PhysicsObject {
+    public Body body;
+
     private BlockMap blockMap;
     int defaultY;
     int defaultFrame;
@@ -54,7 +56,9 @@ public class SpacemanObject extends PhysicsObject {
     }
 
     protected SpacemanObject(int x, int y, int wight, int height, String texturePath, int defaultFrame, int speed, int jumpImpulse, WorldWrap world, BlockMap blockMap) {
-        super(String.format(texturePath, defaultFrame), x, y, wight, height, world);
+        super(String.format(texturePath, defaultFrame), x, y, wight, height);
+        body = createBody(x, y, world);
+
         defaultY = y;
         this.defaultFrame = defaultFrame;
         this.speed = speed;

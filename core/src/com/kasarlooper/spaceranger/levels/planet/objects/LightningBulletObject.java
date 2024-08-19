@@ -17,16 +17,21 @@ import com.kasarlooper.spaceranger.physics.BodyBuilder;
 import com.kasarlooper.spaceranger.physics.WorldWrap;
 
 public class LightningBulletObject extends PhysicsObject {
+    public Body body;
+
     private final Type type;
     private boolean hasToBeDestroyed;
     private static long lastShootTime;
 
     Sprite sprite;
+    private WorldWrap world;
 
     public LightningBulletObject(SpacemanObject spaceman, WorldWrap world) {
         super(spaceman.isRightDirection ? GameResources.LIGHTNING_RIGHT_IMG_PATH : GameResources.LIGHTNING_LEFT_IMG_PATH,
-                (int) (spaceman.isRightDirection ? spaceman.getX() + (LIGHTING_WIDTH) / 2 + COSMONAUT_WIDTH : spaceman.getX() - (LIGHTING_WIDTH) / 2 - COSMONAUT_WIDTH),
-                (int) (spaceman.getY()), LIGHTING_WIDTH, GameSettings.LIGHTING_HEIGHT, world);
+                (spaceman.isRightDirection ? spaceman.getX() + (LIGHTING_WIDTH) / 2 + COSMONAUT_WIDTH : spaceman.getX() - (LIGHTING_WIDTH) / 2 - COSMONAUT_WIDTH),
+                (spaceman.getY()), LIGHTING_WIDTH, GameSettings.LIGHTING_HEIGHT);
+        body = createBody(x, y, world);
+        this.world = world;
         body.setBullet(true);
         sprite = new Sprite(texture);
         type = Type.Bullet;

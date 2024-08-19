@@ -9,19 +9,14 @@ import com.kasarlooper.spaceranger.physics.WorldWrap;
 
 
 public abstract class PhysicsObject extends GameObject {
-    public Body body;
     public Texture texture;
-    protected WorldWrap world;
 
-
-    protected PhysicsObject(String texturePath, int x, int y, float wight, float height, WorldWrap world) {
+    protected PhysicsObject(String texturePath, int x, int y, float wight, float height) {
         super(x, y, wight, height);
         this.x = x;
         this.y = y;
 
         texture = new Texture(texturePath);
-        body = createBody(x, y, world);
-        this.world = world;
     }
 
     public void draw(SpriteBatch batch) {

@@ -13,6 +13,7 @@ import com.kasarlooper.spaceranger.physics.BodyBuilder;
 import com.kasarlooper.spaceranger.physics.WorldWrap;
 
 public class CoreObject extends PhysicsObject {
+    public Body body;
 
     public int x, y;
 
@@ -20,7 +21,8 @@ public class CoreObject extends PhysicsObject {
     public boolean wasCollected;
 
     public CoreObject(int x, int y, WorldWrap world) {
-        super(CORE_IMG_PATH, x, y, CORE_WIDTH, CORE_HEIGHT, world);
+        super(CORE_IMG_PATH, x, y, CORE_WIDTH, CORE_HEIGHT);
+        body = createBody(x, y, world);
         this.x = x;
         this.y = y;
         wasHit = false;

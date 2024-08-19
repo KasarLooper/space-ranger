@@ -12,11 +12,14 @@ import com.kasarlooper.spaceranger.physics.BodyBuilder;
 import com.kasarlooper.spaceranger.physics.WorldWrap;
 
 public class ResourceObject extends PhysicsObject {
+    public Body body;
+
     Type type;
     boolean wasHit;
 
     public ResourceObject(int x, int y, boolean isCrystal, WorldWrap world) {
-        super(isCrystal ? CRYSTAL_IMG_PATH : WRECKAGE_IMG_PATH, x, y, BLOCK_SIZE, BLOCK_SIZE, world);
+        super(isCrystal ? CRYSTAL_IMG_PATH : WRECKAGE_IMG_PATH, x, y, BLOCK_SIZE, BLOCK_SIZE);
+        body = createBody(x, y, world);
         type = Type.Resource;
         wasHit = false;
     }
