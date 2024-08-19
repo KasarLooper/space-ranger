@@ -12,8 +12,8 @@ public class BlockMap {
     public BlockMap(List<PhysicsBlock> blockList, int worldWidth, int worldHeight) {
         blocks = new PhysicsBlock[worldHeight][worldWidth];
         for (PhysicsBlock block : blockList) {
-            int x = block.getX() / BLOCK_SIZE;
-            int y = 16 - (block.getY() - 95 + BLOCK_SIZE) / BLOCK_SIZE;
+            int x = (block.getCenterX()) / BLOCK_SIZE;
+            int y = 16 - (block.getCenterY() - 95 + BLOCK_SIZE) / BLOCK_SIZE;
             System.out.println(x + " " + y);
             blocks[y][x] = block;
         }

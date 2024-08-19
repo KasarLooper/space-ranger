@@ -37,12 +37,12 @@ public class ShipObject extends PhysicsObject {
     private boolean isStop = false;
 
     public ShipObject(int x, int y, WorldWrap world) {
-        super(String.format(GameResources.SHIP_IMG_PATH, 3), x, y, SHIP_WIDTH, SHIP_HEIGHT);
+        super(x, y, SHIP_WIDTH, SHIP_HEIGHT);
         body = createBody(x, y, world);
         body.setLinearDamping(10f);
         livesLeft = 3;
         body.setLinearDamping(10);
-        sprite = new Sprite(texture);
+        sprite = new Sprite(new Texture(String.format(GameResources.SHIP_IMG_PATH, 3)));
         sprite.setOrigin(width / 2f, height / 2f);
         shot_cool_down = GameSettings.SHOOTING_COOL_DOWN;
     }
@@ -72,9 +72,8 @@ public class ShipObject extends PhysicsObject {
         return i >= 19 * COUNT_FRAMES_ONE_IMG;
     }
 
-    @Override
     public void draw(SpriteBatch batch) {
-        sprite.setBounds(getX() - width / 2f, getY() - height / 2f, width, height);
+        sprite.setBounds(cornerX, cornerY, width, height);
         if (i > 0 && i < 19 * COUNT_FRAMES_ONE_IMG) sprite.setTexture(new Texture(String.format(GameResources.ANIM_SHIP_PORTAL_IMG_PATH_PATTERN,
                 i / COUNT_FRAMES_ONE_IMG + 1)));
         sprite.draw(batch);

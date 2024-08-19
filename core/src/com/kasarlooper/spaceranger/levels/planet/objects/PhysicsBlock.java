@@ -19,8 +19,8 @@ public class PhysicsBlock extends Block {
 
     public PhysicsBlock(int x, int y, boolean isGreen, WorldWrap world) {
         super(x, y, BLOCK_SIZE, BLOCK_SIZE);
-        this.x = x;
-        this.y = y;
+        this.cornerX = x;
+        this.cornerY = y;
 
         texture = new Texture(isGreen ? TEXTURE_BOX_GREEN : TEXTURE_BOX_BLACK);
         body = createBody(x, y, world);
@@ -28,11 +28,7 @@ public class PhysicsBlock extends Block {
     }
 
     public void draw(SpriteBatch batch) {
-        batch.draw(texture,
-                getX() - (width / 2f),
-                getY() - (height / 2f),
-                width,
-                height);
+        batch.draw(texture, cornerX, cornerY, width, height);
     }
 
     public void dispose() {

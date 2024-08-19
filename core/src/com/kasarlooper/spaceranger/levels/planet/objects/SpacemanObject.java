@@ -56,14 +56,14 @@ public class SpacemanObject extends PhysicsObject {
     }
 
     protected SpacemanObject(int x, int y, int wight, int height, String texturePath, int defaultFrame, int speed, int jumpImpulse, WorldWrap world, BlockMap blockMap) {
-        super(String.format(texturePath, defaultFrame), x, y, wight, height);
+        super(x, y, wight, height);
         body = createBody(x, y, world);
 
         defaultY = y;
         this.defaultFrame = defaultFrame;
         this.speed = speed;
         this.jumpImpulse = jumpImpulse;
-        sprite = new Sprite(texture);
+        sprite = new Sprite(new Texture(String.format(texturePath, defaultFrame)));
 
         initTextures(defaultFrame);
         isRightDirection = true;
@@ -107,9 +107,8 @@ public class SpacemanObject extends PhysicsObject {
         return liveLeft > 0;
     }
 
-    @Override
     public void draw(SpriteBatch batch) {
-        sprite.setBounds(getX() - width / 2f, getY() - (height) / 2f, width, height);
+        sprite.setBounds(cornerX, cornerY, width, height);
         boolean isRed = TimeUtils.millis() - damageTime <= GameSettings.LIGHTNING_DAMAGE_MILLIS;
         if (isRed) batch.setShader(GameResources.RED_SHADER);
         sprite.draw(batch);
@@ -168,7 +167,7 @@ public class SpacemanObject extends PhysicsObject {
 
     protected void updateJump() {
         body.setAwake(true);
-        isJump = !blockMap.isContact((int) getX(), (int) getY(), (int) width, (int) height) && body.getLinearVelocity().y != 0;
+        isJump = !blockMap.isContact(getCenterX(), getCenterY(), (int) width, (int) height) && body.getLinearVelocity().y != 0;
         if (!isJump) isWalk = true;
         else if (TimeUtils.millis() - lastChangeIsWalkTime > 500) {
             isWalk = false;
@@ -196,9 +195,7 @@ public class SpacemanObject extends PhysicsObject {
         }
     }
 
-    @Override
     public void dispose() {
-        super.dispose();
         if (left != null)
             for (Texture tex : left)
                 tex.dispose();

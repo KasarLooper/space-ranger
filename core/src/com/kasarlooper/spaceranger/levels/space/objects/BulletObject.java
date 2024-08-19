@@ -11,6 +11,7 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -30,12 +31,12 @@ public class BulletObject extends PhysicsObject {
     Sprite sprite;
 
     public BulletObject(int x, int y, WorldWrap world, float degrees, boolean isEnemy) {
-        super(isEnemy ? ENEMY_BULLET_IMG_PATH : BULLET_IMG_PATH, x, y, BULLET_WIDTH, BULLET_HEIGHT);
+        super(x, y, BULLET_WIDTH, BULLET_HEIGHT);
         body = createBody(x, y, world);
         body.setLinearVelocity(new Vector2((float) (cos(toRadians(degrees)) * BULLET_SPEED),
                 (float) (sin(toRadians(degrees)) * BULLET_SPEED)));
         body.setBullet(true);
-        sprite = new Sprite(texture);
+        sprite = new Sprite(new Texture(isEnemy ? ENEMY_BULLET_IMG_PATH : BULLET_IMG_PATH));
         sprite.setRotation(degrees + 270);
         wasHit = false;
         if (isEnemy) type = Type.EnemyBullet;
@@ -50,9 +51,8 @@ public class BulletObject extends PhysicsObject {
                 .createBody(world, this);
     }
 
-    @Override
     public void draw(SpriteBatch batch) {
-        sprite.setBounds(getX() - width / 2f, getY() - height / 2f, width, height);
+        sprite.setBounds(cornerX, cornerY, width, height);
         sprite.draw(batch);
     }
 
@@ -63,10 +63,10 @@ public class BulletObject extends PhysicsObject {
     }
 
     public boolean destroy(float centreX, float centreY) {
-        return wasHit || !(getX() > centreX - (width + SCREEN_WIDTH) / 2 &&
-                getX() < centreX + (width + SCREEN_WIDTH) / 2 &&
-                getY() > centreY - (height + SCREEN_HEIGHT) / 2 &&
-                getY() < centreY + (height + SCREEN_HEIGHT) / 2);
+        return wasHit || !(getCenterX() > centreX - (width + SCREEN_WIDTH) / 2 &&
+                getCenterX() < centreX + (width + SCREEN_WIDTH) / 2 &&
+                getCenterY() > centreY - (height + SCREEN_HEIGHT) / 2 &&
+                getCenterY() < centreY + (height + SCREEN_HEIGHT) / 2);
     }
     public Type type() {
         return type;

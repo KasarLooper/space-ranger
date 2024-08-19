@@ -51,8 +51,8 @@ public class WorldWrap {
 
     private void updateCords(Body body) {
         GameObject object = (GameObject) body.getFixtureList().get(0).getUserData();
-        object.setX((int) (body.getPosition().x / SCALE));
-        object.setY((int) (body.getPosition().y / SCALE));
+        object.setCornerX((int) (body.getPosition().x / SCALE - object.width / 2f));
+        object.setCornerY((int) (body.getPosition().y / SCALE - object.height / 2f));
     }
 
     public Body createBody(BodyDef def, boolean isNoGravity) {

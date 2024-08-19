@@ -3,6 +3,7 @@ package com.kasarlooper.spaceranger.levels.planet.objects;
 import static com.kasarlooper.spaceranger.GameSettings.COSMONAUT_WIDTH;
 import static com.kasarlooper.spaceranger.GameSettings.LIGHTING_WIDTH;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -27,13 +28,13 @@ public class LightningBulletObject extends PhysicsObject {
     private WorldWrap world;
 
     public LightningBulletObject(SpacemanObject spaceman, WorldWrap world) {
-        super(spaceman.isRightDirection ? GameResources.LIGHTNING_RIGHT_IMG_PATH : GameResources.LIGHTNING_LEFT_IMG_PATH,
-                (spaceman.isRightDirection ? spaceman.getX() + (LIGHTING_WIDTH) / 2 + COSMONAUT_WIDTH : spaceman.getX() - (LIGHTING_WIDTH) / 2 - COSMONAUT_WIDTH),
-                (spaceman.getY()), LIGHTING_WIDTH, GameSettings.LIGHTING_HEIGHT);
-        body = createBody(x, y, world);
+        super((spaceman.isRightDirection ? spaceman.getCenterX() + (LIGHTING_WIDTH) / 2 + COSMONAUT_WIDTH : spaceman.getCenterX() - (LIGHTING_WIDTH) / 2 - COSMONAUT_WIDTH),
+                (spaceman.getCenterY()), LIGHTING_WIDTH, GameSettings.LIGHTING_HEIGHT);
+        body = createBody(cornerX, cornerY, world);
         this.world = world;
         body.setBullet(true);
-        sprite = new Sprite(texture);
+        sprite = new Sprite(new Texture(spaceman.isRightDirection ? GameResources.LIGHTNING_RIGHT_IMG_PATH : GameResources.LIGHTNING_LEFT_IMG_PATH));
+        sprite.setBounds(cornerX - width / 2f, cornerY - height / 2f, width, height);
         type = Type.Bullet;
         body.setType(BodyDef.BodyType.DynamicBody);
         hasToBeDestroyed = false;
@@ -54,9 +55,7 @@ public class LightningBulletObject extends PhysicsObject {
                 .createBody(world, this);
     }
 
-    @Override
     public void draw(SpriteBatch batch) {
-        sprite.setBounds(Math.round(getX() - width / 2f), Math.round(getY() - height / 2f), width, height);
         sprite.draw(batch);
     }
 

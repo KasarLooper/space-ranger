@@ -4,6 +4,8 @@ import static com.kasarlooper.spaceranger.GameResources.CRYSTAL_IMG_PATH;
 import static com.kasarlooper.spaceranger.GameResources.WRECKAGE_IMG_PATH;
 import static com.kasarlooper.spaceranger.GameSettings.BLOCK_SIZE;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.kasarlooper.spaceranger.MyGdxGame;
 import com.kasarlooper.spaceranger.objects.PhysicsObject;
@@ -16,12 +18,18 @@ public class ResourceObject extends PhysicsObject {
 
     Type type;
     boolean wasHit;
+    private Texture texture;
 
     public ResourceObject(int x, int y, boolean isCrystal, WorldWrap world) {
-        super(isCrystal ? CRYSTAL_IMG_PATH : WRECKAGE_IMG_PATH, x, y, BLOCK_SIZE, BLOCK_SIZE);
+        super(x, y, BLOCK_SIZE, BLOCK_SIZE);
+        texture = new Texture(isCrystal ? CRYSTAL_IMG_PATH : WRECKAGE_IMG_PATH);
         body = createBody(x, y, world);
         type = Type.Resource;
         wasHit = false;
+    }
+
+    public void draw(SpriteBatch batch) {
+        batch.draw(texture, cornerX, cornerY, width, height);
     }
 
     @Override

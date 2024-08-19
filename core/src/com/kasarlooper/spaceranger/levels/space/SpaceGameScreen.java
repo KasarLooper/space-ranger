@@ -38,7 +38,6 @@ import com.kasarlooper.spaceranger.levels.space.objects.CoreObject;
 import com.kasarlooper.spaceranger.levels.space.objects.EnemyObject;
 import com.kasarlooper.spaceranger.levels.space.objects.ShipObject;
 import com.kasarlooper.spaceranger.manager.AudioManager;
-import com.kasarlooper.spaceranger.manager.ContactManager;
 import com.kasarlooper.spaceranger.physics.WorldWrap;
 import com.kasarlooper.spaceranger.screens.GameScreen;
 import com.kasarlooper.spaceranger.session.SpaceGameSession;
@@ -57,7 +56,6 @@ public class SpaceGameScreen extends GameScreen {
     ArrayList<BoomObject> boomArray;
     ArrayList<EnemyObject> enemyArray;
     ArrayList<AsteroidObject> asteroidArray;
-    ContactManager contactManager;
     MovingBackgroundView backgroundView;
     ButtonView fireButton;
     ImageView backgroundFireButton;
@@ -91,12 +89,12 @@ public class SpaceGameScreen extends GameScreen {
     }
 
     protected float getCenterX() {
-        return shipObject.getX();
+        return shipObject.getCenterX();
     }
 
     @Override
     protected float getCenterY() {
-        return shipObject.getY();
+        return shipObject.getCenterY();
     }
 
     @Override
@@ -119,16 +117,16 @@ public class SpaceGameScreen extends GameScreen {
             joystick.toDefault();
         }
         if (shipObject.isAlive()) {
-            myGdxGame.camera.position.x = shipObject.getX();
-            myGdxGame.camera.position.y = shipObject.getY();
-            backgroundView.move(shipObject.getX(), shipObject.getY());
+            myGdxGame.camera.position.x = shipObject.getCenterX();
+            myGdxGame.camera.position.y = shipObject.getCenterY();
+            backgroundView.move(shipObject.getCenterX(), shipObject.getCenterY());
             if (!shipObject.isEnd()) {
                 if (session.state == PLAYING) {
                     final int padding = 30;
                     if (isTouchedShoot && shipObject.needToShoot()) {
                         BulletObject Bullet = new BulletObject(
-                                (int) (shipObject.getX() + cos(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
-                                (int) (shipObject.getY() + sin(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
+                                (int) (shipObject.getCenterX() + cos(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
+                                (int) (shipObject.getCenterY() + sin(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
                                 world, shipObject.getRotation(), false);
                         bulletArray.add(Bullet);
                         AudioManager.soundBullet.play(0.2f);
@@ -139,7 +137,7 @@ public class SpaceGameScreen extends GameScreen {
                         else generateEnemy();
                     }
                     for (EnemyObject enemy : enemyArray) {
-                        BulletObject bullet = enemy.move(shipObject.getX(), shipObject.getY());
+                        BulletObject bullet = enemy.move(shipObject.getCenterX(), shipObject.getCenterY());
                         if (bullet != null) bulletArray.add(bullet);
                     }
                     live.setLeftLives(shipObject.getLivesLeft());
@@ -195,7 +193,7 @@ public class SpaceGameScreen extends GameScreen {
         Iterator<BulletObject> iterator = bulletArray.iterator();
         while(iterator.hasNext()) {
             BulletObject bulletObject_now = iterator.next();
-            if (bulletObject_now.destroy(shipObject.getX(), shipObject.getY())) {
+            if (bulletObject_now.destroy(shipObject.getCenterX(), shipObject.getCenterY())) {
                 System.out.println("bulletObject_now");
                 world.destroyBody(bulletObject_now.body);
                 iterator.remove();
@@ -213,8 +211,8 @@ public class SpaceGameScreen extends GameScreen {
                     purpose.setText(String.format("Цель - энергия: %d/3", ((SpaceGameSession) session).getCoreCollected()));
                     AudioManager.soundEnergyGive.play(0.2f);
                 } else {
-                    boomArray.add(new BoomObject(core.x, core.y));
-                    if (myGdxGame.camera.frustum.sphereInFrustum(core.getX(), core.getY(), 0, Math.max(core.height, core.width))) {
+                    boomArray.add(new BoomObject(core.getCenterX(), core.getCenterY()));
+                    if (myGdxGame.camera.frustum.sphereInFrustum(core.getCenterX(), core.getCenterY(), 0, Math.max(core.height, core.width))) {
                         AudioManager.soundBoom.play(0.2f);
                     }
                 }
@@ -232,9 +230,9 @@ public class SpaceGameScreen extends GameScreen {
             if (enemy.destroy()) {
                 System.out.println("enemy");
                 world.destroyBody(enemy.body);
-                BoomObject boom = new BoomObject(enemy.getX(), enemy.getY());
+                BoomObject boom = new BoomObject(enemy.getCenterX(), enemy.getCenterY());
                 boomArray.add(boom);
-                if (myGdxGame.camera.frustum.sphereInFrustum(enemy.getX(), enemy.getY(), 0, Math.max(enemy.height, enemy.width))) {
+                if (myGdxGame.camera.frustum.sphereInFrustum(enemy.getCenterX(), enemy.getCenterY(), 0, Math.max(enemy.height, enemy.width))) {
                     AudioManager.soundBoom.play(0.2f);
                 }
                 iterator.remove();
@@ -291,21 +289,21 @@ public class SpaceGameScreen extends GameScreen {
 
     // Генераторы
     private void generateCore() {
-        EntitySpawner.Pair pair = spawner.newPair(shipObject.getX(), shipObject.getY(), CORE_WIDTH / 2, CORE_HEIGHT / 2, shipObject.getRotation());
+        EntitySpawner.Pair pair = spawner.newPair(shipObject.getCenterX(), shipObject.getCenterY(), CORE_WIDTH / 2, CORE_HEIGHT / 2, shipObject.getRotation());
         CoreObject coreObject = new CoreObject((int) pair.x, (int) pair.y, world);
         coreArray.add(coreObject);
     }
 
     private void generateEnemy() {
-        EntitySpawner.Pair pair = spawner.newPair(shipObject.getX(), shipObject.getY(), ENEMY_WIDTH / 2, ENEMY_HEIGHT / 2, shipObject.getRotation());
+        EntitySpawner.Pair pair = spawner.newPair(shipObject.getCenterX(), shipObject.getCenterY(), ENEMY_WIDTH / 2, ENEMY_HEIGHT / 2, shipObject.getRotation());
         EnemyObject enemy = new EnemyObject((int) pair.x, (int) pair.y, world);
         enemyArray.add(enemy);
     }
 
     private void generateAsteroid() {
         int size = ASTEROID_WIDTH_MIN + rd.nextInt(ASTEROID_WIDTH_MAX - ASTEROID_WIDTH_MIN);
-        EntitySpawner.Pair pair = spawner.newPair(shipObject.getX(), shipObject.getY(), size / 2, size / 2, shipObject.getRotation());
-        AsteroidObject asteroid = new AsteroidObject((int) pair.x, (int) pair.y, world, (int) shipObject.getX(), (int) shipObject.getY());
+        EntitySpawner.Pair pair = spawner.newPair(shipObject.getCenterX(), shipObject.getCenterY(), size / 2, size / 2, shipObject.getRotation());
+        AsteroidObject asteroid = new AsteroidObject((int) pair.x, (int) pair.y, world, (int) shipObject.getCenterX(), (int) shipObject.getCenterY());
         asteroidArray.add(asteroid);
     }
 
@@ -364,6 +362,7 @@ public class SpaceGameScreen extends GameScreen {
     @Override
     public void dispose() {
         super.dispose();
+        /*
         if (shipObject != null) shipObject.dispose();
         if (bulletArray != null) {
             for (BulletObject bullet : bulletArray) {
@@ -375,11 +374,13 @@ public class SpaceGameScreen extends GameScreen {
                 core.dispose();
             }
         }
+         */
         if (boomArray != null) {
             for (BoomObject boom : boomArray) {
                 boom.dispose();
             }
         }
+        /*
         if (enemyArray != null) {
             for (EnemyObject enemy : enemyArray) {
                 enemy.dispose();
@@ -390,6 +391,7 @@ public class SpaceGameScreen extends GameScreen {
                 asteroid.dispose();
             }
         }
+         */
         if (backgroundView != null) backgroundView.dispose();
         if (fireButton != null) fireButton.dispose();
         if (backgroundFireButton != null) backgroundFireButton.dispose();

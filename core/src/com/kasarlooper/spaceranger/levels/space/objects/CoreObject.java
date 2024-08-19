@@ -4,6 +4,7 @@ import static com.kasarlooper.spaceranger.GameResources.CORE_IMG_PATH;
 import static com.kasarlooper.spaceranger.GameSettings.CORE_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.CORE_WIDTH;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.kasarlooper.spaceranger.MyGdxGame;
@@ -15,16 +16,14 @@ import com.kasarlooper.spaceranger.physics.WorldWrap;
 public class CoreObject extends PhysicsObject {
     public Body body;
 
-    public int x, y;
-
     public boolean wasHit;
     public boolean wasCollected;
+    private Texture texture;
 
     public CoreObject(int x, int y, WorldWrap world) {
-        super(CORE_IMG_PATH, x, y, CORE_WIDTH, CORE_HEIGHT);
+        super(x, y, CORE_WIDTH, CORE_HEIGHT);
         body = createBody(x, y, world);
-        this.x = x;
-        this.y = y;
+        texture = new Texture(CORE_IMG_PATH);
         wasHit = false;
     }
 
@@ -36,9 +35,8 @@ public class CoreObject extends PhysicsObject {
                 .createBody(world, this);
     }
 
-    @Override
     public void draw(SpriteBatch batch) {
-        batch.draw(texture, x - width / 2f, y - height / 2f, width, height);
+        batch.draw(texture, cornerX, cornerY, width, height);
     }
 
     @Override

@@ -112,12 +112,12 @@ public class PlanetGameScreen extends GameScreen {
     }
 
     protected float getCenterX() {
-        return spaceman.getX();
+        return spaceman.getCenterX();
     }
 
     @Override
     protected float getCenterY() {
-        return spaceman.getY();
+        return spaceman.getCenterY();
     }
 
     float dx, dy;
@@ -131,14 +131,14 @@ public class PlanetGameScreen extends GameScreen {
             joystick.toDefault();
         }
 
-        myGdxGame.camera.position.x = spaceman.getX() + dx;
-        myGdxGame.camera.position.y = spaceman.getY() + GROUND_HEIGHT - CAMERA_Y_FROM_CENTER + dy;
+        myGdxGame.camera.position.x = spaceman.getCenterX() + dx;
+        myGdxGame.camera.position.y = spaceman.getCenterY() + GROUND_HEIGHT - CAMERA_Y_FROM_CENTER + dy;
         if (spaceman.isAlive()) {
             if (session.state == com.kasarlooper.spaceranger.State.PLAYING) {
-                backgroundView.move(spaceman.getX(), spaceman.getY());
+                backgroundView.move(spaceman.getCenterX(), spaceman.getCenterY());
                 if (isJump) spaceman.jump();
                 for (AlienObject alien : aliens)
-                    alien.move((int) spaceman.getX(), (int) spaceman.getY(), physics);
+                    alien.move(spaceman.getCenterX(), spaceman.getCenterY(), physics);
                 world.update(delta);
                 spaceman.update();
                 for (AlienObject alien : aliens) alien.update();
@@ -167,7 +167,7 @@ public class PlanetGameScreen extends GameScreen {
                     isEnoughResources = true;
                 }
 
-                if (capsule.isCollision(spaceman.getX(), spaceman.getY()) && isEnoughResources) {
+                if (capsule.isCollision(spaceman.getCenterX(), spaceman.getCenterY()) && isEnoughResources) {
                     session.state = ENDED;
                     ((PlanetGameSession) session).setVictory();
                     myGdxGame.passPlanetLevel();
@@ -194,9 +194,9 @@ public class PlanetGameScreen extends GameScreen {
     public void drawDynamic() {
         backgroundView.draw(myGdxGame.batch);
         capsule.draw(myGdxGame.batch);
-        earth.draw(myGdxGame.batch, spaceman.getX());
+        earth.draw(myGdxGame.batch, spaceman.getCenterX());
         for (PhysicsBlock block : physics) {
-            if (myGdxGame.camera.frustum.sphereInFrustum(block.getX(), block.getY(), 0, Math.max(block.height, block.width))) {
+            if (myGdxGame.camera.frustum.sphereInFrustum(block.getCenterX(), block.getCenterY(), 0, Math.max(block.height, block.width))) {
                 block.draw(myGdxGame.batch);
             }
         }
@@ -226,15 +226,15 @@ public class PlanetGameScreen extends GameScreen {
     public void spawnAlien() {
         ArrayList<GameObject> near = new ArrayList<>();
         for (GameObject cords : mobSpawns) {
-            float dx = Math.abs(cords.getX() - spaceman.getX());
+            float dx = Math.abs(cords.getCenterX() - spaceman.getCenterX());
             if (dx > SCREEN_WIDTH / 2f && dx < SCREEN_WIDTH * 2.5f)
                 near.add(cords);
         }
         removeCollapsed(near);
         if (!near.isEmpty()) {
             int i = rd.nextInt(near.size());
-            int x = near.get(i).getX();
-            int y = near.get(i).getY();
+            int x = near.get(i).getCenterX();
+            int y = near.get(i).getCenterY();
             aliens.add(new AlienObject(x, y, world, blockMap));
         }
     }
@@ -242,15 +242,15 @@ public class PlanetGameScreen extends GameScreen {
     public void spawnCrystal() {
         ArrayList<GameObject> near = new ArrayList<>();
         for (GameObject cords : resSpawns) {
-            float dx = Math.abs(cords.getX() - spaceman.getX());
+            float dx = Math.abs(cords.getCenterX() - spaceman.getCenterX());
             if (dx > SCREEN_WIDTH / 2f && dx < SCREEN_WIDTH * 2.5f)
                 near.add(cords);
         }
         removeCollapsed(near);
         if (!near.isEmpty()) {
             int i = rd.nextInt(near.size());
-            int x = near.get(i).getX();
-            int y = near.get(i).getY();
+            int x = near.get(i).getCenterX();
+            int y = near.get(i).getCenterY();
             crystals.add(new ResourceObject(x, y, true, world));
         }
     }
@@ -262,8 +262,8 @@ public class PlanetGameScreen extends GameScreen {
             boolean shouldRemove = false;
 
             for (PhysicsObject object2 : wrecks) {
-                if (Math.abs(object1.getX() - object2.getX()) <= BLOCK_SIZE &&
-                        Math.abs(object1.getY() - object2.getY()) <= BLOCK_SIZE) {
+                if (Math.abs(object1.getCenterX() - object2.getCenterX()) <= BLOCK_SIZE &&
+                        Math.abs(object1.getCenterY() - object2.getCenterY()) <= BLOCK_SIZE) {
                     shouldRemove = true;
                     break;
                 }
@@ -271,8 +271,8 @@ public class PlanetGameScreen extends GameScreen {
 
             if (!shouldRemove) {
                 for (PhysicsObject object2 : aliens) {
-                    if (Math.abs(object1.getX() - object2.getX()) <= BLOCK_SIZE &&
-                            Math.abs(object1.getY() - object2.getY()) <= BLOCK_SIZE) {
+                    if (Math.abs(object1.getCenterX() - object2.getCenterX()) <= BLOCK_SIZE &&
+                            Math.abs(object1.getCenterY() - object2.getCenterY()) <= BLOCK_SIZE) {
                         shouldRemove = true;
                         break;
                     }
@@ -281,8 +281,8 @@ public class PlanetGameScreen extends GameScreen {
 
             if (!shouldRemove) {
                 for (PhysicsObject object2 : crystals) {
-                    if (Math.abs(object1.getX() - object2.getX()) <= BLOCK_SIZE &&
-                            Math.abs(object1.getY() - object2.getY()) <= BLOCK_SIZE) {
+                    if (Math.abs(object1.getCenterX() - object2.getCenterX()) <= BLOCK_SIZE &&
+                            Math.abs(object1.getCenterY() - object2.getCenterY()) <= BLOCK_SIZE) {
                         shouldRemove = true;
                         break;
                     }
@@ -334,6 +334,7 @@ public class PlanetGameScreen extends GameScreen {
                 alien.dispose();
             }
         }
+        /*
         if (wrecks != null) {
             for (ResourceObject wreck : wrecks) {
                 wreck.dispose();
@@ -344,13 +345,14 @@ public class PlanetGameScreen extends GameScreen {
                 crystal.dispose();
             }
         }
+         */
         if (capsule != null) capsule.dispose();
         if (lives != null) lives.dispose();
         if (jumpButton != null) jumpButton.dispose();
         if (strip != null) strip.dispose();
         if (purpose != null) purpose.dispose();
         if (fireButton != null) fireButton.dispose();
-        if (lightning != null) lightning.dispose();
+        //if (lightning != null) lightning.dispose();
     }
 
 
@@ -455,10 +457,10 @@ public class PlanetGameScreen extends GameScreen {
             AlienObject alien = iterator.next();
             if (!alien.isAlive()) {
                 if (rd.nextInt(100) < CHANCE_CRYSTAL_DROP) {
-                    ResourceObject crystal = new ResourceObject((int) alien.getX(), (int) alien.getY(), true, world);
+                    ResourceObject crystal = new ResourceObject((int) alien.getCenterX(), (int) alien.getCenterY(), true, world);
                     crystals.add(crystal);
                 } else if (rd.nextInt(100) < CHANCE_WRECK_DROP) {
-                    ResourceObject wreck = new ResourceObject((int) alien.getX(), (int) alien.getY(), false, world);
+                    ResourceObject wreck = new ResourceObject((int) alien.getCenterX(), (int) alien.getCenterY(), false, world);
                     wrecks.add(wreck);
                 }
                 world.destroyBody(alien.body);

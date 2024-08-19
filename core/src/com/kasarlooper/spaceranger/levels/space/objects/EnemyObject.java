@@ -15,6 +15,7 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -32,7 +33,6 @@ public class EnemyObject extends PhysicsObject {
     private final WorldWrap world;
     public Body body;
 
-    public int x, y;
     private long lastShootTime;
     private float aim;
     private boolean hasAim;
@@ -42,15 +42,13 @@ public class EnemyObject extends PhysicsObject {
     public boolean wasHit;
 
     public EnemyObject(int x, int y, WorldWrap world) {
-        super(ENEMY_SHIP_IMG_PATH, x, y, ENEMY_WIDTH, ENEMY_HEIGHT);
+        super(x, y, ENEMY_WIDTH, ENEMY_HEIGHT);
         body = createBody(x, y, world);
         this.world = world;
-        this.x = x;
-        this.y = y;
         rd = new Random();
         wasHit = false;
-        sprite = new Sprite(texture);
-        sprite.setBounds(x, y, width, height);
+        sprite = new Sprite(new Texture(ENEMY_SHIP_IMG_PATH));
+        sprite.setBounds(cornerX, cornerY, width, height);
         sprite.setOrigin(width / 2f, height / 2f);
         hasAim = false;
     }
@@ -63,7 +61,6 @@ public class EnemyObject extends PhysicsObject {
                 .createBody(world, this);
     }
 
-    @Override
     public void draw(SpriteBatch batch) {
         sprite.draw(batch);
     }
@@ -79,8 +76,8 @@ public class EnemyObject extends PhysicsObject {
         final int padding = 50;
         if (TimeUtils.millis() - lastShootTime > GameSettings.ENEMY_SHOOT_COOL_DOWN) {
             lastShootTime = TimeUtils.millis();
-            return new BulletObject((int) (getX() + cos(toRadians(getRotation())) * (getRadius() / 2 + BULLET_HEIGHT + padding)),
-                    (int) (getY() + sin(toRadians(getRotation())) * (getRadius() / 2 + BULLET_HEIGHT + padding)),
+            return new BulletObject((int) (getCenterX() + cos(toRadians(getRotation())) * (getRadius() / 2 + BULLET_HEIGHT + padding)),
+                    (int) (getCenterY() + sin(toRadians(getRotation())) * (getRadius() / 2 + BULLET_HEIGHT + padding)),
                     world, getRotation(), true);
         }
         return null;
@@ -102,7 +99,7 @@ public class EnemyObject extends PhysicsObject {
             sprite.setRotation(sprite.getRotation() + ENEMY_USUAL_ROTATION_SPEED);
             hasAim = false;
         }
-        sprite.setBounds(getX() - width / 2f, getY() - height / 2f, width, height);
+        sprite.setBounds(cornerX, cornerY, width, height);
         int dx = (int) (cos(toRadians(getRotation() % 360)) * SPEED_ENEMY);
         int dy = (int) (sin(toRadians(getRotation() % 360)) * SPEED_ENEMY);
         body.setLinearVelocity(dx, dy);
@@ -111,7 +108,7 @@ public class EnemyObject extends PhysicsObject {
     }
 
     private float getAngleOfPlayer(float playerX, float playerY) {
-        double[] A = {playerX - getX(), playerY - getY()};
+        double[] A = {playerX - getCenterX(), playerY - getCenterY()};
         double[] B = {cos(toRadians(getRotation())), sin(toRadians(getRotation()))};
         double dotProduct = A[0] * B[0] + A[1] * B[1];
         double crossProduct = A[0] * B[1] - A[1] * B[0];
@@ -120,8 +117,8 @@ public class EnemyObject extends PhysicsObject {
     }
 
     private float getPlayerDistance(float playerX, float playerY) {
-        float dx = playerX - getX();
-        float dy = playerY - getY();
+        float dx = playerX - getCenterX();
+        float dy = playerY - getCenterY();
         return (float) Math.sqrt(dx * dx + dy * dy);
     }
 

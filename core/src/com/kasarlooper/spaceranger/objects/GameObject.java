@@ -3,32 +3,32 @@ package com.kasarlooper.spaceranger.objects;
 import com.kasarlooper.spaceranger.MyGdxGame;
 
 public class GameObject {
-    protected int x;
-    protected int y;
+    protected int cornerX;
+    protected int cornerY;
     public float width;
     public float height;
 
     public GameObject(int x, int y, float width, float height) {
-        this.x = x;
-        this.y = y;
+        this.cornerX = x;
+        this.cornerY = y;
         this.width = width;
         this.height = height;
     }
 
-    public int getX() {
-        return x;
+    public int getCenterX() {
+        return cornerX + (int) (width / 2f);
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public int getCenterY() {
+        return cornerY + (int) (height / 2f);
     }
 
-    public int getY() {
-        return y;
+    public void setCornerX(int x) {
+        this.cornerX = x;
     }
 
-    public void setY(int y) {
-        this.y = y;
+    public void setCornerY(int y) {
+        this.cornerY = y;
     }
 
     public GameObject(int x, int y) {
@@ -46,8 +46,8 @@ public class GameObject {
     @Override
     public String toString() {
         return "GameObject{" +
-                "x=" + x +
-                ", y=" + y +
+                "x=" + cornerX +
+                ", y=" + cornerY +
                 '}';
     }
 }

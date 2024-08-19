@@ -15,11 +15,11 @@ public class CapsuleObject extends GameObject {
     }
 
     public boolean isCollision(int x, int y) {
-        return x >= this.x && x <= this.x + width && y <= this.y && y >= this.y - height;
+        return x >= this.cornerX && x <= this.cornerX + width && y <= this.cornerY && y >= this.cornerY - height;
     }
 
     public void draw(SpriteBatch batch) {
-        batch.draw(texture, x, y - height, width, height);
+        batch.draw(texture, cornerX, cornerY - height, width, height);
     }
 
     public void dispose() {

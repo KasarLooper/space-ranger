@@ -94,12 +94,12 @@ public class LevelMapManager {
     }
 
     public ArrayList<GameObject> getMobSpawns() {
-        Collections.sort(mobSpawns, (o1, o2) -> Integer.compare(o1.getX(), o2.getX()));
+        Collections.sort(mobSpawns, (o1, o2) -> Integer.compare(o1.getCenterX(), o2.getCenterX()));
         return mobSpawns;
     }
 
     public ArrayList<GameObject> getResSpawns() {
-        Collections.sort(resSpawns, (o1, o2) -> Integer.compare(o1.getX(), o2.getX()));
+        Collections.sort(resSpawns, (o1, o2) -> Integer.compare(o1.getCenterX(), o2.getCenterX()));
         return resSpawns;
     }
 
