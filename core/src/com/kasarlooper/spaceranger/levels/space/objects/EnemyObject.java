@@ -22,14 +22,14 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
-import com.kasarlooper.spaceranger.objects.PhysicsObject;
-import com.kasarlooper.spaceranger.objects.Type;
-import com.kasarlooper.spaceranger.physics.BodyBuilder;
-import com.kasarlooper.spaceranger.physics.WorldWrap;
+import com.kasarlooper.spaceranger.levels.GameObject;
+import com.kasarlooper.spaceranger.levels.Type;
+import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 
 import java.util.Random;
 
-public class EnemyObject extends PhysicsObject {
+public class EnemyObject extends GameObject {
     private final WorldWrap world;
     public Body body;
 
@@ -53,7 +53,6 @@ public class EnemyObject extends PhysicsObject {
         hasAim = false;
     }
 
-    @Override
     protected Body createBody(float x, float y, WorldWrap world) {
         return BodyBuilder.init()
                 .cords(x, y)
@@ -76,8 +75,8 @@ public class EnemyObject extends PhysicsObject {
         final int padding = 50;
         if (TimeUtils.millis() - lastShootTime > GameSettings.ENEMY_SHOOT_COOL_DOWN) {
             lastShootTime = TimeUtils.millis();
-            return new BulletObject((int) (getCenterX() + cos(toRadians(getRotation())) * (getRadius() / 2 + BULLET_HEIGHT + padding)),
-                    (int) (getCenterY() + sin(toRadians(getRotation())) * (getRadius() / 2 + BULLET_HEIGHT + padding)),
+            return new BulletObject((int) (getCenterX() + cos(toRadians(getRotation())) * (ENEMY_WIDTH / 4 + BULLET_HEIGHT + padding)),
+                    (int) (getCenterY() + sin(toRadians(getRotation())) * (ENEMY_HEIGHT / 4 + BULLET_HEIGHT + padding)),
                     world, getRotation(), true);
         }
         return null;

@@ -7,11 +7,12 @@ import static com.kasarlooper.spaceranger.GameSettings.BLOCK_SIZE;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.kasarlooper.spaceranger.objects.Type;
-import com.kasarlooper.spaceranger.physics.BodyBuilder;
-import com.kasarlooper.spaceranger.physics.WorldWrap;
+import com.kasarlooper.spaceranger.levels.GameObject;
+import com.kasarlooper.spaceranger.levels.Type;
+import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 
-public class PhysicsBlock extends Block {
+public class PhysicsBlock extends GameObject {
     public Body body;
     public Texture texture;
     WorldWrap world;

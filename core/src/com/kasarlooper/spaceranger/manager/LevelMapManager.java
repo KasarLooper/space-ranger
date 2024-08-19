@@ -9,9 +9,9 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 import com.kasarlooper.spaceranger.GameResources;
+import com.kasarlooper.spaceranger.levels.GameObject;
+import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 import com.kasarlooper.spaceranger.levels.planet.objects.PhysicsBlock;
-import com.kasarlooper.spaceranger.objects.GameObject;
-import com.kasarlooper.spaceranger.physics.WorldWrap;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -18,13 +18,13 @@ import com.kasarlooper.spaceranger.BlockMap;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
+import com.kasarlooper.spaceranger.levels.GameObject;
+import com.kasarlooper.spaceranger.levels.Type;
+import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 import com.kasarlooper.spaceranger.manager.AudioManager;
-import com.kasarlooper.spaceranger.objects.PhysicsObject;
-import com.kasarlooper.spaceranger.objects.Type;
-import com.kasarlooper.spaceranger.physics.BodyBuilder;
-import com.kasarlooper.spaceranger.physics.WorldWrap;
 
-public class SpacemanObject extends PhysicsObject {
+public class SpacemanObject extends GameObject {
     public Body body;
 
     private BlockMap blockMap;
@@ -82,7 +82,6 @@ public class SpacemanObject extends PhysicsObject {
         damageTime = 0;
     }
 
-    @Override
     protected Body createBody(float x, float y, WorldWrap world) {
         return BodyBuilder.init()
                 .cords(x, y)

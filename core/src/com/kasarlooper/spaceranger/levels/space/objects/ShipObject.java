@@ -18,12 +18,12 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
-import com.kasarlooper.spaceranger.objects.PhysicsObject;
-import com.kasarlooper.spaceranger.objects.Type;
-import com.kasarlooper.spaceranger.physics.BodyBuilder;
-import com.kasarlooper.spaceranger.physics.WorldWrap;
+import com.kasarlooper.spaceranger.levels.GameObject;
+import com.kasarlooper.spaceranger.levels.Type;
+import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 
-public class ShipObject extends PhysicsObject {
+public class ShipObject extends GameObject {
     public Body body;
 
     public int livesLeft;
@@ -47,7 +47,6 @@ public class ShipObject extends PhysicsObject {
         shot_cool_down = GameSettings.SHOOTING_COOL_DOWN;
     }
 
-    @Override
     protected Body createBody(float x, float y, WorldWrap world) {
         return BodyBuilder.init()
                 .cords(x, y)

@@ -1,4 +1,4 @@
-package com.kasarlooper.spaceranger.physics;
+package com.kasarlooper.spaceranger.levels.physics;
 
 import static com.kasarlooper.spaceranger.GameSettings.EARTH_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.GROUND_HEIGHT;
@@ -13,7 +13,7 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
-import com.kasarlooper.spaceranger.objects.GameObject;
+import com.kasarlooper.spaceranger.levels.GameObject;
 
 public class BodyBuilder {
     public interface ShapeBuilder {

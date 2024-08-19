@@ -12,9 +12,9 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.BlockMap;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
+import com.kasarlooper.spaceranger.levels.Type;
+import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 import com.kasarlooper.spaceranger.manager.AudioManager;
-import com.kasarlooper.spaceranger.objects.Type;
-import com.kasarlooper.spaceranger.physics.WorldWrap;
 
 import java.util.ArrayList;
 

@@ -17,12 +17,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.kasarlooper.spaceranger.MyGdxGame;
-import com.kasarlooper.spaceranger.objects.PhysicsObject;
-import com.kasarlooper.spaceranger.objects.Type;
-import com.kasarlooper.spaceranger.physics.BodyBuilder;
-import com.kasarlooper.spaceranger.physics.WorldWrap;
+import com.kasarlooper.spaceranger.levels.GameObject;
+import com.kasarlooper.spaceranger.levels.Type;
+import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 
-public class BulletObject extends PhysicsObject {
+public class BulletObject extends GameObject {
     public Body body;
 
     private Type type;
@@ -43,7 +43,6 @@ public class BulletObject extends PhysicsObject {
         else type = Type.Bullet;
     }
 
-    @Override
     protected Body createBody(float x, float y, WorldWrap world) {
         return BodyBuilder.init()
                 .cords(x, y)

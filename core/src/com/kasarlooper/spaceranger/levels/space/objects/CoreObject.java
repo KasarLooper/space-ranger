@@ -8,12 +8,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.kasarlooper.spaceranger.MyGdxGame;
-import com.kasarlooper.spaceranger.objects.PhysicsObject;
-import com.kasarlooper.spaceranger.objects.Type;
-import com.kasarlooper.spaceranger.physics.BodyBuilder;
-import com.kasarlooper.spaceranger.physics.WorldWrap;
+import com.kasarlooper.spaceranger.levels.GameObject;
+import com.kasarlooper.spaceranger.levels.Type;
+import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 
-public class CoreObject extends PhysicsObject {
+public class CoreObject extends GameObject {
     public Body body;
 
     public boolean wasHit;
@@ -27,7 +27,6 @@ public class CoreObject extends PhysicsObject {
         wasHit = false;
     }
 
-    @Override
     protected Body createBody(float x, float y, WorldWrap world) {
         return BodyBuilder.init()
                 .cords(x, y)

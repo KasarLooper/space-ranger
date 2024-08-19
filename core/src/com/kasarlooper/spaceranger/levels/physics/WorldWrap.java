@@ -1,4 +1,4 @@
-package com.kasarlooper.spaceranger.physics;
+package com.kasarlooper.spaceranger.levels.physics;
 
 import static com.kasarlooper.spaceranger.GameSettings.POSITION_ITERATIONS;
 import static com.kasarlooper.spaceranger.GameSettings.SCALE;
@@ -12,8 +12,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.MyGdxGame;
+import com.kasarlooper.spaceranger.levels.GameObject;
 import com.kasarlooper.spaceranger.manager.ContactManager;
-import com.kasarlooper.spaceranger.objects.GameObject;
 
 import java.util.HashSet;
 import java.util.Set;

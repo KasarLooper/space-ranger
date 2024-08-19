@@ -28,6 +28,8 @@ import com.kasarlooper.spaceranger.components.LiveView;
 import com.kasarlooper.spaceranger.components.MovingBackgroundLeftRightView;
 import com.kasarlooper.spaceranger.components.MovingBackgroundView;
 import com.kasarlooper.spaceranger.components.TextView;
+import com.kasarlooper.spaceranger.levels.GameObject;
+import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 import com.kasarlooper.spaceranger.levels.planet.objects.AlienObject;
 import com.kasarlooper.spaceranger.levels.planet.objects.CapsuleObject;
 import com.kasarlooper.spaceranger.levels.planet.objects.Earth;
@@ -37,9 +39,6 @@ import com.kasarlooper.spaceranger.levels.planet.objects.ResourceObject;
 import com.kasarlooper.spaceranger.levels.planet.objects.SpacemanObject;
 import com.kasarlooper.spaceranger.manager.AudioManager;
 import com.kasarlooper.spaceranger.manager.LevelMapManager;
-import com.kasarlooper.spaceranger.objects.GameObject;
-import com.kasarlooper.spaceranger.objects.PhysicsObject;
-import com.kasarlooper.spaceranger.physics.WorldWrap;
 import com.kasarlooper.spaceranger.screens.GameScreen;
 import com.kasarlooper.spaceranger.session.PlanetGameSession;
 
@@ -261,7 +260,7 @@ public class PlanetGameScreen extends GameScreen {
             GameObject object1 = iterator.next();
             boolean shouldRemove = false;
 
-            for (PhysicsObject object2 : wrecks) {
+            for (GameObject object2 : wrecks) {
                 if (Math.abs(object1.getCenterX() - object2.getCenterX()) <= BLOCK_SIZE &&
                         Math.abs(object1.getCenterY() - object2.getCenterY()) <= BLOCK_SIZE) {
                     shouldRemove = true;
@@ -270,7 +269,7 @@ public class PlanetGameScreen extends GameScreen {
             }
 
             if (!shouldRemove) {
-                for (PhysicsObject object2 : aliens) {
+                for (GameObject object2 : aliens) {
                     if (Math.abs(object1.getCenterX() - object2.getCenterX()) <= BLOCK_SIZE &&
                             Math.abs(object1.getCenterY() - object2.getCenterY()) <= BLOCK_SIZE) {
                         shouldRemove = true;
@@ -280,7 +279,7 @@ public class PlanetGameScreen extends GameScreen {
             }
 
             if (!shouldRemove) {
-                for (PhysicsObject object2 : crystals) {
+                for (GameObject object2 : crystals) {
                     if (Math.abs(object1.getCenterX() - object2.getCenterX()) <= BLOCK_SIZE &&
                             Math.abs(object1.getCenterY() - object2.getCenterY()) <= BLOCK_SIZE) {
                         shouldRemove = true;

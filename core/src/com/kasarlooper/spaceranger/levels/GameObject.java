@@ -1,4 +1,4 @@
-package com.kasarlooper.spaceranger.objects;
+package com.kasarlooper.spaceranger.levels;
 
 import com.kasarlooper.spaceranger.MyGdxGame;
 
@@ -36,7 +36,7 @@ public class GameObject {
     }
 
     public Type type() {
-        return  null;
+        return null;
     }
 
     public void hit(Type type, MyGdxGame myGdxGame) {

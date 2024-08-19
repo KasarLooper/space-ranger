@@ -4,7 +4,7 @@ import static com.kasarlooper.spaceranger.GameResources.CAPSULE_IMG_PATH;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.kasarlooper.spaceranger.objects.GameObject;
+import com.kasarlooper.spaceranger.levels.GameObject;
 
 public class CapsuleObject extends GameObject {
     Texture texture;

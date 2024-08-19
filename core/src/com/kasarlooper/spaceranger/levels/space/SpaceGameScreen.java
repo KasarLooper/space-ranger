@@ -11,6 +11,8 @@ import static com.kasarlooper.spaceranger.GameSettings.ENEMY_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.ENEMY_WIDTH;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_WIDTH;
+import static com.kasarlooper.spaceranger.GameSettings.SHIP_HEIGHT;
+import static com.kasarlooper.spaceranger.GameSettings.SHIP_WIDTH;
 import static com.kasarlooper.spaceranger.State.ENDED;
 import static com.kasarlooper.spaceranger.State.PAUSED;
 import static com.kasarlooper.spaceranger.State.PLAYING;
@@ -31,6 +33,7 @@ import com.kasarlooper.spaceranger.components.JoystickView;
 import com.kasarlooper.spaceranger.components.LiveView;
 import com.kasarlooper.spaceranger.components.MovingBackgroundView;
 import com.kasarlooper.spaceranger.components.TextView;
+import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 import com.kasarlooper.spaceranger.levels.space.objects.AsteroidObject;
 import com.kasarlooper.spaceranger.levels.space.objects.BoomObject;
 import com.kasarlooper.spaceranger.levels.space.objects.BulletObject;
@@ -38,7 +41,6 @@ import com.kasarlooper.spaceranger.levels.space.objects.CoreObject;
 import com.kasarlooper.spaceranger.levels.space.objects.EnemyObject;
 import com.kasarlooper.spaceranger.levels.space.objects.ShipObject;
 import com.kasarlooper.spaceranger.manager.AudioManager;
-import com.kasarlooper.spaceranger.physics.WorldWrap;
 import com.kasarlooper.spaceranger.screens.GameScreen;
 import com.kasarlooper.spaceranger.session.SpaceGameSession;
 
@@ -125,8 +127,8 @@ public class SpaceGameScreen extends GameScreen {
                     final int padding = 30;
                     if (isTouchedShoot && shipObject.needToShoot()) {
                         BulletObject Bullet = new BulletObject(
-                                (int) (shipObject.getCenterX() + cos(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
-                                (int) (shipObject.getCenterY() + sin(toRadians(shipObject.getRotation())) * (shipObject.getRadius() / 2 + BULLET_HEIGHT + padding)),
+                                (int) (shipObject.getCenterX() + cos(toRadians(shipObject.getRotation())) * (SHIP_WIDTH / 4 + BULLET_HEIGHT + padding)),
+                                (int) (shipObject.getCenterY() + sin(toRadians(shipObject.getRotation())) * (SHIP_HEIGHT / 4 + BULLET_HEIGHT + padding)),
                                 world, shipObject.getRotation(), false);
                         bulletArray.add(Bullet);
                         AudioManager.soundBullet.play(0.2f);
@@ -309,6 +311,7 @@ public class SpaceGameScreen extends GameScreen {
 
     @Override
     public boolean keyDown(int keycode) {
+        super.keyDown(keycode);
         if (keycode == Input.Keys.W) {
             joystick.onTouch((int) joystick.getX(), (int) joystick.getY());
             joystick.onDrag((int) joystick.getX(), (int) joystick.getY() + 10);
