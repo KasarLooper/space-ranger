@@ -92,7 +92,7 @@ public class PlanetGameScreen extends GameScreen {
         aliens = new ArrayList<>();
         wrecks = new ArrayList<>();
         crystals = new ArrayList<>();
-        capsule = new CapsuleObject(loader.getCapsuleX(), loader.getCapsuleY(), loader.getCapsuleWidth(), loader.getCapsuleHeight());
+        capsule = new CapsuleObject(loader.getCapsuleX(), loader.getCapsuleY(), loader.getCapsuleWidth(), loader.getCapsuleHeight(), gRenderer);
         jumpButton = new ButtonView(1130, 10, 150, 150, GameResources.JUMP_BUTTON_IMG_PATH);
         lives = new LiveView(0, 675);
         purpose = new TextView(myGdxGame.averageWhiteFont, 300, 675,
@@ -147,7 +147,7 @@ public class PlanetGameScreen extends GameScreen {
                 lives.setLeftLives(spaceman.liveLeft);
                 if (lightning != null && lightning.destroyIfNeed()) lightning = null;
                 if (lightning == null && isLighting && LightningBulletObject.isShootTime()) {
-                    lightning = new LightningBulletObject(spaceman, world);
+                    lightning = new LightningBulletObject(spaceman, world, gRenderer);
                     AudioManager.soundShot.play(0.2f);
                 }
 
@@ -251,7 +251,7 @@ public class PlanetGameScreen extends GameScreen {
             int i = rd.nextInt(near.size());
             int x = near.get(i).getCenterX();
             int y = near.get(i).getCenterY();
-            crystals.add(new ResourceObject(x, y, true, world));
+            crystals.add(new ResourceObject(x, y, true, world, gRenderer));
         }
     }
 
@@ -324,35 +324,16 @@ public class PlanetGameScreen extends GameScreen {
         if (backgroundView != null) backgroundView.dispose();
         if (spaceman != null) spaceman.dispose();
         if (earth != null) earth.dispose();
-        if (physics != null) {
-            for (PhysicsBlock block : physics) {
-                block.dispose();
-            }
-        }
         if (aliens != null) {
             for (AlienObject alien : aliens) {
                 alien.dispose();
             }
         }
-        /*
-        if (wrecks != null) {
-            for (ResourceObject wreck : wrecks) {
-                wreck.dispose();
-            }
-        }
-        if (crystals != null) {
-            for (ResourceObject crystal : crystals) {
-                crystal.dispose();
-            }
-        }
-         */
-        if (capsule != null) capsule.dispose();
         if (lives != null) lives.dispose();
         if (jumpButton != null) jumpButton.dispose();
         if (strip != null) strip.dispose();
         if (purpose != null) purpose.dispose();
         if (fireButton != null) fireButton.dispose();
-        //if (lightning != null) lightning.dispose();
     }
 
 
@@ -457,10 +438,10 @@ public class PlanetGameScreen extends GameScreen {
             AlienObject alien = iterator.next();
             if (!alien.isAlive()) {
                 if (rd.nextInt(100) < CHANCE_CRYSTAL_DROP) {
-                    ResourceObject crystal = new ResourceObject((int) alien.getCenterX(), (int) alien.getCenterY(), true, world);
+                    ResourceObject crystal = new ResourceObject((int) alien.getCenterX(), (int) alien.getCenterY(), true, world, gRenderer);
                     crystals.add(crystal);
                 } else if (rd.nextInt(100) < CHANCE_WRECK_DROP) {
-                    ResourceObject wreck = new ResourceObject((int) alien.getCenterX(), (int) alien.getCenterY(), false, world);
+                    ResourceObject wreck = new ResourceObject((int) alien.getCenterX(), (int) alien.getCenterY(), false, world, gRenderer);
                     wrecks.add(wreck);
                 }
                 alien.body.destroy();

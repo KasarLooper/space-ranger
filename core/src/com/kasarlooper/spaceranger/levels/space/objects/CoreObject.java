@@ -4,26 +4,26 @@ import static com.kasarlooper.spaceranger.GameResources.CORE_IMG_PATH;
 import static com.kasarlooper.spaceranger.GameSettings.CORE_HEIGHT;
 import static com.kasarlooper.spaceranger.GameSettings.CORE_WIDTH;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.kasarlooper.spaceranger.MyGdxGame;
 import com.kasarlooper.spaceranger.levels.gobjects.GObjectType;
 import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
 import com.kasarlooper.spaceranger.levels.physics.BodyWrap;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
+import com.kasarlooper.spaceranger.levels.rendering.GraphicsRenderer;
 
 public class CoreObject extends GameObject {
     public BodyWrap body;
-
     public boolean wasHit;
     public boolean wasCollected;
-    private Texture texture;
 
-    public CoreObject(int x, int y, WorldWrap world) {
+    public CoreObject(int x, int y, WorldWrap world, GraphicsRenderer gRenderer) {
         super(x, y, CORE_WIDTH, CORE_HEIGHT);
         body = createBody(x, y, world);
-        texture = new Texture(CORE_IMG_PATH);
+        gRenderer.addSprite(this)
+                .texture(CORE_IMG_PATH)
+                .destroy(body::isDestroyed)
+                .create();
         wasHit = false;
     }
 
@@ -32,10 +32,6 @@ public class CoreObject extends GameObject {
                 .cords(x, y)
                 .size(width, height)
                 .createBody(world, this);
-    }
-
-    public void draw(SpriteBatch batch) {
-        batch.draw(texture, cornerX, cornerY, width, height);
     }
 
     @Override

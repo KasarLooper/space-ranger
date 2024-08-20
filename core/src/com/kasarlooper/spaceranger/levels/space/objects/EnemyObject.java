@@ -35,6 +35,7 @@ public class EnemyObject extends GameObject {
     private float aim;
     private boolean hasAim;
     private float rotation;
+    private GraphicsRenderer gRenderer;
 
     Random rd;
     public boolean wasHit;
@@ -47,6 +48,7 @@ public class EnemyObject extends GameObject {
         wasHit = false;
         rotation = 0;
         hasAim = false;
+        this.gRenderer = gRenderer;
         gRenderer.addSprite(this)
                 .texture(ENEMY_SHIP_IMG_PATH)
                 .rotatable(() -> rotation)
@@ -74,7 +76,7 @@ public class EnemyObject extends GameObject {
             lastShootTime = TimeUtils.millis();
             return new BulletObject((int) (getCenterX() + cos(toRadians(getRotation())) * (ENEMY_WIDTH / 4 + BULLET_HEIGHT + padding)),
                     (int) (getCenterY() + sin(toRadians(getRotation())) * (ENEMY_HEIGHT / 4 + BULLET_HEIGHT + padding)),
-                    world, getRotation(), true);
+                    world, getRotation(), true, gRenderer);
         }
         return null;
     }

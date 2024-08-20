@@ -131,7 +131,7 @@ public class SpaceGameScreen extends GameScreen {
                         BulletObject Bullet = new BulletObject(
                                 (int) (shipObject.getCenterX() + cos(toRadians(shipObject.getRotation())) * (SHIP_WIDTH / 4 + BULLET_HEIGHT + padding)),
                                 (int) (shipObject.getCenterY() + sin(toRadians(shipObject.getRotation())) * (SHIP_HEIGHT / 4 + BULLET_HEIGHT + padding)),
-                                world, shipObject.getRotation(), false);
+                                world, shipObject.getRotation(), false, gRenderer);
                         bulletArray.add(Bullet);
                         AudioManager.soundBullet.play(0.2f);
                     }
@@ -293,7 +293,7 @@ public class SpaceGameScreen extends GameScreen {
     // Генераторы
     private void generateCore() {
         EntitySpawner.Pair pair = spawner.newPair(shipObject.getCenterX(), shipObject.getCenterY(), CORE_WIDTH / 2, CORE_HEIGHT / 2, shipObject.getRotation());
-        CoreObject coreObject = new CoreObject((int) pair.x, (int) pair.y, world);
+        CoreObject coreObject = new CoreObject((int) pair.x, (int) pair.y, world, gRenderer);
         coreArray.add(coreObject);
     }
 
@@ -306,7 +306,7 @@ public class SpaceGameScreen extends GameScreen {
     private void generateAsteroid() {
         int size = ASTEROID_WIDTH_MIN + rd.nextInt(ASTEROID_WIDTH_MAX - ASTEROID_WIDTH_MIN);
         EntitySpawner.Pair pair = spawner.newPair(shipObject.getCenterX(), shipObject.getCenterY(), size / 2, size / 2, shipObject.getRotation());
-        AsteroidObject asteroid = new AsteroidObject((int) pair.x, (int) pair.y, world, (int) shipObject.getCenterX(), (int) shipObject.getCenterY());
+        AsteroidObject asteroid = new AsteroidObject((int) pair.x, (int) pair.y, world, (int) shipObject.getCenterX(), (int) shipObject.getCenterY(), gRenderer);
         asteroidArray.add(asteroid);
     }
 

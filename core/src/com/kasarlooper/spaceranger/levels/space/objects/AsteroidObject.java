@@ -5,38 +5,35 @@ import static com.kasarlooper.spaceranger.GameSettings.ASTEROID_SPEED;
 import static com.kasarlooper.spaceranger.GameSettings.ASTEROID_WIDTH_MAX;
 import static com.kasarlooper.spaceranger.GameSettings.ASTEROID_WIDTH_MIN;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.kasarlooper.spaceranger.MyGdxGame;
 import com.kasarlooper.spaceranger.levels.gobjects.GObjectType;
 import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
 import com.kasarlooper.spaceranger.levels.physics.BodyWrap;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
+import com.kasarlooper.spaceranger.levels.rendering.GraphicsRenderer;
 
 import java.util.Random;
 
 public class AsteroidObject extends GameObject {
     public BodyWrap body;
-
     private static final Random rd = new Random();
-    private Texture texture;
 
-    public AsteroidObject(int x, int y, WorldWrap world, int playerX, int playerY) {
+    public AsteroidObject(int x, int y, WorldWrap world, int playerX, int playerY, GraphicsRenderer gRenderer) {
         super(x, y, ASTEROID_WIDTH_MIN + rd.nextInt(ASTEROID_WIDTH_MAX - ASTEROID_WIDTH_MIN),
                 ASTEROID_WIDTH_MIN + rd.nextInt(ASTEROID_WIDTH_MAX - ASTEROID_WIDTH_MIN));
         body = createBody(x, y, world);
-        texture = new Texture(ASTEROID_IMG_PATH);
+        gRenderer.addSprite(this)
+                .texture(ASTEROID_IMG_PATH)
+                .destroy(body::isDestroyed)
+                .create();
+
         float dx = playerX - x;
         float dy = playerY - y;
         float ratio = (float) Math.sqrt(dx * dx + dy * dy);
         float speedX = (float) ASTEROID_SPEED * dx / ratio;
         float speedY = (float) ASTEROID_SPEED * dy / ratio;
         body.setLinearVelocity(speedX, speedY);
-    }
-
-    public void draw(SpriteBatch batch) {
-        batch.draw(texture, cornerX, cornerY, width, height);
     }
 
     protected BodyWrap createBody(float x, float y, WorldWrap world) {

@@ -11,9 +11,6 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.kasarlooper.spaceranger.MyGdxGame;
 import com.kasarlooper.spaceranger.levels.gobjects.GObjectType;
@@ -21,23 +18,24 @@ import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
 import com.kasarlooper.spaceranger.levels.physics.BodyWrap;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
+import com.kasarlooper.spaceranger.levels.rendering.GraphicsRenderer;
 
 public class BulletObject extends GameObject {
     public BodyWrap body;
-
     private GObjectType type;
     public boolean wasHit;
 
-    Sprite sprite;
-
-    public BulletObject(int x, int y, WorldWrap world, float degrees, boolean isEnemy) {
+    public BulletObject(int x, int y, WorldWrap world, float degrees, boolean isEnemy, GraphicsRenderer gRenderer) {
         super(x, y, BULLET_WIDTH, BULLET_HEIGHT);
         body = createBody(x, y, world);
         body.setLinearVelocity(new Vector2((float) (cos(toRadians(degrees)) * BULLET_SPEED),
                 (float) (sin(toRadians(degrees)) * BULLET_SPEED)));
+        gRenderer.addSprite(this)
+                .texture(isEnemy ? ENEMY_BULLET_IMG_PATH : BULLET_IMG_PATH)
+                .destroy(body::isDestroyed)
+                .rotatable(() -> degrees - 90)
+                .create();
         body.setBullet(true);
-        sprite = new Sprite(new Texture(isEnemy ? ENEMY_BULLET_IMG_PATH : BULLET_IMG_PATH));
-        sprite.setRotation(degrees + 270);
         wasHit = false;
         if (isEnemy) type = GObjectType.EnemyBullet;
         else type = GObjectType.Bullet;
@@ -49,12 +47,6 @@ public class BulletObject extends GameObject {
                 .size(width, height)
                 .createBody(world, this);
     }
-
-    public void draw(SpriteBatch batch) {
-        sprite.setBounds(cornerX, cornerY, width, height);
-        sprite.draw(batch);
-    }
-
 
     @Override
     public void hit(GObjectType type, MyGdxGame myGdxGame) {

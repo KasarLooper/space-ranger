@@ -4,32 +4,28 @@ import static com.kasarlooper.spaceranger.GameResources.CRYSTAL_IMG_PATH;
 import static com.kasarlooper.spaceranger.GameResources.WRECKAGE_IMG_PATH;
 import static com.kasarlooper.spaceranger.GameSettings.BLOCK_SIZE;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.kasarlooper.spaceranger.MyGdxGame;
 import com.kasarlooper.spaceranger.levels.gobjects.GObjectType;
 import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
 import com.kasarlooper.spaceranger.levels.physics.BodyWrap;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
+import com.kasarlooper.spaceranger.levels.rendering.GraphicsRenderer;
 
 public class ResourceObject extends GameObject {
     public BodyWrap body;
-
     GObjectType type;
     boolean wasHit;
-    private Texture texture;
 
-    public ResourceObject(int x, int y, boolean isCrystal, WorldWrap world) {
+    public ResourceObject(int x, int y, boolean isCrystal, WorldWrap world, GraphicsRenderer gRenderer) {
         super(x, y, BLOCK_SIZE, BLOCK_SIZE);
-        texture = new Texture(isCrystal ? CRYSTAL_IMG_PATH : WRECKAGE_IMG_PATH);
         body = createBody(x, y, world);
+        gRenderer.addSprite(this)
+                .texture(isCrystal ? CRYSTAL_IMG_PATH : WRECKAGE_IMG_PATH)
+                .destroy(body::isDestroyed)
+                .create();
         type = GObjectType.Resource;
         wasHit = false;
-    }
-
-    public void draw(SpriteBatch batch) {
-        batch.draw(texture, cornerX, cornerY, width, height);
     }
 
     protected BodyWrap createBody(float x, float y, WorldWrap world) {
