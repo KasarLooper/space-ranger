@@ -13,7 +13,6 @@ import static java.lang.Math.toRadians;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
@@ -21,10 +20,11 @@ import com.kasarlooper.spaceranger.MyGdxGame;
 import com.kasarlooper.spaceranger.levels.gobjects.GObjectType;
 import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.levels.physics.BodyWrap;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 
 public class ShipObject extends GameObject {
-    public Body body;
+    public BodyWrap body;
 
     public int livesLeft;
     Sprite sprite;
@@ -47,7 +47,7 @@ public class ShipObject extends GameObject {
         shot_cool_down = GameSettings.SHOOTING_COOL_DOWN;
     }
 
-    protected Body createBody(float x, float y, WorldWrap world) {
+    protected BodyWrap createBody(float x, float y, WorldWrap world) {
         return BodyBuilder.init()
                 .cords(x, y)
                 .size(width, height)

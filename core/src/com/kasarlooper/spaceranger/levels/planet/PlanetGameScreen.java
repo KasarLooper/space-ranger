@@ -299,13 +299,13 @@ public class PlanetGameScreen extends GameScreen {
     @Override
     public void restartGame() {
         super.restartGame();
-        world.destroyBody(spaceman.body);
+        spaceman.body.destroy();
         for (AlienObject alien : aliens)
-            world.destroyBody(alien.body);
+            alien.body.destroy();
         for (ResourceObject res : wrecks)
-            world.destroyBody(res.body);
+            res.body.destroy();
         for (ResourceObject res : crystals)
-            world.destroyBody(res.body);
+            res.body.destroy();
         spaceman = new SpacemanObject(loader.getPlayerX(), loader.getPlayerY(), world, blockMap);
         aliens = new ArrayList<>();
         wrecks = new ArrayList<>();
@@ -463,7 +463,7 @@ public class PlanetGameScreen extends GameScreen {
                     ResourceObject wreck = new ResourceObject((int) alien.getCenterX(), (int) alien.getCenterY(), false, world);
                     wrecks.add(wreck);
                 }
-                world.destroyBody(alien.body);
+                alien.body.destroy();
                 iterator.remove();
             }
         }
@@ -476,7 +476,7 @@ public class PlanetGameScreen extends GameScreen {
             if (wreck.destroy()) {
                 spaceman.wreckCount += 1;
                 purpose.setText(String.format(GraphicsSettings.PLANET_AIM1_PATTERN, spaceman.wreckCount, spaceman.cristalCount));
-                world.destroyBody(wreck.body);
+                wreck.body.destroy();
                 iterator1.remove();
             }
         }
@@ -487,7 +487,7 @@ public class PlanetGameScreen extends GameScreen {
             if (crystal.destroy()) {
                 spaceman.cristalCount += 1;
                 purpose.setText(String.format(GraphicsSettings.PLANET_AIM1_PATTERN, spaceman.wreckCount, spaceman.cristalCount));
-                world.destroyBody(crystal.body);
+                crystal.body.destroy();
                 iterator2.remove();
             }
         }

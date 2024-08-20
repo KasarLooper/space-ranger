@@ -6,15 +6,15 @@ import static com.kasarlooper.spaceranger.GameSettings.BLOCK_SIZE;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.kasarlooper.spaceranger.MyGdxGame;
 import com.kasarlooper.spaceranger.levels.gobjects.GObjectType;
 import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.levels.physics.BodyWrap;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 
 public class ResourceObject extends GameObject {
-    public Body body;
+    public BodyWrap body;
 
     GObjectType type;
     boolean wasHit;
@@ -32,7 +32,7 @@ public class ResourceObject extends GameObject {
         batch.draw(texture, cornerX, cornerY, width, height);
     }
 
-    protected Body createBody(float x, float y, WorldWrap world) {
+    protected BodyWrap createBody(float x, float y, WorldWrap world) {
         return BodyBuilder.init()
                 .cords(x, y)
                 .size(width, height)

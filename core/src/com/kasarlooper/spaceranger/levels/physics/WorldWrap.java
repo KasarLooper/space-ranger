@@ -20,8 +20,8 @@ import java.util.Set;
 
 public class WorldWrap {
     final World world;
-    private final Set<Body> bodies;
-    private final Set<Body> noGravity;
+    private final Set<BodyWrap> bodies;
+    private final Set<BodyWrap> noGravity;
     private float accumulator;
     private Box2DDebugRenderer renderer;
 
@@ -38,11 +38,11 @@ public class WorldWrap {
         accumulator += Math.min(delta, 0.25f);
 
         if (accumulator >= STEP_TIME) {
-            for (Body body : noGravity)
-                body.applyForceToCenter(world.getGravity().scl(-body.getMass()), true);
+            for (BodyWrap wrap : noGravity)
+                wrap.body.applyForceToCenter(world.getGravity().scl(-wrap.body.getMass()), true);
 
-            for (Body body : bodies)
-                updateCords(body);
+            for (BodyWrap wrap : bodies)
+                updateCords(wrap.body);
 
             accumulator -= STEP_TIME;
             world.step(STEP_TIME, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
@@ -50,6 +50,7 @@ public class WorldWrap {
     }
 
     private void updateCords(Body body) {
+        if (body.getFixtureList().size == 0) return;
         GameObject object = (GameObject) body.getFixtureList().get(0).getUserData();
         object.setCornerX((int) (body.getPosition().x / SCALE - object.width / 2f));
         object.setCornerY((int) (body.getPosition().y / SCALE - object.height / 2f));
@@ -57,19 +58,20 @@ public class WorldWrap {
 
     public Body createBody(BodyDef def, boolean isNoGravity) {
         Body body = world.createBody(def);
-        bodies.add(body);
-        if (isNoGravity) noGravity.add(body);
+        bodies.add(new BodyWrap(body, this));
+        if (isNoGravity) noGravity.add(new BodyWrap(body, this));
         return body;
     }
 
-    public void destroyBody(Body body) {
-        world.destroyBody(body);
-        bodies.remove(body);
-        noGravity.remove(body);
+    void removeBody(BodyWrap wrap) {
+        noGravity.remove(wrap);
+        bodies.remove(wrap);
     }
 
+    @SuppressWarnings("NewApi")
     public void destroyAll() {
-        for (Body body : bodies) world.destroyBody(body);
+        for (Object bodyWrap : bodies.toArray())
+            ((BodyWrap) bodyWrap).destroy();
         bodies.clear();
         noGravity.clear();
     }
@@ -77,6 +79,4 @@ public class WorldWrap {
     public void render(Matrix4 matrix4) {
         renderer.render(world, matrix4);
     }
-
-
 }

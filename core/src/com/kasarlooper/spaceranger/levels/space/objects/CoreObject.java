@@ -6,15 +6,15 @@ import static com.kasarlooper.spaceranger.GameSettings.CORE_WIDTH;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.kasarlooper.spaceranger.MyGdxGame;
 import com.kasarlooper.spaceranger.levels.gobjects.GObjectType;
 import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.levels.physics.BodyWrap;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 
 public class CoreObject extends GameObject {
-    public Body body;
+    public BodyWrap body;
 
     public boolean wasHit;
     public boolean wasCollected;
@@ -27,7 +27,7 @@ public class CoreObject extends GameObject {
         wasHit = false;
     }
 
-    protected Body createBody(float x, float y, WorldWrap world) {
+    protected BodyWrap createBody(float x, float y, WorldWrap world) {
         return BodyBuilder.init()
                 .cords(x, y)
                 .size(width, height)

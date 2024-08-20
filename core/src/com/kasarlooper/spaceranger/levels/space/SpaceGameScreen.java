@@ -195,10 +195,10 @@ public class SpaceGameScreen extends GameScreen {
         // For Ship
         Iterator<BulletObject> iterator = bulletArray.iterator();
         while(iterator.hasNext()) {
-            BulletObject bulletObject_now = iterator.next();
-            if (bulletObject_now.destroy(shipObject.getCenterX(), shipObject.getCenterY())) {
-                System.out.println("bulletObject_now");
-                world.destroyBody(bulletObject_now.body);
+            BulletObject curBullet = iterator.next();
+            if (curBullet.destroy(shipObject.getCenterX(), shipObject.getCenterY())) {
+                System.out.println("curBullet");
+                curBullet.body.destroy();
                 iterator.remove();
             }
         }
@@ -220,7 +220,7 @@ public class SpaceGameScreen extends GameScreen {
                     }
                 }
                 System.out.println("core");
-                world.destroyBody(core.body);
+                core.body.destroy();
                 iterator.remove();
             }
         }
@@ -232,7 +232,7 @@ public class SpaceGameScreen extends GameScreen {
             EnemyObject enemy = iterator.next();
             if (enemy.destroy()) {
                 System.out.println("enemy");
-                world.destroyBody(enemy.body);
+                enemy.body.destroy();
                 BoomObject boom = new BoomObject(enemy.getCenterX(), enemy.getCenterY());
                 boomArray.add(boom);
                 if (myGdxGame.camera.frustum.sphereInFrustum(enemy.getCenterX(), enemy.getCenterY(), 0, Math.max(enemy.height, enemy.width))) {
@@ -261,26 +261,26 @@ public class SpaceGameScreen extends GameScreen {
         while (iterator_core.hasNext()) {
             CoreObject core = iterator_core.next();
             System.out.println("core");
-            world.destroyBody(core.body);
+            core.body.destroy();
             iterator_core.remove();
         }
         Iterator<EnemyObject> iterator_enemy = enemyArray.iterator();
         while (iterator_enemy.hasNext()) {
             EnemyObject enemy = iterator_enemy.next();
             System.out.println("enemy");
-            world.destroyBody(enemy.body);
+            enemy.body.destroy();
             iterator_enemy.remove();
         }
         Iterator<AsteroidObject> iteratorAsteroid = asteroidArray.iterator();
         while (iteratorAsteroid.hasNext()) {
             AsteroidObject asteroid = iteratorAsteroid.next();
             System.out.println("asteroid");
-            world.destroyBody(asteroid.body);
+            asteroid.body.destroy();
             iteratorAsteroid.remove();
         }
         if (shipObject != null) {
             System.out.println("shipObject");
-            world.destroyBody(shipObject.body);
+            shipObject.body.destroy();
         }
         shipObject = new ShipObject(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, world);
         purpose.setText("Цель - энергия: 0/3");

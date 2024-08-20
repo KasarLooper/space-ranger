@@ -97,7 +97,7 @@ public class BodyBuilder {
         return this;
     }
 
-    public Body createBody(WorldWrap world, GameObject object) {
+    public BodyWrap createBody(WorldWrap world, GameObject object) {
         if (cords == null) throw new RuntimeException("No cords specified");
         if (size == null) throw new RuntimeException("No size specified");
 
@@ -110,6 +110,6 @@ public class BodyBuilder {
 
         shape.dispose();
         if (!shapeBuilder.equals(GROUND)) body.setTransform(cords.x, cords.y, 0);
-        return body;
+        return new BodyWrap(body, world);
     }
 }

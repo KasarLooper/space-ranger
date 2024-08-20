@@ -7,14 +7,14 @@ import static com.kasarlooper.spaceranger.GameSettings.SCREEN_WIDTH;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.levels.physics.BodyWrap;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 
 public class Earth extends GameObject {
-    Body body;
+    BodyWrap body;
     Texture texture;
     float cameraX;
     float[] earthXs;

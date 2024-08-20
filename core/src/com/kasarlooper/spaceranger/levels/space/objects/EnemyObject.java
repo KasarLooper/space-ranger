@@ -15,7 +15,6 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
 
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
@@ -23,13 +22,14 @@ import com.kasarlooper.spaceranger.levels.drawing.GraphicsRenderer;
 import com.kasarlooper.spaceranger.levels.gobjects.GObjectType;
 import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.levels.physics.BodyWrap;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 
 import java.util.Random;
 
 public class EnemyObject extends GameObject {
     private final WorldWrap world;
-    public Body body;
+    public BodyWrap body;
 
     private long lastShootTime;
     private float aim;
@@ -54,7 +54,7 @@ public class EnemyObject extends GameObject {
                 .create();
     }
 
-    protected Body createBody(float x, float y, WorldWrap world) {
+    protected BodyWrap createBody(float x, float y, WorldWrap world) {
         return BodyBuilder.init()
                 .cords(x, y)
                 .size(width, height)

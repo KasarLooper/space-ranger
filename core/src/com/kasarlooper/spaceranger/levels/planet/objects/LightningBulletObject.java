@@ -6,8 +6,6 @@ import static com.kasarlooper.spaceranger.GameSettings.LIGHTING_WIDTH;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
@@ -15,10 +13,11 @@ import com.kasarlooper.spaceranger.MyGdxGame;
 import com.kasarlooper.spaceranger.levels.gobjects.GObjectType;
 import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
+import com.kasarlooper.spaceranger.levels.physics.BodyWrap;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 
 public class LightningBulletObject extends GameObject {
-    public Body body;
+    public BodyWrap body;
 
     private final GObjectType type;
     private boolean hasToBeDestroyed;
@@ -36,7 +35,6 @@ public class LightningBulletObject extends GameObject {
         sprite = new Sprite(new Texture(spaceman.isRightDirection ? GameResources.LIGHTNING_RIGHT_IMG_PATH : GameResources.LIGHTNING_LEFT_IMG_PATH));
         sprite.setBounds(cornerX - width / 2f, cornerY - height / 2f, width, height);
         type = GObjectType.Bullet;
-        body.setType(BodyDef.BodyType.DynamicBody);
         hasToBeDestroyed = false;
         lastShootTime = TimeUtils.millis();
     }
@@ -45,7 +43,7 @@ public class LightningBulletObject extends GameObject {
         return TimeUtils.millis() - lastShootTime > 1000;
     }
 
-    protected Body createBody(float x, float y, WorldWrap world) {
+    protected BodyWrap createBody(float x, float y, WorldWrap world) {
         return BodyBuilder.init()
                 .cords(x, y)
                 .size(width, height)
@@ -61,7 +59,7 @@ public class LightningBulletObject extends GameObject {
 
     public boolean destroyIfNeed() {
         if (hasToBeDestroyed || TimeUtils.millis() - lastShootTime > 1000) {
-            world.destroyBody(body);
+            body.destroy();
             return true;
         }
         return false;
