@@ -104,7 +104,7 @@ public class BodyBuilder {
         Shape shape = shapeBuilder.getShape(size.x, size.y);
         fixtureDef.shape = shape;
 
-        Body body = world.createBody(bodyDef, fixtureDef.isSensor);
+        Body body = world.createBody(bodyDef);
         Fixture fixture = body.createFixture(fixtureDef);
         fixture.setUserData(object);
 

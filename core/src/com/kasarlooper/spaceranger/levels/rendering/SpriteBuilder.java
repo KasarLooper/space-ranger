@@ -1,4 +1,4 @@
-package com.kasarlooper.spaceranger.levels.drawing;
+package com.kasarlooper.spaceranger.levels.rendering;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;

@@ -21,13 +21,11 @@ import java.util.Set;
 public class WorldWrap {
     final World world;
     private final Set<BodyWrap> bodies;
-    private final Set<BodyWrap> noGravity;
     private float accumulator;
     private Box2DDebugRenderer renderer;
 
     public WorldWrap(float gravity, MyGdxGame game) {
         world = new World(new Vector2(0, -gravity), true);
-        noGravity = new HashSet<>();
         bodies = new HashSet<>();
         accumulator = 0;
         renderer = new Box2DDebugRenderer(true, false, false, false, false, false);
@@ -38,9 +36,6 @@ public class WorldWrap {
         accumulator += Math.min(delta, 0.25f);
 
         if (accumulator >= STEP_TIME) {
-            for (BodyWrap wrap : noGravity)
-                wrap.body.applyForceToCenter(world.getGravity().scl(-wrap.body.getMass()), true);
-
             for (BodyWrap wrap : bodies)
                 updateCords(wrap.body);
 
@@ -56,15 +51,14 @@ public class WorldWrap {
         object.setCornerY((int) (body.getPosition().y / SCALE - object.height / 2f));
     }
 
-    public Body createBody(BodyDef def, boolean isNoGravity) {
+    public Body createBody(BodyDef def) {
         Body body = world.createBody(def);
-        bodies.add(new BodyWrap(body, this));
-        if (isNoGravity) noGravity.add(new BodyWrap(body, this));
+        BodyWrap bw = new BodyWrap(body, this);
+        bodies.add(bw);
         return body;
     }
 
     void removeBody(BodyWrap wrap) {
-        noGravity.remove(wrap);
         bodies.remove(wrap);
     }
 
@@ -73,7 +67,6 @@ public class WorldWrap {
         for (Object bodyWrap : bodies.toArray())
             ((BodyWrap) bodyWrap).destroy();
         bodies.clear();
-        noGravity.clear();
     }
 
     public void render(Matrix4 matrix4) {

@@ -20,6 +20,10 @@ public class BodyWrap {
         isDestroyed = true;
     }
 
+    public boolean isDestroyed() {
+        return isDestroyed;
+    }
+
     public void setLinearVelocity(float vX, float vY) {
         body.setLinearVelocity(vX, vY);
     }

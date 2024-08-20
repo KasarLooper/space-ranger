@@ -5,12 +5,12 @@ import static com.kasarlooper.spaceranger.GameResources.TEXTURE_BOX_GREEN;
 import static com.kasarlooper.spaceranger.GameSettings.BLOCK_SIZE;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.kasarlooper.spaceranger.levels.drawing.GraphicsRenderer;
 import com.kasarlooper.spaceranger.levels.gobjects.GObjectType;
 import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
 import com.kasarlooper.spaceranger.levels.physics.BodyWrap;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
+import com.kasarlooper.spaceranger.levels.rendering.GraphicsRenderer;
 
 public class PhysicsBlock extends GameObject {
     public BodyWrap body;

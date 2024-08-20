@@ -1,4 +1,4 @@
-package com.kasarlooper.spaceranger.levels.drawing;
+package com.kasarlooper.spaceranger.levels.rendering;
 
 import static com.kasarlooper.spaceranger.GameSettings.SCREEN_HEIGHT;
 

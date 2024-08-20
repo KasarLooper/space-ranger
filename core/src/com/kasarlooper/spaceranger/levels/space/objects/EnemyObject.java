@@ -18,12 +18,12 @@ import static java.lang.Math.toRadians;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
-import com.kasarlooper.spaceranger.levels.drawing.GraphicsRenderer;
 import com.kasarlooper.spaceranger.levels.gobjects.GObjectType;
 import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
 import com.kasarlooper.spaceranger.levels.physics.BodyWrap;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
+import com.kasarlooper.spaceranger.levels.rendering.GraphicsRenderer;
 
 import java.util.Random;
 
@@ -50,7 +50,7 @@ public class EnemyObject extends GameObject {
         gRenderer.addSprite(this)
                 .texture(ENEMY_SHIP_IMG_PATH)
                 .rotatable(() -> rotation)
-                .destroy(() -> false)
+                .destroy(body::isDestroyed)
                 .create();
     }
 

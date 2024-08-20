@@ -1,4 +1,4 @@
-package com.kasarlooper.spaceranger.levels.drawing;
+package com.kasarlooper.spaceranger.levels.rendering;
 
 public interface Drawable {
     void updateAndDraw(float delta);
