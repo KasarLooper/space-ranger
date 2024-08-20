@@ -103,4 +103,5 @@ public class GameSettings {
     public static final int ALIEN_SPEED = 6;
     public static final int ALIEN_JUMP_FORCE = 75;
     public static final int ALIEN_DAMAGE_IMPULSE = 100000;
+    public static final int BOOM_EFFECT_FRAME_COOL_DOWN = 5;
 }

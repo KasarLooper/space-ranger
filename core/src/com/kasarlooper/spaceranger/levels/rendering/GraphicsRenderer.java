@@ -16,12 +16,14 @@ public class GraphicsRenderer {
     private final OrthographicCamera camera;
     private final Matrix4 staticMatrix;
     private final Set<Drawable> drawables;
+    private final Set<Drawable> effects;
 
     public GraphicsRenderer(SpriteBatch batch, OrthographicCamera camera) {
         this.batch = batch;
         this.camera = camera;
         staticMatrix = new Matrix4().setToOrtho2D(0, 0, GameSettings.SCREEN_WIDTH, SCREEN_HEIGHT);
         drawables = new HashSet<>();
+        effects = new HashSet<>();
     }
 
     @SuppressWarnings("NewApi")
@@ -30,11 +32,14 @@ public class GraphicsRenderer {
         for (Drawable drawable : drawables)
             if (drawable.isDisposing()) drawable.dispose();
         drawables.removeIf(Drawable::isDisposing);
+        effects.removeIf(Drawable::isDisposing);
 
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
         for (Drawable drawable : drawables)
             drawable.updateAndDraw(delta);
+        for (Drawable effect : effects)
+            effect.updateAndDraw(delta);
         batch.end();
 
         batch.setProjectionMatrix(staticMatrix);
@@ -44,7 +49,11 @@ public class GraphicsRenderer {
     }
 
     public SpriteBuilder addSprite(GameObject object) {
-        return new SpriteBuilder(this, object, batch);
+        return new SpriteBuilder(this, object, batch, false);
+    }
+
+    public SpriteBuilder addEffect(GameObject object) {
+        return new SpriteBuilder(this, object, batch, true);
     }
 
     void add(Drawable sprite) {
@@ -52,12 +61,15 @@ public class GraphicsRenderer {
     }
 
     public boolean isEffectDrawn() {
-        return true;
+        return effects.isEmpty();
     }
 
     public void dispose() {
         for (Drawable drawable : drawables)
             drawable.dispose();
+        for (Drawable effect : effects)
+            effect.dispose();
         drawables.clear();
+        effects.clear();
     }
 }

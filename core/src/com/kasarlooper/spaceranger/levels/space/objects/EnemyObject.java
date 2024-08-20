@@ -24,6 +24,7 @@ import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
 import com.kasarlooper.spaceranger.levels.physics.BodyWrap;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 import com.kasarlooper.spaceranger.levels.rendering.GraphicsRenderer;
+import com.kasarlooper.spaceranger.levels.space.effects.BoomEffect;
 
 import java.util.Random;
 
@@ -35,7 +36,7 @@ public class EnemyObject extends GameObject {
     private float aim;
     private boolean hasAim;
     private float rotation;
-    private GraphicsRenderer gRenderer;
+    private final GraphicsRenderer gRenderer;
 
     Random rd;
     public boolean wasHit;
@@ -67,6 +68,7 @@ public class EnemyObject extends GameObject {
     public void hit(GObjectType type, MyGdxGame myGdxGame) {
         if (type == GObjectType.Player || type == GObjectType.Enemy || type == GObjectType.Bullet || type == GObjectType.Asteroid) {
             wasHit = true;
+            BoomEffect.boom(getCenterX(), getCenterY(), gRenderer);
         }
     }
 

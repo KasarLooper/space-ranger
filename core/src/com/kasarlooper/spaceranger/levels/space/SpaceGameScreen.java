@@ -36,7 +36,6 @@ import com.kasarlooper.spaceranger.components.TextView;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 import com.kasarlooper.spaceranger.levels.rendering.GraphicsRenderer;
 import com.kasarlooper.spaceranger.levels.space.objects.AsteroidObject;
-import com.kasarlooper.spaceranger.levels.space.objects.BoomObject;
 import com.kasarlooper.spaceranger.levels.space.objects.BulletObject;
 import com.kasarlooper.spaceranger.levels.space.objects.CoreObject;
 import com.kasarlooper.spaceranger.levels.space.objects.EnemyObject;
@@ -56,7 +55,6 @@ public class SpaceGameScreen extends GameScreen {
     public ShipObject shipObject;
     ArrayList<BulletObject> bulletArray;
     ArrayList<CoreObject> coreArray;
-    ArrayList<BoomObject> boomArray;
     ArrayList<EnemyObject> enemyArray;
     ArrayList<AsteroidObject> asteroidArray;
     MovingBackgroundView backgroundView;
@@ -89,7 +87,6 @@ public class SpaceGameScreen extends GameScreen {
         isTouchedShoot = false;
         rd = new Random();
         spawner = new EntitySpawner();
-        boomArray = new ArrayList<>();
     }
 
     protected float getCenterX() {
@@ -149,7 +146,6 @@ public class SpaceGameScreen extends GameScreen {
                     updateBullets();
                     updateCore();
                     updateEnemy();
-                    updateBoom();
                     if (session.victory()) {
                         myGdxGame.passSpaceLevel();
                         shipObject.moleHoleAnim();
@@ -158,7 +154,6 @@ public class SpaceGameScreen extends GameScreen {
                         shipObject.setRotation(joystick.getDegrees());
                         shipObject.move();
                     } else shipObject.stop();
-                    for (BoomObject boomObject : boomArray) boomObject.Boom_action();
                 }
             } else {
                 session.state = ENDED;
@@ -214,7 +209,6 @@ public class SpaceGameScreen extends GameScreen {
                     purpose.setText(String.format("Цель - энергия: %d/3", ((SpaceGameSession) session).getCoreCollected()));
                     AudioManager.soundEnergyGive.play(0.2f);
                 } else {
-                    boomArray.add(new BoomObject(core.getCenterX(), core.getCenterY()));
                     if (myGdxGame.camera.frustum.sphereInFrustum(core.getCenterX(), core.getCenterY(), 0, Math.max(core.height, core.width))) {
                         AudioManager.soundBoom.play(0.2f);
                     }
@@ -233,22 +227,9 @@ public class SpaceGameScreen extends GameScreen {
             if (enemy.destroy()) {
                 System.out.println("enemy");
                 enemy.body.destroy();
-                BoomObject boom = new BoomObject(enemy.getCenterX(), enemy.getCenterY());
-                boomArray.add(boom);
                 if (myGdxGame.camera.frustum.sphereInFrustum(enemy.getCenterX(), enemy.getCenterY(), 0, Math.max(enemy.height, enemy.width))) {
                     AudioManager.soundBoom.play(0.2f);
                 }
-                iterator.remove();
-            }
-        }
-    }
-
-    private void updateBoom() {
-        Iterator<BoomObject> iterator = boomArray.iterator();
-        while (iterator.hasNext()) {
-            BoomObject boom = iterator.next();
-            if (boom.isNotAlive()) {
-                System.out.println("boom");
                 iterator.remove();
             }
         }
@@ -286,7 +267,6 @@ public class SpaceGameScreen extends GameScreen {
         purpose.setText("Цель - энергия: 0/3");
         live.setLeftLives(3);
         bulletArray.clear();
-        boomArray.clear();
         session.startGame();
     }
 
@@ -379,11 +359,6 @@ public class SpaceGameScreen extends GameScreen {
             }
         }
          */
-        if (boomArray != null) {
-            for (BoomObject boom : boomArray) {
-                boom.dispose();
-            }
-        }
         /*
         if (enemyArray != null) {
             for (EnemyObject enemy : enemyArray) {

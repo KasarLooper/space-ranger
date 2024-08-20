@@ -11,8 +11,10 @@ import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
 import com.kasarlooper.spaceranger.levels.physics.BodyWrap;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 import com.kasarlooper.spaceranger.levels.rendering.GraphicsRenderer;
+import com.kasarlooper.spaceranger.levels.space.effects.BoomEffect;
 
 public class CoreObject extends GameObject {
+    private final GraphicsRenderer gRenderer;
     public BodyWrap body;
     public boolean wasHit;
     public boolean wasCollected;
@@ -24,6 +26,7 @@ public class CoreObject extends GameObject {
                 .texture(CORE_IMG_PATH)
                 .destroy(body::isDestroyed)
                 .create();
+        this.gRenderer = gRenderer;
         wasHit = false;
     }
 
@@ -37,9 +40,9 @@ public class CoreObject extends GameObject {
     @Override
     public void hit(GObjectType type, MyGdxGame myGdxGame) {
         wasHit = true;
-        if (type == GObjectType.Player) {
+        if (type == GObjectType.Player)
             wasCollected = true;
-        }
+        else BoomEffect.boom(getCenterX(), getCenterY(), gRenderer);
     }
 
     public boolean destroy() {
