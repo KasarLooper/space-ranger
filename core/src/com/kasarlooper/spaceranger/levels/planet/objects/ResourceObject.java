@@ -8,15 +8,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.kasarlooper.spaceranger.MyGdxGame;
-import com.kasarlooper.spaceranger.levels.GameObject;
-import com.kasarlooper.spaceranger.levels.Type;
+import com.kasarlooper.spaceranger.levels.gobjects.GObjectType;
+import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 
 public class ResourceObject extends GameObject {
     public Body body;
 
-    Type type;
+    GObjectType type;
     boolean wasHit;
     private Texture texture;
 
@@ -24,7 +24,7 @@ public class ResourceObject extends GameObject {
         super(x, y, BLOCK_SIZE, BLOCK_SIZE);
         texture = new Texture(isCrystal ? CRYSTAL_IMG_PATH : WRECKAGE_IMG_PATH);
         body = createBody(x, y, world);
-        type = Type.Resource;
+        type = GObjectType.Resource;
         wasHit = false;
     }
 
@@ -41,13 +41,13 @@ public class ResourceObject extends GameObject {
     }
 
     @Override
-    public void hit(Type type, MyGdxGame myGdxGame) {
-        if (type == Type.Player) {
+    public void hit(GObjectType type, MyGdxGame myGdxGame) {
+        if (type == GObjectType.Player) {
             wasHit = true;
         }
     }
 
-    public Type type() {
+    public GObjectType type() {
         return type;
     }
 

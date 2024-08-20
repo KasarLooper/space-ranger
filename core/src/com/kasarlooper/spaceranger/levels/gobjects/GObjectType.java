@@ -1,6 +1,6 @@
-package com.kasarlooper.spaceranger.levels;
+package com.kasarlooper.spaceranger.levels.gobjects;
 
-public enum Type {
+public enum GObjectType {
     Player,
     Enemy,
     Core,

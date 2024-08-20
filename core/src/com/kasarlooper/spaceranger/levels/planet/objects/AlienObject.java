@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.BlockMap;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
-import com.kasarlooper.spaceranger.levels.Type;
+import com.kasarlooper.spaceranger.levels.gobjects.GObjectType;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 import com.kasarlooper.spaceranger.manager.AudioManager;
 
@@ -46,8 +46,8 @@ public class AlienObject extends SpacemanObject{
     }
 
     @Override
-    public void hit(Type type, MyGdxGame myGdxGame) {
-        if (type == Type.Bullet) {
+    public void hit(GObjectType type, MyGdxGame myGdxGame) {
+        if (type == GObjectType.Bullet) {
             liveLeft--;
             AudioManager.soundDamageEnemy.play(0.2f);
             stop();
@@ -73,7 +73,7 @@ public class AlienObject extends SpacemanObject{
     }
 
     @Override
-    public Type type() {
-        return Type.Enemy;
+    public GObjectType type() {
+        return GObjectType.Enemy;
     }
 }

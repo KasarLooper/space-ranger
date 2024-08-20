@@ -18,8 +18,8 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
-import com.kasarlooper.spaceranger.levels.GameObject;
-import com.kasarlooper.spaceranger.levels.Type;
+import com.kasarlooper.spaceranger.levels.gobjects.GObjectType;
+import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 
@@ -94,13 +94,13 @@ public class ShipObject extends GameObject {
     }
 
     @Override
-    public void hit(Type type, MyGdxGame myGdxGame) {
+    public void hit(GObjectType type, MyGdxGame myGdxGame) {
         body.setLinearVelocity(0, 0);
         body.setAngularVelocity(0);
-        if (type == Type.Enemy || type == Type.EnemyBullet || type == Type.Bullet) {
+        if (type == GObjectType.Enemy || type == GObjectType.EnemyBullet || type == GObjectType.Bullet) {
             livesLeft -= 1;
         }
-        if (type == Type.Asteroid) livesLeft = 0;
+        if (type == GObjectType.Asteroid) livesLeft = 0;
         if (livesLeft > 0) sprite.setTexture(new Texture(String.format(GameResources.SHIP_IMG_PATH, livesLeft)));
     }
 
@@ -118,8 +118,8 @@ public class ShipObject extends GameObject {
         isStop = true;
     }
 
-    public Type type() {
-        return Type.Player;
+    public GObjectType type() {
+        return GObjectType.Player;
     }
 
     public boolean isAlive() {

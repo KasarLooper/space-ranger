@@ -28,8 +28,8 @@ import com.kasarlooper.spaceranger.components.LiveView;
 import com.kasarlooper.spaceranger.components.MovingBackgroundLeftRightView;
 import com.kasarlooper.spaceranger.components.MovingBackgroundView;
 import com.kasarlooper.spaceranger.components.TextView;
-import com.kasarlooper.spaceranger.levels.GameObject;
 import com.kasarlooper.spaceranger.levels.drawing.GraphicsRenderer;
+import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 import com.kasarlooper.spaceranger.levels.planet.objects.AlienObject;
 import com.kasarlooper.spaceranger.levels.planet.objects.CapsuleObject;
@@ -80,7 +80,7 @@ public class PlanetGameScreen extends GameScreen {
 
         session = new PlanetGameSession();
         loader = new LevelMapManager();
-        loader.loadMap(world);
+        loader.loadMap(world, gRenderer);
         physics = loader.getPhysics();
         blockMap = new BlockMap(physics, 200, 16);
         mobSpawns = loader.getMobSpawns();
@@ -193,6 +193,7 @@ public class PlanetGameScreen extends GameScreen {
 
     @Override
     public void drawDynamic() {
+        /*
         backgroundView.draw(myGdxGame.batch);
         capsule.draw(myGdxGame.batch);
         earth.draw(myGdxGame.batch, spaceman.getCenterX());
@@ -206,6 +207,7 @@ public class PlanetGameScreen extends GameScreen {
         for (ResourceObject wreck : wrecks) wreck.draw(myGdxGame.batch);
         for (ResourceObject crystal : crystals) crystal.draw(myGdxGame.batch);
         for (AlienObject alien : aliens) alien.draw(myGdxGame.batch);
+         */
     }
 
     @Override

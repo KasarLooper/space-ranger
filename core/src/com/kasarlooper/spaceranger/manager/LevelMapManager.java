@@ -9,7 +9,9 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.TextureData;
 import com.kasarlooper.spaceranger.GameResources;
-import com.kasarlooper.spaceranger.levels.GameObject;
+import com.kasarlooper.spaceranger.levels.drawing.GraphicsRenderer;
+import com.kasarlooper.spaceranger.levels.gobjects.GObjectImpl;
+import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 import com.kasarlooper.spaceranger.levels.planet.objects.PhysicsBlock;
 
@@ -25,7 +27,7 @@ public class LevelMapManager {
     int capsuleEndX, capsuleEndY;
     int playerPixelX;
 
-    public void loadMap(WorldWrap world) {
+    public void loadMap(WorldWrap world, GraphicsRenderer renderer) {
         physics = new ArrayList<>();
         mobSpawns = new ArrayList<>();
         resSpawns = new ArrayList<>();
@@ -56,7 +58,7 @@ public class LevelMapManager {
                 int red = (rgb >> 24) & 0xFF;
                 int green = (rgb >> 16) & 0xFF;
                 int blue = (rgb >> 8) & 0xFF;
-                initBlocks(red, green, blue, x, y, world);
+                initBlocks(red, green, blue, x, y, world, renderer);
             }
         }
 
@@ -127,15 +129,15 @@ public class LevelMapManager {
         }
     }
 
-    private void initBlocks(int red, int green, int blue, int x, int y, WorldWrap world) {
+    private void initBlocks(int red, int green, int blue, int x, int y, WorldWrap world, GraphicsRenderer renderer) {
         if (red == 0 && green == 255 && blue == 0) {
-            physics.add(new PhysicsBlock(getX(x), getY(y), true, world));
+            physics.add(new PhysicsBlock(getX(x), getY(y), true, world, renderer));
         } else if (red == 0 && green == 0 && blue == 0) {
-            physics.add(new PhysicsBlock(getX(x), getY(y), false, world));
+            physics.add(new PhysicsBlock(getX(x), getY(y), false, world, renderer));
         } else if (red == 0 && green == 0 && blue == 255) {
-            resSpawns.add(new GameObject(getX(x), getY(y)));
+            resSpawns.add(new GObjectImpl(getX(x), getY(y)));
         } else if (red == 255 && green == 255 && blue == 0) {
-            mobSpawns.add(new GameObject(getX(x), getY(y)));
+            mobSpawns.add(new GObjectImpl(getX(x), getY(y)));
         } else if ((red == 255 && green == 255 && blue == 255 ||
                 red == 255 && green == 0 && blue == 0) &&
                 capsuleStartX == -1 && capsuleStartY == -1) {

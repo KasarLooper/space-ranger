@@ -12,7 +12,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.kasarlooper.spaceranger.MyGdxGame;
-import com.kasarlooper.spaceranger.levels.GameObject;
+import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.manager.ContactManager;
 
 import java.util.HashSet;

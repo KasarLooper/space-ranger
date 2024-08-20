@@ -1,18 +1,34 @@
-package com.kasarlooper.spaceranger.levels;
+package com.kasarlooper.spaceranger.levels.gobjects;
 
 import com.kasarlooper.spaceranger.MyGdxGame;
 
-public class GameObject {
+public abstract class GameObject {
     protected int cornerX;
     protected int cornerY;
-    public float width;
-    public float height;
+    public int width;
+    public int height;
 
-    public GameObject(int x, int y, float width, float height) {
+    public GameObject(int x, int y, int width, int height) {
         this.cornerX = x;
         this.cornerY = y;
         this.width = width;
         this.height = height;
+    }
+
+    public int getCornerX() {
+        return cornerX;
+    }
+
+    public int getCornerY() {
+        return cornerY;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
     }
 
     public int getCenterX() {
@@ -35,11 +51,11 @@ public class GameObject {
         this(x, y, 0, 0);
     }
 
-    public Type type() {
+    public GObjectType type() {
         return null;
     }
 
-    public void hit(Type type, MyGdxGame myGdxGame) {
+    public void hit(GObjectType type, MyGdxGame myGdxGame) {
         // вся физика ударов и т.п.
     }
 

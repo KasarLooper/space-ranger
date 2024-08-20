@@ -18,8 +18,8 @@ import com.kasarlooper.spaceranger.BlockMap;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
-import com.kasarlooper.spaceranger.levels.GameObject;
-import com.kasarlooper.spaceranger.levels.Type;
+import com.kasarlooper.spaceranger.levels.gobjects.GObjectType;
+import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 import com.kasarlooper.spaceranger.manager.AudioManager;
@@ -185,9 +185,9 @@ public class SpacemanObject extends GameObject {
     }
 
     @Override
-    public void hit(Type type, MyGdxGame myGdxGame) {
+    public void hit(GObjectType type, MyGdxGame myGdxGame) {
         body.applyLinearImpulse(new Vector2(0, 3), body.getWorldCenter(), true);
-        if (type == Type.Enemy) {
+        if (type == GObjectType.Enemy) {
             liveLeft -= 1;
             AudioManager.soundDamageCosmonaut.play(0.2f);
             damageTime = TimeUtils.millis();
@@ -200,8 +200,8 @@ public class SpacemanObject extends GameObject {
                 tex.dispose();
     }
 
-    public Type type() {
-        return Type.Player;
+    public GObjectType type() {
+        return GObjectType.Player;
     }
 
     public void staticDraw(SpriteBatch batch) {

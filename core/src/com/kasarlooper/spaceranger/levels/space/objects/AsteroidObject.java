@@ -9,8 +9,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.kasarlooper.spaceranger.MyGdxGame;
-import com.kasarlooper.spaceranger.levels.GameObject;
-import com.kasarlooper.spaceranger.levels.Type;
+import com.kasarlooper.spaceranger.levels.gobjects.GObjectType;
+import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 
@@ -47,12 +47,12 @@ public class AsteroidObject extends GameObject {
     }
 
     @Override
-    public void hit(Type type, MyGdxGame myGdxGame) {
+    public void hit(GObjectType type, MyGdxGame myGdxGame) {
         super.hit(type, myGdxGame);
     }
 
     @Override
-    public Type type() {
-        return Type.Asteroid;
+    public GObjectType type() {
+        return GObjectType.Asteroid;
     }
 }

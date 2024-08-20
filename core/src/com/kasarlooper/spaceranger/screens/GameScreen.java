@@ -144,6 +144,7 @@ public abstract class GameScreen extends ScreenAdapter implements InputProcessor
     @Override
     public void dispose() {
         super.dispose();
+        gRenderer.dispose();
         if (joystick != null) joystick.dispose();
         if (pauseButton != null) pauseButton.dispose();
         if (endButton != null) endButton.dispose();

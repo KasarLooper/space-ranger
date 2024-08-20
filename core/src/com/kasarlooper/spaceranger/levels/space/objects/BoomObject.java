@@ -3,19 +3,14 @@ package com.kasarlooper.spaceranger.levels.space.objects;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.kasarlooper.spaceranger.GameResources;
+import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 
-public class BoomObject{
+public class BoomObject extends GameObject {
     int i = 3;
-    private float x, y;
-    private int width;
-    private int height;
     private Texture texture;
 
-    public BoomObject(float x, float y) {
-        this.x = x;
-        this.y = y;
-        width = 1;
-        height = 1;
+    public BoomObject(int x, int y) {
+        super(x, y, 1, 1);
         texture = new Texture(GameResources.BOOM_IMG_PATH);
     }
 
@@ -28,7 +23,7 @@ public class BoomObject{
 
     }
     public void draw(SpriteBatch batch) {
-        batch.draw(texture, x, y, width, height);
+        batch.draw(texture, cornerX, cornerY, width, height);
     }
 
     public boolean isNotAlive() {

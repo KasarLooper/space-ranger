@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.kasarlooper.spaceranger.MyGdxGame;
-import com.kasarlooper.spaceranger.levels.GameObject;
-import com.kasarlooper.spaceranger.levels.Type;
+import com.kasarlooper.spaceranger.levels.gobjects.GObjectType;
+import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 
@@ -39,9 +39,9 @@ public class CoreObject extends GameObject {
     }
 
     @Override
-    public void hit(Type type, MyGdxGame myGdxGame) {
+    public void hit(GObjectType type, MyGdxGame myGdxGame) {
         wasHit = true;
-        if (type == Type.Player) {
+        if (type == GObjectType.Player) {
             wasCollected = true;
         }
     }
@@ -50,7 +50,7 @@ public class CoreObject extends GameObject {
         return wasHit;
     }
 
-    public Type type() {
-        return Type.Core;
+    public GObjectType type() {
+        return GObjectType.Core;
     }
 }

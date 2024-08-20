@@ -15,15 +15,13 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 import static java.lang.Math.toRadians;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
-import com.kasarlooper.spaceranger.levels.GameObject;
-import com.kasarlooper.spaceranger.levels.Type;
+import com.kasarlooper.spaceranger.levels.drawing.GraphicsRenderer;
+import com.kasarlooper.spaceranger.levels.gobjects.GObjectType;
+import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 
@@ -36,21 +34,24 @@ public class EnemyObject extends GameObject {
     private long lastShootTime;
     private float aim;
     private boolean hasAim;
+    private float rotation;
 
-    Sprite sprite;
     Random rd;
     public boolean wasHit;
 
-    public EnemyObject(int x, int y, WorldWrap world) {
+    public EnemyObject(int x, int y, WorldWrap world, GraphicsRenderer gRenderer) {
         super(x, y, ENEMY_WIDTH, ENEMY_HEIGHT);
         body = createBody(x, y, world);
         this.world = world;
         rd = new Random();
         wasHit = false;
-        sprite = new Sprite(new Texture(ENEMY_SHIP_IMG_PATH));
-        sprite.setBounds(cornerX, cornerY, width, height);
-        sprite.setOrigin(width / 2f, height / 2f);
+        rotation = 0;
         hasAim = false;
+        gRenderer.addSprite(this)
+                .texture(ENEMY_SHIP_IMG_PATH)
+                .rotatable(() -> rotation)
+                .destroy(() -> false)
+                .create();
     }
 
     protected Body createBody(float x, float y, WorldWrap world) {
@@ -60,13 +61,9 @@ public class EnemyObject extends GameObject {
                 .createBody(world, this);
     }
 
-    public void draw(SpriteBatch batch) {
-        sprite.draw(batch);
-    }
-
     @Override
-    public void hit(Type type, MyGdxGame myGdxGame) {
-        if (type == Type.Player || type == Type.Enemy || type == Type.Bullet || type == Type.Asteroid) {
+    public void hit(GObjectType type, MyGdxGame myGdxGame) {
+        if (type == GObjectType.Player || type == GObjectType.Enemy || type == GObjectType.Bullet || type == GObjectType.Asteroid) {
             wasHit = true;
         }
     }
@@ -92,13 +89,12 @@ public class EnemyObject extends GameObject {
             if (!hasAim) hasAim = true;
             float da = Math.min(ENEMY_TO_PLAYER_ROTATION_SPEED, Math.abs(aim));
             if (aim < 0) da = -da;
-            sprite.setRotation(sprite.getRotation() + da);
+            rotation += da;
             aim -= da;
         } else {
-            sprite.setRotation(sprite.getRotation() + ENEMY_USUAL_ROTATION_SPEED);
+            rotation += ENEMY_USUAL_ROTATION_SPEED;
             hasAim = false;
         }
-        sprite.setBounds(cornerX, cornerY, width, height);
         int dx = (int) (cos(toRadians(getRotation() % 360)) * SPEED_ENEMY);
         int dy = (int) (sin(toRadians(getRotation() % 360)) * SPEED_ENEMY);
         body.setLinearVelocity(dx, dy);
@@ -122,15 +118,15 @@ public class EnemyObject extends GameObject {
     }
 
     public float getRotation() {
-        return sprite.getRotation() - 90;
+        return rotation - 90;
     }
 
     public boolean destroy() {
         return wasHit;
     }
 
-    public Type type() {
-        return Type.Enemy;
+    public GObjectType type() {
+        return GObjectType.Enemy;
     }
 
 }

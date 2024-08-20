@@ -12,15 +12,15 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
-import com.kasarlooper.spaceranger.levels.GameObject;
-import com.kasarlooper.spaceranger.levels.Type;
+import com.kasarlooper.spaceranger.levels.gobjects.GObjectType;
+import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 
 public class LightningBulletObject extends GameObject {
     public Body body;
 
-    private final Type type;
+    private final GObjectType type;
     private boolean hasToBeDestroyed;
     private static long lastShootTime;
 
@@ -35,7 +35,7 @@ public class LightningBulletObject extends GameObject {
         body.setBullet(true);
         sprite = new Sprite(new Texture(spaceman.isRightDirection ? GameResources.LIGHTNING_RIGHT_IMG_PATH : GameResources.LIGHTNING_LEFT_IMG_PATH));
         sprite.setBounds(cornerX - width / 2f, cornerY - height / 2f, width, height);
-        type = Type.Bullet;
+        type = GObjectType.Bullet;
         body.setType(BodyDef.BodyType.DynamicBody);
         hasToBeDestroyed = false;
         lastShootTime = TimeUtils.millis();
@@ -68,11 +68,11 @@ public class LightningBulletObject extends GameObject {
     }
 
     @Override
-    public void hit(Type type, MyGdxGame myGdxGame) {
+    public void hit(GObjectType type, MyGdxGame myGdxGame) {
         hasToBeDestroyed = true;
     }
 
-    public Type type() {
+    public GObjectType type() {
         return type;
     }
 }

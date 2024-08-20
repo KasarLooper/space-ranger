@@ -181,11 +181,13 @@ public class SpaceGameScreen extends GameScreen {
     @Override
     protected void drawDynamic() {
         backgroundView.draw(myGdxGame.batch);
+        /*
         for (BoomObject boom: boomArray) boom.draw(myGdxGame.batch);
         for (BulletObject bullet : bulletArray) bullet.draw(myGdxGame.batch);
         for (CoreObject core: coreArray) core.draw(myGdxGame.batch);
         for (EnemyObject enemy: enemyArray) enemy.draw(myGdxGame.batch);
         for (AsteroidObject asteroid : asteroidArray) asteroid.draw(myGdxGame.batch);
+         */
         super.drawDynamic();
     }
 
@@ -297,7 +299,7 @@ public class SpaceGameScreen extends GameScreen {
 
     private void generateEnemy() {
         EntitySpawner.Pair pair = spawner.newPair(shipObject.getCenterX(), shipObject.getCenterY(), ENEMY_WIDTH / 2, ENEMY_HEIGHT / 2, shipObject.getRotation());
-        EnemyObject enemy = new EnemyObject((int) pair.x, (int) pair.y, world);
+        EnemyObject enemy = new EnemyObject((int) pair.x, (int) pair.y, world, gRenderer);
         enemyArray.add(enemy);
     }
 

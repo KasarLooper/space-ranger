@@ -17,15 +17,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.kasarlooper.spaceranger.MyGdxGame;
-import com.kasarlooper.spaceranger.levels.GameObject;
-import com.kasarlooper.spaceranger.levels.Type;
+import com.kasarlooper.spaceranger.levels.gobjects.GObjectType;
+import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.levels.physics.BodyBuilder;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 
 public class BulletObject extends GameObject {
     public Body body;
 
-    private Type type;
+    private GObjectType type;
     public boolean wasHit;
 
     Sprite sprite;
@@ -39,8 +39,8 @@ public class BulletObject extends GameObject {
         sprite = new Sprite(new Texture(isEnemy ? ENEMY_BULLET_IMG_PATH : BULLET_IMG_PATH));
         sprite.setRotation(degrees + 270);
         wasHit = false;
-        if (isEnemy) type = Type.EnemyBullet;
-        else type = Type.Bullet;
+        if (isEnemy) type = GObjectType.EnemyBullet;
+        else type = GObjectType.Bullet;
     }
 
     protected Body createBody(float x, float y, WorldWrap world) {
@@ -57,7 +57,7 @@ public class BulletObject extends GameObject {
 
 
     @Override
-    public void hit(Type type, MyGdxGame myGdxGame) {
+    public void hit(GObjectType type, MyGdxGame myGdxGame) {
         wasHit = true;
     }
 
@@ -67,7 +67,8 @@ public class BulletObject extends GameObject {
                 getCenterY() > centreY - (height + SCREEN_HEIGHT) / 2 &&
                 getCenterY() < centreY + (height + SCREEN_HEIGHT) / 2);
     }
-    public Type type() {
+
+    public GObjectType type() {
         return type;
     }
 }
