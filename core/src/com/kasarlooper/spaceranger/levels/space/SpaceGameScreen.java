@@ -27,6 +27,7 @@ import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.GameSettings;
 import com.kasarlooper.spaceranger.GraphicsSettings;
 import com.kasarlooper.spaceranger.MyGdxGame;
+import com.kasarlooper.spaceranger.Pair;
 import com.kasarlooper.spaceranger.components.ButtonView;
 import com.kasarlooper.spaceranger.components.ImageView;
 import com.kasarlooper.spaceranger.components.JoystickView;
@@ -272,20 +273,20 @@ public class SpaceGameScreen extends GameScreen {
 
     // Генераторы
     private void generateCore() {
-        EntitySpawner.Pair pair = spawner.newPair(shipObject.getCenterX(), shipObject.getCenterY(), CORE_WIDTH / 2, CORE_HEIGHT / 2, shipObject.getRotation());
+        Pair pair = spawner.newPair(shipObject.getCenterX(), shipObject.getCenterY(), CORE_WIDTH / 2, CORE_HEIGHT / 2, shipObject.getRotation());
         CoreObject coreObject = new CoreObject((int) pair.x, (int) pair.y, world, gRenderer);
         coreArray.add(coreObject);
     }
 
     private void generateEnemy() {
-        EntitySpawner.Pair pair = spawner.newPair(shipObject.getCenterX(), shipObject.getCenterY(), ENEMY_WIDTH / 2, ENEMY_HEIGHT / 2, shipObject.getRotation());
+        Pair pair = spawner.newPair(shipObject.getCenterX(), shipObject.getCenterY(), ENEMY_WIDTH / 2, ENEMY_HEIGHT / 2, shipObject.getRotation());
         EnemyObject enemy = new EnemyObject((int) pair.x, (int) pair.y, world, gRenderer);
         enemyArray.add(enemy);
     }
 
     private void generateAsteroid() {
         int size = ASTEROID_WIDTH_MIN + rd.nextInt(ASTEROID_WIDTH_MAX - ASTEROID_WIDTH_MIN);
-        EntitySpawner.Pair pair = spawner.newPair(shipObject.getCenterX(), shipObject.getCenterY(), size / 2, size / 2, shipObject.getRotation());
+        Pair pair = spawner.newPair(shipObject.getCenterX(), shipObject.getCenterY(), size / 2, size / 2, shipObject.getRotation());
         AsteroidObject asteroid = new AsteroidObject((int) pair.x, (int) pair.y, world, (int) shipObject.getCenterX(), (int) shipObject.getCenterY(), gRenderer);
         asteroidArray.add(asteroid);
     }

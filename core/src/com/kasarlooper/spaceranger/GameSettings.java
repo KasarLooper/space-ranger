@@ -80,7 +80,7 @@ public class GameSettings {
     public static final int EARTH_HEIGHT = 130;
 
     // Block settings
-    public static final int BLOCK_SIZE = 85;
+    public static final int BLOCK_SIZE = 84;
     public static final int MAP_HEIGHT = 16;
 
     // Cosmonaut settings

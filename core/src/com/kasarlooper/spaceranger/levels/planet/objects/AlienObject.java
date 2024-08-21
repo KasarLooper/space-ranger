@@ -64,7 +64,7 @@ public class AlienObject extends SpacemanObject{
         super.stop();
     }
 
-    public void move(int playerX, int playerY, ArrayList<PhysicsBlock> blocks) {
+    public void move(int playerX, int playerY, ArrayList<PhysicsPlatform> blocks) {
         if (TimeUtils.millis() - stopTime < 300) return;
         boolean isRight = playerX > getCenterX();
         jump();

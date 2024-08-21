@@ -34,7 +34,7 @@ import com.kasarlooper.spaceranger.levels.planet.objects.AlienObject;
 import com.kasarlooper.spaceranger.levels.planet.objects.CapsuleObject;
 import com.kasarlooper.spaceranger.levels.planet.objects.Earth;
 import com.kasarlooper.spaceranger.levels.planet.objects.LightningBulletObject;
-import com.kasarlooper.spaceranger.levels.planet.objects.PhysicsBlock;
+import com.kasarlooper.spaceranger.levels.planet.objects.PhysicsPlatform;
 import com.kasarlooper.spaceranger.levels.planet.objects.ResourceObject;
 import com.kasarlooper.spaceranger.levels.planet.objects.SpacemanObject;
 import com.kasarlooper.spaceranger.levels.rendering.GraphicsRenderer;
@@ -54,7 +54,7 @@ public class PlanetGameScreen extends GameScreen {
 
     SpacemanObject spaceman;
     Earth earth;
-    ArrayList<PhysicsBlock> physics;
+    ArrayList<PhysicsPlatform> physics;
     ArrayList<AlienObject> aliens;
     ArrayList<ResourceObject> wrecks;
     ArrayList<ResourceObject> crystals;

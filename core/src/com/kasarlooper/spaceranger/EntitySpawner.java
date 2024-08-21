@@ -51,12 +51,4 @@ public class EntitySpawner {
         float dy = y1 - y2;
         return (float) sqrt(dx * dx + dy * dy);
     }
-
-    public static class Pair {
-        Pair(float x, float y) {
-            this.x = x;
-            this.y = y;
-        }
-        public float x, y;
-    }
 }

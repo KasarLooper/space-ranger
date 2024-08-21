@@ -12,20 +12,24 @@ import com.kasarlooper.spaceranger.GameResources;
 import com.kasarlooper.spaceranger.levels.gobjects.GObjectImpl;
 import com.kasarlooper.spaceranger.levels.gobjects.GameObject;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
-import com.kasarlooper.spaceranger.levels.planet.objects.PhysicsBlock;
+import com.kasarlooper.spaceranger.levels.planet.objects.PhysicsPlatform;
 import com.kasarlooper.spaceranger.levels.rendering.GraphicsRenderer;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class LevelMapManager {
-    ArrayList<PhysicsBlock> physics;
+    ArrayList<PhysicsPlatform> physics;
     ArrayList<GameObject> mobSpawns;
     ArrayList<GameObject> resSpawns;
     int playerX, playerY;
     int capsuleStartX, capsuleStartY;
     int capsuleEndX, capsuleEndY;
     int playerPixelX;
+    private HashMap<Integer, List<Integer>> greenBlocksMap, blackBlocksMap;
 
     public void loadMap(WorldWrap world, GraphicsRenderer renderer) {
         physics = new ArrayList<>();
@@ -33,6 +37,8 @@ public class LevelMapManager {
         resSpawns = new ArrayList<>();
         capsuleStartX = -1;
         capsuleStartY = -1;
+        greenBlocksMap = new HashMap<>();
+        blackBlocksMap = new HashMap<>();
 
         Texture texture = new Texture(GameResources.LEVEL_MAP_IMG_PATH);
         TextureData textureData = texture.getTextureData();
@@ -81,9 +87,59 @@ public class LevelMapManager {
             capsuleEndX++;
         }
         capsuleEndX--;
+
+        initPlatforms(world, renderer, greenBlocksMap, true);
+        initPlatforms(world, renderer, blackBlocksMap, false);
     }
 
-    public ArrayList<PhysicsBlock> getPhysics() {
+    private void initPlatforms(WorldWrap world, GraphicsRenderer renderer, Map<Integer, List<Integer>> cords, boolean isGreen) {
+        for (Map.Entry<Integer, List<Integer>> entry : cords.entrySet()) {
+            List<Integer> xs = entry.getValue();
+            if (xs.isEmpty()) continue;
+            int y = entry.getKey();
+            int firstX = xs.get(0);
+            int lastX = firstX;
+            for (int i = 1; i < xs.size(); i++) {
+                int curX = xs.get(i);
+                if (curX - lastX == 1)
+                    lastX = curX;
+                else {
+                    int platformX = (getX(lastX) + getX(firstX)) / 2;
+                    int platformWidth = lastX - firstX + 1;
+                    physics.add(new PhysicsPlatform(platformX, getY(y), platformWidth,
+                            isGreen, world, renderer));
+                    firstX = curX;
+                    lastX = curX;
+                }
+            }
+        }
+    }
+
+    @SuppressWarnings("NewApi")
+    private void initBlocks(int red, int green, int blue, int x, int y, WorldWrap world, GraphicsRenderer renderer) {
+        if (red == 0 && green == 255 && blue == 0) {
+            List<Integer> list = greenBlocksMap.getOrDefault(y, new ArrayList<>());
+            list.add(x);
+            greenBlocksMap.put(y, list);
+        } else if (red == 0 && green == 0 && blue == 0) {
+            List<Integer> list = blackBlocksMap.getOrDefault(y, new ArrayList<>());
+            list.add(x);
+            blackBlocksMap.put(y, list);
+        } else if (red == 0 && green == 0 && blue == 255) {
+            resSpawns.add(new GObjectImpl(getX(x), getY(y)));
+        } else if (red == 255 && green == 255 && blue == 0) {
+            mobSpawns.add(new GObjectImpl(getX(x), getY(y)));
+        } else if ((red == 255 && green == 255 && blue == 255 ||
+                red == 255 && green == 0 && blue == 0) &&
+                capsuleStartX == -1 && capsuleStartY == -1) {
+            capsuleStartX = x;
+            capsuleStartY = y;
+            capsuleEndX = x;
+            capsuleEndY = y;
+        }
+    }
+
+    public ArrayList<PhysicsPlatform> getPhysics() {
         return physics;
     }
 
@@ -126,25 +182,6 @@ public class LevelMapManager {
             playerX = x * BLOCK_SIZE;
             playerY = GROUND_HEIGHT + 85 + (MAP_HEIGHT - y) * BLOCK_SIZE;
             playerPixelX = x;
-        }
-    }
-
-    private void initBlocks(int red, int green, int blue, int x, int y, WorldWrap world, GraphicsRenderer renderer) {
-        if (red == 0 && green == 255 && blue == 0) {
-            physics.add(new PhysicsBlock(getX(x), getY(y), true, world, renderer));
-        } else if (red == 0 && green == 0 && blue == 0) {
-            physics.add(new PhysicsBlock(getX(x), getY(y), false, world, renderer));
-        } else if (red == 0 && green == 0 && blue == 255) {
-            resSpawns.add(new GObjectImpl(getX(x), getY(y)));
-        } else if (red == 255 && green == 255 && blue == 0) {
-            mobSpawns.add(new GObjectImpl(getX(x), getY(y)));
-        } else if ((red == 255 && green == 255 && blue == 255 ||
-                red == 255 && green == 0 && blue == 0) &&
-                capsuleStartX == -1 && capsuleStartY == -1) {
-            capsuleStartX = x;
-            capsuleStartY = y;
-            capsuleEndX = x;
-            capsuleEndY = y;
         }
     }
 

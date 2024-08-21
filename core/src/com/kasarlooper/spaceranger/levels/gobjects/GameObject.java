@@ -62,8 +62,10 @@ public abstract class GameObject {
     @Override
     public String toString() {
         return "GameObject{" +
-                "x=" + cornerX +
-                ", y=" + cornerY +
+                "cornerX=" + cornerX +
+                ", cornerY=" + cornerY +
+                ", width=" + width +
+                ", height=" + height +
                 '}';
     }
 }

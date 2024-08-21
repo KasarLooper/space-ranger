@@ -11,13 +11,13 @@ import com.kasarlooper.spaceranger.levels.physics.BodyWrap;
 import com.kasarlooper.spaceranger.levels.physics.WorldWrap;
 import com.kasarlooper.spaceranger.levels.rendering.GraphicsRenderer;
 
-public class PhysicsBlock extends GameObject {
+public class PhysicsPlatform extends GameObject {
     public BodyWrap body;
     WorldWrap world;
 
 
-    public PhysicsBlock(int x, int y, boolean isGreen, WorldWrap world, GraphicsRenderer renderer) {
-        super(x, y, BLOCK_SIZE, BLOCK_SIZE);
+    public PhysicsPlatform(int x, int y, int width, boolean isGreen, WorldWrap world, GraphicsRenderer renderer) {
+        super(x, y, BLOCK_SIZE * width, BLOCK_SIZE);
         this.cornerX = x;
         this.cornerY = y;
 
